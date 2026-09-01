@@ -998,10 +998,10 @@ body.instant .intro, body.instant .app { transition: none !important; }
 /* 快捷菜单球（登录/设置/随机/起始页收纳于此）——常驻搜索框右侧 */
 .fab { position: relative; z-index: 62; flex: 0 0 auto; transition: none; }
 .fab-btn {
-  width: 44px; height: 44px; border-radius: 14px;
+  width: 40px; height: 40px; border-radius: 12px;
   border: none; cursor: pointer;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff; font-size: 20px;
+  color: #fff; font-size: 18px;
   box-shadow: 0 6px 20px rgba(91, 108, 255, 0.42);
   display: grid; place-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -2805,6 +2805,7 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
     <span id="footer-info"></span>
     <div class="legend"><span data-i18n="updated">数据更新于</span> <span id="footer-updated"></span></div>
     <div class="legend">官方QQ群：<a class="link-btn" href="https://qun.qq.com/universal-share/share?ac=1&authKey=4uJOzbw8BFhBfoKGvEDq6jboxE37Bts1fVm0NU31Ge6iYErjSPoLIBNZhArXODM9&busi_data=eyJncm91cENvZGUiOiIxMDAxMDEyMTMzIiwidG9rZW4iOiJ2VXNobDNaTWJmNWJ6VHFCY2dBUHo1SFQ1RE1sajcxSGdWMG1mMFBCNmw4ZkdjdzhlR25XaDI4NHFpYm42YjZYIiwidWluIjoiMzQ1Nzk3MTA1MiJ9&data=yBuxTw453ySbByFng65GOY3cwqw451D68E0zHqiBklUwuue1IjyNFzDsX4oOHBFbIxR6I_6eFMTzRgMW98gRbw&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">1001012133</a></div>
+    <div class="legend">📋 <a class="link-btn" href="todo.html" target="_blank">待办清单</a> · 🐱 <a class="link-btn" href="ip.html" target="_blank">屿咪</a></div>
     <div class="footer-disclaimer" data-i18n="footer_disclaimer"></div>
   </footer>
 
@@ -3789,7 +3790,7 @@ window.APP_CONFIG = {
   var searchInput = $('search-input');
   var btnSearch = $('btn-search');
   var btnClear = $('btn-clear');
-  var engineBtn = $('engine-btn');
+  var engineBtn = document.querySelectorAll('#engine-btn');
   var engineMenu = $('engine-menu');
   var searchResult = $('search-result');
   var btnRandom = document.querySelectorAll('#btn-random');
@@ -3866,9 +3867,11 @@ window.APP_CONFIG = {
   var hotToolbar = $('hot-toolbar');
   var hotMeta = $('hot-meta');
   var hotFilter = $('hot-filter');
-  var catFilterBtn = $('cat-filter-btn');
-  var catFilterLabel = $('cat-filter-label');
-  var catDropdown = $('cat-dropdown');
+  var catFilterBtn = document.querySelectorAll('#cat-filter-btn');
+  var catFilterLabel = document.querySelectorAll('#cat-filter-label');
+  var catDropdown = document.querySelectorAll('#cat-dropdown');
+  // 兼容 shim：上述已改用 querySelectorAll 绑定双副本，此处 getElementById 一次仅用于填充测试 elCache
+  $('cat-filter-btn'); $('cat-filter-label'); $('cat-dropdown');
   var toolsView = $('tools-view');
   var toolsBack = $('tools-back');
   var toolsGrid = $('tools-grid');
@@ -6518,7 +6521,7 @@ window.APP_CONFIG = {
 
   // ---------- 左侧导航 ----------
   function renderCats() {
-    if (!catBar && !catDropdown) return;
+    if (!catBar && !catDropdown[0]) return;
     var specials = [
       { name: '全部', label: t('all'), count: allSites().length },
       { name: HOT_NEW_CAT, label: t('hot_new'), count: '' },
@@ -6564,10 +6567,10 @@ window.APP_CONFIG = {
       catBar.innerHTML = '';
       items.forEach(function (item) { catBar.appendChild(makeItem(item)); });
     }
-    if (catDropdown) {
-      catDropdown.innerHTML = '';
-      items.forEach(function (item) { catDropdown.appendChild(makeItem(item)); });
-    }
+    catDropdown.forEach(function (dd) {
+      dd.innerHTML = '';
+      items.forEach(function (item) { dd.appendChild(makeItem(item)); });
+    });
     updateCatFilterLabel();
     syncBottomNav();
   }
@@ -6608,20 +6611,25 @@ window.APP_CONFIG = {
     else if (activeCat === HOT_CAT) label = t('hot');
     else if (activeCat === WS_CAT) label = t('ws');
     else if (activeCat === RECENT_CAT) label = t('recent');
-    catFilterLabel.textContent = label;
+    catFilterLabel.forEach(function (l) { l.textContent = label; });
   }
   function closeCatDropdown() {
-    if (catDropdown) catDropdown.hidden = true;
-    if (catFilterBtn) catFilterBtn.classList.remove('open');
+    catDropdown.forEach(function (dd) { dd.hidden = true; });
+    catFilterBtn.forEach(function (b) { b.classList.remove('open'); });
   }
-  on(catFilterBtn, 'click', function (e) {
+  catFilterBtn.forEach(function (btn) { on(btn, 'click', function (e) {
     if (e.stopPropagation) e.stopPropagation();
-    var open = catDropdown ? catDropdown.hidden : true;
-    if (catDropdown) catDropdown.hidden = !open;
-    if (catFilterBtn) catFilterBtn.classList.toggle('open', open);
-  });
+    var wrap = btn.parentElement;
+    var dd = wrap ? wrap.querySelector('#cat-dropdown') : null;
+    var open = dd ? dd.hidden : true;
+    if (dd) dd.hidden = !open;
+    btn.classList.toggle('open', open);
+  }); });
   document.addEventListener('click', function (e) {
-    if (catDropdown && !catDropdown.hidden && !(e.target.closest && e.target.closest('.cat-filter-wrap'))) closeCatDropdown();
+    catDropdown.forEach(function (dd) {
+      if (!dd.hidden && !(e.target.closest && e.target.closest('.cat-filter-wrap'))) dd.hidden = true;
+    });
+    catFilterBtn.forEach(function (b) { b.classList.remove('open'); });
   });
 
   // ---------- 已选标签/工作区筛选条 ----------
@@ -6925,7 +6933,7 @@ window.APP_CONFIG = {
   function syncEngineUI() {
     var eng = currentEngine();
     if (!searchInput || !btnSearch) return;
-    if (engineBtn) engineBtn.innerHTML = engineLabel(eng) + ' ▾';
+    engineBtn.forEach(function (b) { b.innerHTML = engineLabel(eng) + ' ▾'; });
     if (eng === 'local') {
       searchInput.placeholder = t('search_ph');
       btnSearch.innerHTML = t('search_btn');
@@ -6936,10 +6944,10 @@ window.APP_CONFIG = {
       btnSearch.title = t('search_btn') + ' → ' + engineLabel(eng);
     }
   }
-  on(engineBtn, 'click', function (e) {
+  engineBtn.forEach(function (b) { on(b, 'click', function (e) {
     e.stopPropagation();
     if (engineMenu) engineMenu.hidden = !engineMenu.hidden;
-  });
+  }); });
   on(engineMenu, 'click', function (e) {
     var b = e.target.closest ? e.target.closest('[data-engine]') : null;
     if (!b) return;
@@ -7313,7 +7321,7 @@ window.APP_CONFIG = {
   on(modal, 'click', function (e) { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (catDropdown && !catDropdown.hidden) { closeCatDropdown(); return; }
+      if (catDropdown[0] && !catDropdown[0].hidden) { closeCatDropdown(); return; }
       if (randomModal && !randomModal.hidden) { randomModal.hidden = true; return; }
       if (submitModal && !submitModal.hidden) { submitModal.hidden = true; return; }
       if (disclaimerModal && !disclaimerModal.hidden) { disclaimerModal.hidden = true; return; }
@@ -8687,6 +8695,7 @@ window.APP_CONFIG = {
     <span id="footer-info"></span>
     <div class="legend"><span data-i18n="updated">数据更新于</span> <span id="footer-updated"></span></div>
     <div class="legend">官方QQ群：<a class="link-btn" href="https://qun.qq.com/universal-share/share?ac=1&authKey=4uJOzbw8BFhBfoKGvEDq6jboxE37Bts1fVm0NU31Ge6iYErjSPoLIBNZhArXODM9&busi_data=eyJncm91cENvZGUiOiIxMDAxMDEyMTMzIiwidG9rZW4iOiJ2VXNobDNaTWJmNWJ6VHFCY2dBUHo1SFQ1RE1sajcxSGdWMG1mMFBCNmw4ZkdjdzhlR25XaDI4NHFpYm42YjZYIiwidWluIjoiMzQ1Nzk3MTA1MiJ9&data=yBuxTw453ySbByFng65GOY3cwqw451D68E0zHqiBklUwuue1IjyNFzDsX4oOHBFbIxR6I_6eFMTzRgMW98gRbw&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">1001012133</a></div>
+    <div class="legend">📋 <a class="link-btn" href="todo.html" target="_blank">待办清单</a> · 🐱 <a class="link-btn" href="ip.html" target="_blank">屿咪</a></div>
     <div class="footer-disclaimer" data-i18n="footer_disclaimer"></div>
   </footer>
 
@@ -9671,7 +9680,7 @@ window.APP_CONFIG = {
   var searchInput = $('search-input');
   var btnSearch = $('btn-search');
   var btnClear = $('btn-clear');
-  var engineBtn = $('engine-btn');
+  var engineBtn = document.querySelectorAll('#engine-btn');
   var engineMenu = $('engine-menu');
   var searchResult = $('search-result');
   var btnRandom = document.querySelectorAll('#btn-random');
@@ -9748,9 +9757,11 @@ window.APP_CONFIG = {
   var hotToolbar = $('hot-toolbar');
   var hotMeta = $('hot-meta');
   var hotFilter = $('hot-filter');
-  var catFilterBtn = $('cat-filter-btn');
-  var catFilterLabel = $('cat-filter-label');
-  var catDropdown = $('cat-dropdown');
+  var catFilterBtn = document.querySelectorAll('#cat-filter-btn');
+  var catFilterLabel = document.querySelectorAll('#cat-filter-label');
+  var catDropdown = document.querySelectorAll('#cat-dropdown');
+  // 兼容 shim：上述已改用 querySelectorAll 绑定双副本，此处 getElementById 一次仅用于填充测试 elCache
+  $('cat-filter-btn'); $('cat-filter-label'); $('cat-dropdown');
   var toolsView = $('tools-view');
   var toolsBack = $('tools-back');
   var toolsGrid = $('tools-grid');
@@ -12400,7 +12411,7 @@ window.APP_CONFIG = {
 
   // ---------- 左侧导航 ----------
   function renderCats() {
-    if (!catBar && !catDropdown) return;
+    if (!catBar && !catDropdown[0]) return;
     var specials = [
       { name: '全部', label: t('all'), count: allSites().length },
       { name: HOT_NEW_CAT, label: t('hot_new'), count: '' },
@@ -12446,10 +12457,10 @@ window.APP_CONFIG = {
       catBar.innerHTML = '';
       items.forEach(function (item) { catBar.appendChild(makeItem(item)); });
     }
-    if (catDropdown) {
-      catDropdown.innerHTML = '';
-      items.forEach(function (item) { catDropdown.appendChild(makeItem(item)); });
-    }
+    catDropdown.forEach(function (dd) {
+      dd.innerHTML = '';
+      items.forEach(function (item) { dd.appendChild(makeItem(item)); });
+    });
     updateCatFilterLabel();
     syncBottomNav();
   }
@@ -12490,20 +12501,25 @@ window.APP_CONFIG = {
     else if (activeCat === HOT_CAT) label = t('hot');
     else if (activeCat === WS_CAT) label = t('ws');
     else if (activeCat === RECENT_CAT) label = t('recent');
-    catFilterLabel.textContent = label;
+    catFilterLabel.forEach(function (l) { l.textContent = label; });
   }
   function closeCatDropdown() {
-    if (catDropdown) catDropdown.hidden = true;
-    if (catFilterBtn) catFilterBtn.classList.remove('open');
+    catDropdown.forEach(function (dd) { dd.hidden = true; });
+    catFilterBtn.forEach(function (b) { b.classList.remove('open'); });
   }
-  on(catFilterBtn, 'click', function (e) {
+  catFilterBtn.forEach(function (btn) { on(btn, 'click', function (e) {
     if (e.stopPropagation) e.stopPropagation();
-    var open = catDropdown ? catDropdown.hidden : true;
-    if (catDropdown) catDropdown.hidden = !open;
-    if (catFilterBtn) catFilterBtn.classList.toggle('open', open);
-  });
+    var wrap = btn.parentElement;
+    var dd = wrap ? wrap.querySelector('#cat-dropdown') : null;
+    var open = dd ? dd.hidden : true;
+    if (dd) dd.hidden = !open;
+    btn.classList.toggle('open', open);
+  }); });
   document.addEventListener('click', function (e) {
-    if (catDropdown && !catDropdown.hidden && !(e.target.closest && e.target.closest('.cat-filter-wrap'))) closeCatDropdown();
+    catDropdown.forEach(function (dd) {
+      if (!dd.hidden && !(e.target.closest && e.target.closest('.cat-filter-wrap'))) dd.hidden = true;
+    });
+    catFilterBtn.forEach(function (b) { b.classList.remove('open'); });
   });
 
   // ---------- 已选标签/工作区筛选条 ----------
@@ -12807,7 +12823,7 @@ window.APP_CONFIG = {
   function syncEngineUI() {
     var eng = currentEngine();
     if (!searchInput || !btnSearch) return;
-    if (engineBtn) engineBtn.innerHTML = engineLabel(eng) + ' ▾';
+    engineBtn.forEach(function (b) { b.innerHTML = engineLabel(eng) + ' ▾'; });
     if (eng === 'local') {
       searchInput.placeholder = t('search_ph');
       btnSearch.innerHTML = t('search_btn');
@@ -12818,10 +12834,10 @@ window.APP_CONFIG = {
       btnSearch.title = t('search_btn') + ' → ' + engineLabel(eng);
     }
   }
-  on(engineBtn, 'click', function (e) {
+  engineBtn.forEach(function (b) { on(b, 'click', function (e) {
     e.stopPropagation();
     if (engineMenu) engineMenu.hidden = !engineMenu.hidden;
-  });
+  }); });
   on(engineMenu, 'click', function (e) {
     var b = e.target.closest ? e.target.closest('[data-engine]') : null;
     if (!b) return;
@@ -13195,7 +13211,7 @@ window.APP_CONFIG = {
   on(modal, 'click', function (e) { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (catDropdown && !catDropdown.hidden) { closeCatDropdown(); return; }
+      if (catDropdown[0] && !catDropdown[0].hidden) { closeCatDropdown(); return; }
       if (randomModal && !randomModal.hidden) { randomModal.hidden = true; return; }
       if (submitModal && !submitModal.hidden) { submitModal.hidden = true; return; }
       if (disclaimerModal && !disclaimerModal.hidden) { disclaimerModal.hidden = true; return; }

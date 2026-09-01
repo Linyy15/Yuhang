@@ -36,7 +36,7 @@
   var searchInput = $('search-input');
   var btnSearch = $('btn-search');
   var btnClear = $('btn-clear');
-  var engineBtn = $('engine-btn');
+  var engineBtn = document.querySelectorAll('#engine-btn');
   var engineMenu = $('engine-menu');
   var searchResult = $('search-result');
   var btnRandom = document.querySelectorAll('#btn-random');
@@ -113,9 +113,11 @@
   var hotToolbar = $('hot-toolbar');
   var hotMeta = $('hot-meta');
   var hotFilter = $('hot-filter');
-  var catFilterBtn = $('cat-filter-btn');
-  var catFilterLabel = $('cat-filter-label');
-  var catDropdown = $('cat-dropdown');
+  var catFilterBtn = document.querySelectorAll('#cat-filter-btn');
+  var catFilterLabel = document.querySelectorAll('#cat-filter-label');
+  var catDropdown = document.querySelectorAll('#cat-dropdown');
+  // 兼容 shim：上述已改用 querySelectorAll 绑定双副本，此处 getElementById 一次仅用于填充测试 elCache
+  $('cat-filter-btn'); $('cat-filter-label'); $('cat-dropdown');
   var toolsView = $('tools-view');
   var toolsBack = $('tools-back');
   var toolsGrid = $('tools-grid');
@@ -2765,7 +2767,7 @@
 
   // ---------- 左侧导航 ----------
   function renderCats() {
-    if (!catBar && !catDropdown) return;
+    if (!catBar && !catDropdown[0]) return;
     var specials = [
       { name: '全部', label: t('all'), count: allSites().length },
       { name: HOT_NEW_CAT, label: t('hot_new'), count: '' },
@@ -2811,10 +2813,10 @@
       catBar.innerHTML = '';
       items.forEach(function (item) { catBar.appendChild(makeItem(item)); });
     }
-    if (catDropdown) {
-      catDropdown.innerHTML = '';
-      items.forEach(function (item) { catDropdown.appendChild(makeItem(item)); });
-    }
+    catDropdown.forEach(function (dd) {
+      dd.innerHTML = '';
+      items.forEach(function (item) { dd.appendChild(makeItem(item)); });
+    });
     updateCatFilterLabel();
     syncBottomNav();
   }
@@ -2855,20 +2857,25 @@
     else if (activeCat === HOT_CAT) label = t('hot');
     else if (activeCat === WS_CAT) label = t('ws');
     else if (activeCat === RECENT_CAT) label = t('recent');
-    catFilterLabel.textContent = label;
+    catFilterLabel.forEach(function (l) { l.textContent = label; });
   }
   function closeCatDropdown() {
-    if (catDropdown) catDropdown.hidden = true;
-    if (catFilterBtn) catFilterBtn.classList.remove('open');
+    catDropdown.forEach(function (dd) { dd.hidden = true; });
+    catFilterBtn.forEach(function (b) { b.classList.remove('open'); });
   }
-  on(catFilterBtn, 'click', function (e) {
+  catFilterBtn.forEach(function (btn) { on(btn, 'click', function (e) {
     if (e.stopPropagation) e.stopPropagation();
-    var open = catDropdown ? catDropdown.hidden : true;
-    if (catDropdown) catDropdown.hidden = !open;
-    if (catFilterBtn) catFilterBtn.classList.toggle('open', open);
-  });
+    var wrap = btn.parentElement;
+    var dd = wrap ? wrap.querySelector('#cat-dropdown') : null;
+    var open = dd ? dd.hidden : true;
+    if (dd) dd.hidden = !open;
+    btn.classList.toggle('open', open);
+  }); });
   document.addEventListener('click', function (e) {
-    if (catDropdown && !catDropdown.hidden && !(e.target.closest && e.target.closest('.cat-filter-wrap'))) closeCatDropdown();
+    catDropdown.forEach(function (dd) {
+      if (!dd.hidden && !(e.target.closest && e.target.closest('.cat-filter-wrap'))) dd.hidden = true;
+    });
+    catFilterBtn.forEach(function (b) { b.classList.remove('open'); });
   });
 
   // ---------- 已选标签/工作区筛选条 ----------
@@ -3172,7 +3179,7 @@
   function syncEngineUI() {
     var eng = currentEngine();
     if (!searchInput || !btnSearch) return;
-    if (engineBtn) engineBtn.innerHTML = engineLabel(eng) + ' ▾';
+    engineBtn.forEach(function (b) { b.innerHTML = engineLabel(eng) + ' ▾'; });
     if (eng === 'local') {
       searchInput.placeholder = t('search_ph');
       btnSearch.innerHTML = t('search_btn');
@@ -3183,10 +3190,10 @@
       btnSearch.title = t('search_btn') + ' → ' + engineLabel(eng);
     }
   }
-  on(engineBtn, 'click', function (e) {
+  engineBtn.forEach(function (b) { on(b, 'click', function (e) {
     e.stopPropagation();
     if (engineMenu) engineMenu.hidden = !engineMenu.hidden;
-  });
+  }); });
   on(engineMenu, 'click', function (e) {
     var b = e.target.closest ? e.target.closest('[data-engine]') : null;
     if (!b) return;
@@ -3560,7 +3567,7 @@
   on(modal, 'click', function (e) { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
-      if (catDropdown && !catDropdown.hidden) { closeCatDropdown(); return; }
+      if (catDropdown[0] && !catDropdown[0].hidden) { closeCatDropdown(); return; }
       if (randomModal && !randomModal.hidden) { randomModal.hidden = true; return; }
       if (submitModal && !submitModal.hidden) { submitModal.hidden = true; return; }
       if (disclaimerModal && !disclaimerModal.hidden) { disclaimerModal.hidden = true; return; }

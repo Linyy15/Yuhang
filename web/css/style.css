@@ -978,10 +978,10 @@ body.instant .intro, body.instant .app { transition: none !important; }
 /* 快捷菜单球（登录/设置/随机/起始页收纳于此）——常驻搜索框右侧 */
 .fab { position: relative; z-index: 62; flex: 0 0 auto; transition: none; }
 .fab-btn {
-  width: 44px; height: 44px; border-radius: 14px;
+  width: 40px; height: 40px; border-radius: 12px;
   border: none; cursor: pointer;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  color: #fff; font-size: 20px;
+  color: #fff; font-size: 18px;
   box-shadow: 0 6px 20px rgba(91, 108, 255, 0.42);
   display: grid; place-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
