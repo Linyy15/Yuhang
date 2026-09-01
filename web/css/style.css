@@ -857,15 +857,19 @@ body.instant .intro, body.instant .app { transition: none !important; }
 @keyframes pop { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
 .modal-close {
   position: absolute; top: 14px; right: 14px;
-  width: 34px; height: 34px;
-  border: none; border-radius: 50%;
+  width: 36px; height: 36px;
+  border: none; border-radius: 12px;
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.07);
-  color: var(--text-sub);
-  font-size: 14px;
-  transition: background 0.15s ease;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff; font-size: 15px; font-weight: 700;
+  box-shadow: 0 4px 12px rgba(91,108,255,0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: grid; place-items: center;
 }
-.modal-close:hover { background: rgba(0, 0, 0, 0.14); }
+.modal-close:hover { transform: rotate(90deg) scale(1.08); box-shadow: 0 6px 18px rgba(91,108,255,0.42); }
+.modal-box::-webkit-scrollbar { width: 6px; }
+.modal-box::-webkit-scrollbar-thumb { background: var(--accent-soft, rgba(91,108,255,.28)); border-radius: 4px; }
+.modal-box::-webkit-scrollbar-track { background: transparent; }
 
 /* 添加弹窗：手动 / 从收录中选 双标签 + 搜索建议 */
 .add-tabs { display: flex; gap: 6px; margin-bottom: 10px; }
@@ -1515,6 +1519,8 @@ body.instant .intro, body.instant .app { transition: none !important; }
 [data-theme="terminal"] .m-vpn, [data-theme="cyber"] .m-vpn, [data-theme="pixel"] .m-vpn, [data-theme="space"] .m-vpn { color: #fbbf24; background: rgba(251, 191, 36, 0.16); }
 [data-theme="terminal"] .sidebar::-webkit-scrollbar-thumb, [data-theme="cyber"] .sidebar::-webkit-scrollbar-thumb,
 [data-theme="pixel"] .sidebar::-webkit-scrollbar-thumb, [data-theme="space"] .sidebar::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); }
+[data-theme="terminal"] .modal-box::-webkit-scrollbar-thumb, [data-theme="cyber"] .modal-box::-webkit-scrollbar-thumb,
+[data-theme="pixel"] .modal-box::-webkit-scrollbar-thumb, [data-theme="space"] .modal-box::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.18); }
 [data-theme="terminal"] .switch, [data-theme="cyber"] .switch, [data-theme="pixel"] .switch, [data-theme="space"] .switch { background: rgba(255, 255, 255, 0.18); }
 [data-theme="terminal"] .s-row, [data-theme="cyber"] .s-row, [data-theme="pixel"] .s-row, [data-theme="space"] .s-row { border-bottom-color: rgba(255, 255, 255, 0.08); }
 [data-theme="terminal"] .ws-item, [data-theme="cyber"] .ws-item, [data-theme="pixel"] .ws-item, [data-theme="space"] .ws-item { background: rgba(255, 255, 255, 0.06); }
