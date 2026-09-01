@@ -1,0 +1,493 @@
+{
+  "totalRows": 1462,
+  "columns": [
+    "网站简称",
+    "网站详细名称",
+    "网站所属大类",
+    "网站详细标签",
+    "网站简介",
+    "网站详细简介",
+    "网站官网网址",
+    "是否需要加速器"
+  ],
+  "categories": {
+    "出行": 59,
+    "电商": 43,
+    "电子": 25,
+    "工具": 328,
+    "教育": 64,
+    "金融": 47,
+    "开发": 180,
+    "科技": 6,
+    "媒体": 114,
+    "汽车": 54,
+    "设计": 108,
+    "社交": 46,
+    "摄影": 13,
+    "生活服务": 27,
+    "时尚": 9,
+    "视频": 25,
+    "视频与直播": 21,
+    "文具": 10,
+    "音乐": 57,
+    "硬件": 21,
+    "游戏": 112,
+    "阅读": 5,
+    "运动": 14,
+    "运动户外": 4,
+    "政务": 16,
+    "AI": 54
+  },
+  "missingUrl": [],
+  "dupByUrl": [],
+  "dupByName": [
+    {
+      "name": "台铃",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.tailg.cn",
+          "row": 3,
+          "cat": "出行"
+        },
+        {
+          "url": "https://www.tailg.com.cn",
+          "row": 919,
+          "cat": "汽车"
+        }
+      ]
+    },
+    {
+      "name": "绿源",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.luyuan.com",
+          "row": 8,
+          "cat": "出行"
+        },
+        {
+          "url": "https://www.luyuan.com.cn",
+          "row": 920,
+          "cat": "汽车"
+        }
+      ]
+    },
+    {
+      "name": "雅迪",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.yadea.com",
+          "row": 10,
+          "cat": "出行"
+        },
+        {
+          "url": "https://www.yadea.com.cn",
+          "row": 917,
+          "cat": "汽车"
+        }
+      ]
+    },
+    {
+      "name": "百度地图",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://map.baidu.com",
+          "row": 15,
+          "cat": "出行"
+        },
+        {
+          "url": "https://ditu.baidu.com",
+          "row": 206,
+          "cat": "工具"
+        }
+      ]
+    },
+    {
+      "name": "墨迹天气",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.moji.com",
+          "row": 17,
+          "cat": "出行"
+        },
+        {
+          "url": "https://www.tianqi.com",
+          "row": 190,
+          "cat": "工具"
+        }
+      ]
+    },
+    {
+      "name": "Airbnb",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.airbnb.cn",
+          "row": 41,
+          "cat": "出行"
+        },
+        {
+          "url": "https://www.airbnb.com",
+          "row": 48,
+          "cat": "出行"
+        }
+      ]
+    },
+    {
+      "name": "三星官网",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.samsung.com.cn",
+          "row": 65,
+          "cat": "电商"
+        },
+        {
+          "url": "https://www.samsung.com/cn/",
+          "row": 115,
+          "cat": "电子"
+        }
+      ]
+    },
+    {
+      "name": "优衣库",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.uniqlo.com",
+          "row": 68,
+          "cat": "电商"
+        },
+        {
+          "url": "https://www.uniqlo.com/cn/",
+          "row": 1117,
+          "cat": "时尚"
+        }
+      ]
+    },
+    {
+      "name": "Xmind",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.xmind.cn",
+          "row": 177,
+          "cat": "工具"
+        },
+        {
+          "url": "https://www.xmind.net",
+          "row": 453,
+          "cat": "工具"
+        }
+      ]
+    },
+    {
+      "name": "剪映",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.capcut.com",
+          "row": 185,
+          "cat": "工具"
+        },
+        {
+          "url": "https://www.capcut.cn",
+          "row": 950,
+          "cat": "设计"
+        }
+      ]
+    },
+    {
+      "name": "卡巴斯基",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.kaspersky.com",
+          "row": 186,
+          "cat": "工具"
+        },
+        {
+          "url": "https://www.kaspersky.com.cn",
+          "row": 269,
+          "cat": "工具"
+        }
+      ]
+    },
+    {
+      "name": "夸克",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://m.quark.cn",
+          "row": 191,
+          "cat": "工具"
+        },
+        {
+          "url": "https://www.quark.cn",
+          "row": 1440,
+          "cat": "AI"
+        }
+      ]
+    },
+    {
+      "name": "维基百科",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.wikipedia.org",
+          "row": 210,
+          "cat": "工具"
+        },
+        {
+          "url": "https://zh.wikipedia.org",
+          "row": 509,
+          "cat": "教育"
+        }
+      ]
+    },
+    {
+      "name": "LeetCode",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://leetcode.cn",
+          "row": 473,
+          "cat": "教育"
+        },
+        {
+          "url": "https://leetcode.com",
+          "row": 672,
+          "cat": "开发"
+        }
+      ]
+    },
+    {
+      "name": "保时捷",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.porsche.com",
+          "row": 870,
+          "cat": "汽车"
+        },
+        {
+          "url": "https://www.porsche.cn",
+          "row": 916,
+          "cat": "汽车"
+        }
+      ]
+    },
+    {
+      "name": "特斯拉",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.tesla.com",
+          "row": 891,
+          "cat": "汽车"
+        },
+        {
+          "url": "https://www.tesla.cn",
+          "row": 909,
+          "cat": "汽车"
+        }
+      ]
+    },
+    {
+      "name": "Canva可画",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.canva.com",
+          "row": 925,
+          "cat": "设计"
+        },
+        {
+          "url": "https://www.canva.cn",
+          "row": 948,
+          "cat": "设计"
+        }
+      ]
+    },
+    {
+      "name": "Twitter",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://x.com",
+          "row": 1041,
+          "cat": "社交"
+        },
+        {
+          "url": "https://twitter.com",
+          "row": 1059,
+          "cat": "社交"
+        }
+      ]
+    },
+    {
+      "name": "Telegram",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://telegram.org",
+          "row": 1047,
+          "cat": "社交"
+        },
+        {
+          "url": "https://web.telegram.org",
+          "row": 1060,
+          "cat": "社交"
+        }
+      ]
+    },
+    {
+      "name": "国誉",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.kokuyo.com",
+          "row": 1171,
+          "cat": "文具"
+        },
+        {
+          "url": "https://www.kokuyo.com.cn",
+          "row": 1179,
+          "cat": "文具"
+        }
+      ]
+    },
+    {
+      "name": "得力",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.deli.com",
+          "row": 1172,
+          "cat": "文具"
+        },
+        {
+          "url": "https://www.nbdeli.com",
+          "row": 1176,
+          "cat": "文具"
+        }
+      ]
+    },
+    {
+      "name": "斑马",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.zebra.co.jp",
+          "row": 1173,
+          "cat": "文具"
+        },
+        {
+          "url": "https://www.zebrapen.com.cn",
+          "row": 1178,
+          "cat": "文具"
+        }
+      ]
+    },
+    {
+      "name": "百乐",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.pilot.co.jp",
+          "row": 1175,
+          "cat": "文具"
+        },
+        {
+          "url": "https://www.pilotpen.com.cn",
+          "row": 1177,
+          "cat": "文具"
+        }
+      ]
+    },
+    {
+      "name": "Spotify",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.spotify.com",
+          "row": 1189,
+          "cat": "音乐"
+        },
+        {
+          "url": "https://open.spotify.com",
+          "row": 1198,
+          "cat": "音乐"
+        }
+      ]
+    },
+    {
+      "name": "咪咕音乐",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://migu.cn/music",
+          "row": 1190,
+          "cat": "音乐"
+        },
+        {
+          "url": "https://music.migu.cn",
+          "row": 1197,
+          "cat": "音乐"
+        }
+      ]
+    },
+    {
+      "name": "耐克",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://www.nike.com",
+          "row": 1384,
+          "cat": "运动"
+        },
+        {
+          "url": "https://www.nike.com.cn",
+          "row": 1390,
+          "cat": "运动户外"
+        }
+      ]
+    },
+    {
+      "name": "Kimi",
+      "count": 2,
+      "items": [
+        {
+          "url": "https://kimi.moonshot.cn",
+          "row": 1417,
+          "cat": "AI"
+        },
+        {
+          "url": "https://www.kimi.com",
+          "row": 1439,
+          "cat": "AI"
+        }
+      ]
+    }
+  ],
+  "nonHttpUrls": [],
+  "suspiciousUrls": [],
+  "vpnValues": {
+    "否": 567,
+    "是": 895
+  },
+  "summary": {
+    "totalRows": 1462,
+    "categoryCount": 26,
+    "missingUrlCount": 0,
+    "dupByUrlGroups": 0,
+    "dupByUrlExtraRows": 0,
+    "dupByNameGroups": 27,
+    "nonHttpUrlCount": 0,
+    "suspiciousUrlCount": 0
+  }
+}

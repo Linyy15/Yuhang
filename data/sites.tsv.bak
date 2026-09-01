@@ -1,0 +1,2082 @@
+网站简称	网站详细名称	网站所属大类	网站详细标签	网站简介	网站详细简介	网站官网网址	是否需要加速器
+ChatGPT	ChatGPT	AI	人工智能,AI聊天,大模型	OpenAI推出的AI聊天机器人	OpenAI开发的人工智能聊天机器人，支持自然语言对话、文本创作、代码生成等多种AI能力，是目前最流行的AI助手之一。	https://chat.openai.com	是
+Claude	Claude AI	AI	人工智能,AI聊天,大模型,Anthropic	Anthropic推出的AI助手	Anthropic开发的大型语言模型AI助手，以安全对齐和长文本处理著称，支持深度推理和创意写作。	https://claude.ai	是
+Copilot	GitHub Copilot	AI	AI编程,代码助手,GitHub,智能编码	GitHub推出的AI编程助手	GitHub推出的AI编程助手，能根据代码上下文自动生成代码建议、补全代码、解释代码，大幅提升开发效率。	https://github.com/features/copilot	是
+Coze扣子	Coze扣子	AI	AI聊天,大模型,智能体,Bot平台	字节跳动推出的AI智能体平台	字节跳动推出的AI智能体(Bot)创作平台，支持快速搭建个性化AI助手，可发布到多个社交平台使用。	https://www.coze.cn	否
+DALL-E	DALL-E	AI	AI绘画,人工智能,图像生成,OpenAI	OpenAI的AI图像生成工具	OpenAI开发的AI图像生成模型，能根据文字描述生成高质量、符合语义的图像，支持图像编辑和变体生成。	https://openai.com/dall-e	是
+Deepseek	DeepSeek	AI	AI,大模型,人工智能,深度求索	深度求索推出的AI大模型	深度求索研发的大语言模型，以高效推理和开源策略著称，在代码生成和逻辑推理方面表现突出。	https://www.deepseek.com	否
+Gemini	Google Gemini	AI	人工智能,AI聊天,大模型,Google	Google推出的多模态AI大模型	Google研发的多模态大语言模型，深度集成于Google生态，支持文本、图像、代码等多种任务处理。	https://gemini.google.com	是
+Kimi	Kimi	AI	AI,大模型,人工智能,月之暗面	月之暗面推出的AI助手	月之暗面研发的智能助手，支持超长文本理解和多轮对话，在文档分析和信息提取方面能力出众。	https://kimi.moonshot.cn	否
+Leonardo AI	Leonardo AI	AI	AI绘画,人工智能,图像生成	AI图像生成与创作平台	基于AI的图像生成平台，提供多种模型和创意工具，支持角色设计、概念艺术等游戏和影视创作场景。	https://leonardo.ai	是
+Midjourney	Midjourney	AI	AI绘画,人工智能,图像生成	AI绘画生成工具	基于AI的图像生成工具，通过输入文字描述即可生成高质量的艺术图像，在AI绘画领域处于领先地位。	https://www.midjourney.com	是
+Notion AI	Notion AI	AI	AI写作,生产力,笔记,大模型	Notion内置的AI助手	Notion内置的AI写作助手，能辅助文档创作、内容总结、翻译、头脑风暴等，深度集成于Notion工作流。	https://www.notion.so/product/ai	是
+Perplexity	Perplexity AI	AI	人工智能,AI搜索,大模型	AI驱动的搜索引擎	基于大语言模型的AI搜索引擎，能实时检索网络信息并生成精准回答，提供带引用的智能问答体验。	https://www.perplexity.ai	是
+Runway	Runway ML	AI	AI视频,AI绘画,人工智能,视频生成	AI视频生成与编辑工具	领先的AI创意工具平台，提供文本生成视频、图像编辑、视频特效等AI功能，被广泛应用于影视创作。	https://runwayml.com	是
+Stable Diffusion	Stable Diffusion	AI	AI绘画,开源,图像生成	开源AI图像生成模型	开源的高性能文本到图像生成模型，支持本地部署和自定义训练，拥有庞大的社区和插件生态。	https://stability.ai	是
+华为盘古	华为盘古大模型	AI	人工智能,AI聊天,大模型,华为	华为行业大模型	华为研发的行业大模型，面向政务、金融、矿山、药物等垂直领域，提供行业专用的AI解决方案。	https://www.huawei.com/pangu	否
+天工AI	天工AI	AI	人工智能,AI聊天,大模型,昆仑万维	昆仑万维推出的AI助手	昆仑万维研发的大语言模型，提供智能对话、内容创作、代码辅助等功能，支持网页搜索和长文档理解。	https://tiangong.cn	否
+小米AI	小米AI	AI	AI,人工智能,小米,语音助手	小米旗下AI助手	小米集团推出的AI智能助手，深度融入小米生态链产品，提供语音交互、智能控制和AI创作等功能。	https://ai.mi.com	否
+文心一言	文心一言	AI	人工智能,AI助手,百度	百度推出的AI大模型	百度自主研发的新一代知识增强大语言模型，具备对话交互、内容创作、逻辑推理等能力，深度融入百度搜索等产品。	https://yiyan.baidu.com	否
+智谱AI	智谱AI	AI	人工智能,AI聊天,大模型,智谱清言	智谱清言AI助手	智谱AI研发的大语言模型，提供智能对话、文档分析、代码生成等能力，支持长文本理解和多轮对话。	https://chatglm.cn	否
+百川智能	百川智能	AI	人工智能,AI聊天,大模型	百川智能大模型	百川智能研发的大语言模型，具备强大的文本理解和生成能力，支持智能问答、内容创作等多种应用场景。	https://www.baichuan-ai.com	否
+腾讯混元	腾讯混元大模型	AI	人工智能,AI聊天,大模型,腾讯	腾讯自研的大语言模型	腾讯自研的大语言模型，深度集成于腾讯产品生态，提供智能对话、内容创作、数据分析等AI能力。	https://hunyuan.tencent.com	否
+讯飞星火	讯飞星火认知大模型	AI	人工智能,AI聊天,大模型,科大讯飞	科大讯飞推出的AI大模型	科大讯飞研发的认知大模型，具备多轮对话、文档分析、图像理解等能力，在语音交互方面具有独特优势。	https://xinghuo.xfyun.cn	否
+豆包	豆包AI	AI	人工智能,AI助手,大模型	字节跳动旗下AI助手	字节跳动推出的AI智能助手，支持对话、创作、问答等多种AI功能，融入微信、抖音等产品。	https://www.doubao.com	否
+通义千问	通义千问	AI	人工智能,AI助手,阿里	阿里推出的AI大模型	阿里巴巴通义实验室研发的大语言模型，支持多轮对话、文档解析、代码编写等功能，提供网页版和API服务。	https://tongyi.aliyun.com	否
+4399	4399小游戏	游戏	小游戏,休闲游戏,在线	在线小游戏平台	国内领先的在线小游戏平台，拥有海量Flash和HTML5小游戏，用户覆盖广泛。	https://www.4399.com	否
+7k7k	7k7k小游戏	游戏	小游戏,休闲游戏,在线	在线小游戏平台	国内知名的在线小游戏平台，提供大量免费HTML5小游戏，涵盖休闲、竞技、益智等类型。	https://www.7k7k.com	否
+Battle.net	Battle.net	游戏	游戏平台,暴雪,战网	暴雪游戏官方平台	暴雪娱乐的官方游戏平台，集成魔兽世界、守望先锋、暗黑破坏神、星际争霸等暴雪游戏的下载和联机。	https://www.blizzard.com	否
+BUFF饰品交易	网易BUFF	游戏	游戏,饰品,交易,Steam	网易旗下游戏饰品交易平台	网易推出的游戏虚拟物品交易平台，支持CS:GO、DOTA2等游戏的饰品买卖和估价。	https://buff.163.com	否
+CS2库存模拟	CS2 Inventory Simulator	游戏	CS2,库存,模拟,饰品	CS2库存模拟器	CS2游戏库存模拟器，可预览和管理CS2中的武器皮肤库存。	https://cs2inventorysimulator.com	是
+CS2贴纸编辑	CS2贴纸编辑器	游戏	CS2,贴纸,编辑,自定义	CS2贴纸编辑工具	CS2游戏贴纸编辑和预览工具，可自定义贴纸样式和位置。		是
+CSInspect检视器	CSInspect	游戏	CS2,饰品,检视,3D	CS2饰品3D检视器	CS2饰品3D检视工具，可在浏览器中近距离查看武器皮肤的外观和磨损。	https://csinspect.com	否
+EA平台	EA	游戏	游戏,EA,Origin,电竞	EA游戏数字发行平台	美国艺电公司旗下游戏数字发行平台，拥有FIFA、战地、极品飞车等知名游戏系列。	https://www.ea.com	是
+EA平台(旧)	Origin	游戏	游戏,Origin,EA,旧版	EA旧版游戏平台Origin	EA公司旧版游戏数字发行平台Origin，已被EA App取代，但仍可访问部分功能。	https://www.ea.com/origin	是
+Epic Games	Epic Games Store	游戏	游戏商店,PC游戏,免费游戏	Epic游戏商店平台	Epic Games推出的游戏数字发行平台，以每周免费游戏和开发者分成比例优势吸引用户，拥有Fortnite等知名游戏。	https://store.epicgames.com	是
+Game Mini	Game Mini	游戏	小游戏,休闲游戏,在线游戏	在线小游戏平台	提供各类免费在线小游戏，涵盖休闲、益智、动作等多种类型，即开即玩无需下载。	https://www.gamemini.net	否
+GOG	GOG Games	游戏	游戏平台,GOG,GOG Galaxy	CD Projekt旗下的无DRM游戏平台	CD Projekt运营的无DRM游戏平台，主打经典游戏和GOG Galaxy客户端，部分游戏支持离线安装。	https://www.gog.com	是
+GTA官网	GTA	游戏	游戏,GTA,Rockstar,开放世界	侠盗猎车手系列官网	Rockstar Games旗下GTA系列游戏的官方网站，提供GTA V、GTA Online等最新资讯和更新。	https://www.rockstargames.com/gta-v	否
+itch.io	itch.io	游戏	游戏平台,独立游戏,数字发行	独立游戏创作者社区平台	面向独立游戏开发者的数字发行平台，拥有大量创意实验性独立游戏，支持创作者自由定价或免费分享。	https://itch.io	是
+Lilith Games	莉莉丝游戏	游戏	游戏,莉莉丝,手游,国产	莉莉丝游戏官方	中国知名游戏开发商，以刀塔传奇、万国觉醒、剑与远征等手游闻名。	https://www.lilithgames.com	否
+LKs推荐站	LKs网站推荐合集	游戏	导航,推荐,合集,网站	优质网站推荐合集	个人整理的优质网站推荐合集，涵盖工具、资源、娱乐等多个分类。		否
+MC中文维基	中文Minecraft Wiki	游戏	Minecraft,Wiki,中文,百科	Minecraft中文维基	Minecraft游戏的中文维基百科，由社区维护，收录完整的游戏数据、合成表和攻略。	https://minecraft.wiki	否
+MC百科	MC百科	游戏	Minecraft,百科,模组,攻略	Minecraft综合百科	国内领先的Minecraft综合百科网站，提供模组、数据包、地图、服务器等全方位资源。	https://www.mcmod.cn	否
+MC皮肤壁纸	mc壁纸	游戏	Minecraft,皮肤,壁纸,素材	Minecraft皮肤和壁纸资源	提供Minecraft游戏皮肤、壁纸和素材下载的资源站。		否
+MC种子地图	种子地图 - Minecraft App	游戏	Minecraft,种子,地图,生成	Minecraft种子地图生成器	Minecraft世界种子地图查看器，输入种子即可预览世界的地形、村庄和宝藏位置。	https://www.minecraft-seeds.net	否
+MoeUB服列表	服务器列表 - MoeUB	游戏	Minecraft,服务器,列表	Minecraft服务器列表	Minecraft游戏服务器列表和推荐平台，帮助玩家发现和连接优质服务器。	https://mooub.github.io	是
+MoeUB饰品预览	试试换饰品吧 - MoeUB	游戏	Steam,饰品,预览,CS2	Steam饰品预览工具	Steam游戏饰品预览和搭配工具，可在线预览CS2等游戏的饰品外观效果。	https://mooub.github.io	是
+PlayStation	PlayStation	游戏	游戏平台,PS5,索尼游戏主机	索尼游戏主机及数字商店	索尼PlayStation游戏主机官方平台，提供PS5/PS4游戏数字商店、订阅服务PS Plus及在线多人游戏。	https://www.playstation.com	是
+Riot Games	Riot Games	游戏	游戏平台,英雄联盟,瓦罗兰特	拳头游戏官方平台	拳头游戏(Riot Games)官方平台，运营英雄联盟、瓦罗兰特、金铲铲之战等多款热门游戏。	https://www.riotgames.com	是
+Steam	Steam	游戏	游戏商店,PC游戏,数字发行	全球最大PC游戏数字发行平台	Valve推出的全球领先PC游戏数字发行平台，拥有海量游戏库、创意工坊和社交功能，是PC游戏玩家的首选平台。	https://store.steampowered.com	是
+SteamDB	Steam DB	游戏	Steam,数据库,价格,社区	Steam数据库与价格追踪	第三方Steam数据库网站，提供游戏价格历史、玩家统计、服务器状态等详细信息。	https://steamdb.info	是
+SteamPY交易	SteamPY	游戏	Steam,交易,饰品,Python	Steam社区市场辅助工具	基于Steam社区市场的第三方交易辅助工具，提供饰品比价、自动报价等功能。	https://steamspy.com	是
+Steam免费包	Free Packages - SteamDB	游戏	Steam,免费,游戏,包	Steam免费游戏包合集	SteamDB收录的Steam免费游戏包列表，帮助用户找到限时免费和永久免费的游戏。	https://steamdb.info	是
+Steam卡牌交易	Steam Card Exchange	游戏	Steam,卡牌,交易,徽章	Steam集换式卡牌的第三方交易社区	玩家可在此买卖和交易Steam卡牌及徽章。	https://steamcardexchange.net	是
+Steam库存查看	Steam社区-屿雀物品库存	游戏	Steam,库存,查看,社区	Steam物品库存查看	通过Steam社区查看和管理游戏物品库存的第三方工具。	https://steamcommunity.com	是
+Switch	Nintendo Switch	游戏	游戏主机,任天堂,掌机	任天堂混合游戏主机	任天堂推出的混合式游戏主机，可家用可掌机，拥有马里奥、塞尔达等顶级第一方游戏。	https://www.nintendo.com/switch	否
+Xbox	Xbox	游戏	游戏主机,微软,游戏	微软游戏主机品牌	微软推出的游戏主机品牌，拥有Game Pass游戏订阅服务和Xbox生态。	https://www.xbox.com	否
+XGP订阅	Xbox Games Pass Ultimate	游戏	游戏,XGP,订阅,微软	微软Xbox游戏通行证终极版	微软的游戏订阅服务，包含数百款游戏、EA Play会员和Xbox云游戏，支持主机和PC。	https://www.xbox.com/xbox-game-pass	否
+原神官网	原神	游戏	游戏,原神,Genshin,米哈游	米哈游开放世界RPG游戏	米哈游开发的开放世界动作RPG游戏，以提瓦特大陆为舞台，凭借精美画面和自由探索玩法风靡全球。	https://ys.mihoyo.com	否
+哈迪斯	Hades	游戏	独立游戏,Roguelike,动作,Supergiant	Supergiant Games的Roguelike动作神作	Supergiant Games开发的Roguelike动作游戏，以希腊神话为背景，凭借流畅的战斗、出色的叙事和精美的手绘美术广受好评。	https://www.supergiantgames.com/games/hades	否
+嘉立创	嘉立创	游戏	硬件,PCB,电子,制造	PCB快板打样制造平台	国内领先的PCB快速制造平台，提供PCB打样、SMT贴片、元器件采购等一站式硬件制造服务。	https://www.jlc.com	否
+崩坏:星穹铁道	崩坏：星穹铁道	游戏	二次元,回合制RPG,米哈游,开放世界	米哈游星际题材回合制RPG	米哈游开发的开放世界回合制角色扮演游戏，以星际旅行为主题，拥有精美的二次元画风和丰富的剧情。	https://sr.mihoyo.com	否
+异环官网	异环	游戏	游戏,异环,开放世界,米哈游	米哈游新一代开放世界游戏	米哈游开发的新一代开放世界游戏，以都市幻想为背景，结合高自由度探索和战斗系统。	https://www.hoyolab.com	否
+怪物猎人:世界	怪物猎人：世界	游戏	单机游戏,动作RPG,卡普空,狩猎	卡普空经典狩猎动作游戏	卡普空开发的动作角色扮演游戏，以狩猎巨型怪物为主题，支持多人联机合作，拥有深度的装备养成系统。	https://monsterhunter.com	否
+我的世界官网	Minecraft	游戏	游戏,Minecraft,沙盒,创造	Minecraft官方网站	Minecraft官方网站，提供游戏购买、资讯、模组和社区资源。	https://www.minecraft.net	否
+斗鱼	斗鱼直播	游戏	游戏直播,弹幕,电竞直播	国内知名游戏直播平台	国内领先的游戏直播平台，涵盖电竞比赛、游戏直播、娱乐直播等内容，拥有大量游戏主播和电竞赛事版权。	https://www.douyu.com	否
+明日方舟	明日方舟	游戏	二次元,策略塔防,米哈游,鹰角网络	鹰角网络策略塔防游戏	鹰角网络开发的二次元策略塔防游戏，以末世科幻为背景，拥有独特的艺术风格和深度的策略玩法。	https://arknights.com	否
+星露谷物语	Stardew Valley	游戏	独立游戏,模拟经营,像素,农场	经典像素农场模拟游戏	ConcernedApe开发的独立农场模拟游戏，玩家经营祖父遗留的农场，种植、养殖、钓鱼、探索矿洞，体验悠闲的乡村生活。	https://www.stardewvalley.net	否
+正点原子	正点原子	游戏	硬件,嵌入式,开发板,教育	嵌入式开发板与教程平台	专注嵌入式开发教育和硬件平台的品牌，提供STM32、FPGA等开发板和配套教程资源。	https://www.openedv.com	否
+泰拉瑞亚	Terraria	游戏	独立游戏,沙盒,动作冒险,像素	经典2D沙盒冒险游戏	Re-Logic开发的2D沙盒冒险游戏，融合了探索、建造、战斗、挖矿等多种元素，拥有极高的自由度和丰富的内容。	https://terraria.org	否
+王者荣耀	王者荣耀官网	游戏	游戏,MOBA,腾讯,电竞	腾讯MOBA手游	腾讯天美工作室开发的MOBA手游，是中国最流行的手机竞技游戏，拥有庞大的玩家群体。	https://pvp.qq.com	否
+空洞骑士	Hollow Knight	游戏	独立游戏,银河恶魔城,动作,银石工作室	银石工作室的2D银河恶魔城经典	Team Cherry开发的2D动作冒险游戏，以虫族王国为背景，拥有庞大的地图、流畅的操作和极具挑战性的Boss战。	https://www.hollowknight.com	否
+米哈游	米哈游官网	游戏	游戏,米哈游,原神,二次元	米哈游游戏公司	中国知名游戏开发商，以原神、崩坏：星穹铁道、未定事件簿等作品闻名全球。	https://www.mihoyo.com	否
+育碧平台	育碧	游戏	游戏,育碧,Ubisoft,刺客信条	育碧游戏官方平台	法国知名游戏开发商和发行商，以刺客信条、孤岛惊魂、彩虹六号等系列游戏闻名。	https://www.ubisoft.com	是
+艾尔登法环	艾尔登法环	游戏	单机游戏,动作RPG,开放世界,魂系	FromSoftware开放世界动作RPG	FromSoftware开发、万代南梦宫发行的开放世界动作RPG，宫崎英高与乔治·R·R·马丁联合打造，获多项年度游戏大奖。	https://www.eldenring.com	否
+英雄联盟	英雄联盟官网	游戏	游戏,LOL,电竞,腾讯	英雄联盟官方网站	Riot Games开发的MOBA电竞游戏，全球最受欢迎的竞技游戏之一，由腾讯代理运营。	https://lol.qq.com	否
+赛博朋克2077	赛博朋克2077	游戏	单机游戏,动作RPG,开放世界,CD Projekt	CD Projekt开放世界RPG	CD Projekt Red开发的开放世界动作RPG，以夜之城为背景，玩家扮演义体佣兵V，体验丰富的剧情和玩法。	https://www.cyberpunk.net	否
+风灵修改器	枫林月影	游戏	游戏,修改器,FlyingWin	游戏修改器制作工具	提供各类PC游戏修改器的平台，支持数值修改、无限生命等作弊功能，方便玩家自定义游戏体验。	https://www.flyingwin.cn	是
+饥荒	Don't Starve	游戏	独立游戏,生存,沙盒,像素	Klei的硬核生存游戏	Klei Entertainment开发的硬核生存沙盒游戏，以独特的暗黑手绘美术风格著称，玩家需在荒野中采集、建造、生存。	https://dontstarve.com	否
+黑神话:悟空	黑神话：悟空	游戏	单机游戏,动作RPG,国产游戏,游戏科学	国产3A动作RPG大作	游戏科学开发的国产3A级动作角色扮演游戏，以西游记为题材，凭借出色的画面和战斗系统广受好评。	https://www.heishenhua.com	否
+AcFun	AcFun弹幕视频网	视频	弹幕,动画,游戏,视频	弹幕视频网站	国内较早的弹幕视频网站之一，以动画、游戏、番剧等内容为主，社区氛围浓厚。	https://www.acfun.cn	否
+Amazon Prime Video	Amazon Prime Video	视频	流媒体,影视剧,亚马逊,原创	亚马逊流媒体视频服务	亚马逊旗下的全球流媒体视频平台，提供海量影视剧、纪录片和Prime原创内容，支持多设备观看。	https://www.primevideo.com	是
+Disney+	Disney+	视频	流媒体,影视,迪士尼,漫威	迪士尼官方流媒体平台	迪士尼推出的官方流媒体平台，汇聚漫威、星战、皮克斯、国家地理等品牌的全系内容。	https://www.disneyplus.com	是
+HBO Max	HBO Max	视频	流媒体,影视剧,HBO,原创	华纳旗下高端流媒体平台	华纳兄弟探索旗下高端流媒体平台，汇聚HBO经典剧集、华纳电影、DC超级英雄等优质原创内容。	https://www.hbomax.com	是
+Netflix	Netflix	视频	流媒体,影视,海外,原创	全球领先流媒体平台	全球领先的流媒体播放平台，以原创剧集和电影闻名，拥有怪奇物语、王冠等现象级作品。	https://www.netflix.com	是
+PPTV	PPTV聚力	视频	网络视频,体育,电视剧	PPTV聚力网络视频平台	PPTV聚力旗下的网络视频平台，以体育赛事直播和影视剧点播为特色，曾拥有多项顶级体育赛事版权。	https://www.pptv.com	否
+Twitch	Twitch	视频	游戏直播,直播,海外	全球游戏直播平台	全球领先的游戏直播平台，隶属于Amazon，以游戏直播为主，同时涵盖音乐、生活等聊天频道。	https://www.twitch.tv	是
+YouTube	YouTube	视频	视频,全球,短视频,直播	全球最大视频分享平台	全球领先的视频分享平台，用户可上传、观看、评论和分享视频，涵盖音乐、教育、娱乐等几乎所有内容领域。	https://www.youtube.com	是
+YouTube Premium	YouTube Premium	视频	短视频,音乐,无广告,Google	YouTube去广告订阅服务	YouTube推出的订阅服务，提供无广告观看、后台播放、离线下载等特权，部分区域包含YouTube Music。	https://www.youtube.com/premium	是
+优酷	优酷	视频	视频,影视,综艺,阿里	优酷在线视频平台	阿里巴巴旗下视频平台，拥有大量正版影视和综艺内容，支持高清播放和多元内容创作。	https://www.youku.com	否
+光厂	光厂素材	视频	视频素材,模板,AE模板,设计素材	创意视频素材交易平台	专注为视频创作者提供高质量视频素材、AE模板、特效等资源的交易平台，助力高效视频制作。	https://www.vjshi.com	否
+哔哩哔哩	哔哩哔哩(B站)	视频	弹幕视频,二次元,学习,综艺	国内领先的弹幕视频网站	中国最具影响力的年轻人文化社区和视频平台，涵盖动漫、游戏、知识、生活、音乐等多元内容，以弹幕互动为特色。	https://www.bilibili.com	否
+哔哩哔哩漫画	哔哩哔哩漫画	视频	漫画,ACG,阅读,哔哩哔哩	哔哩哔哩旗下漫画平台	哔哩哔哩旗下专业漫画阅读平台，提供大量正版中日漫画作品，与B站视频内容形成生态联动。	https://manga.bilibili.com	否
+央视网	央视网	视频	新闻,视频,央视,官方	中央广播电视总台官网	中央广播电视总台旗下网络视听平台，提供新闻、综艺、体育、纪录片等全品类视频内容。	https://www.cctv.com	否
+微博视频	微博	视频	社交媒体,短视频,热点,资讯	微博平台的视频内容	新浪微博平台内的视频内容板块，汇聚热点事件视频、明星动态、自媒体短视频等，与微博社交生态深度融合。	https://weibo.com	否
+快手	快手	视频	短视频,直播,社交	短视频社交平台	国内领先的短视频社交平台，以普惠算法著称，覆盖生活记录、直播、电商等多元场景，拥有海量活跃用户。	https://www.kuaishou.com	否
+抖音网页版	抖音	视频	短视频,直播,社交媒体,字节跳动	字节跳动旗下短视频平台	字节跳动推出的短视频分享平台，以15秒至60秒短视频为主，融合直播、电商、社交等功能，用户规模庞大。	https://www.douyin.com	是
+搜狐视频	搜狐视频	视频	网络视频,电视剧,综艺,搜狐	搜狐旗下的网络视频平台	搜狐公司旗下的综合视频平台，以自制剧、综艺和海外影视剧为特色，提供高清视频点播服务。	https://tv.sohu.com	否
+新片场	新片场	视频	影视创作,短片,视频素材,导演	影视创作者社区与作品展示平台	面向影视创作者的视频社区，汇集优质短片、广告、MV等作品，提供创作交流和素材资源服务。	https://www.xinpianchang.com	否
+梨视频	梨视频	视频	短视频,新闻,时事,自媒体	以短视频为载体的新闻媒体	以短视频为主要载体的新闻媒体平台，聚焦国内外时事热点、社会新闻和独家报道，以快速直观的短视频形式呈现。	https://www.pearvideo.com	否
+爱奇艺	爱奇艺	视频	视频,影视,综艺,原创	爱奇艺在线视频平台	国内领先的综合视频平台，以原创内容和技术创新为驱动，涵盖电影、电视剧、综艺、动漫等丰富内容。	https://www.iqiyi.com	否
+腾讯视频	腾讯视频	视频	视频,影视,综艺,直播	腾讯旗下在线视频平台	腾讯旗下大型在线视频平台，拥有海量正版影视、综艺、动漫和体育内容，支持高清流畅播放。	https://v.qq.com	否
+芒果TV	芒果TV	视频	视频,综艺,湖南广电	湖南广电旗下视频平台	湖南广播电视台旗下视频平台，以自制综艺闻名，拥有乘风破浪等现象级节目。	https://www.mgtv.com	否
+茶杯狐影视	茶杯狐	视频	影视搜索,电影,剧集	影视资源搜索引擎	聚合全网影视资源的搜索平台，可快速查找电影、电视剧的在线观看和下载资源。	https://www.cupfox.app	否
+虎牙直播	虎牙直播	视频	游戏直播,直播,电竞	游戏直播直播平台	国内领先的游戏直播平台，聚焦电竞直播、娱乐直播和赛事转播，拥有大量头部主播和独家赛事版权。	https://www.huya.com	否
+西瓜视频	西瓜视频	视频	短视频,中视频,字节跳动,资讯	字节跳动中视频平台	字节跳动旗下的中视频平台，提供长短视频结合的娱乐、资讯、知识类视频内容，支持横屏观看体验。	https://www.ixigua.com	否
+Adobe Stock	Adobe Stock	设计	素材库,图片,视频,模板,Adobe	Adobe官方素材资源库	Adobe官方提供的创意素材平台，与Creative Cloud应用深度集成，提供高质量图片、矢量图、视频、模板等资源。	https://stock.adobe.com	是
+Adobe XD	Adobe XD	设计	UI设计,原型设计,Adobe,Figma替代	Adobe推出的UI/UX设计工具	Adobe推出的用户界面和用户体验设计工具，支持线框图、原型设计和交互设计，与Adobe生态深度集成。	https://www.adobe.com/products/xd.html	是
+Behance	Behance	设计	设计,作品集,创意,全球	Adobe旗下创意作品集平台	Adobe旗下的全球创意作品集平台，设计师可展示完整项目案例，获取灵感和职业机会。	https://www.behance.net	否
+Canva可画	Canva可画	设计	设计,模板,海报,在线	在线图形设计平台	全球流行的在线图形设计工具，提供海量模板和素材，让非专业用户也能轻松制作精美设计。	https://www.canva.com	否
+Dribbble	Dribbble	设计	设计,UI,灵感,全球	全球设计师社区	全球领先的设计师社区平台，设计师分享作品片段，获取灵感和工作机会。	https://dribbble.com	否
+Figma	Figma	设计	设计,UI,原型,协作	在线UI协作设计工具	基于浏览器的UI设计工具，支持多人实时协作设计，是产品设计领域的行业标准工具之一。	https://www.figma.com	是
+Flaticon	Flaticon	设计	图标,矢量图标,素材,Flaticon	全球最大的矢量图标库	全球最大的矢量图标搜索和下载平台，提供超过600万个图标，支持多种格式和颜色自定义。	https://www.flaticon.com	是
+Fotor	Fotor	设计	在线PS,图片编辑,设计工具	在线图片编辑与设计工具	功能丰富的在线图片编辑工具，提供照片修饰、设计排版、AI图像生成等功能，适合快速完成设计任务。	https://www.fotor.com	否
+Framer	Framer	设计	UI设计,原型设计,交互设计,Web	支持代码的交互式原型设计工具	新一代交互式原型设计工具，支持在Framer中直接编写代码实现复杂交互，可一键发布为可访问的网页。	https://www.framer.com	是
+Freepik	Freepik	设计	矢量素材,PSD,图标,素材库	海量创意素材下载平台	提供海量矢量图、PSD文件、图标、照片和视频素材的创意平台，拥有庞大的免费和付费素材库。	https://www.freepik.com	是
+Iconfont	阿里巴巴矢量图标库	设计	图标,矢量图标,阿里巴巴,设计资源	阿里巴巴矢量图标管理平台	阿里巴巴旗下的矢量图标管理平台，提供海量可编辑矢量图标，支持SVG、PNG等多种格式，设计师常用资源。	https://www.iconfont.cn	否
+Pexels	Pexels	设计	免费图片,摄影素材,视频素材	免费摄影图片和视频素材库	提供高质量免费摄影图片和短视频素材的网站，支持按颜色和类别搜索，适合各类设计项目使用。	https://www.pexels.com	是
+Pixabay	Pixabay	设计	免费素材,图片,矢量,视频,音乐	免费创意素材共享平台	提供超过400万免费创意素材的平台，涵盖图片、矢量图、插画、视频、音乐和音效，支持CC0协议免费使用。	https://pixabay.com	是
+Sketch	Sketch	设计	UI设计,界面设计,Mac,原型设计	Mac平台专业UI设计工具	专为Mac设计的界面设计工具，在UI/UX设计领域拥有广泛用户基础，拥有强大的插件生态和社区资源。	https://www.sketch.com	是
+Unsplash	Unsplash	设计	免费图片,摄影,高清壁纸,素材	高质量免费摄影图片库	提供高分辨率免费摄影图片的网站，所有图片均可免费使用，是设计师和创作者常用的素材来源。	https://unsplash.com	是
+Webflow	Webflow	设计	无代码,网站设计,前端,建站	无代码网站设计与开发平台	面向设计师的无代码网站开发平台，通过可视化界面设计并直接生成高质量的HTML/CSS/JS代码，无需编程即可建站。	https://webflow.com	是
+创客贴	创客贴	设计	在线设计,海报设计,模板,小白友好	在线平面设计工具	面向普通用户的在线平面设计工具，提供海量海报、PPT、社交媒体图片等模板，拖拽式操作简单易上手。	https://www.chuangkit.com	否
+图怪兽	图怪兽	设计	在线设计,海报,电商设计,模板	智能在线设计平台	智能在线设计平台，提供海报、Banner、公众号配图等丰富模板，支持智能抠图和批量设计，适合电商和营销场景。	https://818ps.com	否
+稿定设计	稿定设计	设计	在线设计,电商设计,海报,营销	电商营销设计工具	专注电商和营销场景的在线设计工具，提供商品主图、详情页、海报等模板，支持AI辅助设计和团队协作。	https://www.gaoding.com	否
+站酷	站酷	设计	设计,创意,作品集,社区	中国设计师创意社区	中国领先的设计师创意社区，汇聚平面、UI、插画、摄影等各领域设计师的作品和灵感。	https://www.zcool.com.cn	否
+花瓣网	花瓣网	设计	设计,灵感,收集,素材	设计师灵感收集平台	设计师的灵感收集与分享平台，用户可以创建花瓣画板，收集和设计相关的图片灵感。	https://huaban.com	否
+视觉中国	视觉中国	设计	图片库,版权图片,摄影,素材	中国领先的视觉内容平台	中国领先的版权视觉内容平台，提供摄影图片、矢量图、视频、音乐等创意素材，拥有庞大的版权图片库。	https://www.vcg.com	否
+Coursera	Coursera	教育	教育,MOOC,全球,大学	全球在线课程平台	全球领先的在线课程平台，与斯坦福、耶鲁等顶尖大学和企业合作，提供在线课程和学位项目。	https://www.coursera.org	是
+CSDN	CSDN	教育	技术社区,编程,开发,IT资讯	中国领先的IT技术社区	中国领先的IT技术社区和开发者平台，提供编程教程、技术博客、问答求助、下载资源等全方位开发者服务。	https://www.csdn.net	否
+edX	edX	教育	MOOC,名校课程,在线学习,哈佛	哈佛和MIT创办的在线教育平台	由哈佛大学和麻省理工学院创办的非营利在线教育平台，提供全球顶尖大学的在线课程和微硕士项目。	https://www.edx.org	是
+Udemy	Udemy	教育	在线课程,技能学习,编程,设计	全球在线课程市场平台	全球领先的在线课程平台，涵盖编程、设计、营销、商业等数千门课程，由行业专家授课，支持终身访问。	https://www.udemy.com	是
+中国大学MOOC	中国大学MOOC	教育	教育,MOOC,大学,课程	中国大学在线课程平台	中国领先的在线课程平台，汇集北大、清华等名校的公开课和系统课程。	https://www.icourse163.org	否
+博客园	博客园	教育	技术博客,编程,开发者社区	中国老牌技术博客社区	中国老牌的技术博客和社区平台，聚集了大量程序员分享技术经验、编程心得和行业洞察，内容专业且深入。	https://www.cnblogs.com	否
+可汗学院	Khan Academy	教育	免费教育,在线课程,数学,科学	全球知名的免费教育平台	由萨尔·可汗创立的非营利教育组织，提供涵盖数学、科学、编程、经济等领域的免费在线课程和练习。	https://www.khanacademy.org	是
+喜马拉雅	喜马拉雅	教育	音频平台,有声书,播客,音乐	中国领先的音频分享平台	中国领先的音频分享平台，提供有声书、播客、音乐、教育等丰富音频内容，用户规模庞大，覆盖通勤、睡前等场景。	https://www.ximalaya.com	否
+学堂在线	学堂在线	教育	教育,MOOC,清华,课程	清华大学发起的在线教育平台	清华大学发起的在线教育平台，提供清华及国内外名校的在线课程和学位项目。	https://www.xuetangx.com	否
+廖雪峰	廖雪峰官方网站	教育	编程教程,Python,Java,Git	知名编程教程个人网站	程序员廖雪峰的个人教程网站，以Python、Java、Git等编程教程最为知名，内容深入浅出，深受中文编程学习者喜爱。	https://www.liaoxuefeng.com	否
+得到	得到APP	教育	知识付费,在线课程,通识教育,听书	罗振宇推出的知识服务平台	罗振宇创立的知识服务平台，提供通识教育、商业思维、人文历史等在线课程和电子书，倡导终身学习。	https://www.dedao.cn	否
+慕课网	慕课网	教育	教育,编程,开发,实战	程序员实战技能学习平台	专注程序员实战技能学习的平台，提供前端、后端、AI、移动端等方向的实战课程。	https://www.imooc.com	否
+极客时间	极客时间	教育	技术课程,编程,架构,深度学习	极客邦科技旗下的技术学习平台	极客邦科技推出的专业技术学习平台，提供架构设计、编程语言、算法、大数据等深度技术课程，由一线专家授课。	https://time.geekbang.org	否
+网易云课堂	网易云课堂	教育	职业技能,在线培训,编程,设计	网易职业技能学习平台	网易推出的职业技能学习平台，提供编程开发、设计创作、职场提升等实用课程，注重实战操作。	https://study.163.com	否
+网易公开课	网易公开课	教育	公开课,MOOC,翻译字幕,学习	网易推出的公开课平台	网易推出的公开课学习平台，汇集全球名校公开课、TED演讲和纪录片，提供机器翻译中文字幕服务。	https://open.163.com	否
+腾讯课堂	腾讯课堂	教育	在线学习,职业技能,直播课堂	腾讯在线教育平台	腾讯推出的在线教育平台，汇集编程、设计、语言、职业认证等海量课程，支持直播和录播两种教学模式。	https://ke.qq.com	否
+Apple Music	Apple Music	音乐	流媒体音乐,音乐订阅,苹果	Apple推出的流媒体音乐服务	Apple推出的全球流媒体音乐服务，提供数千万首歌曲在线收听，以无损音频和空间音频为特色，深度集成于Apple生态。	https://music.apple.com	是
+Bandcamp	Bandcamp	音乐	独立音乐,音乐下载,艺术家直售,小众	独立音乐人直售音乐平台	专注于独立音乐人的音乐发行和直售平台，音乐人可直接向粉丝售卖音乐和周边，平台对创作者友好。	https://bandcamp.com	是
+Deezer	Deezer	音乐	流媒体音乐,音乐推荐,无损音质	法国流媒体音乐平台	法国领先的流媒体音乐平台，提供数千万首歌曲，以Flow推荐算法和HiFi无损音质为特色，全球多地区可用。	https://www.deezer.com	是
+JOOX	JOOX	音乐	流媒体音乐,华语音乐,东南亚	腾讯控股的音乐平台	腾讯控股的音乐流媒体平台，主要覆盖东南亚和华语市场，提供正版音乐收听和社交功能。	https://www.joox.com	是
+KKBOX	KKBOX	音乐	流媒体音乐,华语音乐,台湾地区	华语音乐流媒体平台	总部位于台北的音乐流媒体平台，以华语音乐曲库为特色，覆盖台湾、日本、东南亚等多个地区。	https://www.kkbox.com	是
+Last.fm	Last.fm	音乐	音乐追踪,音乐推荐,音乐统计	全球音乐追踪与推荐平台	全球知名的音乐追踪和推荐平台，记录用户听歌习惯并生成音乐报告，基于音乐指纹技术推荐相似音乐和艺人。	https://www.last.fm	是
+QQ音乐	QQ音乐	音乐	音乐,流媒体,腾讯,华语	腾讯旗下音乐平台	腾讯旗下大型音乐流媒体平台，拥有海量正版音乐库和高品质音效，支持在线收听和下载。	https://y.qq.com	否
+SoundCloud	SoundCloud	音乐	音乐分享,独立音乐,音频上传,DJ	全球音乐分享与创作平台	全球知名的音乐分享和创作平台，支持音乐人上传、分享原创音乐，是独立音乐人和DJ展示作品的重要社区。	https://soundcloud.com	是
+Spotify	Spotify	音乐	音乐,流媒体,海外,播客	全球领先音乐流媒体	全球领先的音乐流媒体平台，拥有海量歌曲和播客内容，以个性化推荐算法著称。	https://www.spotify.com	是
+咪咕音乐	咪咕音乐	音乐	流媒体音乐,中国移动,音乐播放器	中国移动旗下音乐平台	中国移动推出的音乐流媒体平台，拥有大量正版音乐曲库，支持高品质音质收听，与移动套餐深度绑定。	https://migu.cn/music	否
+汽水音乐	汽水音乐	音乐	流媒体音乐,短视频,字节跳动,音乐推荐	字节跳动推出的音乐流媒体	字节跳动推出的音乐流媒体应用，依托算法推荐技术精准推送音乐，与抖音短视频深度联动，发现好音乐。	https://qishui.douyin.com	否
+网易云音乐	网易云音乐	音乐	音乐,流媒体,网易,社区	网易音乐社交平台	网易推出的音乐流媒体平台，以个性化推荐和评论区社区文化著称，拥有独特的音乐社交体验。	https://music.163.com	否
+豆瓣FM	豆瓣FM	音乐	音乐推荐,电台,音乐发现,豆瓣	豆瓣推出的音乐电台	豆瓣推出的个性化音乐电台服务，基于用户音乐品味进行智能推荐，提供独特的音乐发现体验。	https://douban.com/fm	否
+酷我音乐	酷我音乐	音乐	音乐,流媒体,腾讯,听书	腾讯旗下音乐平台	腾讯音乐娱乐集团旗下音乐平台，以高品质音乐和听书功能为特色，支持无损音质播放。	https://www.kuwo.cn	否
+酷狗音乐	酷狗音乐	音乐	音乐,流媒体,腾讯,MP3	腾讯旗下音乐平台	腾讯音乐娱乐集团旗下的音乐平台，以MP3下载和在线听歌起家，拥有庞大的曲库。	https://www.kugou.com	否
+123云盘	123云盘	工具	云存储,网盘,文件共享	免费高速云盘	提供大空间免费云存储服务的网盘，支持高速上传下载和文件在线分享，无需登录即可下载。	https://www.123pan.com	否
+163邮箱	163邮箱	工具	邮箱,邮件,网易	网易163免费邮箱	网易推出的经典免费邮箱服务，是中国最早和最知名的邮箱产品之一。	https://mail.163.com	否
+360	360安全卫士	工具	安全软件,杀毒,系统优化	一站式安全平台	奇虎360推出的安全卫士，提供病毒查杀、漏洞修复、电脑清理等全方位安全防护。	https://www.360.cn	否
+7-ZIP	7-ZIP压缩工具	工具	压缩解压,开源,文件管理	免费开源压缩软件	免费开源的高压缩比文件压缩与解压工具，支持7z、ZIP等多种格式，轻量高效。	https://www.7-zip.org	否
+After Effects	Adobe After Effects	工具	特效合成,动画,视觉特效	影视特效合成软件	Adobe出品的视觉特效与动态图形合成软件，广泛用于片头动画、影视特效和Motion Graphics。	https://www.adobe.com/products/after-effects	是
+Bandzip	Bandzip压缩软件	工具	压缩解压,文件管理	快速压缩解压工具	Bandisoft出品的轻量级压缩软件，支持多种压缩格式，具备快速解压和自动分类功能。	https://www.bandisoft.com/bandizip	否
+BigJPG放大	BigJPG	工具	图片放大,AI,超分辨率	AI图片放大增强工具	基于AI算法的图片放大和增强工具，可将低分辨率图片智能放大至高清，同时保持细节清晰。	https://bigjpg.com	否
+C/C++	C/C++开发环境	工具	编程语言,开发,系统编程	系统级编程语言	C和C++是底层系统编程和性能敏感应用的核心语言，广泛用于操作系统、游戏引擎和嵌入式开发。	https://visualstudio.microsoft.com/vs/features/cplusplus/	是
+Carbon代码图	Carbon	工具	代码,截图,分享,开发	生成精美代码截图	在线代码截图生成工具，支持多种主题和语言高亮，可生成美观的代码图片用于分享和展示。	https://carbon.now.sh	是
+Chrome浏览器	Google Chrome	工具	浏览器,谷歌,Chromium	谷歌Chrome浏览器	谷歌开发的全球最流行网页浏览器，以极速渲染、丰富扩展生态和与谷歌服务深度整合闻名。	https://www.google.com/chrome	否
+Convertio转换	Convertio	工具	文件转换,格式转换,在线	万能文件格式转换器	在线文件格式转换工具，支持超过300种文件格式之间的互相转换，包括文档、图片、音频、视频等。	https://convertio.co	是
+DevDocs文档	DevDocs	工具	文档,API,开发,离线	开发者文档聚合平台	聚合主流编程语言和框架官方文档的在线平台，支持离线访问和快速搜索，开发者必备。	https://devdocs.io	是
+Discord	Discord	工具	语音聊天,社区,游戏	面向社区的文字语音聊天工具	面向游戏玩家的即时通讯平台，提供语音、视频和文字聊天功能，被各类兴趣社区广泛使用。	https://discord.com	是
+Docker Hub	Docker Hub	工具	开发,Docker,容器,镜像	Docker镜像仓库	Docker官方的容器镜像仓库，提供海量开源和官方的Docker镜像供下载和分享。	https://hub.docker.com	否
+Edge新标签页	新建标签页	工具	浏览器,Edge,新标签页	Edge浏览器新标签页	Microsoft Edge浏览器的默认新标签页，提供快捷链接、天气和新闻等信息。	https://edge://newtab	否
+Edge浏览器	Microsoft Edge	工具	浏览器,微软,Chromium	微软Edge浏览器	微软基于Chromium开发的现代浏览器，内置AI助手Copilot，以高性能和低资源占用著称。	https://www.microsoft.com/edge	是
+Gitee	码云	工具	开发,代码托管,Git,国产	国内代码托管平台	国内领先的代码托管和协作开发平台，提供Git仓库托管、项目管理、CI/CD等服务。	https://www.gitee.com	否
+GitHub	GitHub	工具	代码托管,开源,开发协作	全球最大代码托管平台	全球最大的代码托管和协作开发平台，汇聚全球开发者，托管开源项目，提供版本控制、代码审查和CI/CD功能。	https://github.com	是
+Illustrator	Adobe Illustrator	工具	矢量设计,插画,图形设计	专业矢量图形设计软件	Adobe推出的矢量图形编辑软件，是Logo设计、插画绘制和版式设计领域的行业标准工具。	https://www.adobe.com/products/illustrator	是
+iLovePDF	iLovePDF	工具	PDF,工具,在线	在线PDF处理工具	简单易用的在线PDF处理工具，提供PDF合并、拆分、压缩、转换和编辑等实用功能。	https://www.ilovepdf.com	否
+JustWatch	JustWatch	工具	影视,流媒体,搜索	影视流媒体搜索指南	帮你快速查找电影和剧集在哪些流媒体平台可以观看的搜索工具。	https://www.justwatch.com	是
+MikuTools	MikuTools	工具	工具合集,在线工具,开发	一站式在线工具合集	开发者和技术爱好者的一站式在线工具箱，集成编码、解码、格式转换等数十种实用工具。	https://miku.tools	否
+Nature	Nature	工具	科学,期刊,论文,学术	国际顶级综合性科学期刊	全球最权威的综合性科学期刊之一，发表物理学、化学、生物学、医学等领域的顶尖研究成果。	https://www.nature.com	否
+Node.js	Node.js	工具	开发工具,后端,JavaScript	JavaScript运行环境	基于V8引擎的JavaScript运行时，可在服务器端运行JS代码，广泛用于后端开发和API构建。	https://nodejs.org	否
+NoSignups	NoSignups	工具	工具,无需注册,在线	无需注册的在线工具站	收录大量无需注册即可使用的免费在线工具网站，帮助用户快速找到即开即用的好工具。	https://nosignups.com	是
+Notion	Notion	工具	笔记,知识库,协作办公	全能型笔记与协作平台	集笔记、知识库、项目管理于一体的全能型协作工具，支持模块化排版和团队协作，深受全球用户喜爱。	https://www.notion.so	是
+npm	npm包管理	工具	开发,npm,JavaScript,包管理	JavaScript包管理器	Node.js的默认包管理工具，全球最大的开源包注册中心，管理JavaScript项目的依赖包。	https://www.npmjs.com	否
+Open Culture	The best free cultural & education	工具	文化,教育,免费资源	免费文化和教育资源聚合	聚合全球免费文化教育和学习资源的平台，收录免费课程、电子书、音频、电影等优质资源。	https://www.openculture.com	是
+PCL2启动器	PCL2	工具	Minecraft,启动器,游戏	Minecraft轻量级启动器	一款轻量高效的Minecraft启动器，以简洁界面和快速启动著称，支持版本管理和模组加载。	https://www.hdslb.net	否
+PDF24工具	PDF24 Tools	工具	PDF,工具,免费	免费PDF工具合集	完全免费的PDF工具箱，提供PDF合并、拆分、转换、压缩、编辑等全功能PDF处理工具。	https://tools.pdf24.org	否
+Photopea	Photopea	工具	PS,图片编辑,在线,免费	在线免费图片编辑器	基于浏览器的免费图片编辑器，界面和功能高度模仿Photoshop，支持PSD、AI、XD等格式。	https://www.photopea.com	否
+Photoshop	Adobe Photoshop	工具	图像处理,设计,摄影	行业标准图像编辑软件	Adobe旗下全球领先的图像编辑与设计软件，广泛应用于平面设计、摄影后期和数字绘画。	https://www.adobe.com/products/photoshop	是
+Pixabay壁纸	Pixabay壁纸	工具	壁纸,图片,素材,免费	免费高清图片和壁纸平台	提供海量免费高清图片、插画、矢量图和壁纸资源的平台，所有素材均可免费商用。	https://pixabay.com	否
+Premiere	Adobe Premiere Pro	工具	视频剪辑,影视后期,专业	专业视频剪辑软件	Adobe推出的专业级视频编辑软件，支持4K/8K视频剪辑、调色、音频处理等全流程制作。	https://www.adobe.com/products/premiere	是
+Python	Python	工具	编程语言,开发,数据科学	通用编程语言	Python Software Foundation推广的通用编程语言，以简洁优雅著称，广泛应用于AI、数据分析、自动化等领域。	https://www.python.org	否
+QQ邮箱	QQ邮箱	工具	邮箱,邮件,腾讯	腾讯QQ邮箱服务	腾讯推出的电子邮件服务，与QQ深度整合，支持大附件传输和邮箱管理，用户基数庞大。	https://mail.qq.com	否
+Radio Garden	Radio Garden	工具	音乐,电台,全球,探索	探索全球实时广播电台	通过地球仪探索全球各地实时广播电台的创意工具，随时随地收听世界各地的音乐和新闻。	https://radio.garden	是
+Remove.bg	Remove.bg	工具	图片,去背景,AI,抠图	一键智能去除图片背景	基于AI的在线图片去背景工具，上传照片即可自动识别人物或物体并去除背景，支持高清输出。	https://www.remove.bg	否
+SauceNAO搜图	SauceNAO Reverse Image Search	工具	反向搜图,动漫,图片	动漫图片反向搜索引擎	专注于动漫、插画等二次元图片的反向搜索引擎，可快速识别图片来源和原画师信息。	https://saucenao.com	是
+Science	Science	工具	科学,期刊,论文,学术	国际顶级科学期刊	美国科学促进会出版的顶级学术期刊，发表各领域最具影响力的原创科学研究成果。	https://www.science.org	否
+Shell命令解析	explainshell.com	工具	Shell,命令行,开发,解释	Shell命令参数解释器	输入Shell命令即可自动解析每个参数的含义和用法，帮助理解和记忆复杂的命令行参数。	https://explainshell.com	是
+Stack Overflow	Stack Overflow	工具	编程问答,开发,技术社区	全球程序员问答社区	全球领先的程序员问答社区，开发者可以提问、回答和分享编程知识，是解决技术难题的首选平台。	https://stackoverflow.com	是
+TinyWow	TinyWow	工具	AI,PDF,图片,工具合集	免费在线工具合集	提供大量免费在线工具的平台，涵盖AI写作、PDF处理、图片编辑、视频转换等多种功能。	https://www.tinywow.com	是
+TOOOLS设计	设计师设计资源与工具	工具	设计资源,工具,素材	设计师资源与工具导航	为设计师精选的优质工具、素材和资源导航站，涵盖图标、字体、配色、灵感等分类。	https://toools.design	是
+unDraw插画	unDraw	工具	插画,开源,设计资源	开源可定制插画素材库	提供大量开源可定制插画的素材库，所有插画均可免费用于商业项目，支持一键换色。	https://undraw.co	是
+UU加速器	UU加速器	工具	网络加速,游戏加速,网易	网易旗下网络加速工具	网易推出的专业网络加速工具，支持游戏加速、远程桌面加速和网页加速，有效降低网络延迟。	https://uu.163.com	否
+V2EX	V2EX	工具	技术社区,创意工作者,论坛	创意工作者社区	面向程序员和创意工作者的中文社区论坛，涵盖编程讨论、分享创造、酷工作等信息，氛围活跃。	https://www.v2ex.com	否
+VS Code	Visual Studio Code	工具	代码编辑器,开发工具,微软	微软开源代码编辑器	微软推出的轻量级但功能强大的开源代码编辑器，支持数百种编程语言，拥有丰富的扩展生态和内置终端。	https://code.visualstudio.com	否
+WindowSwap	WindowSwap	工具	全球,窗口,虚拟旅行	看看世界各地人们的窗外	让你通过世界各地真实窗户的实时视频来云旅行的创意网站，足不出户看遍全球风景。	https://www.window-swap.com	是
+Work Tools	Work Tools	工具	在线工具,办公,效率	一站式在线办公工具箱	提供多种实用在线工具的工具集合平台，涵盖图片处理、文件转换、文本编辑等办公场景。	https://worktools.cc	否
+WPS Office	WPS Office	工具	办公软件,WPS,文档,金山	金山旗下办公软件套件	金山办公推出的办公软件套件，兼容Microsoft Office格式，提供文档、表格、演示等全套办公功能。	https://www.wps.cn	否
+Xmind	Xmind思维导图	工具	思维导图,笔记,效率	专业思维导图软件	功能强大的思维导图和头脑风暴工具，支持多种图表结构，适用于学习、工作和项目管理。	https://www.xmind.cn	否
+Yandex搜索	Yandex	工具	搜索引擎,俄罗斯,全球	俄罗斯最大搜索引擎	俄罗斯领先的搜索引擎和互联网门户，提供搜索、邮件、地图、翻译等全方位服务。	https://yandex.com	是
+YayText花体字	花体字文本生成器	工具	花体字,字体,文本装饰	花体特殊字体生成器	在线花体字文本生成工具，可将普通文字转换为各种花体、装饰性字体，方便社交媒体使用。	https://yaytext.com	否
+Zoom	Zoom	工具	视频会议,远程办公,直播	视频会议与远程办公工具	全球领先的视频会议软件，提供高清稳定的视频通话、屏幕共享和在线会议功能，广泛应用于远程办公和教育。	https://zoom.us	否
+万能命令	针对站点可用的工具-万能命令	工具	工具,命令,站点,合集	站点万能命令合集	收录各类网站和平台的隐藏命令或快捷操作技巧的合集站。		否
+中国政府网	国务院	政务	政府,政策,政务	中国政府官方门户网站	中国政府官方门户网站，发布国家政策、法律法规、政务信息和公共服务内容。	https://www.gov.cn	否
+中国知网	中国知网	工具	学术,论文,期刊,知识	中国学术文献综合数据库	中国最大的学术文献数据库，涵盖期刊、博硕士论文、会议论文、报纸等海量学术资源。	https://www.cnki.net	否
+京东云	JD Cloud京东云	工具	云计算,云服务,电商	京东云计算平台	京东集团旗下的云计算服务平台，依托京东电商和物流场景，提供稳定可靠的云服务。	https://www.jdcloud.com	否
+倒数日	Days Matter倒数日	工具	日历,倒数,时间管理	倒数日应用	记录重要日期并提供倒数/正数功能的日历应用，支持自定义事件和提醒。	https://www.daysmatter.com	否
+剪映	剪映专业版	工具	视频剪辑,短视频,字节跳动	字节跳动旗下视频剪辑工具	字节跳动推出的免费视频剪辑工具，提供丰富的模板、特效和字幕功能，适合短视频创作。	https://www.capcut.com	否
+卡巴斯基	卡巴斯基反病毒	工具	杀毒软件,网络安全,隐私保护	国际知名杀毒软件	俄罗斯顶尖网络安全厂商，提供强大的病毒查杀、网络安全防护和隐私保护解决方案。	https://www.kaspersky.com	否
+古腾堡计划	免费电子书-古腾堡计划	工具	电子书,免费,文学,开源	免费电子书图书馆	全球最早的数字图书馆，提供超过7万本版权已过期的免费电子书，涵盖文学、历史、哲学等经典著作。	https://www.gutenberg.org	是
+台词搜电影	台词找影片	工具	电影,搜索,台词	通过台词搜索电影	输入电影台词片段即可搜索对应影片的工具，帮助找到对应电影名称。	https://www.the-vault.org	否
+坚果云	坚果云	工具	云存储,网盘,同步	高效文件同步云盘	国内领先的云存储和文件同步工具，以稳定快速的同步能力和版本历史功能著称，适合办公使用。	https://www.jianguoyun.com	否
+墨迹天气	墨迹天气	工具	天气,预报,生活	天气预报与生活服务	提供精准天气预报和生活服务的应用，涵盖天气预警、穿衣指数、空气质量等实用信息。	https://www.tianqi.com	否
+夸克	夸克浏览器	工具	浏览器,搜索,网盘	智能搜索浏览器	阿里旗下智能浏览器，以简洁搜索和网盘功能为核心，提供无广告的快速浏览体验。	https://m.quark.cn	否
+小鸡词典	小鸡词典	工具	网络流行语,词典,热词	网络流行语查询词典	专注于网络流行语和新词释义的在线词典，收录大量互联网热词、梗文化的解释和来源。	https://jixi.dict.yandex.com	否
+微信网页传输助手	微信网页传输助手	工具	文件传输,微信,办公	微信网页版文件传输工具	微信官方网页版传输助手，实现在电脑与手机间快速传输文件和消息。	https://file.weixin.qq.com	否
+微信读书	微信读书	工具	阅读,电子书,微信	微信旗下在线阅读平台	腾讯旗下在线阅读平台，依托微信社交链，提供海量正版电子书和听书资源。	https://weread.qq.com	否
+微软365	Microsoft 365	工具	办公软件,生产力,云服务	微软官方办公软件套件	微软推出的云端办公套件，包含Word、Excel、PowerPoint等核心应用及OneDrive云存储。	https://www.microsoft.com/microsoft-365	是
+微软官网	Microsoft	工具	微软,软件,操作系统,云服务	微软官方网站	微软公司官方网站，提供Windows、Office、Azure、Xbox等全系列产品下载和服务支持。	https://www.microsoft.com	否
+快递100	快递100	工具	快递,物流,查询	快递物流查询平台	国内领先的快递物流信息查询平台，支持全国主流快递公司的快递单号查询和物流追踪。	https://www.kuaidi100.com	否
+懂车帝	Dongchedi懂车帝	工具	汽车资讯,购车,评测	汽车信息平台	字节跳动旗下的汽车信息平台，提供车型参数对比、真实车主报价、专业评测等内容。	https://www.dongchedi.com	否
+掘金	掘金	工具	开发,技术社区,前端,编程	开发者技术社区	面向开发者的技术社区平台，分享编程技术、开发经验和职业成长等内容。	https://juejin.cn	否
+推特下载器	下载推特视频	工具	推特,下载,视频	推特视频下载工具	在线推特视频和GIF下载工具，粘贴推文链接即可快速下载Twitter上的视频内容。	https://twittervideodownloader.com	是
+斗图啦	斗图啦	工具	表情包,搞笑,图片	表情包分享平台	专注于表情包分享和搜索的平台，提供海量搞笑、萌系、动漫等风格的表情包资源。	https://www.doutula.com	否
+晋江文学城	晋江文学城	工具	小说,网络文学,阅读,女性	女性向网络文学平台	国内领先的女性向网络文学原创平台，以言情小说为主，拥有大量知名作者和爆款作品。	https://www.jjwxc.net	否
+海明威编辑器	Hemingway Editor	工具	写作,编辑,文字,效率	让文字更简洁有力的写作工具	在线写作辅助工具，通过高亮复杂句式和被动语态，帮助用户写出更简洁有力的文字。	https://hemingwayapp.com	是
+火绒	火绒安全	工具	安全软件,杀毒,系统优化	轻量级安全软件	火绒安全软件是一款轻量级、无广告的国产安全工具，提供病毒防护、系统加固和弹窗拦截功能。	https://www.huorong.cn	否
+番茄时钟	番茄钟（Forest等）	工具	时间管理,效率,专注	番茄工作法工具	基于番茄工作法的时间管理工具，通过25分钟专注+5分钟休息的节奏提升工作效率。	https://www.forestapp.cc	否
+百度地图	百度地图	工具	地图,导航,百度	百度旗下地图导航服务	百度推出的在线地图和导航服务，提供详细的地理信息、路线规划、实时路况和周边搜索。	https://ditu.baidu.com	否
+百度百科	百度百科	工具	百科,知识,中文	中文在线百科全书	百度推出的中文在线百科全书平台，由用户共同编辑，涵盖人物、文化、科技等各领域知识。	https://baike.baidu.com	否
+百度网盘	百度网盘	工具	云存储,网盘,文件备份	百度旗下云存储服务	百度推出的云存储服务平台，提供大容量文件存储、备份和分享功能，是国内用户量最大的网盘之一。	https://pan.baidu.com	否
+石墨文档	石墨文档	工具	在线文档,协作,办公	在线协作文档平台	简洁易用的在线协作文档工具，支持多人实时编辑、评论和分享，适用于团队办公和项目管理。	https://www.shimo.im	否
+稿定设计PS	稿定设计	工具	设计,PS,海报,在线	在线设计编辑工具	在线图形设计平台，提供海报、封面、Banner等模板和简易PS功能，适合非专业用户快速设计。	https://www.gaoding.com	否
+笔趣阁小说	笔趣阁	工具	小说,阅读,网络文学	网络小说阅读平台	提供各类网络小说在线阅读的平台，涵盖玄幻、都市、历史等丰富题材，用户基数庞大。	https://www.biquge.com	否
+维基百科	Wikipedia	工具	百科,知识,开源,全球	全球自由百科全书	全球最大、最全面的开源在线百科全书，由全球志愿者共同编写，支持多种语言。	https://www.wikipedia.org	是
+网易邮箱	网易邮箱	工具	邮箱,邮件,网易	网易免费邮箱服务	网易推出的免费电子邮件服务，提供稳定安全的邮箱体验，支持大容量存储和多端同步。	https://mail.163.com	否
+腾讯云	Tencent Cloud腾讯云	工具	云计算,云服务,AI	腾讯云计算平台	腾讯旗下的云计算服务平台，提供云服务器、数据库、AI、视频直播等全栈云服务。	https://cloud.tencent.com	否
+腾讯微云	腾讯微云	工具	云存储,网盘,腾讯	腾讯旗下云存储服务	腾讯推出的云存储服务平台，与QQ、微信深度整合，提供文件存储、备份和分享功能。	https://www.weiyun.com	否
+腾讯文档	腾讯文档	工具	在线文档,协作,腾讯	腾讯在线协作文档	腾讯推出的在线协作文档工具，支持与微信、QQ深度整合，提供文档、表格、幻灯片等编辑功能。	https://docs.qq.com	否
+腾讯文档(在线)	腾讯文档	工具	在线文档,协作,腾讯	腾讯官方在线文档服务，支持多人实时协作编辑文档、表格和演示文稿。	https://docs.qq.com	否
+英国身份生成	英国地址生成器	工具	地址生成,虚拟,测试	虚拟英国地址生成器	在线生成虚拟英国地址信息的工具，可生成姓名、地址、电话等完整虚拟身份信息。	https://www.fakeukaddress.com	是
+苹果云服务	iCloud	工具	云服务,苹果,同步,存储	苹果iCloud云服务	苹果公司提供的云服务，实现iPhone、iPad、Mac等设备间的数据同步、照片备份和文件存储。	https://www.icloud.com	是
+草料二维码	草料二维码	工具	二维码,生成,工具	二维码生成与管理工具	简单易用的二维码生成和管理工具，支持文本、网址、联系方式等多种类型二维码的创建。	https://cli.im	否
+菜鸟教程	菜鸟教程	工具	编程,教程,开发,学习	编程开发学习教程	提供编程入门和进阶教程的中文技术社区，涵盖Python、Java、SQL、Web前端等主流技术栈。	https://www.runoob.com	否
+视频解析下载	免费在线视频解析下载	工具	视频下载,解析,免费	免费在线视频解析下载	提供免费在线视频解析和下载服务的工具，支持多个主流视频平台的内容下载。	https://www.jx.sb	否
+语雀	语雀	工具	知识库,文档,阿里,笔记	阿里巴巴旗下知识库工具	阿里巴巴旗下知识创作与分享平台，支持文档、知识库、思维导图等多种内容形式。	https://www.yuque.com	否
+谷歌	Google	工具	搜索引擎,谷歌,全球	全球领先搜索引擎	全球领先的搜索引擎和科技公司，提供搜索、浏览器、操作系统、云计算等全方位产品和服务。	https://www.google.com	是
+起点中文网	起点中文网	工具	小说,网络文学,阅读,阅文	网络文学原创平台	阅文集团旗下原创网络文学平台，是中国网络文学的标杆站点，汇聚大量优质网文作品。	https://www.qidian.com	否
+路由器后台	联通路由器	工具	路由器,网络,设置	联通路由器管理后台	中国联通路由器管理后台入口，可配置网络设置、查看连接设备和优化网络性能。	https://192.168.1.1	否
+达芬奇官网	DaVinci Resolve	工具	视频剪辑,调色,影视	专业视频调色与剪辑软件	Blackmagic Design推出的专业视频调色软件，同时集成剪辑、特效、音频后期等全流程制作能力。	https://www.blackmagicdesign.com/products/davinciresolve	否
+迅雷	迅雷下载	工具	下载工具,P2P,资源下载	高速下载工具	国内知名的多线程下载工具，支持HTTP、BT、磁力链接等多种协议，提供高速下载服务。	https://www.xunlei.com	否
+酷安	Coolapk酷安	工具	应用社区,数码,安卓	数码应用社区	国内知名的数码爱好者社区和应用分发平台，以高质量数码讨论和APK分享著称。	https://www.coolapk.com	否
+钉钉	钉钉	工具	办公,协作,阿里,企业	阿里巴巴旗下企业协作平台	阿里巴巴推出的企业级协同办公平台，提供即时通讯、OA审批、视频会议、文档协作等功能。	https://www.dingtalk.com	否
+阿里云	阿里云	工具	云计算,云服务,阿里,AI	阿里巴巴旗下云计算平台	阿里巴巴集团旗下云计算服务平台，提供弹性计算、数据库、存储、AI等大模型和全栈云服务。	https://www.aliyun.com	否
+阿里云盘	阿里云盘	工具	云存储,网盘,阿里	阿里巴巴旗下云存储服务	阿里巴巴推出的高品质云存储服务，提供高速上传下载、在线播放和智能相册等功能。	https://www.alipan.com	否
+阿里无影	无影云电脑	工具	云电脑,云计算,阿里	阿里云无影云电脑	阿里巴巴推出的云电脑服务，将计算能力放在云端，通过终端设备即可使用完整的桌面体验。	https://wuying.aliyun.com	否
+飞书	飞书	工具	办公,协作,字节跳动,文档	字节跳动旗下企业协作平台	字节跳动推出的企业级协作平台，集即时通讯、文档协作、日历、视频会议于一体。	https://www.feishu.cn	否
+高德地图	高德地图	工具	地图,导航,出行,阿里	阿里旗下地图导航服务	阿里巴巴旗下领先的数字地图和导航服务，提供实时路况、路线规划、公交导航和出行服务。	https://www.amap.com	否
+魔极客驱动	MonsGeek Driver	工具	驱动,外设,客制化	魔极客外设驱动工具	魔极客品牌客制化键盘和外设的驱动程序，支持按键映射、宏编程和灯光效果自定义。	https://www.monsgeek.com	否
+麦高驱动	麦高中枢	工具	驱动,硬件,驱动更新	电脑驱动自动更新工具	一键检测并更新电脑硬件驱动程序的工具，支持主流显卡、声卡、网卡等设备的驱动自动安装。	https://www.mg-driver.com	否
+黑猫投诉	315投诉维权-黑猫投诉	工具	投诉,维权,消费者	消费者投诉维权平台	新浪旗下消费者投诉平台，用户可在此发起消费投诉，企业回应处理，推动消费者权益保护。	https://tousu.sina.com.cn	否
+龙族5小说	龙族5	工具	小说,阅读,江南	龙族系列小说在线阅读	龙族系列小说的在线阅读平台，提供正版章节阅读和作品资讯。		否
+AMD官网	AMD	电商	硬件,AMD,Ryzen,GPU	AMD中国官网	AMD公司中国官网，提供Ryzen处理器、Radeon显卡、EPYC服务器芯片等产品。	https://www.amd.com/zh-hans	是
+NVIDIA商店	英伟达	电商	硬件,英伟达,NVIDIA,显卡	英伟达官方商店	英伟达官方商店，销售GeForce游戏显卡、RTX专业显卡及游戏周边产品。	https://www.nvidia.cn	是
+OPPO官网	OPPO	电商	电商,OPPO,手机,数码	OPPO官方商城	OPPO官方商城，提供智能手机、耳机、穿戴设备等产品的在线购买和售后服务。	https://www.oppo.com	是
+Vivo官网	Vivo	电商	电商,Vivo,手机,数码	Vivo官方商城	Vivo智能手机官方商城，提供手机、耳机、穿戴设备等产品的在线购买和售后服务。	https://www.vivo.com.cn	是
+三星官网	三星	电商	电商,三星,Samsung,电子	三星中国官网	三星电子中国官网，提供Galaxy手机、家电、半导体等产品的信息和购买服务。	https://www.samsung.com.cn	是
+亚马逊	Amazon亚马逊	电商	电商,云计算,AI,图书	全球电商与科技巨头	全球领先的电子商务和云计算公司，旗下拥有AWS云服务、Kindle电子书和Alexa智能助手。	https://www.amazon.com	是
+京东	JD京东	电商	电商,购物,物流	自营电商与物流平台	以自营模式和高效物流著称的电商平台，3C数码和家电品类优势明显，次日达服务体验出色。	https://www.jd.com	否
+优衣库	UNIQLO优衣库	电商	服装,快时尚,电商	日本快时尚品牌	日本迅销集团旗下的快时尚品牌，以Basic高品质基础款和HEATTECH等科技面料著称。	https://www.uniqlo.com	否
+华为官网	华为	电商	电商,华为,数码,通信	华为官方商城	华为技术有限公司官方商城，销售手机、电脑、平板、穿戴设备等全场景智能产品。	https://www.huawei.com	是
+唯品会	唯品会	电商	电商,特卖,品牌,折扣	品牌特卖电商平台	专注品牌特卖的电商平台，与国内外知名品牌合作，提供限时折扣和尾货清仓购物。	https://www.vip.com	否
+天猫	Tmall天猫	电商	电商,购物,平台	天猫电商平台	阿里巴巴旗下B2C电商平台，汇聚国内外品牌官方旗舰店，是中国领先的综合购物平台。	https://www.tmall.com	否
+小米商城	小米	电商	电商,小米,数码,生态链	小米官方电商平台	小米集团官方商城，销售手机、家电、生态链产品等全品类商品，支持MIUI互联。	https://www.mi.com	是
+拼多多	PDD拼多多	电商	电商,购物,性价比	社交拼团电商平台	以社交拼团和极致性价比为特色的电商平台，通过团购模式为用户提供低价优质的商品，用户规模快速增长。	https://www.pinduoduo.com	否
+新华书店	Xinhua Bookstore新华书店	电商	图书,文化,零售	国有图书发行渠道	中国历史悠久、覆盖最广的国有图书发行连锁机构，线上线下均有售书服务。	https://www.xhsd.com.cn	否
+淘宝	Taobao淘宝	电商	电商,购物,平台	阿里巴巴旗下购物平台	中国领先的C2C电商平台，汇聚海量商品和商家，提供丰富的购物体验和完善的买家保护机制。	https://www.taobao.com	否
+爱回收	Aihuishou爱回收	电商	二手交易,数码回收	数码产品回收平台	专业的数码产品回收与二手交易平台，提供手机、电脑等数码产品的估价回收和二手销售。	https://www.aihuishou.com	否
+苏宁易购	苏宁易购	电商	电商,苏宁,3C,家电	苏宁电器电商平台	苏宁集团旗下综合电商平台，以3C家电和日用百货为主，线上线下融合零售。	https://www.suning.com	否
+英特尔官网	英特尔	电商	硬件,英特尔,Intel,CPU	英特尔中国官网	英特尔中国官网，提供CPU、显卡、主板、服务器芯片等产品的信息和购买渠道。	https://www.intel.cn	否
+苹果官网	苹果	电商	电商,苹果,数码,iPhone	苹果中国官网	苹果公司中国官网，提供iPhone、Mac、iPad、Apple Watch等产品的购买和Apple服务。	https://www.apple.com.cn	是
+转转	Zhuanzhuan转转	电商	二手交易,闲置,数码	二手交易平台	腾讯投资的二手物品交易平台，提供数码产品、图书、服饰等闲置物品买卖服务。	https://www.zhuanzhuan.com	否
+三星	Samsung三星	电子	消费电子,芯片,屏幕,手机	韩国综合电子巨头	韩国最大电子制造企业，业务涵盖智能手机、半导体、显示器、家电等，是全球少数全产业链布局的消费电子巨头。	https://www.samsung.com	否
+松下	Panasonic松下	电子	消费电子,家电,相机	日本综合电子品牌	日本大型综合电子品牌，产品涵盖家电、数码相机、电池、汽车电子等。	https://www.panasonic.com.cn	否
+索尼	索尼（中国）	电子	消费电子,相机,游戏,音频	日本综合电子品牌	日本知名综合电子品牌，涵盖相机、耳机、游戏机、电视、VAIO电脑等丰富产品线。	https://www.sony.com.cn	是
+苹果	Apple苹果	电子	消费电子,手机,电脑,平板	美国消费电子巨头	全球市值最高的科技公司之一，以iPhone、Mac、iPad、Apple Watch等硬件产品和iOS生态闻名于世。	https://www.apple.com	是
+AMD	AMD	硬件	芯片,CPU,GPU	美国芯片设计公司	美国知名半导体公司，旗下Ryzen处理器和Radeon显卡在PC市场占据重要份额，与英特尔和英伟达直接竞争。	https://www.amd.com	是
+BestBuy显卡	NVIDIA GeForce RTX 3060 Ti / 3080	硬件	硬件,显卡,NVIDIA,RTX	NVIDIA显卡信息查询	NVIDIA GeForce RTX 30系列显卡的产品信息和购买渠道页面。	https://www.nvidia.cn	是
+ROG	ROG玩家国度	硬件	电竞,显卡,主板,笔记本	华硕电竞品牌	华硕旗下高端电竞品牌，提供电竞笔记本、显卡、主板、外设等极致性能产品。	https://rog.asus.com	否
+佳能	Canon佳能	硬件	相机,打印机,光学	日本影像品牌	日本知名影像与光学品牌，以单反相机、无反相机、打印机和镜头闻名。	https://www.canon.com.cn	是
+劳力士	Rolex劳力士	硬件	手表,奢侈品,珠宝	瑞士顶级腕表品牌	瑞士顶级奢侈腕表品牌，以精准、耐用和保值著称，是身份与品味的象征。	https://www.rolex.com	否
+博世	Bosch博世	硬件	家电,工具,汽车电子	德国工业品牌	德国知名工业和技术品牌，涵盖家电、电动工具、汽车电子、安防等多元领域。	https://www.bosch.com.cn	否
+卡西欧	Casio卡西欧	硬件	手表,电子琴,计算器,相机	日本综合电子品牌	日本知名电子品牌，涵盖电子手表、计算器、电子琴、数码相机等多品类产品。	https://www.casio.com.cn	否
+哈曼卡顿	Harman Kardon哈曼卡顿	硬件	音响,耳机,音频	美国音频品牌	哈曼国际旗下高端音频品牌，以设计感强的音箱和汽车音响系统著称。	https://www.harman.com	否
+哈苏	Hasselblad哈苏	硬件	相机,中画幅,摄影	瑞典中画幅相机品牌	瑞典顶级中画幅相机品牌，曾随阿波罗登月，以极致画质和经典外观闻名。	https://www.hasselblad.com	是
+喜得胜	XDS喜得胜	硬件	耳机,音频,外设	音频设备品牌	专注音频设备的品牌，提供耳机、耳麦、音响等产品，主打高性价比音频体验。	https://www.xds.com.cn	否
+尼康	Nikon尼康	硬件	相机,光学,镜头	日本影像品牌	日本老牌影像品牌，以专业级单反相机、光学镜头和科学仪器著称。	https://www.nikon.com.cn	否
+希捷	Seagate希捷	硬件	硬盘,存储,数据中心	硬盘存储品牌	全球领先的硬盘制造商，提供机械硬盘、固态硬盘及企业级存储解决方案。	https://www.seagate.com	否
+影驰	Galaxy影驰	硬件	显卡,存储,内存	电脑硬件品牌	以显卡和存储产品闻名的硬件品牌，旗下GALAXY系列显卡在玩家中口碑良好。	https://www.galaxy.com.cn	否
+徕卡	Leica徕卡	硬件	相机,镜头,光学	德国光学品牌	德国顶级光学品牌，以徕卡相机和镜头闻名于世，是摄影器材的顶级象征。	https://www.leica-camera.com	是
+海盗船	Corsair海盗船	硬件	电脑硬件,内存,电源,外设	电脑硬件与外设品牌	专注高性能电脑硬件的品牌，以内存、电源、机箱、电竞外设等产品著称。	https://www.corsair.com	否
+美光	Micron美光	硬件	存储芯片,内存,固态硬盘	美国存储芯片品牌	美国半导体存储巨头，旗下拥有Crucial英睿达消费品牌，生产内存颗粒和固态硬盘。	https://www.micron.com	否
+联发科	MediaTek联发科	硬件	芯片,手机SoC,通信	台湾芯片设计品牌	台湾知名芯片设计公司，天玑系列5G处理器在手机市场占据重要份额。	https://www.mediatek.com	否
+英伟达	NVIDIA英伟达	硬件	GPU,显卡,AI芯片	GPU与AI芯片领军企业	全球领先的GPU设计公司，GeForce游戏显卡和CUDA生态占据主导地位，在AI训练芯片领域更是处于绝对领先。	https://www.nvidia.com	是
+英特尔	Intel英特尔	硬件	芯片,CPU,半导体	美国半导体与芯片巨头	美国领先的半导体公司，英特尔CPU长期主导PC和服务器处理器市场，同时涉足FPGA和AI芯片领域。	https://www.intel.com	是
+西数	Western Digital西部数据	硬件	硬盘,存储,固态硬盘	美国存储品牌	美国知名存储设备制造商，旗下拥有西部数据（机械硬盘）和闪迪（固态硬盘/闪存）两大品牌。	https://www.westerndigital.com	否
+铭瑄	Maxsun铭瑄	硬件	显卡,主板,电脑硬件	电脑硬件品牌	专注电脑硬件的品牌，提供性价比突出的显卡、主板、整机等产品。	https://www.maxsun.com.cn	否
+马歇尔	Marshall马歇尔	硬件	音响,耳机,音频	英国音频品牌	英国经典音频品牌，以复古造型的音箱和耳机闻名，音效调校独具特色。	https://www.marshallheadphones.com	否
+高通	Qualcomm高通	硬件	芯片,手机SoC,通信	美国芯片设计品牌	美国领先的无线芯片设计公司，骁龙（Snapdragon）系列处理器广泛应用于智能手机。	https://www.qualcomm.com	否
+GMC	GMC	汽车	汽车,皮卡,SUV	美国汽车品牌	通用汽车旗下商用与乘用皮卡品牌，以Sierra皮卡和Yukon SUV为代表。	https://www.gmc.com	是
+丰田	Toyota丰田	汽车	汽车,日本,混动	日本汽车制造商	全球销量领先的日本汽车制造商，以卡罗拉、凯美瑞、汉兰达等车型闻名，混动技术领先。	https://www.toyota.com.cn	是
+保时捷	Porsche保时捷	汽车	跑车,豪华车,德国	德国豪华跑车品牌	德国豪华跑车与SUV制造商，以911跑车闻名于世，兼顾日常实用性与赛道性能。	https://www.porsche.com	是
+劳斯莱斯	Rolls-Royce劳斯莱斯	汽车	超豪华车,奢侈品,英国	英国超豪华汽车品牌	英国顶级超豪华汽车品牌，以极致工艺、静谧性和定制服务著称，是尊贵与地位的象征。	https://www.rolls-roycemotorcars.com	是
+吉利	Geely吉利	汽车	汽车,国产,新能源	中国民营汽车制造商	中国领先民营汽车企业，旗下拥有吉利、领克、极氪、沃尔沃等多个品牌。	https://www.geely.com	是
+大众	Volkswagen大众	汽车	汽车,德国,国民车	德国汽车制造商	德国最大汽车制造商，以高尔夫、迈腾、帕萨特等车型闻名，是中国市场销量最高的品牌之一。	https://www.volkswagen.com.cn	否
+奔驰	Mercedes-Benz奔驰	汽车	汽车,豪华车,德国	德国豪华汽车品牌	德国豪华汽车品牌，汽车发明者，以S级、C级、GLE等车型定义豪华车标准。	https://www.mercedes-benz.com.cn	是
+奥迪	Audi奥迪	汽车	汽车,豪华车,德国	德国豪华汽车品牌	德国豪华汽车品牌，以quattro四驱技术和前瞻性设计闻名，A4、A6、Q5等车型畅销。	https://www.audi.com.cn	否
+宝马	BMW宝马	汽车	汽车,豪华车,德国	德国豪华汽车品牌	德国豪华汽车品牌，以驾驶乐趣和'终极驾驶机器'著称，3系、5系、X5等车型广受欢迎。	https://www.bmw.com.cn	否
+宾利	Bentley宾利	汽车	豪华车,超豪华,英国	英国顶级豪华汽车品牌	英国顶级豪华汽车品牌，以手工打造的豪华轿车和GT跑车闻名，兼具奢华与性能。	https://www.bentleymotors.com	是
+小米汽车	Xiaomi Auto	汽车	新能源汽车,智能驾驶,国产	小米旗下汽车品牌	小米集团进军的新能源汽车品牌，首款车型SU7以智能生态和极致性价比引发关注。	https://www.mi.com/auto	否
+小鹏	XPeng小鹏	汽车	新能源汽车,智能驾驶,国产	中国新势力汽车品牌	中国智能电动汽车品牌，以高阶智能驾驶和前沿科技为卖点，是造车新势力代表之一。	https://www.xiaopeng.com	是
+川崎	Kawasaki川崎	汽车	摩托车,重型机械,日本	日本综合重工业品牌	日本大型综合重工业企业，摩托车部门以高性能川崎忍者（Ninja）系列闻名。	https://www.kawasaki.com	否
+布加迪	Bugatti布加迪	汽车	超跑,豪车,法国	法国顶级超跑品牌	法国顶级超跑品牌，以极致速度和奢华工艺著称，代表作Chiron和Bolide。	https://www.bugatti.com	是
+帕加尼	Pagani帕加尼	汽车	超跑,手工,意大利	意大利手工超跑品牌	意大利手工打造的艺术级超跑品牌，以极致工艺和独特设计著称，每辆车都是艺术品。	https://www.pagani.com	是
+张雪机车	张雪机车	汽车	摩托车,国产	国产摩托车品牌	国内摩托车品牌，以中大排量摩托车产品为主。	https://www.zxjche.com	否
+春风	CFMOTO春风	汽车	摩托车,大排量,国产	中国摩托车品牌	中国领先的大排量摩托车制造商，以春风250NK、800MT等车型在摩友圈广受欢迎。	https://www.cfmoto.com	否
+本田	Honda本田	汽车	汽车,摩托车,发动机	日本综合制造商	日本大型综合制造商，汽车部门以思域、雅阁闻名，摩托车部门为全球最大摩托车制造商。	https://www.honda.com.cn	否
+杜卡迪	Ducati杜卡迪	汽车	摩托车,跑车,意大利	意大利顶级摩托车品牌	意大利顶级摩托车品牌，以红色V型双缸发动机和赛道基因闻名，是摩托车界的性能标杆。	https://www.ducati.com	否
+林肯	Lincoln林肯	汽车	汽车,豪华车,美国	美国豪华汽车品牌	福特旗下豪华汽车品牌，以舒适驾乘体验和美式豪华著称，航海家、飞行家等车型广受欢迎。	https://www.lincoln.com.cn	是
+比亚迪	BYD比亚迪	汽车	新能源汽车,国产,电池	中国新能源车企龙头	中国领先的新能源汽车制造商，以刀片电池技术和DM-i混动系统为核心竞争力，产品线覆盖轿车、SUV和MPV。	https://www.byd.com	是
+沃尔沃	Volvo沃尔沃	汽车	汽车,安全,北欧	瑞典豪华汽车品牌	瑞典豪华汽车品牌，以极致安全性和环保理念著称，现属吉利控股集团。	https://www.volvocars.com.cn	否
+法拉利	Ferrari法拉利	汽车	超跑,赛车,意大利	意大利传奇超跑品牌	意大利传奇超跑品牌，以红色跃马标志和F1赛车血统闻名，是速度与激情的代名词。	https://www.ferrari.com	是
+特斯拉	Tesla特斯拉	汽车	新能源汽车,自动驾驶,太空	美国新能源汽车品牌	全球领先的新能源汽车和清洁能源公司，以电动汽车、太阳能和储能产品为核心业务。	https://www.tesla.com	是
+理想	Li Auto理想	汽车	新能源汽车,增程式,国产	中国新势力汽车品牌	中国智能电动汽车品牌，以增程式电动车为切入点，主打家庭用户，L系列SUV产品备受市场认可。	https://www.lixiang.com	否
+福特	Ford福特	汽车	汽车,皮卡,美国	美国汽车制造商	美国历史悠久的大型汽车制造商，以F系列皮卡、Mustang跑车和探险者SUV闻名。	https://www.ford.com.cn	是
+科尼赛格	Koenigsegg科尼赛格	汽车	超跑,顶级,瑞典	瑞典顶级超级跑车品牌	瑞典顶级超级跑车制造商，以突破速度极限和创新技术著称，产量极为稀少。	https://www.koenigsegg.com	是
+莲花	Lotus莲花（路特斯）	汽车	跑车,超跑,电动化	英国跑车品牌	英国传奇跑车品牌，以轻量化和赛道基因著称，现正全面电动化转型。	https://www.lotus.com	否
+蔚来	NIO蔚来	汽车	新能源汽车,智能驾驶,国产	中国高端智能电动车品牌	中国高端智能电动汽车品牌，以换电技术和用户社区运营为特色，提供ET7、ES8等多款车型。	https://www.nio.com	否
+通用	GM通用汽车	汽车	汽车,集团,美国	美国汽车巨头	全球三大汽车制造商之一，旗下拥有雪佛兰、凯迪拉克、别克、GMC等品牌。	https://www.gm.com	否
+道奇	Dodge道奇	汽车	汽车,肌肉车,美国	美国经典汽车品牌	美国经典汽车品牌，以肌肉车文化闻名，代表作挑战者和蝰蛇。	https://www.dodge.com	是
+野马	Ford Mustang野马	汽车	跑车,肌肉车,福特	福特旗下跑车品牌	福特旗下的经典美式肌肉跑车，以强劲动力和标志性设计闻名全球。	https://www.ford.com/mustang	否
+雅马哈	Yamaha雅马哈	汽车	摩托车,乐器,音频	日本综合制造商	日本知名综合制造商，摩托车以XSR、MT系列闻名，同时是全球顶级乐器和音频设备品牌。	https://www.yamaha.com	否
+雪佛兰	Chevrolet雪佛兰	汽车	汽车,通用,美国	美国汽车品牌	通用汽车旗下核心品牌，以科迈罗跑车、索罗德皮卡和探界者SUV等产品著称。	https://www.chevrolet.com	否
+马自达	Mazda马自达	汽车	汽车,日本,操控	日本汽车制造商	日本知名汽车制造商，以魂动设计语言和人马一体驾驶理念著称，擅长小排量高效率发动机技术。	https://www.mazda.com.cn	否
+鸿蒙智行	HarmonyOS Intelligent Mobility	汽车	智能汽车,鸿蒙,华为	华为智能汽车解决方案	华为推出的智能汽车解决方案品牌，整合智选车模式，赋能问界、智界等合作品牌。	https://www.harmonyos.com	否
+Bilibili	bilibili	媒体	视频,弹幕,ACG,知识	中国年轻文化视频社区	中国领先的年轻人文化社区和视频平台，以弹幕文化和ACG内容起家，现已拓展至知识、生活、娱乐等全品类内容。	https://www.bilibili.com	否
+SeedHub	SeedHub-影视动漫分享	媒体	影视,动漫,分享,资源	影视动漫分享社区	专注于影视和动漫内容分享的社区平台，提供新番资讯、资源分享和讨论交流。		是
+人民日报	People's Daily人民日报	媒体	新闻,资讯,官方媒体	中国官方媒体	中国共产党中央委员会机关报，中国最具权威性的新闻媒体之一，提供国内外时政资讯。	https://www.people.com.cn	否
+今日头条	今日头条	媒体	新闻,资讯,推荐,字节跳动	智能资讯分发平台	字节跳动旗下的智能资讯聚合平台，以AI算法推荐为核心，覆盖新闻、视频、问答等多元内容。	https://www.toutiao.com	否
+抖音	Douyin抖音	媒体	短视频,直播,社交	字节跳动旗下短视频平台	字节跳动推出的短视频分享平台，以算法推荐和创意内容著称，拥有数亿活跃用户，涵盖娱乐、知识、生活等多元内容。	https://www.douyin.com	否
+新华网	新华网	媒体	新闻,资讯,官方,新华社	新华社官方网站	新华通讯社官方网站，提供国内外权威新闻报道和时政资讯。	https://www.xinhuanet.com	否
+澎湃新闻	澎湃新闻	媒体	新闻,资讯,原创,时政	专注时政与思想的媒体	上海报业集团旗下原创时政媒体，以调查报道和深度评论见长，是国内有影响力的新媒体。	https://www.thepaper.cn	否
+知乎	Zhihu知乎	媒体	问答,知识,社区	中文问答社区	中国领先的问答社区和知识分享平台，汇聚各行业专业人士，提供深度问答、文章和专栏等内容形式。	https://www.zhihu.com	否
+虎嗅	虎嗅网	媒体	科技,商业,资讯,评论	科技商业资讯平台	专注科技和商业领域的深度资讯平台，提供前沿科技动态、商业分析和创业投资资讯。	https://www.huxiu.com	否
+QQ	QQ	社交	社交,即时通讯,腾讯	腾讯QQ即时通讯	腾讯推出的经典即时通讯工具，支持文字、语音、视频聊天和文件传输，拥有庞大的用户群体。	https://im.qq.com	否
+小红书	小红书	社交	社交,生活方式,分享,购物	生活方式分享平台	中国流行的生活方式分享和电商平台，用户分享购物、旅行、美食、美妆等生活经验。	https://www.xiaohongshu.com	否
+微信网页版	微信	社交	社交,微信,腾讯,通讯	微信网页版	微信官方网页版，可在电脑上直接使用微信进行文字、语音、视频聊天和文件传输。	https://web.wechat.com	否
+微博	新浪微博	社交	社交,微博,热点,资讯	中国领先社交媒体	中国领先的社交媒体平台，以微博形式传播资讯和观点，是公众事件和热点话题的主要发酵地。	https://weibo.com	否
+豆瓣	豆瓣	社交	社交,读书,电影,评分	中文文化社区	中国独特的文化社区，以书影音评分和小组讨论为核心，拥有高粘性的文艺用户群体。	https://www.douban.com	否
+贴吧	百度贴吧	社交	社交,论坛,贴吧,百度	百度贴吧社区	百度旗下的兴趣社区平台，以吧为单位组织话题讨论，涵盖游戏、影视、科技等无数兴趣圈子。	https://tieba.baidu.com	否
+12306	铁路12306	出行	出行,火车票,铁路,官方	铁路官方购票平台	中国铁路官方购票平台，提供火车票购买、余票查询、列车时刻表等全方位铁路出行服务。	https://www.12306.cn	否
+台铃	Tailg台铃	出行	电动车,电动自行车	国产电动车品牌	国产知名电动车品牌，以长续航电动车为特色，主打'跑得更远的电动车'。	https://www.tailg.cn	否
+哈啰	Hellobike哈啰	出行	共享单车,出行,电动车	共享单车与出行服务平台	阿里生态旗下出行服务平台，以共享单车起家，逐步拓展至助力车、网约车和电动车销售等领域。	https://www.hellobike.com	否
+小牛	NIU小牛	出行	电动车,智能电动车,出行	智能电动车品牌	小牛电动旗下智能电动车品牌，以设计感强、智能化的电动两轮车著称。	https://www.niu.com	否
+携程旅行	携程	出行	出行,旅游,机票,酒店	综合旅游服务平台	国内领先的综合旅游服务平台，提供机票、酒店、火车票、旅游度假等一站式旅行服务。	https://www.ctrip.com	是
+滴滴	Didi滴滴	出行	网约车,出行,地图	中国领先出行平台	中国领先的综合出行服务平台，提供网约车、出租车、顺风车、共享单车等多种出行方式的一站式服务。	https://www.didiglobal.com	否
+绿源	Luyuan绿源	出行	电动车,电动自行车	国产电动车品牌	国产电动车品牌，以液冷电机技术和长寿命电动车为特色。	https://www.luyuan.com	否
+美团	美团	出行	出行,外卖,团购,生活	生活服务电商平台	中国领先的生活服务电商平台，覆盖外卖、团购、酒店、出行等日常生活各个领域。	https://www.meituan.com	否
+雅迪	Yadea雅迪	出行	电动车,电动自行车	国产电动车品牌	国内电动自行车领军品牌，产品线覆盖国标车、电摩、折叠车等，销量领先。	https://www.yadea.com	否
+飞猪旅行	飞猪	出行	出行,旅游,阿里,机票	阿里旗下旅行平台	阿里巴巴旗下旅行服务平台，提供机票、酒店、度假、当地玩乐等旅行服务。	https://www.fliggy.com	是
+饿了么	饿了么	出行	出行,外卖,阿里,配送	阿里旗下外卖平台	阿里巴巴旗下外卖配送平台，连接用户、餐厅和骑手，提供快速外卖配送和生活服务。	https://www.ele.me	否
+东方财富	东方财富网	金融	金融,股票,投资,财经	财经信息与交易平台	中国领先的财经信息门户和证券交易平台，提供股票、基金、期货等实时行情和资讯。	https://www.eastmoney.com	否
+同花顺	同花顺	金融	金融,股票,炒股,行情	股票行情交易软件	国内领先的股票行情和交易软件，提供实时行情、技术分析、智能选股等投资辅助工具。	https://www.10jqka.com.cn	否
+新浪财经	新浪财经	金融	金融,财经,股票,新闻	新浪旗下财经资讯平台	新浪旗下专业财经资讯平台，提供全球股票、基金、期货、外汇等实时行情和财经新闻。	https://finance.sina.com.cn	否
+NASA	NASA	科技	航天,航空,科研	美国国家航空航天局	美国国家航空航天局，全球领先的航天探索机构，负责美国民用航天和太空研究。	https://www.nasa.gov	否
+SpaceX	SpaceX	科技	航天,火箭,卫星	美国航天公司	马斯克创立的私营航天公司，致力于可回收火箭技术和火星殖民计划。	https://www.spacex.com	否
+韦伯望远镜照片	NASA's James Webb Space Telescope	科技	科技,航天,太空,NASA	詹姆斯·韦伯太空望远镜	NASA新一代太空望远镜，以红外波段观测宇宙深处，拍摄到迄今最清晰的深空图像。	https://webb.nasa.gov	否
+优尼克斯	Yonex尤尼克斯	运动	羽毛球,网球,运动装备	日本运动品牌	日本知名运动品牌，以羽毛球拍、网球拍闻名全球，是多项国际赛事的官方供应商。	https://www.yonex.com.cn	否
+喜德盛	XDS喜德盛	运动	自行车,国产	国产自行车品牌	中国大型自行车制造企业，以铝合金车架技术闻名，产品线覆盖山地车、公路车、折叠车。	https://www.xds-bike.com	否
+始祖鸟	Arc'teryx始祖鸟	运动	户外,冲锋衣,高端	加拿大高端户外品牌	加拿大顶级户外品牌，以极致工艺的冲锋衣和户外装备闻名，被誉为户外界的'爱马仕'。	https://www.arcteryx.com	是
+安踏	Anta安踏	运动	运动鞋服,国货,运动	国产运动品牌龙头	中国领先的运动品牌企业，以运动鞋服为核心，旗下拥有FILA、Descente等多个品牌，赞助多项国际赛事。	https://www.anta.com	否
+捷安特	Giant捷安特	运动	自行车,运动装备	台湾自行车品牌	全球知名自行车品牌，涵盖公路车、山地车、折叠车等全品类自行车产品。	https://www.giant-bicycles.com	否
+李宁	Li-Ning李宁	运动	运动服饰,运动鞋,国潮	国产运动品牌	中国知名运动品牌，以运动服饰、运动鞋为主，融合国潮设计，多次亮相国际时装周。	https://www.lining.com	否
+梅花	Colnago梅花	运动	自行车,运动装备	意大利自行车品牌	意大利传奇自行车品牌，以手工打造的高端公路车著称，被誉为'自行车中的法拉利'。	https://www.colnago.com	否
+永久	Forever永久自行车	运动	自行车,出行	国产自行车品牌	中国老牌自行车品牌，百年历史，以经典实用的自行车产品闻名。	https://www.yongjiu.com	否
+耐克	Nike耐克	运动	运动鞋服,运动装备	美国运动品牌	全球最大运动品牌之一，以Air Jordan、Air Max等系列运动鞋和运动服饰闻名全球。	https://www.nike.com	否
+胜利	Victor胜利	运动	羽毛球,运动装备	台湾运动品牌	台湾知名运动品牌，以羽毛球拍、羽毛球鞋服闻名，是国际羽联认证的赛事供应商。	https://www.victor.com.tw	否
+迪卡侬	Decathlon迪卡侬	运动	运动装备,户外,平价	法国综合运动用品零售商	法国大型运动用品零售商，自有品牌覆盖跑步、游泳、登山、健身等数十种运动项目，以高性价比著称。	https://www.decathlon.com.cn	否
+闪电	Specialized闪电	运动	自行车,运动装备	美国高端自行车品牌	美国顶级自行车品牌，以高性能公路车和山地车闻名，是职业赛事中的常客。	https://www.specialized.com	否
+骆驼	Camel骆驼	运动	户外,鞋服,登山	国产户外品牌	国产户外休闲品牌，以登山鞋、冲锋衣、户外箱包等产品为主，性价比高。	https://www.camel.com.cn	否
+鸿星尔克	ERKE鸿星尔克	运动	运动鞋服,国货	国产运动品牌	国产运动品牌，以运动鞋服为主，因公益捐赠事件广受国人支持。	https://www.erke.com	否
+国誉	Kokuyo国誉	文具	文具,办公用品,纸张	日本文具品牌	日本知名文具品牌，以办公用纸、笔记本、文件夹等高品质文具产品著称。	https://www.kokuyo.com	否
+得力	Deli得力	文具	文具,办公用品,办公设备	国产文具办公用品品牌	国内领先的文具及办公用品品牌，涵盖书写工具、办公设备、收纳用品等全品类。	https://www.deli.com	否
+斑马	Zebra斑马	文具	文具,书写工具,日本	日本文具品牌	日本知名文具品牌，以斑马牌钢笔、中性笔、荧光笔等书写工具著称。	https://www.zebra.co.jp	否
+晨光	M&G晨光	文具	文具,书写工具,学生用品	国产文具品牌	国内知名文具品牌，以晨光笔为核心产品，覆盖学生文具、办公文具等全品类。	https://www.m&g.com.cn	否
+百乐	Pilot百乐	文具	文具,书写工具,日本	日本文具品牌	日本三大书写工具品牌之一，以百乐钢笔、中性笔、果汁笔等产品深受用户喜爱。	https://www.pilot.co.jp	否
+MLB	MLB（品牌）	时尚	潮牌,服饰,帽子	美国职棒潮流品牌	源自美国职业棒球大联盟的潮流品牌，以棒球帽、街头服饰闻名，亚洲市场由F&F集团运营。	https://www.mlb.com	否
+Carbon	Carbon	工具	代码截图,代码分享,开发者工具	将代码转为精美图片	将代码片段转换为美观的可分享图片，支持多种主题和语法高亮，适合在社交媒体和文档中展示代码。	https://carbon.now.sh	否
+DevDocs	DevDocs	工具	API文档,开发者工具,离线文档	聚合100+API文档的在线浏览器	聚合了100多种编程语言和框架的API文档，支持离线使用，提供快速搜索功能，是开发者的必备工具。	https://devdocs.io	否
+explainshell	explainshell	工具	Shell命令,命令行,开发者工具	Shell命令参数解析工具	输入Shell命令即可解析每个参数的含义和用法，支持多种Linux发行版的man页面，是命令行用户的得力助手。	https://explainshell.com	否
+PDF24 Tools	PDF24 Tools	工具	PDF工具,PDF合并,PDF压缩,PDF转换	免费在线PDF工具集	提供PDF合并、拆分、压缩、编辑、转换等全方位PDF处理工具，完全免费无限制，无需注册即可使用。	https://tools.pdf24.org	否
+Convertio	Convertio	工具	文件转换,格式转换,在线转换	支持300+格式的文件转换器	支持300多种文件格式的在线转换工具，涵盖文档、图片、音频、视频等，上传文件即可快速转换格式。	https://convertio.co	否
+Hemingway Editor	Hemingway Editor	工具	写作辅助,语法检查,文本优化	写作清晰度检查工具	自动检测并高亮显示冗长复杂的句子、被动语态和可简化的用词，帮助写出更清晰有力的文章。	https://hemingwayapp.com	否
+YayText	YayText	工具	花体字,字体生成,社交文本	花体字文本生成器	提供24种以上的花式字体风格，可将普通文字转换为特殊Unicode字体，适用于Instagram、Twitter等社交平台。	https://yaytext.app	否
+unDraw	unDraw	设计	开源插画,SVG,UI素材,免费素材	开源矢量插画库	提供大量免费开源的SVG插画素材，支持自定义主色调，可商用无需署名，适合网页设计和产品UI使用。	https://undraw.co	否
+TOOOLS.design	TOOOLS.design	设计	设计资源,设计工具,素材库	设计师资源与工具导航	收录2200+设计资源和工具的导航网站，每周更新，涵盖AI工具、图标、插画、配色、字体等分类。	https://www.toools.design	否
+bigjpg	bigjpg	工具	图片放大,AI放大,超分辨率,动漫图片	AI图片无损放大工具	基于深度卷积神经网络的图片放大工具，对动漫风格图片效果极佳，支持2倍到16倍放大且不失真。	https://bigjpg.com	否
+Wallhaven	Wallhaven	设计	壁纸,高清壁纸,4K壁纸,桌面壁纸	高质量壁纸分享社区	专注于高质量桌面壁纸的分享社区，提供4K、8K超高清壁纸，支持按分辨率、比例、颜色等多维度筛选。	https://wallhaven.cc	否
+SteamPY	SteamPY	游戏	Steam,饰品交易,CSGO,CS2	Steam饰品交易平台	Steam游戏饰品交易平台，支持CSGO/CS2等游戏的皮肤、饰品买卖，价格透明交易安全。	https://www.steampy.com	是
+Epic商城	Epic Games	游戏	游戏平台,Epic,免费游戏,游戏商城	Epic Games游戏商城	Epic Games官方游戏商城，每周提供免费游戏领取，拥有《堡垒之夜》等热门游戏及多平台发行服务。	https://www.epicgames.com	是
+Origin	Origin	游戏	游戏平台,EA,Origin,游戏商城	EA官方游戏平台	Electronic Arts官方游戏平台，提供《极品飞车》《FIFA》《战地》等EA旗下游戏的下载和在线服务。	https://www.origin.com	是
+利尔无尽游戏	Lilith Games	游戏	游戏公司,莉莉丝,手游,游戏开发	莉莉丝游戏官方网站	莉莉丝游戏是中国知名游戏开发商，代表作包括《刀塔传奇》《小冰冰传奇》《万国觉醒》等。	https://www.lilithgames.com	否
+MoeUB	MoeUB	游戏	CSGO,CS2,服务器列表,饰品预览	CSGO/CS2服务器列表与饰品预览	提供CSGO/CS2游戏服务器列表查询和饰品预览功能，方便玩家查找服务器和查看饰品外观。	https://csgo.moeub.cn	是
+CSInspect	CSInspect	游戏	CSGO,CS2,皮肤预览,饰品检视	CSGO/CS2饰品检视器	在线CSGO/CS2饰品3D检视工具，可预览武器皮肤外观、查看饰品详情和Steam市场链接。	https://www.csinspect.com	是
+CS2贴纸编辑器	Stash	游戏	CS2,贴纸编辑器,CSGO,饰品定制	CS2贴纸编辑器	CS2/CSGO贴纸编辑和组合工具，支持自定义贴纸布局和预览效果，方便玩家设计专属武器外观。	https://stash.clash.gg	是
+种子地图	Chunkbase	游戏	Minecraft,种子查询,地图生成,地形查看	Minecraft种子地图查询工具	输入Minecraft种子即可查看世界地形预览、村庄位置、结构分布等地图信息，支持多种查看模式。	https://www.chunkbase.com	是
+风灵月影	Fling Trainer	游戏	修改器,游戏修改,风灵月影,PC游戏	游戏修改器合集站	收录大量PC游戏的内存修改器，一键激活作弊功能如无限生命、无限弹药等，方便游戏体验。	https://flingtrainer.com	是
+CCTV节目官网	央视网	视频	央视,CCTV,电视直播,新闻,综艺	中央电视台节目官方网站	央视网提供CCTV各频道电视直播、节目回放、新闻播报、综艺体育赛事等视频内容在线观看。	https://tv.cctv.com	否
+SaveTwitter	SaveTwitter	工具	推特下载,视频下载,X视频下载	推特视频下载工具	支持下载Twitter/X平台上的视频和GIF动图，粘贴链接即可快速下载，无需登录。	https://savetwitter.net	是
+VlogDownloader	VlogDownloader	工具	视频解析,视频下载,在线下载	免费在线视频解析下载	支持多个主流视频平台的在线解析下载，输入视频链接即可获取下载地址，支持多种格式。	https://pv.vlogdownloader.com	否
+新华字典	新华字典在线	工具	字典,查字,汉语字典,拼音查询	在线新华字典查询	在线新华字典查询工具，支持汉字拼音输入、笔画查询、部首检索、释义解释等功能。	https://zidian.gushici.net	否
+茶杯狐	茶杯狐	工具	影视搜索,电影搜索,在线观影	影视资源搜索平台	聚合多个视频源的影视搜索平台，输入电影或电视剧名称即可搜索在线观看链接。	https://www.cupfox.com	是
+笔趣阁	笔趣阁	工具	网络小说,小说阅读,TXT下载	网络小说阅读网站	提供各类网络小说在线阅读服务，涵盖玄幻、都市、历史、科幻等丰富题材，更新及时阅读体验良好。	https://m.bige7.com	否
+龙族5	龙族5小说	工具	小说,龙族,网络文学,在线阅读	龙族5小说在线阅读	提供《龙族5》小说的在线阅读服务，延续江南原著世界观，继续讲述混血种少年的热血故事。	https://www.777zw.net	否
+英国地址生成器	美国地址生成器	工具	地址生成,虚拟地址,测试数据,身份生成	多国地址信息生成器	可随机生成美国、英国、加拿大等多国虚拟地址、身份信息、信用卡信息等，适用于开发测试。	https://www.meiguodizhi.com	否
+金投网	金投网	金融	白银价格,黄金价格,期货,金融行情	贵金属价格行情网站	提供白银、黄金等贵金属实时价格行情、走势图、市场分析，是贵金属投资者常用的行情查询平台。	https://www.jinjia.com.cn	否
+无影云电脑	阿里云无影	工具	云电脑,阿里云,远程桌面,云计算	阿里云无影云电脑	阿里云推出的云电脑服务，在云端提供完整的Windows/Mac电脑体验，无需高性能硬件即可办公使用。	https://wuying.aliyun.com	否
+麦高中枢	MCHOSE麦高	工具	驱动,键盘驱动,鼠标驱动,外设驱动	麦高外设驱动管理中心	麦高品牌外设驱动管理软件，支持键盘、鼠标等外设的驱动更新和个性化设置配置。	https://www.mchose.com.cn	否
+iCloud	iCloud	电子	苹果云服务,云存储,同步,备份	苹果iCloud云服务	苹果公司提供的云服务，支持照片、通讯录、备忘录等数据跨设备同步，提供iCloud云盘和查找功能。	https://www.icloud.com	否
+联通路由器	联通路由器后台	工具	路由器,网络设置,宽带管理,联通	联通光猫路由器管理后台	中国联通提供的光猫/路由器本地管理后台地址，用于配置宽带设置、WiFi密码等网络参数。	http://192.168.101.1	否
+韦伯望远镜	NASA Webb Telescope	科技	NASA,太空,望远镜,天文,照片	詹姆斯·韦伯太空望远镜	NASA詹姆斯·韦伯太空望远镜的官方Flickr相册，发布深空宇宙高清照片和科学发现成果。	https://www.flickr.com	否
+Yandex	Yandex	科技	搜索引擎,俄罗斯,图片搜索,反向搜索	俄罗斯最大搜索引擎	俄罗斯最大的搜索引擎和互联网服务公司，提供搜索、邮箱、地图、翻译等服务，图片反向搜索功能强大。	https://yandex.com	是
+Plati	Plati.GG	游戏	XGP,游戏兑换,Steam,游戏密钥	游戏数字商品交易平台	全球游戏数字商品交易平台，提供Xbox Game Pass兑换码、Steam游戏密钥等虚拟商品买卖。	https://plati.com	是
+Blackmagic Design	Blackmagic Design	工具	达芬奇,视频剪辑,调色	专业视频后期制作公司	Blackmagic Design旗下达芬奇是全球领先的调色和剪辑软件。	https://www.blackmagicdesign.com	否
+腾讯元宝	腾讯元宝AI助手	AI	人工智能,AI助手,大模型	腾讯推出的AI助手	腾讯推出的AI助手，集成混元大模型，支持对话、文档理解、图像识别等能力，深度打通微信生态。	https://yuanbao.tencent.com	否
+秘塔AI搜索	Metaso	AI	人工智能,AI搜索,大模型	新一代AI搜索引擎	基于大模型的AI搜索引擎，无广告、结果带来源溯源，支持学术、播客等垂直搜索。	https://metaso.cn	否
+LeetCode	力扣	教育	编程开发,在线学习	算法刷题平台	全球知名算法与编程面试刷题平台，提供题库、竞赛、面试模拟与题解社区。	https://leetcode.cn	否
+秀米	秀米XIUMI	设计	设计工具,办公协作	微信图文排版工具	微信公众号图文排版工具，提供海量模板与组件，可视化拖拽排版。	https://xiumi.us	否
+5sing	5sing原创音乐	音乐	音乐	原创音乐分享平台	中国原创音乐基地，原创歌手与音乐人上传、分享与交流作品。	https://5sing.kugou.com	否
+TinyPNG	TinyPNG	工具	图片处理,效率工具	图片智能压缩	在线PNG/JPEG/WebP智能压缩，显著减小体积同时保持画质。	https://tinypng.com	是
+Smallpdf	Smallpdf	工具	效率工具,办公协作	PDF在线工具箱	一站式在线PDF处理：压缩、转换、合并、拆分、签名等。	https://smallpdf.com	是
+文叔叔	文叔叔	工具	效率工具,云盘存储	免注册大文件传输	无需注册即可在线发送大文件的临时传输工具，支持二维码与链接分享。	https://www.wenshushu.cn	否
+少数派	少数派	科技	新闻资讯,效率工具	数字生活媒体	专注科技与数字生活方式的媒体社区，深度评测与效率工具分享。	https://sspai.com	否
+36氪	36氪	科技	新闻资讯	科技创投媒体	深度报道科技、创投与商业动态的媒体平台。	https://36kr.com	否
+即刻	即刻	社交	社交媒体	兴趣话题社区	围绕兴趣话题的社交社区，关注圈子与即时讨论。	https://web.okjike.com	否
+欧路词典	欧路词典	教育	在线学习,知识百科	多语种在线词典	支持中英日德法等多语种的在线词典与翻译工具。	https://dict.eudic.net	否
+Regex101	Regex101	工具	编程开发,效率工具	正则表达式测试	在线正则表达式测试与调试，实时解释与高亮匹配。	https://regex101.com	是
+Coolors	Coolors	设计	设计灵感素材,设计工具	配色方案生成器	在线生成与浏览配色方案，支持导出与灵感收藏。	https://coolors.co	是
+酷家乐	酷家乐	设计	设计工具	在线家装设计	在线家居装修设计平台，快速生成户型图与效果图。	https://www.kujiale.com	否
+CodePen	CodePen	开发	编程开发,设计工具	前端代码分享	在线前端代码编辑与分享社区，支持HTML/CSS/JS实时预览。	https://codepen.io	是
+JSFiddle	JSFiddle	开发	编程开发	在线代码调试	在线JS/HTML/CSS调试与协作工具。	https://jsfiddle.net	是
+W3Schools	W3Schools	教育	编程开发,在线学习	Web开发教程	免费Web开发教程与在线练习，覆盖HTML/CSS/JS等前端技术。	https://www.w3schools.com	是
+幕布	幕布	工具	效率工具,办公协作	大纲笔记工具	大纲式笔记与思维导图一键互转，适合结构化记录与思考。	https://mubu.com	否
+draw.io	draw.io	工具	效率工具,设计工具	免费流程图绘制	免费在线流程图、架构图、UML图绘制工具，支持云盘导入导出。	https://app.diagrams.net	是
+大英百科	大英百科全书	教育	知识百科,在线学习	权威英文百科	全球权威英文百科全书，条目经专家审校，覆盖几乎所有学科。	https://www.britannica.com	是
+雪球	雪球	金融	金融理财,新闻资讯	投资者社区	股票投资者交流社区，行情、讨论、组合与问答。	https://xueqiu.com	否
+天天基金	天天基金	金融	金融理财	基金交易平台	东方财富旗下基金销售与净值查询平台，覆盖全市场基金。	https://fund.eastmoney.com	否
+Axure原型	Axure 项目原型	政务	效率工具,设计工具	Axure 原型项目页面	在 Axure 原型托管平台 project.axureshow.com 上发布的原型项目页面。	http://un6xlfjk.project.axureshow.com/	否
+国家政务服务平台	国家政务服务平台	政务	政务,服务,办事	全国一体化在线政务服务平台	面向企业和群众的全国一体化政务服务平台，汇聚各类政务服务事项，提供在线办理入口。	https://gjzwfw.www.gov.cn	否
+民政部	中华人民共和国民政部	政务	政务,民政,政策	民政部官方网站	民政部官网，发布民政政策法规、社会救助、养老服务等权威政务信息。	https://www.mca.gov.cn	否
+外交部	中华人民共和国外交部	政务	政务,外交,领事	外交部官方网站	外交部官网，发布外交政策、领事服务、出国提醒、外交动态等权威信息。	https://www.mfa.gov.cn	否
+国家统计局	国家统计局	政务	政务,统计,数据	国家统计局官方网站	国家统计局官网，发布国民经济和社会发展统计数据、普查结果与统计公报。	https://www.stats.gov.cn	否
+国家税务总局	国家税务总局	政务	政务,税务,办税	国家税务总局官方网站	税务总局官网，提供税收政策法规、纳税服务指南与办税服务入口。	https://www.chinatax.gov.cn	否
+OpenAI	OpenAI	AI	人工智能,大模型	美国AI研究公司	开发 ChatGPT、GPT 系列等前沿大模型的 AI 研究机构。	https://openai.com	是
+Anthropic	Anthropic	AI	人工智能,大模型	AI安全公司	开发 Claude 系列大模型的 AI 安全研究公司。	https://www.anthropic.com	是
+Gemini	Google Gemini	AI	人工智能,大模型	谷歌AI助手	谷歌出品的多模态大模型与 AI 助手。	https://gemini.google.com	是
+Midjourney	Midjourney	AI	人工智能,AI绘画	AI绘画工具	通过文本描述生成高质量图像的 AI 绘画平台。	https://www.midjourney.com	是
+Stable Diffusion	Stable Diffusion	AI	人工智能,AI绘画	开源AI绘画	开源文本生成图像模型，可在本地部署。	https://stability.ai	是
+Hugging Face	Hugging Face	AI	人工智能,大模型,开源	AI模型社区	全球最大的开源 AI 模型与数据集社区，可在线体验模型。	https://huggingface.co	是
+文心一言	百度文心一言	AI	人工智能,大模型	百度AI对话	百度研发的大语言模型与 AI 对话助手。	https://yiyan.baidu.com	否
+通义千问	阿里通义千问	AI	人工智能,大模型	阿里AI助手	阿里巴巴研发的大语言模型，支持对话与创作。	https://tongyi.aliyun.com	否
+豆包	字节豆包	AI	人工智能,大模型	字节AI助手	字节跳动出品的 AI 对话与创作助手。	https://www.doubao.com	否
+Kimi	月之暗面Kimi	AI	人工智能,大模型	长文本AI	月之暗面出品的长文本 AI 助手。	https://www.kimi.com	否
+DeepSeek	DeepSeek深度求索	AI	人工智能,大模型	开源AI	深度求索研发的开源大语言模型与对话助手。	https://www.deepseek.com	否
+智谱AI	智谱AI清言	AI	人工智能,大模型	国产AI	智谱AI出品的大语言模型平台，支持对话与开放平台。	https://chatglm.cn	否
+秘塔AI搜索	秘塔AI搜索	AI	人工智能,搜索	AI搜索引擎	无广告的 AI 智能搜索，支持学术搜索。	https://metaso.cn	否
+夸克	夸克AI	AI	人工智能,搜索,浏览器	智能搜索	阿里巴巴出品的智能搜索与浏览器应用。	https://www.quark.cn	否
+讯飞星火	讯飞星火认知大模型	AI	人工智能,大模型	科大讯飞AI	科大讯飞研发的认知大模型。	https://xinghuo.xfyun.cn	否
+腾讯元宝	腾讯元宝	AI	人工智能,大模型	腾讯AI	腾讯出品的 AI 助手应用。	https://yuanbao.tencent.com	否
+百度搜索	百度搜索	工具	搜索引擎,效率工具	中文搜索引擎	全球最大的中文搜索引擎。	https://www.baidu.com	否
+必应	Microsoft Bing	工具	搜索引擎,效率工具	微软搜索引擎	微软出品的搜索引擎，整合 AI 搜索。	https://www.bing.com	否
+Google	Google搜索	工具	搜索引擎,效率工具	全球搜索引擎	全球最流行的搜索引擎。	https://www.google.com	是
+搜狗	搜狗搜索	工具	搜索引擎,效率工具	中文搜索	搜狐系中文搜索引擎。	https://www.sogou.com	否
+360搜索	360搜索	工具	搜索引擎,效率工具	中文搜索	360 出品的搜索引擎。	https://www.so.com	否
+夸克浏览器	夸克浏览器	工具	浏览器,效率工具	智能浏览器	阿里巴巴出品的智能浏览器。	https://www.quark.cn	否
+Chrome	Google Chrome	工具	浏览器,效率工具	谷歌浏览器	谷歌出品的流行浏览器。	https://www.google.com/chrome/	是
+Edge	Microsoft Edge	工具	浏览器,效率工具	微软浏览器	微软出品的浏览器。	https://www.microsoft.com/edge	是
+Firefox	Mozilla Firefox	工具	浏览器,效率工具	火狐浏览器	Mozilla 出品的开源浏览器。	https://www.mozilla.org/firefox/	是
+微信	微信官网	社交	社交媒体,即时通讯	腾讯即时通讯	腾讯旗下国民级即时通讯软件。	https://weixin.qq.com	否
+QQ	QQ官网	社交	社交媒体,即时通讯	腾讯通讯	腾讯经典即时通讯软件。	https://im.qq.com	否
+抖音	抖音	视频与直播	短视频,社交媒体	字节短视频	字节跳动出品的短视频平台。	https://www.douyin.com	否
+快手	快手	视频与直播	短视频,社交媒体	短视频平台	国内主流短视频平台。	https://www.kuaishou.com	否
+微信视频号	微信视频号	视频与直播	短视频,社交媒体	微信短视频	微信生态内的短视频平台。	https://channels.weixin.qq.com	否
+哔哩哔哩	哔哩哔哩	视频与直播	二次元,视频,社交媒体	视频社区	国内领先的二次元与视频弹幕社区。	https://www.bilibili.com	否
+腾讯视频	腾讯视频	视频与直播	视频,影视	在线视频	腾讯旗下在线视频平台。	https://v.qq.com	否
+优酷	优酷	视频与直播	视频,影视	在线视频	阿里巴巴旗下视频平台。	https://www.youku.com	否
+爱奇艺	爱奇艺	视频与直播	视频,影视	在线视频	国内主流在线视频平台。	https://www.iqiyi.com	否
+芒果TV	芒果TV	视频与直播	视频,影视	在线视频	湖南广电旗下视频平台。	https://www.mgtv.com	否
+西瓜视频	西瓜视频	视频与直播	视频,短视频	字节视频	字节跳动出品的视频平台。	https://www.ixigua.com	否
+搜狐视频	搜狐视频	视频与直播	视频,影视	在线视频	搜狐旗下视频平台。	https://tv.sohu.com	否
+YouTube	YouTube	视频与直播	视频,影视	全球视频	全球最大的视频分享平台。	https://www.youtube.com	是
+Netflix	Netflix	视频与直播	视频,影视	流媒体	全球知名流媒体平台。	https://www.netflix.com	是
+网易云音乐	网易云音乐	音乐	音乐,音频	在线音乐	国内广受欢迎的音乐平台，以歌单和评论著称。	https://music.163.com	否
+QQ音乐	QQ音乐	音乐	音乐,音频	在线音乐	腾讯旗下在线音乐平台。	https://y.qq.com	否
+酷狗音乐	酷狗音乐	音乐	音乐,音频	在线音乐	老牌在线音乐平台。	https://www.kugou.com	否
+酷我音乐	酷我音乐	音乐	音乐,音频	在线音乐	在线音乐平台。	https://www.kuwo.cn	否
+咪咕音乐	咪咕音乐	音乐	音乐,音频	在线音乐	中国移动旗下音乐平台。	https://music.migu.cn	否
+喜马拉雅	喜马拉雅	音乐	音乐,音频,听书	音频平台	国内领先的有声书与音频内容平台。	https://www.ximalaya.com	否
+网易公开课	网易公开课	教育	在线学习,课程	免费课程	提供国内外名校公开课。	https://open.163.com	否
+中国大学MOOC	中国大学MOOC	教育	在线学习,课程	慕课平台	国内高校大规模在线开放课程平台。	https://www.icourse163.org	否
+学堂在线	学堂在线	教育	在线学习,课程	清华慕课	清华大学发起的慕课平台。	https://www.xuetangx.com	否
+慕课网	慕课网	教育	在线学习,编程	IT教程	专注 IT 技能学习的在线平台。	https://www.imooc.com	否
+B站课堂	哔哩哔哩课堂	教育	在线学习,课程	知识付费	B站出品的在线课程平台。	https://www.bilibili.com	否
+得到	得到	教育	在线学习,知识付费	知识服务	罗辑思维出品的知识付费平台。	https://www.dedao.cn	否
+知乎	知乎	社交	社交媒体,问答	中文问答	国内领先的知识问答社区。	https://www.zhihu.com	否
+微博	微博	社交	社交媒体,资讯	社交媒体	国内主流社交媒体平台。	https://weibo.com	否
+小红书	小红书	社交	社交媒体,生活方式	内容社区	生活方式分享社区。	https://www.xiaohongshu.com	否
+豆瓣	豆瓣	社交	社交媒体,书影音	文化社区	书影音评分与兴趣社区。	https://www.douban.com	否
+贴吧	百度贴吧	社交	社交媒体,论坛	中文社区	百度旗下中文社区。	https://tieba.baidu.com	否
+天涯	天涯社区	社交	社交媒体,论坛	老牌社区	老牌中文网络社区。	https://www.tianya.cn	否
+淘宝	淘宝网	电商	电商购物,网购	电商平台	国内最大的电商平台之一。	https://www.taobao.com	否
+天猫	天猫	电商	电商购物,网购	电商平台	阿里巴巴旗下电商平台。	https://www.tmall.com	否
+京东	京东商城	电商	电商购物,网购	电商平台	国内领先的自营电商平台。	https://www.jd.com	否
+拼多多	拼多多	电商	电商购物,网购	电商平台	主打低价拼团的电商平台。	https://www.pinduoduo.com	否
+苏宁易购	苏宁易购	电商	电商购物,网购	电商平台	老牌家电与综合电商。	https://www.suning.com	否
+唯品会	唯品会	电商	电商购物,网购	特卖电商	主打品牌特卖的电商平台。	https://www.vip.com	否
+美团	美团	出行	生活服务,外卖	本地生活	本地生活服务平台。	https://www.meituan.com	否
+饿了么	饿了么	出行	生活服务,外卖	外卖平台	阿里旗下本地生活外卖平台。	https://www.ele.me	否
+大众点评	大众点评	出行	生活服务,点评	本地生活	吃喝玩乐点评平台。	https://www.dianping.com	否
+携程旅行	携程旅行	出行	生活服务,旅游	在线旅游	国内领先的在线旅游平台。	https://www.ctrip.com	否
+去哪儿旅行	去哪儿旅行	出行	生活服务,旅游	在线旅游	在线旅游搜索与预订平台。	https://www.qunar.com	否
+飞猪旅行	飞猪旅行	出行	生活服务,旅游	在线旅游	阿里巴巴旗下旅游平台。	https://www.fliggy.com	否
+12306	12306中国铁路	出行	生活服务,交通	铁路购票	中国铁路官方购票网站。	https://www.12306.cn	否
+滴滴出行	滴滴出行	出行	生活服务,出行	网约车	国内领先的网约车平台。	https://www.didiglobal.com	否
+高德地图	高德地图	出行	生活服务,地图	地图导航	阿里巴巴旗下地图导航平台。	https://www.amap.com	否
+百度地图	百度地图	出行	生活服务,地图	地图导航	百度旗下地图导航。	https://map.baidu.com	否
+腾讯地图	腾讯地图	出行	生活服务,地图	地图导航	腾讯旗下地图导航。	https://map.qq.com	否
+墨迹天气	墨迹天气	出行	生活服务,天气	天气应用	国内知名天气应用。	https://www.moji.com	否
+中国天气	中国天气网	出行	生活服务,天气	天气预报	中国气象局官方天气网站。	http://www.weather.com.cn	否
+今日头条	今日头条	媒体	新闻资讯,资讯	资讯平台	字节跳动出品的资讯平台。	https://www.toutiao.com	否
+腾讯新闻	腾讯新闻	媒体	新闻资讯,资讯	新闻资讯	腾讯旗下新闻资讯平台。	https://news.qq.com	否
+网易新闻	网易新闻	媒体	新闻资讯,资讯	新闻资讯	网易旗下新闻资讯平台。	https://news.163.com	否
+新浪新闻	新浪新闻	媒体	新闻资讯,资讯	新闻资讯	新浪旗下新闻资讯平台。	https://news.sina.com.cn	否
+澎湃新闻	澎湃新闻	媒体	新闻资讯,资讯	新闻资讯	上海报业集团旗下新闻平台。	https://www.thepaper.cn	否
+凤凰网	凤凰网	媒体	新闻资讯,资讯	新闻门户	华语媒体门户网站。	https://www.ifeng.com	否
+财新网	财新网	媒体	新闻资讯,财经	财经新闻	专业财经新闻媒体。	https://www.caixin.com	否
+第一财经	第一财经	媒体	新闻资讯,财经	财经资讯	上海广播电视台旗下财经媒体。	https://www.yicai.com	否
+东方财富	东方财富	金融	金融理财,股票	财经门户	国内领先的财经资讯与股票数据平台。	https://www.eastmoney.com	否
+同花顺	同花顺	金融	金融理财,股票	股票软件	国内知名股票行情与分析软件。	https://www.10jqka.com.cn	否
+雪球	雪球	金融	金融理财,投资	投资社区	投资交流与行情社区。	https://xueqiu.com	否
+支付宝	支付宝	金融	金融理财,支付	移动支付	蚂蚁集团旗下移动支付平台。	https://www.alipay.com	否
+微信支付	微信支付	金融	金融理财,支付	移动支付	微信生态内的移动支付。	https://pay.weixin.qq.com	否
+招商银行	招商银行	金融	金融理财,银行	网上银行	招商银行官方网站与网上银行。	https://www.cmbchina.com	否
+工商银行	工商银行	金融	金融理财,银行	网上银行	中国工商银行官方网站。	https://www.icbc.com.cn	否
+建设银行	建设银行	金融	金融理财,银行	网上银行	中国建设银行官方网站。	https://www.ccb.com	否
+农业银行	农业银行	金融	金融理财,银行	网上银行	中国农业银行官方网站。	https://www.abchina.com	否
+中国银行	中国银行	金融	金融理财,银行	网上银行	中国银行官方网站。	https://www.boc.cn	否
+网易邮箱	网易邮箱	工具	邮箱,效率工具	电子邮箱	国内常用的免费邮箱服务。	https://mail.163.com	否
+QQ邮箱	QQ邮箱	工具	邮箱,效率工具	电子邮箱	腾讯旗下免费邮箱。	https://mail.qq.com	否
+新浪邮箱	新浪邮箱	工具	邮箱,效率工具	电子邮箱	新浪旗下免费邮箱。	https://mail.sina.com.cn	否
+Gmail	Gmail	工具	邮箱,效率工具	谷歌邮箱	谷歌出品的电子邮箱。	https://mail.google.com	是
+阿里云	阿里云	工具	云服务,云计算	云计算	阿里巴巴旗下云计算平台。	https://www.aliyun.com	否
+腾讯云	腾讯云	工具	云服务,云计算	云计算	腾讯旗下云计算平台。	https://cloud.tencent.com	否
+华为云	华为云	工具	云服务,云计算	云计算	华为旗下云计算平台。	https://www.huaweicloud.com	否
+百度智能云	百度智能云	工具	云服务,云计算	云计算	百度旗下云计算平台。	https://cloud.baidu.com	否
+京东云	京东云	工具	云服务,云计算	云计算	京东旗下云计算平台。	https://www.jdcloud.com	否
+百度网盘	百度网盘	工具	云盘存储,网盘	云存储	百度旗下网盘服务。	https://pan.baidu.com	否
+阿里云盘	阿里云盘	工具	云盘存储,网盘	云存储	阿里巴巴旗下网盘服务。	https://www.alipan.com	否
+腾讯微云	腾讯微云	工具	云盘存储,网盘	云存储	腾讯旗下网盘服务。	https://www.weiyun.com	否
+123云盘	123云盘	工具	云盘存储,网盘	云存储	免费网盘服务。	https://www.123pan.com	否
+坚果云	坚果云	工具	云盘存储,网盘	云存储	同步网盘服务。	https://www.jianguoyun.com	否
+iCloud	iCloud	工具	云盘存储,网盘	苹果云服务	苹果官方云服务。	https://www.icloud.com	是
+GitHub	GitHub	开发	编程开发,开源	代码托管	全球最大的代码托管平台。	https://github.com	是
+Gitee	码云Gitee	开发	编程开发,开源	代码托管	国内流行的代码托管平台。	https://gitee.com	否
+CSDN	CSDN	开发	编程开发,技术社区	技术社区	国内最大的中文技术社区。	https://www.csdn.net	否
+博客园	博客园	开发	编程开发,技术博客	技术博客	国内技术博客平台。	https://www.cnblogs.com	否
+掘金	掘金	开发	编程开发,技术社区	技术社区	面向开发者的技术社区。	https://juejin.cn	否
+菜鸟教程	菜鸟教程	开发	编程开发,教程	编程教程	提供各种编程语言的入门教程。	https://www.runoob.com	否
+廖雪峰	廖雪峰官方网站	开发	编程开发,教程	编程教程	知名 IT 教程作者的个人网站。	https://www.liaoxuefeng.com	否
+LeetCode	力扣	开发	编程开发,算法	算法刷题	全球知名的算法在线评测平台。	https://leetcode.cn	否
+Stack Overflow	Stack Overflow	开发	编程开发,问答	技术问答	全球最大的程序员问答社区。	https://stackoverflow.com	是
+W3Schools	W3Schools	开发	编程开发,教程	Web教程	流行的 Web 开发在线教程。	https://www.w3schools.com	是
+MDN	MDN Web Docs	开发	编程开发,文档	Web文档	Mozilla 出品的 Web 开发文档。	https://developer.mozilla.org	是
+npm	npm	开发	编程开发,包管理	Node包管理	Node.js 官方包管理器。	https://www.npmjs.com	是
+Vue	Vue.js	开发	编程开发,前端框架	前端框架	流行的前端 JavaScript 框架。	https://vuejs.org	是
+React	React	开发	编程开发,前端框架	前端框架	Meta 出品的前端框架。	https://react.dev	是
+Bootstrap	Bootstrap	开发	编程开发,前端框架	CSS框架	流行的响应式前端框架。	https://getbootstrap.com	是
+Notion	Notion	工具	办公协作,笔记	笔记应用	集笔记、文档与数据库于一体的协作工具。	https://www.notion.so	是
+语雀	语雀	工具	办公协作,笔记	知识库	蚂蚁集团出品的云端知识库。	https://www.yuque.com	否
+飞书	飞书	工具	办公协作,协作	办公协作	字节跳动出品的企业协作平台。	https://www.feishu.cn	否
+钉钉	钉钉	工具	办公协作,协作	办公协作	阿里巴巴出品的企业办公平台。	https://www.dingtalk.com	否
+企业微信	企业微信	工具	办公协作,协作	办公协作	腾讯出品的企业办公应用。	https://work.weixin.qq.com	否
+腾讯文档	腾讯文档	工具	办公协作,在线文档	协同文档	腾讯旗下在线协作文档。	https://docs.qq.com	否
+石墨文档	石墨文档	工具	办公协作,在线文档	协同文档	在线协同文档平台。	https://shimo.im	否
+WPS Office	WPS Office	工具	办公协作,办公软件	办公套件	金山出品的办公软件套装。	https://www.wps.cn	否
+Microsoft 365	Microsoft 365	工具	办公协作,办公软件	办公套件	微软出品的云端办公套件。	https://www.office.com	是
+Canva可画	Canva可画	设计	设计工具,在线设计	在线设计	在线平面设计平台。	https://www.canva.cn	是
+稿定设计	稿定设计	设计	设计工具,在线设计	在线设计	国内在线设计平台，提供模板与抠图。	https://www.gaoding.com	否
+创客贴	创客贴	设计	设计工具,在线设计	在线设计	在线设计平台。	https://www.chuangkit.com	否
+图怪兽	图怪兽	设计	设计工具,在线设计	在线设计	在线设计平台。	https://818ps.com	否
+站酷	站酷	设计	设计灵感,素材	设计师社区	国内设计师灵感与作品社区。	https://www.zcool.com.cn	否
+花瓣	花瓣网	设计	设计灵感,素材	灵感采集	图片灵感采集社区。	https://huaban.com	否
+Pixabay	Pixabay	设计	素材,图片	免费图库	免费可商用图片与素材库。	https://pixabay.com	是
+Pexels	Pexels	设计	素材,图片	免费图库	免费高清图库。	https://www.pexels.com	是
+Unsplash	Unsplash	设计	素材,图片	免费图库	免费高清摄影图库。	https://unsplash.com	是
+Figma	Figma	设计	设计工具,UI设计	在线设计	在线 UI/UX 协作设计工具。	https://www.figma.com	是
+Ae/AI	Adobe Creative Cloud	设计	设计工具,创意软件	Adobe工具	Adobe 全家桶软件与订阅。	https://www.adobe.com	是
+剪映	剪映	设计	视频剪辑,工具	视频剪辑	字节跳动出品的视频剪辑工具。	https://www.capcut.cn	否
+爱剪辑	爱剪辑	设计	视频剪辑,工具	视频剪辑	国产视频剪辑软件。	https://www.ijianji.com	否
+新浪	新浪网	媒体	新闻资讯,门户	综合门户	综合门户网站。	https://www.sina.com.cn	否
+网易	网易	媒体	新闻资讯,门户	综合门户	综合门户网站。	https://www.163.com	否
+搜狐	搜狐	媒体	新闻资讯,门户	综合门户	综合门户网站。	https://www.sohu.com	否
+腾讯	腾讯网	媒体	新闻资讯,门户	综合门户	腾讯综合门户。	https://www.qq.com	否
+人民网	人民网	媒体	新闻资讯,政务	权威媒体	人民日报旗下新闻网站。	http://www.people.com.cn	否
+新华网	新华网	媒体	新闻资讯,政务	权威媒体	新华社旗下新闻网站。	http://www.xinhuanet.com	否
+央视网	央视网	媒体	新闻资讯,政务	权威媒体	中央广播电视总台旗下网站。	https://www.cctv.com	否
+环球网	环球网	媒体	新闻资讯,资讯	新闻门户	人民日报社旗下新闻门户。	https://www.huanqiu.com	否
+中关村在线	中关村在线	电子	数码硬件,IT资讯	IT资讯	国内 IT 数码资讯与产品库。	https://www.zol.com.cn	否
+太平洋电脑网	太平洋电脑网	电子	数码硬件,IT资讯	IT资讯	IT 数码资讯网站。	https://www.pconline.com.cn	否
+IT之家	IT之家	电子	数码硬件,IT资讯	IT资讯	科技数码资讯网站。	https://www.ithome.com	否
+驱动之家	驱动之家	电子	数码硬件,驱动	驱动下载	电脑驱动下载网站。	https://www.mydrivers.com	否
+小米商城	小米商城	电子	数码硬件,手机	小米官方	小米官方商城。	https://www.mi.com	否
+华为商城	华为商城	电子	数码硬件,手机	华为官方	华为官方商城。	https://www.vmall.com	否
+OPPO官网	OPPO官网	电子	数码硬件,手机	OPPO官方	OPPO 官方商城。	https://www.oppo.com	否
+vivo官网	vivo官网	电子	数码硬件,手机	vivo官方	vivo 官方商城。	https://www.vivo.com	否
+三星官网	三星电子中国	电子	数码硬件,手机	三星官方	三星中国官网。	https://www.samsung.com/cn/	否
+苹果官网	Apple中国	电子	数码硬件,手机	苹果官方	苹果中国官网。	https://www.apple.com.cn	否
+英特尔	英特尔中国	电子	数码硬件,芯片	Intel官方	英特尔中国官方网站。	https://www.intel.cn	否
+AMD	AMD中国	电子	数码硬件,芯片	AMD官方	AMD 中国官方网站。	https://www.amd.com	是
+英伟达	NVIDIA中国	电子	数码硬件,显卡	NVIDIA官方	英伟达中国官方网站。	https://www.nvidia.cn	否
+京东数码	京东数码	电子	数码硬件,数码	数码商城	京东数码频道。	https://www.jd.com	否
+汽车之家	汽车之家	汽车	汽车,资讯	汽车资讯	国内领先的汽车资讯与报价平台。	https://www.autohome.com.cn	否
+懂车帝	懂车帝	汽车	汽车,资讯	汽车资讯	字节跳动出品的汽车资讯平台。	https://www.dongchedi.com	否
+易车	易车网	汽车	汽车,资讯	汽车资讯	汽车资讯与交易平台。	https://www.yiche.com	否
+太平洋汽车	太平洋汽车	汽车	汽车,资讯	汽车资讯	汽车资讯网站。	https://www.pcauto.com.cn	否
+瓜子二手车	瓜子二手车	汽车	汽车,二手车	二手车交易	国内知名二手车交易平台。	https://www.guazi.com	否
+人人车	人人车	汽车	汽车,二手车	二手车交易	二手车交易平台。	https://www.renrenche.com	否
+58同城	58同城	出行	生活服务,分类信息	分类信息	本地生活分类信息服务。	https://www.58.com	否
+赶集网	赶集网	出行	生活服务,分类信息	分类信息	分类信息服务网站。	https://www.ganji.com	否
+贝壳找房	贝壳找房	出行	生活服务,房产	房产平台	房产交易与服务平台。	https://www.ke.com	否
+安居客	安居客	出行	生活服务,房产	房产平台	房产信息平台。	https://www.anjuke.com	否
+链家	链家	出行	生活服务,房产	房产平台	房产经纪平台。	https://www.lianjia.com	否
+智联招聘	智联招聘	出行	生活服务,招聘	招聘平台	国内知名招聘网站。	https://www.zhaopin.com	否
+前程无忧	前程无忧	出行	生活服务,招聘	招聘平台	知名招聘网站。	https://www.51job.com	否
+BOSS直聘	BOSS直聘	出行	生活服务,招聘	招聘平台	直接与老板沟通的招聘平台。	https://www.zhipin.com	否
+拉勾网	拉勾网	出行	生活服务,招聘	招聘平台	互联网行业招聘平台。	https://www.lagou.com	否
+Steam	Steam	游戏	游戏平台,游戏	游戏平台	全球最大的 PC 游戏数字分发平台。	https://store.steampowered.com	是
+Epic Games	Epic Games Store	游戏	游戏平台,游戏	游戏平台	Epic 出品的游戏商城，每周送游戏。	https://store.epicgames.com	是
+战网	暴雪战网	游戏	游戏平台,游戏	暴雪平台	暴雪游戏平台。	https://www.blizzard.com	是
+GOG	GOG	游戏	游戏平台,游戏	老游戏平台	以 DRM-Free 著称的游戏平台。	https://www.gog.com	是
+itch.io	itch.io	游戏	游戏平台,独立游戏	独立游戏	独立游戏发布平台。	https://itch.io	是
+米哈游	米哈游	游戏	二次元游戏,游戏	游戏公司	《原神》开发商官网。	https://www.mihoyo.com	否
+原神	原神官网	游戏	二次元游戏,游戏	原神	米哈游开放世界游戏官网。	https://ys.mihoyo.com	否
+网易游戏	网易游戏	游戏	游戏平台,游戏	游戏公司	网易游戏官方。	https://game.163.com	否
+腾讯游戏	腾讯游戏	游戏	游戏平台,游戏	游戏公司	腾讯游戏官方。	https://game.qq.com	否
+哔哩哔哩游戏	哔哩哔哩游戏	游戏	游戏平台,游戏	游戏平台	哔哩哔哩游戏中心。	https://game.bilibili.com	否
+4399	4399小游戏	游戏	小游戏,游戏	小游戏平台	在线小游戏平台。	https://www.4399.com	否
+7k7k	7k7k小游戏	游戏	小游戏,游戏	小游戏平台	在线小游戏平台。	https://www.7k7k.com	否
+英雄联盟	英雄联盟官网	游戏	竞技游戏,游戏	MOBA	拳头出品的 MOBA 游戏。	https://lol.qq.com	否
+王者荣耀	王者荣耀官网	游戏	竞技游戏,游戏	手游	腾讯 MOBA 手游。	https://pvp.qq.com	否
+和平精英	和平精英官网	游戏	竞技游戏,游戏	手游	腾讯战术竞技手游。	https://gp.qq.com	否
+永劫无间	永劫无间官网	游戏	竞技游戏,游戏	端游	网易武侠竞技游戏。	https://www.yjwujian.cn	否
+我的世界	我的世界中国版	游戏	沙盒游戏,游戏	沙盒游戏	网易代理的沙盒游戏。	https://www.minecraft.net	是
+CSGO	CS2官网	游戏	射击游戏,游戏	射击游戏	Valve 出品的射击游戏。	https://www.counter-strike.net	是
+DOTA2	DOTA2官网	游戏	MOBA,游戏	MOBA	Valve 出品的 MOBA 游戏。	https://www.dota2.com	是
+星际战甲	星际战甲官网	游戏	射击游戏,游戏	免费游戏	免费第三人称射击游戏。	https://www.warframe.com	是
+上古卷轴	上古卷轴官网	游戏	单机游戏,游戏	单机游戏	Bethesda 出品的单机游戏。	https://elderscrolls.bethesda.net	是
+SteamDB	SteamDB	游戏	游戏数据,游戏	游戏数据	Steam 游戏数据与价格查询。	https://steamdb.info	是
+TapTap	TapTap	游戏	游戏社区,游戏	手游社区	手游社区与下载平台。	https://www.taptap.cn	否
+3DM	3DM游戏	游戏	游戏资讯,游戏	游戏资讯	游戏资讯与攻略网站。	https://www.3dmgame.com	否
+游民星空	游民星空	游戏	游戏资讯,游戏	游戏资讯	游戏资讯与评测网站。	https://www.gamersky.com	否
+斗鱼	斗鱼直播	视频与直播	直播,游戏直播	直播平台	游戏直播平台。	https://www.douyu.com	否
+虎牙直播	虎牙直播	视频与直播	直播,游戏直播	直播平台	游戏直播平台。	https://www.huya.com	否
+B站直播	哔哩哔哩直播	视频与直播	直播,视频	直播平台	哔哩哔哩直播。	https://live.bilibili.com	否
+抖音直播	抖音直播	视频与直播	直播,短视频	直播平台	抖音直播。	https://live.douyin.com	否
+网易CC	网易CC直播	视频与直播	直播,游戏直播	直播平台	网易旗下直播平台。	https://cc.163.com	否
+新浪微博视频	微博视频	视频与直播	短视频,社交媒体	短视频	微博视频频道。	https://weibo.com	否
+好看视频	好看视频	视频与直播	短视频,视频	短视频	百度旗下短视频平台。	https://haokan.baidu.com	否
+腾讯微视	腾讯微视	视频与直播	短视频,视频	短视频	腾讯旗下短视频平台。	https://weishi.qq.com	否
+搜狐视频号	搜狐号	媒体	内容平台,自媒体	自媒体	搜狐自媒体平台。	https://mp.sohu.com	否
+百家号	百家号	媒体	内容平台,自媒体	自媒体	百度自媒体平台。	https://baijiahao.baidu.com	否
+头条号	头条号	媒体	内容平台,自媒体	自媒体	今日头条自媒体平台。	https://mp.toutiao.com	否
+微信公众号	微信公众平台	媒体	内容平台,自媒体	自媒体	微信公众号平台。	https://mp.weixin.qq.com	否
+网易云音乐歌单	网易云音乐	音乐	音乐,歌单	在线音乐	网易云音乐。	https://music.163.com	否
+Spotify	Spotify	音乐	音乐,流媒体	在线音乐	全球知名音乐流媒体。	https://open.spotify.com	是
+Apple Music	Apple Music	音乐	音乐,流媒体	在线音乐	苹果音乐服务。	https://music.apple.com	是
+QQ音乐网页版	QQ音乐网页版	音乐	音乐,音频	在线音乐	QQ 音乐网页版。	https://y.qq.com	否
+千千音乐	千千音乐	音乐	音乐,音频	在线音乐	百度旗下音乐平台。	https://music.taihe.com	否
+荔枝FM	荔枝FM	音乐	音频,播客	播客平台	音频播客平台。	https://www.lizhi.fm	否
+蜻蜓FM	蜻蜓FM	音乐	音频,电台	音频平台	在线电台与音频。	https://www.qingting.fm	否
+懒人听书	懒人听书	音乐	音频,听书	有声书	有声书平台。	https://www.lrts.me	否
+企鹅FM	企鹅FM	音乐	音频,电台	音频平台	腾讯音频平台。	https://fm.qq.com	否
+中国知网	中国知网	教育	学术,论文	学术文献	国内学术文献数据库。	https://www.cnki.net	否
+万方数据	万方数据	教育	学术,论文	学术文献	学术文献数据库。	https://www.wanfangdata.com.cn	否
+维普	维普期刊	教育	学术,论文	学术文献	期刊文献数据库。	https://www.cqvip.com	否
+百度学术	百度学术	教育	学术,论文	学术搜索	学术文献搜索。	https://xueshu.baidu.com	否
+谷粉学术	谷粉学术	教育	学术,论文	学术搜索	谷歌学术镜像。	https://gfsoso.99lb.net	否
+网易有道	有道	教育	在线学习,翻译	学习工具	有道词典与学习工具。	https://www.youdao.com	否
+沪江网校	沪江网校	教育	在线学习,外语	语言学习	在线外语学习平台。	https://class.hujiang.com	否
+多邻国	多邻国	教育	在线学习,外语	语言学习	免费语言学习平台。	https://www.duolingo.com	是
+Coursera	Coursera	教育	在线学习,课程	慕课平台	国际名校在线课程。	https://www.coursera.org	是
+Udemy	Udemy	教育	在线学习,课程	在线课程	在线技能课程平台。	https://www.udemy.com	是
+edX	edX	教育	在线学习,课程	慕课平台	国际慕课平台。	https://www.edx.org	是
+Khan Academy	可汗学院	教育	在线学习,课程	免费课程	非营利在线教育平台。	https://www.khanacademy.org	是
+极客时间	极客时间	教育	在线学习,IT	IT课程	面向开发者的知识付费平台。	https://time.geekbang.org	否
+网易云课堂	网易云课堂	教育	在线学习,课程	在线课程	网易在线课程平台。	https://study.163.com	否
+腾讯课堂	腾讯课堂	教育	在线学习,课程	在线课程	腾讯在线课程平台。	https://ke.qq.com	否
+百度翻译	百度翻译	工具	翻译,效率工具	翻译工具	在线翻译。	https://fanyi.baidu.com	否
+谷歌翻译	谷歌翻译	工具	翻译,效率工具	翻译工具	谷歌在线翻译。	https://translate.google.com	是
+有道翻译	有道翻译	工具	翻译,效率工具	翻译工具	在线翻译。	https://fanyi.youdao.com	否
+DeepL	DeepL翻译	工具	翻译,效率工具	翻译工具	高质量机器翻译。	https://www.deepl.com	是
+金山词霸	金山词霸	工具	词典,效率工具	词典	在线词典。	https://www.iciba.com	否
+百度文库	百度文库	工具	文档,效率工具	文档库	在线文档库。	https://wenku.baidu.com	否
+道客巴巴	道客巴巴	工具	文档,效率工具	文档库	在线文档分享。	https://www.doc88.com	否
+豆丁网	豆丁网	工具	文档,效率工具	文档库	在线文档分享。	https://www.docin.com	否
+腾讯云开发	腾讯云开发	开发	云计算,后端	云开发	腾讯云开发平台。	https://cloud.tencent.com	否
+Vercel	Vercel	开发	前端部署,部署	前端部署	前端项目部署平台。	https://vercel.com	是
+Netlify	Netlify	开发	前端部署,部署	前端部署	静态网站托管平台。	https://www.netlify.com	是
+GitLab	GitLab	开发	代码托管,DevOps	代码托管	DevOps 平台。	https://gitlab.com	是
+Bitbucket	Bitbucket	开发	代码托管,DevOps	代码托管	Atlassian 代码托管。	https://bitbucket.org	是
+Docker	Docker Hub	开发	容器,DevOps	容器仓库	Docker 容器镜像仓库。	https://hub.docker.com	是
+Node.js	Node.js	开发	后端,JavaScript	运行时	Node.js 官方文档。	https://nodejs.org	是
+Python	Python	开发	编程语言,文档	编程语言	Python 官方。	https://www.python.org	是
+MDN JS	MDN JavaScript	开发	编程开发,文档	前端文档	JS 文档。	https://developer.mozilla.org	是
+CodePen	CodePen	开发	前端,在线编辑	在线编辑	前端代码在线分享。	https://codepen.io	是
+JSFiddle	JSFiddle	开发	前端,在线编辑	在线编辑	在线代码调试。	https://jsfiddle.net	是
+Regex101	Regex101	开发	正则,工具	正则测试	在线正则表达式测试。	https://regex101.com	是
+Can I Use	Can I Use	开发	前端,兼容性	浏览器兼容	浏览器特性兼容性查询。	https://caniuse.com	是
+ESLint	ESLint	开发	前端,代码规范	代码规范	JS 代码检查工具。	https://eslint.org	是
+Prettier	Prettier	开发	前端,代码格式化	代码格式化	代码格式化工具。	https://prettier.io	是
+Tailwind	Tailwind CSS	开发	前端,CSS框架	CSS框架	实用类 CSS 框架。	https://tailwindcss.com	是
+耐克	Nike中国	运动户外	运动,运动装备	运动品牌	耐克中国官网。	https://www.nike.com.cn	是
+阿迪达斯	Adidas中国	运动户外	运动,运动装备	运动品牌	阿迪达斯中国官网。	https://www.adidas.com.cn	是
+安踏	安踏体育	运动户外	运动,运动装备	运动品牌	安踏官方商城。	https://www.anta.com	否
+李宁	李宁官方	运动户外	运动,运动装备	运动品牌	李宁官方商城。	https://www.lining.com	否
+鸿星尔克	鸿星尔克	运动户外	运动,运动装备	运动品牌	鸿星尔克官网。	https://www.erke.com	否
+迪卡侬	迪卡侬	运动户外	运动,运动装备	运动零售	迪卡侬中国官网。	https://www.decathlon.com.cn	否
+始祖鸟	Arc'teryx始祖鸟	运动户外	运动,户外	户外品牌	始祖鸟官方。	https://www.arcteryx.com	是
+探路者	探路者	运动户外	户外,运动	户外品牌	户外用品品牌。	https://www.toread.com.cn	否
+骆驼	Camel骆驼	运动户外	户外,运动	户外品牌	户外用品品牌。	https://www.camel.com.cn	否
+凯乐石	凯乐石	运动户外	户外,运动	户外品牌	户外装备品牌。	https://www.kailas.com.cn	否
+优衣库	优衣库中国	时尚	服装,购物	服装品牌	优衣库中国官网。	https://www.uniqlo.com/cn/	否
+ZARA	ZARA中国	时尚	服装,购物	服装品牌	ZARA 中国官网。	https://www.zara.cn	否
+H&M	H&M中国	时尚	服装,购物	服装品牌	H&M 中国官网。	https://www2.hm.com/zh_cn/	是
+森马	森马	时尚	服装,购物	服装品牌	森马官方。	https://www.semir.com	否
+太平鸟	太平鸟	时尚	服装,购物	服装品牌	太平鸟官方。	https://www.peacebird.com	否
+ONLY	ONLY	时尚	服装,购物	服装品牌	ONLY 官方。	https://www.only.com.cn	否
+优衣库官网	优衣库	时尚	服装,购物	服装品牌	优衣库官网。	https://www.uniqlo.com	否
+晨光	晨光文具	文具	文具,办公	文具品牌	晨光官方商城。	https://www.mg-pen.com.cn	否
+得力	得力文具	文具	文具,办公	文具品牌	得力官方商城。	https://www.nbdeli.com	否
+百乐	百乐笔	文具	文具,书写	文具品牌	百乐官方。	https://www.pilotpen.com.cn	否
+斑马	斑马笔	文具	文具,书写	文具品牌	斑马文具。	https://www.zebrapen.com.cn	否
+国誉	国誉文具	文具	文具,办公	文具品牌	国誉官方。	https://www.kokuyo.com.cn	否
+小米有品	小米有品	时尚	家居,购物	生活电商	小米生态链电商。	https://www.xiaomiyoupin.com	否
+网易严选	网易严选	时尚	家居,购物	生活电商	网易自有品牌电商。	https://you.163.com	否
+京东京造	京东京造	时尚	家居,购物	生活电商	京东自有品牌。	https://www.jd.com	否
+当当	当当网	电商	图书,购物	图书电商	图书电商平台。	https://www.dangdang.com	否
+孔夫子旧书网	孔夫子旧书网	电商	图书,二手	二手图书	二手书交易平台。	https://www.kongfz.com	否
+掌阅	掌阅	阅读	在线阅读,小说	阅读平台	电子书阅读平台。	https://www.ireader.com	否
+微信读书	微信读书	阅读	在线阅读,小说	阅读平台	腾讯阅读平台。	https://weread.qq.com	否
+起点中文网	起点中文网	阅读	在线阅读,小说	网络文学	网络文学平台。	https://www.qidian.com	否
+晋江文学城	晋江文学城	阅读	在线阅读,小说	网络文学	女性向网络文学。	https://www.jjwxc.net	否
+番茄小说	番茄小说	阅读	在线阅读,小说	网络文学	字节小说平台。	https://fanqienovel.com	否
+QQ阅读	QQ阅读	阅读	在线阅读,小说	阅读平台	腾讯阅读平台。	https://book.qq.com	否
+古登堡计划	Project Gutenberg	阅读	在线阅读,电子书	免费电子书	免费公版电子书库。	https://www.gutenberg.org	是
+Z-Library	Z-Library	阅读	在线阅读,电子书	电子书库	免费电子书下载。	https://z-lib.io	是
+豆瓣读书	豆瓣读书	阅读	书评,图书	图书社区	图书评分与书评。	https://book.douban.com	否
+中国政府网	中国政府网	政务	政务,政府	政府门户	中国政府官方门户。	https://www.gov.cn	否
+国家政务服务平台	国家政务服务平台	政务	政务,办事	政务平台	全国一体化政务服务平台。	https://gjzwfw.www.gov.cn	否
+民政部	民政部	政务	政务,民政	部委官网	民政部官网。	https://www.mca.gov.cn	否
+人力资源和社会保障部	人社部	政务	政务,人社	部委官网	人社部官网。	http://www.mohrss.gov.cn	否
+国家税务总局	国家税务总局	政务	政务,税务	部委官网	税务总局官网。	https://www.chinatax.gov.cn	否
+国家统计局	国家统计局	政务	政务,统计	部委官网	国家统计局官网。	https://www.stats.gov.cn	否
+外交部	外交部	政务	政务,外交	部委官网	外交部官网。	https://www.mfa.gov.cn	否
+教育部	教育部	政务	政务,教育	部委官网	教育部官网。	http://www.moe.gov.cn	否
+科学技术部	科技部	政务	政务,科技	部委官网	科技部官网。	https://www.most.gov.cn	否
+工业和信息化部	工信部	政务	政务,工信	部委官网	工信部官网。	https://www.miit.gov.cn	否
+中国人民银行	中国人民银行	政务	政务,央行	部委官网	央行官网。	http://www.pbc.gov.cn	否
+国家市场监督管理总局	市场监管总局	政务	政务,市场监管	部委官网	市场监管总局官网。	https://www.samr.gov.cn	否
+国务院	中国政府网	政务	政务,国务院	政府门户	中国政府网。	https://www.gov.cn	否
+国家税务总局12366	12366纳税服务	政务	政务,税务	税务服务	纳税服务热线平台。	https://www.chinatax.gov.cn	否
+信用中国	信用中国	政务	政务,信用	信用查询	全国信用信息公示平台。	https://www.creditchina.gov.cn	否
+国家企业信用信息公示系统	国家企业信用信息公示	政务	政务,企业信用	企业信用	企业信用信息查询。	https://www.gsxt.gov.cn	否
+中国裁判文书网	中国裁判文书网	政务	政务,司法	司法公开	裁判文书公开平台。	https://wenshu.court.gov.cn	否
+比亚迪	比亚迪	汽车	汽车,新能源	汽车品牌	比亚迪官网。	https://www.byd.com	否
+特斯拉	特斯拉中国	汽车	汽车,新能源	汽车品牌	特斯拉中国官网。	https://www.tesla.cn	否
+蔚来	蔚来汽车	汽车	汽车,新能源	汽车品牌	蔚来官网。	https://www.nio.com	否
+理想汽车	理想汽车	汽车	汽车,新能源	汽车品牌	理想官网。	https://www.lixiang.com	否
+小鹏汽车	小鹏汽车	汽车	汽车,新能源	汽车品牌	小鹏官网。	https://www.xiaopeng.com	否
+吉利汽车	吉利汽车	汽车	汽车,新能源	汽车品牌	吉利官网。	https://www.geely.com	否
+长城汽车	长城汽车	汽车	汽车,SUV	汽车品牌	长城官网。	https://www.gwm.com.cn	否
+长安汽车	长安汽车	汽车	汽车,新能源	汽车品牌	长安官网。	https://www.changan.com.cn	否
+奇瑞汽车	奇瑞汽车	汽车	汽车,新能源	汽车品牌	奇瑞官网。	https://www.chery.cn	否
+广汽本田	广汽本田	汽车	汽车,合资	汽车品牌	广汽本田官网。	https://www.ghac.cn	否
+一汽大众	一汽大众	汽车	汽车,合资	汽车品牌	一汽大众官网。	https://www.faw-vw.com	否
+宝马中国	宝马中国	汽车	汽车,豪华	汽车品牌	宝马中国官网。	https://www.bmw.com.cn	否
+奔驰中国	梅赛德斯奔驰中国	汽车	汽车,豪华	汽车品牌	奔驰中国官网。	https://www.mercedes-benz.com.cn	否
+奥迪中国	奥迪中国	汽车	汽车,豪华	汽车品牌	奥迪中国官网。	https://www.audi.cn	否
+保时捷	保时捷中国	汽车	汽车,豪华	汽车品牌	保时捷中国官网。	https://www.porsche.cn	否
+丰田中国	丰田中国	汽车	汽车,日系	汽车品牌	丰田中国官网。	https://www.toyota.com.cn	否
+本田中国	本田中国	汽车	汽车,日系	汽车品牌	本田中国官网。	https://www.honda.com.cn	否
+雅迪	雅迪电动车	汽车	电动车,两轮	电动车品牌	雅迪官网。	https://www.yadea.com.cn	否
+爱玛	爱玛电动车	汽车	电动车,两轮	电动车品牌	爱玛官网。	https://www.aimatech.com	否
+台铃	台铃电动车	汽车	电动车,两轮	电动车品牌	台铃官网。	https://www.tailg.com.cn	否
+绿源	绿源电动车	汽车	电动车,两轮	电动车品牌	绿源官网。	https://www.luyuan.com.cn	否
+九号	九号电动车	汽车	电动车,智能	电动车品牌	九号官网。	https://www.ninebot.com	否
+小牛	小牛电动车	汽车	电动车,智能	电动车品牌	小牛官网。	https://www.niu.com	否
+京东物流	京东物流	出行	物流,快递	物流	京东物流官网。	https://www.jdl.com	否
+顺丰速运	顺丰速运	出行	物流,快递	快递	顺丰速运官网。	https://www.sf-express.com	否
+中通快递	中通快递	出行	物流,快递	快递	中通官网。	https://www.zto.com	否
+圆通速递	圆通速递	出行	物流,快递	快递	圆通官网。	https://www.yto.net.cn	否
+韵达快递	韵达快递	出行	物流,快递	快递	韵达官网。	https://www.yundaex.com	否
+申通快递	申通快递	出行	物流,快递	快递	申通官网。	https://www.sto.cn	否
+EMS	中国邮政速递物流	出行	物流,快递	快递	邮政 EMS 官网。	http://www.ems.com.cn	否
+菜鸟裹裹	菜鸟裹裹	出行	物流,快递	快递	菜鸟裹裹。	https://www.cainiao.com	否
+蜂巢快递柜	丰巢	出行	物流,快递柜	快递	丰巢快递柜。	https://www.fcbox.com	否
+特快专递	顺丰特快	出行	物流,快递	快递	顺丰。	https://www.sf-express.com	否
+千图网	千图网	设计	素材,设计	设计素材	设计素材下载。	https://www.58pic.com	否
+千库网	千库网	设计	素材,设计	设计素材	设计素材下载。	https://588ku.com	否
+摄图网	摄图网	设计	素材,图片	设计素材	图片素材网站。	https://699pic.com	否
+包图网	包图网	设计	素材,设计	设计素材	设计素材网站。	https://ibaotu.com	否
+iconfont	阿里图标库	设计	图标,素材	图标库	阿里巴巴图标库。	https://www.iconfont.cn	否
+Iconfinder	Iconfinder	设计	图标,素材	图标库	全球图标库。	https://www.iconfinder.com	是
+Flaticon	Flaticon	设计	图标,素材	图标库	免费图标库。	https://www.flaticon.com	是
+Freepik	Freepik	设计	素材,矢量	设计素材	免费矢量素材。	https://www.freepik.com	是
+Color Hunt	Color Hunt	设计	配色,色彩	配色工具	配色方案网站。	https://colorhunt.co	是
+Coolors	Coolors	设计	配色,色彩	配色工具	在线配色工具。	https://coolors.co	是
+Google Fonts	Google Fonts	设计	字体,素材	字体库	谷歌字体库。	https://fonts.google.com	是
+字体天下	字体天下	设计	字体,素材	字体库	中文字体下载。	https://www.fonts.net.cn	否
+字体管家	字体管家	设计	字体,素材	字体库	字体下载工具。	https://www.youziku.com	否
+优设网	优设网	设计	设计教程,设计	设计社区	设计师教程与社区。	https://www.uisdc.com	否
+UI中国	UI中国	设计	UI设计,设计	设计社区	UI 设计社区。	https://www.ui.cn	否
+即时设计	即时设计	设计	设计工具,UI设计	在线设计	国产在线设计工具。	https://js.design	否
+蓝湖	蓝湖	设计	协作,UI设计	设计协作	产品设计协作平台。	https://lanhuapp.com	否
+雨课堂	雨课堂	教育	在线学习,课堂	教学工具	清华在线课堂工具。	https://www.yuketang.cn	否
+腾讯会议	腾讯会议	工具	办公协作,会议	在线会议	腾讯视频会议工具。	https://meeting.tencent.com	否
+钉钉文档	钉钉文档	工具	办公协作,在线文档	协同文档	钉钉在线文档。	https://alidocs.dingtalk.com	否
+华为云会议	华为云会议	工具	办公协作,会议	在线会议	华为云会议。	https://www.huaweicloud.com	否
+Zoom	Zoom	工具	办公协作,会议	在线会议	全球视频会议工具。	https://zoom.us	是
+WPS云文档	WPS云文档	工具	办公协作,在线文档	协同文档	WPS 在线文档。	https://www.kdocs.cn	否
+微软翻译	Microsoft Translator	工具	翻译,效率工具	翻译工具	微软在线翻译。	https://www.bing.com/translator	是
+阿里旺旺	阿里旺旺	工具	即时通讯,电商	聊天工具	淘宝聊天工具。	https://wangwang.taobao.com	否
+百度网盘同步	百度网盘	工具	云盘存储,网盘	云存储	百度网盘。	https://pan.baidu.com	否
+115网盘	115网盘	工具	云盘存储,网盘	云存储	115 网盘。	https://115.com	否
+阿里网盘	阿里云盘	工具	云盘存储,网盘	云存储	阿里云盘。	https://www.alipan.com	否
+迅雷	迅雷	工具	下载,效率工具	下载工具	迅雷下载。	https://www.xunlei.com	否
+百度下载	百度网盘下载	工具	下载,效率工具	下载工具	百度网盘。	https://pan.baidu.com	否
+idm	Internet Download Manager	工具	下载,效率工具	下载工具	IDM 下载工具。	https://www.internetdownloadmanager.com	是
+360安全卫士	360安全	工具	安全,系统工具	安全软件	360 安全产品。	https://www.360.cn	否
+火绒	火绒安全	工具	安全,系统工具	安全软件	火绒安全软件。	https://www.huorong.cn	否
+卡巴斯基	卡巴斯基	工具	安全,杀毒	杀毒软件	卡巴斯基杀毒。	https://www.kaspersky.com.cn	否
+QQ安全中心	QQ安全中心	工具	安全,账号	账号安全	腾讯账号安全中心。	https://aq.qq.com	否
+微信安全中心	微信安全中心	工具	安全,账号	账号安全	微信账号安全。	https://weixin110.qq.com	否
+剪贴板	草料二维码	工具	二维码,效率工具	二维码工具	二维码生成工具。	https://cli.im	否
+幕布	幕布	工具	思维导图,笔记	大纲笔记	极简大纲笔记。	https://mubu.com	否
+Xmind	Xmind	工具	思维导图,效率工具	思维导图	思维导图软件。	https://www.xmind.cn	否
+ProcessOn	ProcessOn	工具	流程图,效率工具	在线绘图	在线流程图绘制。	https://www.processon.com	否
+石墨	石墨	工具	办公协作,在线文档	协同文档	石墨文档。	https://shimo.im	否
+为知笔记	为知笔记	工具	笔记,效率工具	笔记应用	个人笔记应用。	https://www.wiz.cn	否
+印象笔记	印象笔记	工具	笔记,效率工具	笔记应用	印象笔记。	https://www.yinxiang.com	否
+OneNote	OneNote	工具	笔记,效率工具	笔记应用	微软笔记应用。	https://www.onenote.com	是
+番茄工作法	番茄Todo	工具	番茄钟,效率工具	专注工具	番茄钟专注工具。	https://pomofocus.io	是
+Forest	Forest专注	工具	番茄钟,效率工具	专注工具	种树专注应用。	https://www.forestapp.cc	否
+滴答清单	滴答清单	工具	待办,效率工具	待办清单	待办事项应用。	https://www.dida365.com	否
+Microsoft To Do	微软待办	工具	待办,效率工具	待办清单	微软待办清单。	https://todo.microsoft.com	是
+百度地图路线	百度地图	出行	地图,导航	地图导航	百度地图。	https://map.baidu.com	否
+滴滴顺风车	滴滴出行	出行	出行,网约车	网约车	滴滴出行。	https://www.didiglobal.com	否
+哈啰出行	哈啰出行	出行	出行,共享	共享出行	哈啰出行。	https://www.hellobike.com	否
+青桔单车	青桔单车	出行	出行,共享	共享单车	滴滴旗下共享单车。	https://www.didiglobal.com	否
+美团单车	美团单车	出行	出行,共享	共享单车	美团共享单车。	https://www.meituan.com	否
+铁路12306	铁路12306	出行	出行,火车票	火车购票	12306 官网。	https://www.12306.cn	否
+智行火车票	智行火车票	出行	出行,火车票	火车购票	第三方火车票平台。	https://www.zhixing.com	否
+同程旅行	同程旅行	出行	旅游,机票	在线旅游	同程旅行。	https://www.ly.com	否
+马蜂窝	马蜂窝	出行	旅游,攻略	旅游攻略	旅游攻略社区。	https://www.mafengwo.cn	否
+途牛	途牛旅游	出行	旅游,度假	在线旅游	途牛旅游网。	https://www.tuniu.com	否
+Airbnb	爱彼迎	出行	旅游,民宿	民宿预订	全球民宿平台。	https://www.airbnb.cn	是
+Booking	Booking.com	出行	旅游,酒店	酒店预订	全球酒店预订。	https://www.booking.com	是
+Agoda	Agoda	出行	旅游,酒店	酒店预订	亚洲酒店预订。	https://www.agoda.com	是
+国家电网	国家电网	生活服务	公共服务,电力	公用事业	国家电网官网。	http://www.sgcc.com.cn	否
+中国联通	中国联通	生活服务	通信,运营商	运营商	中国联通官网。	https://www.10010.com	否
+中国移动	中国移动	生活服务	通信,运营商	运营商	中国移动官网。	https://www.10086.cn	否
+中国电信	中国电信	生活服务	通信,运营商	运营商	中国电信官网。	https://www.189.cn	否
+12315	全国12315平台	生活服务	消费,投诉	消费维权	12315 消费者投诉平台。	https://www.12315.cn	否
+中国平安	中国平安	生活服务	保险,金融	保险公司	平安保险官网。	https://www.pingan.com	否
+中国人寿	中国人寿	生活服务	保险,金融	保险公司	中国人寿官网。	https://www.e-chinalife.com	否
+太平洋保险	太平洋保险	生活服务	保险,金融	保险公司	太平洋保险官网。	https://www.cpic.com.cn	否
+GitHub	GitHub	开发	编程开发,开源	代码托管	全球最大开源代码托管平台。	https://github.com	是
+GitLab	GitLab	开发	编程开发,DevOps	DevOps平台	开源 DevOps 平台。	https://gitlab.com	是
+Bitbucket	Bitbucket	开发	代码托管,DevOps	代码托管	Atlassian 代码托管。	https://bitbucket.org	是
+Stack Overflow	Stack Overflow	开发	编程开发,问答	技术问答	全球程序员问答社区。	https://stackoverflow.com	是
+npm	npm	开发	编程开发,包管理	包管理	Node.js 包管理。	https://www.npmjs.com	是
+PyPI	PyPI	开发	编程开发,包管理	包管理	Python 包索引。	https://pypi.org	是
+Docker Hub	Docker Hub	开发	容器,镜像	容器仓库	Docker 镜像仓库。	https://hub.docker.com	是
+Hacker News	Hacker News	开发	技术,社区	科技社区	Y Combinator 旗下科技社区。	https://news.ycombinator.com	是
+Product Hunt	Product Hunt	开发	产品,发现	产品发现	新产品发现社区。	https://www.producthunt.com	是
+CodePen	CodePen	开发	前端,在线编辑	在线编辑	前端代码在线分享。	https://codepen.io	是
+CodeSandbox	CodeSandbox	开发	前端,在线编辑	在线编辑	在线代码沙箱。	https://codesandbox.io	是
+Replit	Replit	开发	在线IDE,开发	在线IDE	在线编程环境。	https://replit.com	是
+Vercel	Vercel	开发	部署,前端	前端部署	前端部署平台。	https://vercel.com	是
+Netlify	Netlify	开发	部署,前端	前端部署	静态网站托管。	https://www.netlify.com	是
+Supabase	Supabase	开发	后端,数据库	后端平台	开源 Firebase 替代。	https://supabase.com	是
+Firebase	Firebase	开发	后端,数据库	后端平台	谷歌后端云服务。	https://firebase.google.com	是
+PlanetScale	PlanetScale	开发	数据库,MySQL	数据库	MySQL 云数据库。	https://planetscale.com	是
+Neon	Neon	开发	数据库,Postgres	数据库	Serverless Postgres。	https://neon.tech	是
+Postman	Postman	开发	API,测试	API工具	API 调试与测试工具。	https://www.postman.com	是
+Insomnia	Insomnia	开发	API,测试	API工具	开源 API 客户端。	https://insomnia.rest	是
+Swagger	Swagger	开发	API,文档	API文档	API 文档工具。	https://swagger.io	是
+Figma	Figma	开发	设计,协作	UI设计	在线 UI 设计协作工具。	https://www.figma.com	是
+Sketch	Sketch	开发	设计,Mac	UI设计	macOS 设计工具。	https://www.sketch.com	是
+Framer	Framer	开发	设计,网页	网页设计	网页设计与发布。	https://www.framer.com	是
+Webflow	Webflow	开发	设计,网页	网页构建	可视化网页构建。	https://webflow.com	是
+Canva	Canva	设计	设计,在线设计	平面设计	在线平面设计平台。	https://www.canva.com	是
+Photopea	Photopea	设计	图片编辑,在线	图片编辑	在线 Photoshop 替代。	https://www.photopea.com	是
+Remove.bg	Remove.bg	设计	抠图,AI	背景移除	在线自动抠图。	https://www.remove.bg	是
+Behance	Behance	设计	灵感,作品集	设计社区	设计师作品集社区。	https://www.behance.net	是
+Dribbble	Dribbble	设计	灵感,作品集	设计社区	设计师作品分享社区。	https://dribbble.com	是
+Awwwards	Awwwards	设计	灵感,网页设计	设计奖	优秀网页设计评选。	https://www.awwwards.com	是
+Unsplash	Unsplash	设计	素材,图片	免费图库	免费高清摄影图库。	https://unsplash.com	是
+Pexels	Pexels	设计	素材,图片	免费图库	免费高清图库。	https://www.pexels.com	是
+Pixabay	Pixabay	设计	素材,图片	免费图库	免费图片与视频素材。	https://pixabay.com	是
+Freepik	Freepik	设计	素材,矢量	免费素材	免费矢量与设计素材。	https://www.freepik.com	是
+Flaticon	Flaticon	设计	图标,素材	图标库	免费图标库。	https://www.flaticon.com	是
+Iconscout	Iconscout	设计	图标,素材	图标库	图标与插画库。	https://iconscout.com	是
+Coolors	Coolors	设计	配色,工具	配色工具	在线配色方案。	https://coolors.co	是
+Google Fonts	Google Fonts	设计	字体,素材	字体库	谷歌免费字体。	https://fonts.google.com	是
+Adobe Fonts	Adobe Fonts	设计	字体,素材	字体库	Adobe 字体库。	https://fonts.adobe.com	是
+Font Awesome	Font Awesome	设计	图标,素材	图标库	网页图标库。	https://fontawesome.com	是
+Bootstrap	Bootstrap	开发	前端,CSS框架	前端框架	响应式前端框架。	https://getbootstrap.com	是
+Tailwind CSS	Tailwind CSS	开发	前端,CSS框架	前端框架	实用类 CSS 框架。	https://tailwindcss.com	是
+Sass	Sass	开发	前端,CSS	CSS预处理器	CSS 预处理器。	https://sass-lang.com	是
+Vue.js	Vue.js	开发	前端,框架	前端框架	渐进式前端框架。	https://vuejs.org	是
+React	React	开发	前端,框架	前端框架	Meta 前端框架。	https://react.dev	是
+Angular	Angular	开发	前端,框架	前端框架	谷歌前端框架。	https://angular.io	是
+Svelte	Svelte	开发	前端,框架	前端框架	编译型前端框架。	https://svelte.dev	是
+Node.js	Node.js	开发	后端,运行时	JavaScript运行时	Node.js 官方。	https://nodejs.org	是
+Python	Python	开发	编程语言,官网	编程语言	Python 官方。	https://www.python.org	是
+Java	Java	开发	编程语言,官网	编程语言	Java 官方。	https://www.java.com	是
+Rust	Rust	开发	编程语言,官网	编程语言	Rust 官方。	https://www.rust-lang.org	是
+Go	Go语言	开发	编程语言,官网	编程语言	Go 官方。	https://go.dev	是
+MDN	MDN Web Docs	开发	文档,Web	前端文档	Web 开发文档。	https://developer.mozilla.org	是
+W3Schools	W3Schools	开发	教程,Web	在线教程	Web 开发教程。	https://www.w3schools.com	是
+freeCodeCamp	freeCodeCamp	开发	教程,编程	编程学习	免费编程学习平台。	https://www.freecodecamp.org	是
+Dev.to	Dev.to	开发	社区,技术	开发者社区	开发者写作社区。	https://dev.to	是
+Hashnode	Hashnode	开发	博客,技术	开发者博客	开发者博客平台。	https://hashnode.com	是
+Netlify	Netlify	开发	部署,静态	托管平台	静态网站托管。	https://www.netlify.com	是
+Notion	Notion	工具	笔记,协作	效率工具	集笔记文档于一体的协作工具。	https://www.notion.so	是
+Obsidian	Obsidian	工具	笔记,知识管理	笔记应用	本地优先知识库。	https://obsidian.md	是
+Roam Research	Roam Research	工具	笔记,双向链接	笔记应用	双向链接笔记。	https://roamresearch.com	是
+Logseq	Logseq	工具	笔记,开源	笔记应用	开源大纲笔记。	https://logseq.com	是
+Joplin	Joplin	工具	笔记,开源	笔记应用	开源笔记应用。	https://joplinapp.org	是
+Evernote	Evernote	工具	笔记,效率工具	笔记应用	经典笔记应用。	https://evernote.com	是
+OneNote	OneNote	工具	笔记,效率工具	笔记应用	微软笔记。	https://www.onenote.com	是
+Google Docs	Google Docs	工具	办公,文档	在线文档	谷歌在线文档。	https://docs.google.com	是
+Google Sheets	Google Sheets	工具	办公,表格	在线表格	谷歌在线表格。	https://sheets.google.com	是
+Google Slides	Google Slides	工具	办公,演示	在线演示	谷歌在线演示。	https://slides.google.com	是
+Microsoft 365	Microsoft 365	工具	办公,套件	办公套件	微软云端办公套件。	https://www.office.com	是
+LibreOffice	LibreOffice	工具	办公,套件	办公套件	开源办公套件。	https://www.libreoffice.org	是
+Trello	Trello	工具	项目管理,看板	项目管理	看板式项目管理。	https://trello.com	是
+Asana	Asana	工具	项目管理,协作	项目管理	团队项目管理。	https://asana.com	是
+Monday.com	Monday.com	工具	项目管理,协作	项目管理	工作操作系统。	https://monday.com	是
+Airtable	Airtable	工具	表格,数据库	协作工具	表格与数据库。	https://airtable.com	是
+ClickUp	ClickUp	工具	项目管理,协作	项目管理	一体化项目管理。	https://clickup.com	是
+Miro	Miro	工具	白板,协作	在线白板	在线协作白板。	https://miro.com	是
+Mural	Mural	工具	白板,协作	在线白板	可视化协作白板。	https://www.mural.co	是
+Slack	Slack	工具	通讯,协作	团队通讯	团队通讯工具。	https://slack.com	是
+Microsoft Teams	Microsoft Teams	工具	通讯,会议	团队协作	微软团队协作。	https://teams.microsoft.com	是
+Discord	Discord	社交	通讯,社区	语音社区	游戏与社区通讯。	https://discord.com	是
+Zoom	Zoom	工具	会议,视频	视频会议	在线视频会议。	https://zoom.us	是
+Google Meet	Google Meet	工具	会议,视频	视频会议	谷歌视频会议。	https://meet.google.com	是
+Calendly	Calendly	工具	日程,预约	日程工具	在线预约工具。	https://calendly.com	是
+Zapier	Zapier	工具	自动化,集成	自动化	应用自动化连接。	https://zapier.com	是
+IFTTT	IFTTT	工具	自动化,集成	自动化	条件自动化。	https://ifttt.com	是
+Make	Make	工具	自动化,集成	自动化	可视化自动化平台。	https://www.make.com	是
+n8n	n8n	工具	自动化,开源	自动化	开源工作流自动化。	https://n8n.io	是
+Bitly	Bitly	工具	短链,链接	短链工具	网址缩短服务。	https://bitly.com	是
+TinyURL	TinyURL	工具	短链,链接	短链工具	网址缩短服务。	https://tinyurl.com	是
+LastPass	LastPass	工具	密码管理,安全	密码管理	密码管理器。	https://www.lastpass.com	是
+1Password	1Password	工具	密码管理,安全	密码管理	密码管理器。	https://1password.com	是
+Bitwarden	Bitwarden	工具	密码管理,安全	密码管理	开源密码管理器。	https://bitwarden.com	是
+Dashlane	Dashlane	工具	密码管理,安全	密码管理	密码管理器。	https://www.dashlane.com	是
+KeePass	KeePass	工具	密码管理,安全	密码管理	开源密码管理器。	https://keepass.info	是
+Dropbox	Dropbox	工具	云存储,同步	云盘	云存储与同步。	https://www.dropbox.com	是
+OneDrive	OneDrive	工具	云存储,微软	云盘	微软云存储。	https://onedrive.live.com	是
+Google Drive	Google Drive	工具	云存储,谷歌	云盘	谷歌云存储。	https://drive.google.com	是
+MEGA	MEGA	工具	云存储,加密	云盘	加密云存储。	https://mega.io	是
+pCloud	pCloud	工具	云存储,加密	云盘	加密云存储。	https://www.pcloud.com	是
+Backblaze	Backblaze	工具	云存储,备份	云备份	云端备份服务。	https://www.backblaze.com	是
+Tutanota	Tutanota	工具	邮箱,加密	加密邮箱	加密邮箱服务。	https://tutanota.com	是
+ProtonMail	ProtonMail	工具	邮箱,加密	加密邮箱	加密邮箱服务。	https://proton.me/mail	是
+Zoho Mail	Zoho Mail	工具	邮箱,办公	电子邮箱	企业邮箱服务。	https://www.zoho.com/mail	是
+Gmail	Gmail	工具	邮箱,谷歌	电子邮箱	谷歌邮箱。	https://mail.google.com	是
+Outlook	Outlook	工具	邮箱,微软	电子邮箱	微软邮箱。	https://outlook.live.com	是
+Mail.ru	Mail.ru	工具	邮箱,俄罗斯	电子邮箱	俄罗斯邮箱门户。	https://mail.ru	是
+Fastmail	Fastmail	工具	邮箱,隐私	电子邮箱	隐私优先邮箱。	https://www.fastmail.com	是
+Wikipedia	Wikipedia	教育	百科,知识	在线百科	自由百科全书。	https://www.wikipedia.org	是
+Google Scholar	Google Scholar	教育	学术,搜索	学术搜索	谷歌学术。	https://scholar.google.com	是
+Coursera	Coursera	教育	课程,在线学习	慕课平台	国际名校在线课程。	https://www.coursera.org	是
+edX	edX	教育	课程,在线学习	慕课平台	国际慕课平台。	https://www.edx.org	是
+Udemy	Udemy	教育	课程,在线学习	在线课程	技能在线课程。	https://www.udemy.com	是
+Udacity	Udacity	教育	课程,技术	在线课程	技术类在线课程。	https://www.udacity.com	是
+Khan Academy	Khan Academy	教育	课程,免费教育	在线课程	免费在线教育。	https://www.khanacademy.org	是
+Brilliant	Brilliant	教育	数学,科学	互动学习	数学与科学互动学习。	https://brilliant.org	是
+Codecademy	Codecademy	教育	编程,学习	编程学习	交互式编程学习。	https://www.codecademy.com	是
+freeCodeCamp	freeCodeCamp	教育	编程,免费	编程学习	免费编程学习。	https://www.freecodecamp.org	是
+Duolingo	Duolingo	教育	语言,学习	语言学习	免费语言学习应用。	https://www.duolingo.com	是
+TED	TED	教育	演讲,知识	演讲视频	思想分享演讲。	https://www.ted.com	是
+Quizlet	Quizlet	教育	学习,卡片	学习工具	闪卡学习工具。	https://quizlet.com	是
+Britannica	Britannica	教育	百科,知识	在线百科	大英百科全书。	https://www.britannica.com	是
+arXiv	arXiv	教育	论文,学术	预印本	学术预印本平台。	https://arxiv.org	是
+PubMed	PubMed	教育	论文,医学	文献数据库	生物医学文献。	https://pubmed.ncbi.nlm.nih.gov	是
+JSTOR	JSTOR	教育	论文,学术	文献数据库	学术期刊存档。	https://www.jstor.org	是
+IEEE Xplore	IEEE Xplore	教育	论文,工程	文献数据库	工程技术文献。	https://ieeexplore.ieee.org	是
+SpringerLink	SpringerLink	教育	论文,学术	文献数据库	学术图书期刊。	https://link.springer.com	是
+Nature	Nature	教育	期刊,科学	科学期刊	《自然》期刊。	https://www.nature.com	是
+Science	Science	教育	期刊,科学	科学期刊	《科学》期刊。	https://www.science.org	是
+Wolfram Alpha	Wolfram Alpha	工具	计算,知识引擎	计算引擎	计算知识引擎。	https://www.wolframalpha.com	是
+Desmos	Desmos	教育	数学,绘图	数学工具	在线数学绘图。	https://www.desmos.com	是
+GeoGebra	GeoGebra	教育	数学,几何	数学工具	在线数学软件。	https://www.geogebra.org	是
+Kaggle	Kaggle	教育	数据科学,竞赛	数据科学	数据科学竞赛平台。	https://www.kaggle.com	是
+Facebook	Facebook	社交	社交媒体,社交	社交平台	全球社交网络。	https://www.facebook.com	是
+Instagram	Instagram	社交	社交媒体,图片	图片社交	图片社交平台。	https://www.instagram.com	是
+Twitter	Twitter(X)	社交	社交媒体,资讯	社交平台	实时社交与资讯平台。	https://x.com	是
+LinkedIn	LinkedIn	社交	社交媒体,职场	职场社交	职场社交网络。	https://www.linkedin.com	是
+Reddit	Reddit	社交	社区,论坛	社区论坛	美国热门社区。	https://www.reddit.com	是
+Quora	Quora	社交	问答,社区	问答平台	知识问答社区。	https://www.quora.com	是
+Pinterest	Pinterest	社交	图片,灵感	图片社区	图片灵感社区。	https://www.pinterest.com	是
+Tumblr	Tumblr	社交	博客,社区	轻博客	轻博客社区。	https://www.tumblr.com	是
+Telegram	Telegram	社交	通讯,加密	即时通讯	加密即时通讯。	https://telegram.org	是
+WhatsApp	WhatsApp	社交	通讯,聊天	即时通讯	全球即时通讯。	https://www.whatsapp.com	是
+Signal	Signal	社交	通讯,加密	即时通讯	隐私加密通讯。	https://signal.org	是
+Snapchat	Snapchat	社交	社交,图片	图片社交	阅后即焚社交。	https://www.snapchat.com	是
+Threads	Threads	社交	社交媒体,文字	文字社交	Meta 文字社交。	https://www.threads.net	是
+Bluesky	Bluesky	社交	社交媒体,去中心	去中心社交	去中心化社交网络。	https://bsky.app	是
+Mastodon	Mastodon	社交	社交媒体,去中心	去中心社交	联邦式社交网络。	https://mastodon.social	是
+Pixiv	Pixiv	社交	插画,创作	创作社区	日本插画创作社区。	https://www.pixiv.net	是
+DeviantArt	DeviantArt	社交	艺术,创作	艺术社区	艺术家作品社区。	https://www.deviantart.com	是
+Patreon	Patreon	社交	众筹,创作者	创作者赞助	创作者赞助平台。	https://www.patreon.com	是
+Meetup	Meetup	社交	线下,活动	线下活动	线下兴趣活动平台。	https://www.meetup.com	是
+Nextdoor	Nextdoor	社交	社区,邻里	邻里社区	邻里社交网络。	https://nextdoor.com	是
+YouTube	YouTube	视频与直播	视频,影视	视频平台	全球最大视频平台。	https://www.youtube.com	是
+Netflix	Netflix	视频与直播	视频,影视	流媒体	全球流媒体平台。	https://www.netflix.com	是
+Prime Video	Prime Video	视频与直播	视频,影视	流媒体	亚马逊流媒体。	https://www.primevideo.com	是
+Disney+	Disney+	视频与直播	视频,影视	流媒体	迪士尼流媒体。	https://www.disneyplus.com	是
+Max	Max (HBO)	视频与直播	视频,影视	流媒体	华纳流媒体。	https://www.max.com	是
+Hulu	Hulu	视频与直播	视频,影视	流媒体	美国流媒体。	https://www.hulu.com	是
+Apple TV+	Apple TV+	视频与直播	视频,影视	流媒体	苹果流媒体。	https://tv.apple.com	是
+Peacock	Peacock	视频与直播	视频,影视	流媒体	NBC 流媒体。	https://www.peacocktv.com	是
+Paramount+	Paramount+	视频与直播	视频,影视	流媒体	派拉蒙流媒体。	https://www.paramountplus.com	是
+Vimeo	Vimeo	视频与直播	视频,创作	视频平台	创作者视频平台。	https://vimeo.com	是
+Twitch	Twitch	视频与直播	直播,游戏	直播平台	游戏直播平台。	https://www.twitch.tv	是
+Dailymotion	Dailymotion	视频与直播	视频,分享	视频平台	视频分享平台。	https://www.dailymotion.com	是
+Tubi	Tubi	视频与直播	视频,免费影视	免费影视	免费广告流媒体。	https://tubitv.com	是
+Pluto TV	Pluto TV	视频与直播	视频,免费影视	免费影视	免费电视流媒体。	https://pluto.tv	是
+Crunchyroll	Crunchyroll	视频与直播	动画,动漫	动漫平台	日本动漫流媒体。	https://www.crunchyroll.com	是
+IMDb	IMDb	视频与直播	影视,评分	影视资料库	全球影视资料库。	https://www.imdb.com	是
+Rotten Tomatoes	Rotten Tomatoes	视频与直播	影视,评分	影视评分	影视烂番茄评分。	https://www.rottentomatoes.com	是
+Letterboxd	Letterboxd	视频与直播	影视,社交	影评社区	电影日记社区。	https://letterboxd.com	是
+MyAnimeList	MyAnimeList	视频与直播	动画,评分	动漫社区	动漫评分社区。	https://myanimelist.net	是
+Spotify	Spotify	音乐	音乐,流媒体	在线音乐	全球音乐流媒体。	https://www.spotify.com	是
+Apple Music	Apple Music	音乐	音乐,流媒体	在线音乐	苹果音乐。	https://music.apple.com	是
+YouTube Music	YouTube Music	音乐	音乐,流媒体	在线音乐	谷歌音乐流媒体。	https://music.youtube.com	是
+Amazon Music	Amazon Music	音乐	音乐,流媒体	在线音乐	亚马逊音乐。	https://music.amazon.com	是
+SoundCloud	SoundCloud	音乐	音乐,创作者	音频平台	音乐创作者平台。	https://soundcloud.com	是
+Bandcamp	Bandcamp	音乐	音乐,独立	独立音乐	独立音乐销售平台。	https://bandcamp.com	是
+Tidal	Tidal	音乐	音乐,无损	在线音乐	无损音乐流媒体。	https://tidal.com	是
+Deezer	Deezer	音乐	音乐,流媒体	在线音乐	法国音乐流媒体。	https://www.deezer.com	是
+Pandora	Pandora	音乐	音乐,电台	网络电台	个性电台。	https://www.pandora.com	是
+Last.fm	Last.fm	音乐	音乐,数据	音乐社区	音乐收听数据社区。	https://www.last.fm	是
+Shazam	Shazam	音乐	音乐,识别	音乐识别	音乐识别应用。	https://www.shazam.com	是
+Audible	Audible	音乐	有声书,音频	有声书	亚马逊有声书。	https://www.audible.com	是
+Google News	Google News	媒体	新闻,聚合	新闻聚合	谷歌新闻聚合。	https://news.google.com	是
+BBC	BBC	媒体	新闻,国际	国际媒体	英国广播公司。	https://www.bbc.com	是
+CNN	CNN	媒体	新闻,国际	国际媒体	美国有线新闻网。	https://www.cnn.com	是
+Reuters	Reuters	媒体	新闻,国际	国际媒体	路透社。	https://www.reuters.com	是
+AP News	AP News	媒体	新闻,国际	国际媒体	美联社。	https://apnews.com	是
+Bloomberg	Bloomberg	媒体	新闻,财经	财经媒体	彭博财经资讯。	https://www.bloomberg.com	是
+Financial Times	Financial Times	媒体	新闻,财经	财经媒体	英国金融时报。	https://www.ft.com	是
+The Economist	The Economist	媒体	新闻,财经	财经媒体	《经济学人》。	https://www.economist.com	是
+Wall Street Journal	华尔街日报	媒体	新闻,财经	财经媒体	美国财经媒体。	https://www.wsj.com	是
+New York Times	纽约时报	媒体	新闻,国际	国际媒体	美国主流报纸。	https://www.nytimes.com	是
+The Guardian	卫报	媒体	新闻,国际	国际媒体	英国《卫报》。	https://www.theguardian.com	是
+The Washington Post	华盛顿邮报	媒体	新闻,国际	国际媒体	美国主流报纸。	https://www.washingtonpost.com	是
+Forbes	福布斯	媒体	新闻,财经	财经媒体	《福布斯》。	https://www.forbes.com	是
+TIME	时代周刊	媒体	新闻,时事	新闻杂志	《时代》周刊。	https://time.com	是
+Al Jazeera	半岛电视台	媒体	新闻,国际	国际媒体	卡塔尔国际媒体。	https://www.aljazeera.com	是
+NHK	NHK	媒体	新闻,日本	国际媒体	日本放送协会。	https://www3.nhk.or.jp	是
+France 24	France 24	媒体	新闻,国际	国际媒体	法国国际媒体。	https://www.france24.com	是
+Deutsche Welle	德国之声	媒体	新闻,国际	国际媒体	德国国际媒体。	https://www.dw.com	是
+Medium	Medium	媒体	博客,写作	写作平台	博客写作平台。	https://medium.com	是
+Amazon	Amazon	电商	电商,网购	电商平台	全球电商巨头。	https://www.amazon.com	是
+eBay	eBay	电商	电商,二手	拍卖电商	在线拍卖平台。	https://www.ebay.com	是
+Etsy	Etsy	电商	电商,手工艺	手工艺电商	手工艺品市场。	https://www.etsy.com	是
+Walmart	Walmart	电商	电商,零售	电商平台	美国零售巨头。	https://www.walmart.com	是
+Target	Target	电商	电商,零售	电商平台	美国零售平台。	https://www.target.com	是
+Best Buy	Best Buy	电商	电商,数码	数码零售	美国数码零售。	https://www.bestbuy.com	是
+Costco	Costco	电商	电商,仓储	仓储零售	美国会员仓储零售。	https://www.costco.com	是
+Newegg	Newegg	电商	电商,数码	数码电商	电脑硬件电商。	https://www.newegg.com	是
+B&H Photo	B&H Photo	电商	电商,摄影	摄影器材	摄影器材电商。	https://www.bhphotovideo.com	是
+AliExpress	AliExpress	电商	电商,跨境	跨境电商	阿里国际电商。	https://www.aliexpress.com	是
+SHEIN	SHEIN	电商	电商,快时尚	快时尚	快时尚电商。	https://www.shein.com	是
+Temu	Temu	电商	电商,折扣	跨境电商	拼多多国际版。	https://www.temu.com	是
+Shopify	Shopify	电商	电商,建站	电商建站	电商建站平台。	https://www.shopify.com	是
+Rakuten	Rakuten	电商	电商,日本	电商平台	日本电商平台。	https://www.rakuten.co.jp	是
+Shopee	Shopee	电商	电商,东南亚	电商平台	东南亚电商。	https://shopee.com	是
+Lazada	Lazada	电商	电商,东南亚	电商平台	东南亚电商。	https://www.lazada.com	是
+MercadoLibre	MercadoLibre	电商	电商,拉美	电商平台	拉美电商平台。	https://www.mercadolibre.com	是
+Flipkart	Flipkart	电商	电商,印度	电商平台	印度电商。	https://www.flipkart.com	是
+Ozon	Ozon	电商	电商,俄罗斯	电商平台	俄罗斯电商。	https://www.ozon.ru	是
+Wish	Wish	电商	电商,折扣	电商平台	折扣电商。	https://www.wish.com	是
+Yahoo Finance	Yahoo Finance	金融	金融,股票	财经资讯	雅虎财经。	https://finance.yahoo.com	是
+MarketWatch	MarketWatch	金融	金融,市场	财经资讯	美股市场资讯。	https://www.marketwatch.com	是
+Investing.com	英为财情	金融	金融,行情	行情数据	全球金融行情。	https://www.investing.com	是
+TradingView	TradingView	金融	金融,图表	图表工具	专业金融图表。	https://www.tradingview.com	是
+Investopedia	Investopedia	金融	金融,百科	财经百科	投资教育网站。	https://www.investopedia.com	是
+Trading Economics	Trading Economics	金融	金融,数据	经济数据	经济指标数据。	https://tradingeconomics.com	是
+CoinMarketCap	CoinMarketCap	金融	加密,行情	加密行情	加密货币行情。	https://coinmarketcap.com	是
+CoinGecko	CoinGecko	金融	加密,行情	加密行情	加密货币数据。	https://www.coingecko.com	是
+Binance	Binance	金融	加密,交易所	加密交易所	全球加密交易所。	https://www.binance.com	是
+Coinbase	Coinbase	金融	加密,交易所	加密交易所	美国加密交易所。	https://www.coinbase.com	是
+Kraken	Kraken	金融	加密,交易所	加密交易所	加密交易所。	https://www.kraken.com	是
+PayPal	PayPal	金融	支付,在线支付	在线支付	全球在线支付。	https://www.paypal.com	是
+Stripe	Stripe	金融	支付,开发者	在线支付	开发者支付平台。	https://stripe.com	是
+Wise	Wise	金融	支付,跨境	跨境汇款	跨境汇款服务。	https://wise.com	是
+Revolut	Revolut	金融	支付,银行	数字银行	数字银行应用。	https://www.revolut.com	是
+Morningstar	Morningstar	金融	基金,分析	基金评级	基金与投资分析。	https://www.morningstar.com	是
+Moody's	穆迪	金融	评级,信用	信用评级	信用评级机构。	https://www.moodys.com	是
+S&P Global	标普全球	金融	评级,数据	金融数据	标普全球数据。	https://www.spglobal.com	是
+Google Cloud	Google Cloud	开发	云服务,谷歌	云计算	谷歌云计算平台。	https://cloud.google.com	是
+AWS	AWS	开发	云服务,亚马逊	云计算	亚马逊云服务。	https://aws.amazon.com	是
+Microsoft Azure	Microsoft Azure	开发	云服务,微软	云计算	微软云服务。	https://azure.microsoft.com	是
+DigitalOcean	DigitalOcean	开发	云服务,VPS	云计算	开发者云平台。	https://www.digitalocean.com	是
+Linode	Linode	开发	云服务,VPS	云计算	云服务器提供商。	https://www.linode.com	是
+Vultr	Vultr	开发	云服务,VPS	云计算	云服务器提供商。	https://www.vultr.com	是
+Cloudflare	Cloudflare	开发	CDN,安全	CDN	CDN 与安全服务。	https://www.cloudflare.com	是
+Vercel	Vercel	开发	部署,前端	托管平台	前端托管平台。	https://vercel.com	是
+Heroku	Heroku	开发	云服务,PaaS	云平台	PaaS 平台。	https://www.heroku.com	是
+Render	Render	开发	云服务,PaaS	云平台	应用托管平台。	https://render.com	是
+Fly.io	Fly.io	开发	云服务,部署	云平台	应用部署平台。	https://fly.io	是
+Railway	Railway	开发	云服务,部署	云平台	应用部署平台。	https://railway.app	是
+Netlify	Netlify	开发	部署,静态	托管平台	静态站点托管。	https://www.netlify.com	是
+Kubernetes	Kubernetes	开发	容器,编排	容器编排	容器编排平台。	https://kubernetes.io	是
+Docker	Docker	开发	容器,部署	容器平台	Docker 官方。	https://www.docker.com	是
+Terraform	Terraform	开发	基础设施,代码	IaC	基础设施即代码。	https://www.terraform.io	是
+Ansible	Ansible	开发	自动化,运维	运维自动化	自动化运维工具。	https://www.ansible.com	是
+Jenkins	Jenkins	开发	CI,持续集成	持续集成	开源 CI 工具。	https://www.jenkins.io	是
+CircleCI	CircleCI	开发	CI,持续集成	持续集成	云端 CI/CD。	https://circleci.com	是
+GitHub Actions	GitHub Actions	开发	CI,持续集成	持续集成	GitHub 自带 CI/CD。	https://github.com/features/actions	是
+Argo CD	Argo CD	开发	GitOps,部署	GitOps	Kubernetes GitOps 工具。	https://argoproj.github.io/cd	是
+Prometheus	Prometheus	开发	监控,可观测	监控工具	开源监控系统。	https://prometheus.io	是
+Grafana	Grafana	开发	监控,可视化	监控面板	可观测性面板。	https://grafana.com	是
+Elastic	Elasticsearch	开发	搜索,数据库	搜索引擎	开源搜索引擎。	https://www.elastic.co	是
+PostgreSQL	PostgreSQL	开发	数据库,开源	关系数据库	开源关系数据库。	https://www.postgresql.org	是
+MySQL	MySQL	开发	数据库,开源	关系数据库	开源关系数据库。	https://www.mysql.com	是
+MongoDB	MongoDB	开发	数据库,NoSQL	文档数据库	文档数据库。	https://www.mongodb.com	是
+Redis	Redis	开发	数据库,缓存	键值数据库	内存数据库。	https://redis.io	是
+SQLite	SQLite	开发	数据库,嵌入式	数据库	嵌入式数据库。	https://www.sqlite.org	是
+Have I Been Pwned	Have I Been Pwned	工具	安全,隐私	安全查询	数据泄露查询。	https://haveibeenpwned.com	是
+VirusTotal	VirusTotal	工具	安全,恶意软件	安全扫描	恶意软件扫描。	https://www.virustotal.com	是
+Shodan	Shodan	工具	安全,扫描	网络搜索	互联网设备搜索。	https://www.shodan.io	是
+Norton	Norton	工具	安全,杀毒	安全软件	诺顿安全。	https://us.norton.com	是
+McAfee	McAfee	工具	安全,杀毒	安全软件	迈克菲安全。	https://www.mcafee.com	是
+Bitdefender	Bitdefender	工具	安全,杀毒	安全软件	比特梵德。	https://www.bitdefender.com	是
+Malwarebytes	Malwarebytes	工具	安全,杀毒	安全软件	恶意软件清除。	https://www.malwarebytes.com	是
+Kaspersky	Kaspersky	工具	安全,杀毒	安全软件	卡巴斯基。	https://www.kaspersky.com	是
+NordVPN	NordVPN	工具	安全,VPN	VPN服务	NordVPN 服务。	https://nordvpn.com	是
+ExpressVPN	ExpressVPN	工具	安全,VPN	VPN服务	ExpressVPN 服务。	https://www.expressvpn.com	是
+Mullvad	Mullvad VPN	工具	安全,VPN	VPN服务	隐私 VPN 服务。	https://mullvad.net	是
+Tor Project	Tor Project	工具	隐私,匿名	匿名网络	Tor 匿名网络。	https://www.torproject.org	是
+TripAdvisor	TripAdvisor	出行	旅行,点评	旅行社区	全球旅行点评。	https://www.tripadvisor.com	是
+Booking.com	Booking.com	出行	旅行,酒店	酒店预订	全球酒店预订。	https://www.booking.com	是
+Expedia	Expedia	出行	旅行,预订	旅行预订	全球旅行预订。	https://www.expedia.com	是
+Kayak	Kayak	出行	旅行,比价	旅行比价	旅行比价搜索。	https://www.kayak.com	是
+Skyscanner	Skyscanner	出行	旅行,机票	机票比价	全球机票比价。	https://www.skyscanner.com	是
+Airbnb	Airbnb	出行	旅行,民宿	民宿预订	全球民宿平台。	https://www.airbnb.com	是
+Hotels.com	Hotels.com	出行	旅行,酒店	酒店预订	酒店预订平台。	https://www.hotels.com	是
+Agoda	Agoda	出行	旅行,酒店	酒店预订	亚洲酒店预订。	https://www.agoda.com	是
+Klook	Klook	出行	旅行,当地活动	旅行体验	亚洲旅行体验。	https://www.klook.com	是
+GetYourGuide	GetYourGuide	出行	旅行,当地活动	旅行体验	全球旅行体验。	https://www.getyourguide.com	是
+Lonely Planet	Lonely Planet	出行	旅行,攻略	旅行指南	旅行指南品牌。	https://www.lonelyplanet.com	是
+Google Maps	Google Maps	出行	地图,导航	地图导航	谷歌地图。	https://maps.google.com	是
+Waze	Waze	出行	地图,导航	导航应用	社区导航。	https://www.waze.com	是
+Apple Maps	Apple Maps	出行	地图,导航	地图导航	苹果地图。	https://maps.apple.com	是
+Uber	Uber	出行	出行,网约车	网约车	全球网约车。	https://www.uber.com	是
+Lyft	Lyft	出行	出行,网约车	网约车	美国网约车。	https://www.lyft.com	是
+Grab	Grab	出行	出行,东南亚	出行平台	东南亚出行平台。	https://www.grab.com	是
+Uber Eats	Uber Eats	出行	外卖,美食	外卖平台	Uber 外卖。	https://www.ubereats.com	是
+DoorDash	DoorDash	出行	外卖,美食	外卖平台	美国外卖平台。	https://www.doordash.com	是
+Flickr	Flickr	设计	摄影,社区	图片社区	摄影分享社区。	https://www.flickr.com	是
+500px	500px	设计	摄影,社区	摄影社区	专业摄影社区。	https://500px.com	是
+Adobe Stock	Adobe Stock	设计	素材,图片	图库	Adobe 图库。	https://stock.adobe.com	是
+Shutterstock	Shutterstock	设计	素材,图片	图库	付费图库。	https://www.shutterstock.com	是
+Getty Images	Getty Images	设计	素材,图片	图库	版权图片库。	https://www.gettyimages.com	是
+iStock	iStock	设计	素材,图片	图库	iStock 图库。	https://www.istockphoto.com	是
+Depositphotos	Depositphotos	设计	素材,图片	图库	图库素材站。	https://depositphotos.com	是
+Storyblocks	Storyblocks	设计	素材,视频	素材库	视频与图片素材。	https://www.storyblocks.com	是
+Envato Elements	Envato Elements	设计	素材,创意	素材库	创意素材订阅。	https://elements.envato.com	是
+Behance	Behance	设计	作品集,设计	设计社区	设计师作品集。	https://www.behance.net	是
+GIMP	GIMP	设计	图片编辑,开源	图片编辑	开源图片编辑。	https://www.gimp.org	是
+Inkscape	Inkscape	设计	矢量,开源	矢量编辑	开源矢量编辑。	https://inkscape.org	是
+Krita	Krita	设计	绘画,开源	数字绘画	开源数字绘画。	https://krita.org	是
+Blender	Blender	设计	3D,开源	3D建模	开源 3D 软件。	https://www.blender.org	是
+Photopea	Photopea	设计	图片编辑,在线	图片编辑	在线 Photoshop。	https://www.photopea.com	是
+Pixlr	Pixlr	设计	图片编辑,在线	图片编辑	在线图片编辑。	https://pixlr.com	是
+iPiccy	iPiccy	设计	图片编辑,在线	图片编辑	在线图片编辑。	https://ipiccy.com	是
+Fotor	Fotor	设计	图片编辑,设计	图片工具	在线图片编辑。	https://www.fotor.com	是
+Steam	Steam	游戏	游戏平台,PC	游戏平台	全球 PC 游戏平台。	https://store.steampowered.com	是
+Epic Games	Epic Games	游戏	游戏平台,商城	游戏商城	Epic 游戏商城。	https://www.epicgames.com	是
+GOG	GOG	游戏	游戏平台,DRM-Free	游戏平台	无 DRM 游戏平台。	https://www.gog.com	是
+itch.io	itch.io	游戏	独立游戏,平台	独立游戏	独立游戏发布平台。	https://itch.io	是
+Roblox	Roblox	游戏	游戏,创作	游戏平台	玩家创作游戏平台。	https://www.roblox.com	是
+Xbox	Xbox	游戏	游戏,主机	主机平台	微软游戏主机。	https://www.xbox.com	是
+PlayStation	PlayStation	游戏	游戏,主机	主机平台	索尼游戏主机。	https://www.playstation.com	是
+Nintendo	Nintendo	游戏	游戏,主机	主机平台	任天堂。	https://www.nintendo.com	是
+Humble Bundle	Humble Bundle	游戏	游戏,慈善	游戏捆绑	慈善游戏捆绑。	https://www.humblebundle.com	是
+IGN	IGN	游戏	游戏,资讯	游戏媒体	游戏资讯媒体。	https://www.ign.com	是
+GameSpot	GameSpot	游戏	游戏,资讯	游戏媒体	游戏资讯媒体。	https://www.gamespot.com	是
+Kotaku	Kotaku	游戏	游戏,资讯	游戏媒体	游戏资讯博客。	https://kotaku.com	是
+PC Gamer	PC Gamer	游戏	游戏,资讯	游戏媒体	PC 游戏媒体。	https://www.pcgamer.com	是
+Polygon	Polygon	游戏	游戏,资讯	游戏媒体	游戏媒体。	https://www.polygon.com	是
+Eurogamer	Eurogamer	游戏	游戏,资讯	游戏媒体	欧洲游戏媒体。	https://www.eurogamer.net	是
+Rock Paper Shotgun	Rock Paper Shotgun	游戏	游戏,资讯	游戏媒体	PC 游戏媒体。	https://www.rockpapershotgun.com	是
+Gematsu	Gematsu	游戏	游戏,资讯	游戏媒体	日本游戏资讯。	https://www.gematsu.com	是
+WebMD	WebMD	生活服务	健康,医疗	健康资讯	美国健康资讯。	https://www.webmd.com	是
+Mayo Clinic	Mayo Clinic	生活服务	健康,医疗	医疗官网	梅奥诊所。	https://www.mayoclinic.org	是
+Healthline	Healthline	生活服务	健康,资讯	健康资讯	健康资讯网站。	https://www.healthline.com	是
+MedlinePlus	MedlinePlus	生活服务	健康,医疗	医学百科	美国医学百科。	https://medlineplus.gov	是
+WHO	世界卫生组织	生活服务	健康,全球	国际组织	世界卫生组织。	https://www.who.int	是
+CDC	美国疾控中心	生活服务	健康,疾控	卫生机构	美国疾控中心。	https://www.cdc.gov	是
+丁香园	丁香园	生活服务	健康,医学	医学社区	医学专业社区。	https://www.dxy.cn	是
+薄荷健康	薄荷健康	生活服务	健康,饮食	健康应用	饮食健康管理。	https://www.boohee.com	是
+Keep	Keep	生活服务	健身,运动	健身应用	健身课程应用。	https://www.gotokeep.com	是
+Strava	Strava	生活服务	健身,跑步	运动社交	跑步骑行社区。	https://www.strava.com	是
+MyFitnessPal	MyFitnessPal	生活服务	健康,热量	健康应用	卡路里记录。	https://www.myfitnesspal.com	是
+Calm	Calm	生活服务	冥想,心理健康	冥想应用	冥想助眠应用。	https://www.calm.com	是
+Headspace	Headspace	生活服务	冥想,心理健康	冥想应用	冥想应用。	https://www.headspace.com	是
+Zillow	Zillow	生活服务	房产,美国	房产平台	美国房产平台。	https://www.zillow.com	是
+Redfin	Redfin	生活服务	房产,美国	房产平台	美国房产平台。	https://www.redfin.com	是
+Indeed	Indeed	生活服务	招聘,求职	招聘平台	全球招聘平台。	https://www.indeed.com	是
+Glassdoor	Glassdoor	生活服务	招聘,公司评价	招聘平台	公司评价与招聘。	https://www.glassdoor.com	是
+Upwork	Upwork	生活服务	自由职业,外包	自由职业平台	全球自由职业平台。	https://www.upwork.com	是
+Fiverr	Fiverr	生活服务	自由职业,外包	自由职业平台	自由职业服务平台。	https://www.fiverr.com	是
+Speedtest	Speedtest	工具	测速,网络	网络工具	网络测速。	https://www.speedtest.net	是
+Can I Use	Can I Use	开发	前端,兼容性	浏览器兼容	浏览器特性兼容查询。	https://caniuse.com	是
+Regex101	Regex101	开发	正则,测试	正则工具	在线正则测试。	https://regex101.com	是
+Smallpdf	Smallpdf	工具	PDF,转换	PDF工具	在线 PDF 工具。	https://smallpdf.com	是
+iLovePDF	iLovePDF	工具	PDF,转换	PDF工具	在线 PDF 工具。	https://www.ilovepdf.com	是
+TinyPNG	TinyPNG	工具	图片,压缩	图片压缩	在线图片压缩。	https://tinypng.com	是
+Squoosh	Squoosh	工具	图片,压缩	图片压缩	谷歌图片压缩。	https://squoosh.app	是
+JSON Formatter	JSON Formatter	工具	JSON,格式化	开发者工具	JSON 格式化工具。	https://jsonformatter.org	是
+Code Beautify	Code Beautify	工具	代码,格式化	开发者工具	代码格式化工具。	https://codebeautify.org	是
+BrowserStack	BrowserStack	开发	测试,跨浏览器	浏览器测试	云端浏览器测试。	https://www.browserstack.com	是
+GTmetrix	GTmetrix	开发	性能,测试	性能测试	网页性能测试。	https://gtmetrix.com	是
+WebPageTest	WebPageTest	开发	性能,测试	性能测试	网页加载测试。	https://www.webpagetest.org	是
+DownDetector	DownDetector	工具	状态,故障	服务状态	服务中断检测。	https://downdetector.com	是
+Wayback Machine	Wayback Machine	工具	存档,历史	网页存档	网页历史存档。	https://web.archive.org	是
+Archive.org	Archive.org	工具	存档,资料库	数字图书馆	互联网档案馆。	https://archive.org	是
+Open Library	Open Library	工具	图书,电子书	电子图书馆	开放电子图书馆。	https://openlibrary.org	是
+Z-Library	Z-Library	工具	电子书,下载	电子书库	电子书下载站。	https://z-lib.io	是
+WordPress	WordPress	工具	建站,博客	建站平台	全球博客与建站平台。	https://wordpress.org	是
+Wix	Wix	工具	建站,网站构建	建站平台	可视化建站平台。	https://www.wix.com	是
+Squarespace	Squarespace	工具	建站,网站构建	建站平台	精美建站平台。	https://www.squarespace.com	是
+Ghost	Ghost	工具	建站,博客	博客平台	开源博客平台。	https://ghost.org	是
+GoDaddy	GoDaddy	工具	域名,托管	域名注册	全球域名注册。	https://www.godaddy.com	是
+Namecheap	Namecheap	工具	域名,托管	域名注册	域名注册商。	https://www.namecheap.com	是
+Cloudflare Pages	Cloudflare Pages	开发	托管,静态	静态托管	Cloudflare 静态托管。	https://pages.cloudflare.com	是
+GitHub Pages	GitHub Pages	开发	托管,静态	静态托管	GitHub 静态托管。	https://pages.github.com	是
+Medium	Medium	媒体	写作,博客	写作平台	博客写作平台。	https://medium.com	是
+Substack	Substack	媒体	写作,新闻通讯	写作平台	通讯写作平台。	https://substack.com	是
+Ghost	Ghost	工具	建站,博客	博客平台	开源博客平台。	https://ghost.org	是
+Hugo	Hugo	开发	静态站点,生成器	静态生成	Go 静态站点生成器。	https://gohugo.io	是
+Hexo	Hexo	开发	静态站点,生成器	静态生成	Node 静态站点生成器。	https://hexo.io	是
+Astro	Astro	开发	静态站点,框架	前端框架	静态站点框架。	https://astro.build	是
+Next.js	Next.js	开发	框架,React	前端框架	React 框架。	https://nextjs.org	是
+Nuxt	Nuxt	开发	框架,Vue	前端框架	Vue 框架。	https://nuxt.com	是
+SvelteKit	SvelteKit	开发	框架,Svelte	前端框架	Svelte 应用框架。	https://svelte.dev	是
+Astro	Astro	开发	静态站点,框架	前端框架	静态站点框架。	https://astro.build	是
+GitBook	GitBook	开发	文档,写作	文档工具	文档写作平台。	https://www.gitbook.com	是
+Read the Docs	Read the Docs	开发	文档,托管	文档托管	开源文档托管。	https://readthedocs.org	是
+Storybook	Storybook	开发	组件,UI	组件开发	UI 组件开发工具。	https://storybook.js.org	是
+Framer	Framer	开发	设计,原型	原型工具	设计发布工具。	https://www.framer.com	是
+InVision	InVision	开发	设计,原型	原型工具	设计协作工具。	https://www.invisionapp.com	是
+Marvel	Marvel	开发	设计,原型	原型工具	原型设计工具。	https://marvelapp.com	是
+Proto.io	Proto.io	开发	设计,原型	原型工具	高保真原型工具。	https://proto.io	是
+Balsamiq	Balsamiq	开发	设计,线框图	原型工具	线框原型工具。	https://balsamiq.com	是
+Axure	Axure	开发	设计,原型	原型工具	专业原型工具。	https://www.axure.com	是
+Zeplin	Zeplin	开发	设计,协作	设计交付	设计交付协作。	https://zeplin.io	是
+Abstract	Abstract	开发	设计,版本控制	设计协作	设计版本控制。	https://www.abstract.com	是
+Sketch	Sketch	开发	设计,Mac	UI设计	macOS 设计工具。	https://www.sketch.com	是
+Principle	Principle	开发	设计,动效	动效工具	交互原型工具。	https://principleformac.com	是
+LottieFiles	LottieFiles	开发	动效,动画	动效工具	动画资源平台。	https://lottiefiles.com	是
+Rive	Rive	开发	动效,交互	动效工具	交互动效工具。	https://rive.app	是
+Spline	Spline	开发	3D,设计	3D设计	浏览器 3D 设计。	https://spline.design	是
+Bunny	Bunny.net	开发	CDN,托管	CDN	欧洲 CDN 服务。	https://bunny.net	是
+Fastly	Fastly	开发	CDN,边缘	CDN	边缘云平台。	https://www.fastly.com	是
+Akamai	Akamai	开发	CDN,安全	CDN	全球 CDN。	https://www.akamai.com	是
+SendGrid	SendGrid	开发	邮件,API	邮件服务	邮件发送服务。	https://sendgrid.com	是
+Twilio	Twilio	开发	API,通讯	通讯API	通讯云 API。	https://www.twilio.com	是
+Mapbox	Mapbox	开发	地图,API	地图服务	开发者地图服务。	https://www.mapbox.com	是
+Algolia	Algolia	开发	搜索,API	搜索服务	托管搜索 API。	https://www.algolia.com	是
+Auth0	Auth0	开发	认证,身份	身份认证	身份认证服务。	https://auth0.com	是
+Clerk	Clerk	开发	认证,身份	身份认证	开发者认证。	https://clerk.com	是
+Plaid	Plaid	开发	金融,API	金融API	金融数据 API。	https://plaid.com	是
+Square	Square	开发	支付,API	支付服务	支付解决方案。	https://squareup.com	是
+Adyen	Adyen	开发	支付,API	支付服务	全球支付平台。	https://www.adyen.com	是
+Unreal Engine	Unreal Engine	游戏	游戏引擎,3D	游戏引擎	虚幻引擎。	https://www.unrealengine.com	是
+Unity	Unity	游戏	游戏引擎,3D	游戏引擎	Unity 引擎。	https://unity.com	是
+Godot	Godot	游戏	游戏引擎,开源	游戏引擎	开源游戏引擎。	https://godotengine.org	是
+Phaser	Phaser	开发	游戏,框架	游戏框架	HTML5 游戏框架。	https://phaser.io	是
+Itch.io	Itch.io	游戏	独立游戏,平台	独立游戏	独立游戏平台。	https://itch.io	是
+OpenSea	OpenSea	开发	NFT,Web3	NFT平台	NFT 交易平台。	https://opensea.io	是
+Ethereum	Ethereum	开发	区块链,Web3	区块链	以太坊官网。	https://ethereum.org	是
+MetaMask	MetaMask	开发	钱包,Web3	加密钱包	加密钱包插件。	https://metamask.io	是
+Etherscan	Etherscan	开发	区块链,浏览器	区块浏览器	以太坊区块浏览器。	https://etherscan.io	是
+CoinDesk	CoinDesk	媒体	加密,资讯	加密资讯	加密新闻媒体。	https://www.coindesk.com	是
+CoinTelegraph	CoinTelegraph	媒体	加密,资讯	加密资讯	加密新闻媒体。	https://cointelegraph.com	是
+The Block	The Block	媒体	加密,资讯	加密资讯	加密研究媒体。	https://www.theblock.co	是
+OpenAI	OpenAI	AI	人工智能,大模型	AI公司	OpenAI 官网。	https://openai.com	是
+Anthropic	Anthropic	AI	人工智能,大模型	AI公司	Anthropic 官网。	https://www.anthropic.com	是
+Hugging Face	Hugging Face	AI	人工智能,开源模型	AI社区	开源模型社区。	https://huggingface.co	是
+Perplexity	Perplexity	AI	人工智能,搜索	AI搜索	AI 搜索工具。	https://www.perplexity.ai	是
+Midjourney	Midjourney	AI	人工智能,AI绘画	AI绘画	AI 绘画工具。	https://www.midjourney.com	是
+Runway	Runway	AI	人工智能,AI视频	AI视频	AI 视频生成。	https://runwayml.com	是
+Suno	Suno	AI	人工智能,AI音乐	AI音乐	AI 音乐生成。	https://suno.ai	是
+ElevenLabs	ElevenLabs	AI	人工智能,AI语音	AI语音	AI 语音生成。	https://elevenlabs.io	是
+Replit	Replit	AI	人工智能,编程	AI编程	AI 编程平台。	https://replit.com	是
+Cursor	Cursor	AI	人工智能,编程	AI编程	AI 代码编辑器。	https://cursor.sh	是
+Poe	Poe	AI	人工智能,对话	AI对话	多模型 AI 平台。	https://poe.com	是
+Character.ai	Character.ai	AI	人工智能,对话	AI对话	AI 角色对话。	https://character.ai	是
+Skillshare	Skillshare	教育	课程,创意	在线课程	创意技能课程。	https://www.skillshare.com	是
+MasterClass	MasterClass	教育	课程,名人	在线课程	名人教学课程。	https://www.masterclass.com	是
+Pluralsight	Pluralsight	教育	课程,技术	在线课程	技术技能平台。	https://www.pluralsight.com	是
+DataCamp	DataCamp	教育	课程,数据科学	在线课程	数据科学课程。	https://www.datacamp.com	是
+Frontend Masters	Frontend Masters	教育	课程,前端	在线课程	前端高级课程。	https://frontendmasters.com	是
+Scrimba	Scrimba	教育	课程,编程	在线课程	交互式编程课程。	https://scrimba.com	是
+Educative	Educative	教育	课程,编程	在线课程	文本交互编程课。	https://www.educative.io	是
+SoloLearn	SoloLearn	教育	课程,编程	在线课程	移动编程学习。	https://www.sololearn.com	是
+HackerRank	HackerRank	开发	算法,面试	刷题平台	编程面试刷题。	https://www.hackerrank.com	是
+LeetCode	LeetCode	开发	算法,面试	刷题平台	算法刷题平台。	https://leetcode.com	是
+Codewars	Codewars	开发	算法,练习	刷题平台	编程挑战平台。	https://www.codewars.com	是
+Exercism	Exercism	开发	编程,练习	编程练习	免费编程练习。	https://exercism.org	是
+Free Code Camp	Free Code Camp	开发	编程,免费	编程学习	免费编程学习。	https://www.freecodecamp.org	是
+The Odin Project	The Odin Project	开发	编程,免费	编程学习	开源全栈课程。	https://www.theodinproject.com	是
+CS50	CS50	教育	课程,计算机	大学课程	哈佛计算机课。	https://cs50.harvard.edu	是
+MIT OpenCourseWare	MIT OCW	教育	课程,计算机	大学课程	MIT 免费课程。	https://ocw.mit.edu	是
+Coursera	Coursera	教育	课程,名校	慕课平台	名校在线课程。	https://www.coursera.org	是
+Khan Academy	Khan Academy	教育	课程,免费	在线教育	免费在线教育。	https://www.khanacademy.org	是
+ArtStation	ArtStation	设计	作品集,艺术	艺术社区	概念艺术家社区。	https://www.artstation.com	是
+DeviantArt	DeviantArt	设计	作品集,艺术	艺术社区	艺术创作社区。	https://www.deviantart.com	是
+Society6	Society6	设计	作品,商店	设计商店	艺术家作品商店。	https://society6.com	是
+Redbubble	Redbubble	设计	作品,商店	设计商店	艺术家周边商店。	https://www.redbubble.com	是
+Pixiv	Pixiv	设计	插画,日本	创作社区	日本插画社区。	https://www.pixiv.net	是
+Wallpaper Engine	Wallpaper Engine	设计	壁纸,动态	壁纸工具	动态壁纸平台。	https://www.wallpaperengine.io	是
+Wallhaven	Wallhaven	设计	壁纸,高清	壁纸库	高清壁纸站。	https://wallhaven.cc	是
+Pixabay	Pixabay	设计	素材,免费	素材库	免费图片素材。	https://pixabay.com	是
+Pexels	Pexels	设计	素材,免费	素材库	免费高清图片。	https://www.pexels.com	是
+Textures.com	Textures.com	设计	材质,3D	材质库	3D 材质库。	https://www.textures.com	是
+Poly Haven	Poly Haven	设计	材质,3D	素材库	开源 3D 素材。	https://polyhaven.com	是
+Quixel	Quixel	设计	材质,3D	素材库	3D 扫描素材。	https://quixel.com	是
+Sketchfab	Sketchfab	设计	3D,模型	3D模型库	在线 3D 模型。	https://sketchfab.com	是
+Mixamo	Mixamo	设计	3D,动画	动画工具	3D 角色动画。	https://www.mixamo.com	是
+Figma Community	Figma Community	设计	组件,模板	设计社区	Figma 设计资源。	https://www.figma.com/community	是
+Mobbin	Mobbin	设计	灵感,App	设计灵感	App 设计参考。	https://mobbin.com	是
+Lapa Ninja	Lapa Ninja	设计	灵感,落地页	设计灵感	落地页设计参考。	https://www.lapa.ninja	是
+Land-book	Land-book	设计	灵感,落地页	设计灵感	网页设计参考。	https://land-book.com	是
+Awwwards	Awwwards	设计	灵感,网页	设计奖	优秀网页设计。	https://www.awwwards.com	是
+CSS Design Awards	CSS Design Awards	设计	灵感,网页	设计奖	CSS 设计奖。	https://www.cssdesignawards.com	是
+Dribbble	Dribbble	设计	灵感,UI	设计社区	UI 设计社区。	https://dribbble.com	是
+Behance	Behance	设计	灵感,作品	设计社区	作品集社区。	https://www.behance.net	是
+SiteInspire	SiteInspire	设计	灵感,网页	设计灵感	网页设计灵感。	https://www.siteinspire.com	是
+Httpster	Httpster	设计	灵感,网页	设计灵感	优秀网页示例。	https://httpster.net	是
+Muzli	Muzli	设计	灵感,聚合	设计灵感	设计灵感聚合。	https://muz.li	是
+Designspiration	Designspiration	设计	灵感,素材	设计灵感	设计灵感收集。	https://www.designspiration.com	是
+Pinterest	Pinterest	设计	灵感,图片	灵感社区	图片灵感收集。	https://www.pinterest.com	是
+Niice	Niice	设计	灵感,搜索	设计搜索	设计灵感搜索。	https://niice.co	是
+ColorHunt	Color Hunt	设计	配色,灵感	配色工具	配色方案灵感。	https://colorhunt.co	是
+Adobe Color	Adobe Color	设计	配色,工具	配色工具	Adobe 配色工具。	https://color.adobe.com	是
+Coolors	Coolors	设计	配色,工具	配色工具	快速配色工具。	https://coolors.co	是
+AudioJungle	AudioJungle	设计	音效,素材	音效库	音效与配乐库。	https://audiojungle.net	是
+Epidemic Sound	Epidemic Sound	设计	音乐,素材	配乐库	创作者配乐库。	https://www.epidemicsound.com	是
+Artlist	Artlist	设计	音乐,素材	配乐库	创作者音乐库。	https://artlist.io	是
+Freesound	Freesound	设计	音效,开源	音效库	开源音效库。	https://freesound.org	是
+Mixkit	Mixkit	设计	素材,免费	素材库	免费视频音效素材。	https://mixkit.co	是
+Coverr	Coverr	设计	视频,免费	视频素材	免费视频素材。	https://coverr.co	是
+Pexels Video	Pexels Video	设计	视频,免费	视频素材	免费视频素材。	https://www.pexels.com/videos	是
+Videvo	Videvo	设计	视频,素材	视频素材	免费视频素材。	https://www.videvo.net	是
+Storyblocks	Storyblocks	设计	视频,素材	素材库	视频图片素材。	https://www.storyblocks.com	是
+Envato	Envato	设计	素材,市场	素材市场	创意素材市场。	https://envato.com	是
+ThemeForest	ThemeForest	设计	模板,网站	模板市场	网站模板市场。	https://themeforest.net	是
+CodeCanyon	CodeCanyon	设计	脚本,代码	代码市场	代码脚本市场。	https://codecanyon.net	是
+GraphicRiver	GraphicRiver	设计	素材,图形	素材市场	图形素材市场。	https://graphicriver.net	是
+Photodune	PhotoDune	设计	素材,图片	素材市场	图片素材市场。	https://photodune.net	是
+3D Warehouse	3D Warehouse	设计	3D,模型	3D模型库	3D 模型库。	https://3dwarehouse.sketchup.com	是
+TurboSquid	TurboSquid	设计	3D,模型	3D模型库	付费 3D 模型。	https://www.turbosquid.com	是
+CGTrader	CGTrader	设计	3D,模型	3D模型库	3D 模型交易。	https://www.cgtrader.com	是
+Free3D	Free3D	设计	3D,模型	3D模型库	免费 3D 模型。	https://free3d.com	是
+SketchUp	SketchUp	设计	3D,建模	3D软件	3D 建模软件。	https://www.sketchup.com	是
+Blender	Blender	设计	3D,开源	3D软件	开源 3D 套件。	https://www.blender.org	是
+Cinema 4D	Cinema 4D	设计	3D,动效	3D软件	专业 3D 软件。	https://www.maxon.net/cinema-4d	是
+Houdini	Houdini	设计	3D,特效	3D软件	特效 3D 软件。	https://www.sidefx.com	是
+ZBrush	ZBrush	设计	3D,雕刻	3D软件	数字雕刻软件。	https://pixologic.com	是
+Maya	Maya	设计	3D,动画	3D软件	Autodesk 3D 软件。	https://www.autodesk.com/products/maya	是
+3ds Max	3ds Max	设计	3D,建模	3D软件	Autodesk 3D 软件。	https://www.autodesk.com/products/3ds-max	是
+Substance 3D	Substance 3D	设计	3D,材质	3D软件	Adobe 3D 材质。	https://www.adobe.com/products/substance3d.html	是
+Unity	Unity	游戏	游戏引擎,开发	游戏引擎	Unity 游戏引擎。	https://unity.com	是
+Unreal Engine	Unreal Engine	游戏	游戏引擎,开发	游戏引擎	虚幻引擎。	https://www.unrealengine.com	是
+GameMaker	GameMaker	游戏	游戏开发,引擎	游戏引擎	2D 游戏引擎。	https://gamemaker.io	是
+Construct	Construct	游戏	游戏开发,引擎	游戏引擎	无代码游戏引擎。	https://www.construct.net	是
+Stencyl	Stencyl	游戏	游戏开发,引擎	游戏引擎	可视化游戏引擎。	https://www.stencyl.com	是
+RPG Maker	RPG Maker	游戏	游戏开发,工具	游戏制作	RPG 制作工具。	https://www.rpgmakerweb.com	是
+Trello	Trello	工具	项目管理,看板	协作工具	看板项目管理。	https://trello.com	是
+Notion	Notion	工具	笔记,协作	效率工具	一体化工作区。	https://www.notion.so	是
+Asana	Asana	工具	项目管理,团队	协作工具	团队任务管理。	https://asana.com	是
+Monday.com	Monday.com	工具	项目管理,团队	协作工具	项目管理平台。	https://monday.com	是
+Wrike	Wrike	工具	项目管理,团队	协作工具	项目管理平台。	https://www.wrike.com	是
+Smartsheet	Smartsheet	工具	项目管理,表格	协作工具	表格项目管理。	https://www.smartsheet.com	是
+Basecamp	Basecamp	工具	项目管理,团队	协作工具	团队协作工具。	https://basecamp.com	是
+Teamwork	Teamwork	工具	项目管理,团队	协作工具	项目管理平台。	https://www.teamwork.com	是
+Workfront	Adobe Workfront	工具	项目管理,企业	协作工具	企业项目管理。	https://business.adobe.com/products/workfront.html	是
+ClickUp	ClickUp	工具	项目管理,全能	协作工具	全能项目管理。	https://clickup.com	是
+Linear	Linear	工具	项目管理,研发	协作工具	研发项目管理。	https://linear.app	是
+Jira	Jira	工具	项目管理,研发	协作工具	Atlassian 项目工具。	https://www.atlassian.com/software/jira	是
+Confluence	Confluence	工具	文档,协作	协作工具	团队知识库。	https://www.atlassian.com/software/confluence	是
+Loom	Loom	工具	录屏,分享	效率工具	录屏分享工具。	https://www.loom.com	是
+OBS Studio	OBS Studio	工具	录屏,直播	直播工具	开源直播软件。	https://obsproject.com	是
+Streamlabs	Streamlabs	工具	直播,工具	直播工具	直播工具套件。	https://streamlabs.com	是
+CapCut	CapCut	工具	视频,剪辑	视频工具	免费视频剪辑。	https://www.capcut.com	是
+DaVinci Resolve	DaVinci Resolve	工具	视频,剪辑	视频工具	专业视频剪辑。	https://www.blackmagicdesign.com/products/davinciresolve	是
+HandBrake	HandBrake	工具	视频,转码	视频工具	开源视频转码。	https://handbrake.fr	是
+VLC	VLC Media Player	工具	播放器,开源	影音工具	开源媒体播放器。	https://www.videolan.org	是
+Audacity	Audacity	工具	音频,编辑	音频工具	开源音频编辑。	https://www.audacityteam.org	是
+Twitter	Twitter	社交	社交媒体,资讯	社交平台	全球实时社交平台。	https://twitter.com	是
+Facebook	Facebook	社交	社交媒体,社交	社交平台	全球最大社交网络。	https://facebook.com	是
+Instagram	Instagram	社交	图片,社交	图片社交	图片与短视频社交。	https://instagram.com	是
+YouTube	YouTube	视频与直播	视频,短视频	视频平台	全球视频平台。	https://youtube.com	是
+TikTok	TikTok	视频与直播	短视频,社交	短视频平台	全球短视频平台。	https://www.tiktok.com	是
+Telegram	Telegram	社交	通讯,加密	即时通讯	加密即时通讯。	https://web.telegram.org	是
+Discord	Discord	社交	通讯,社区	即时通讯	社区通讯平台。	https://discord.com	是
+Reddit	Reddit	社交	社区,论坛	社区论坛	热门社区聚合。	https://reddit.com	是
+Quora	Quora	社交	问答,社区	问答平台	知识问答社区。	https://quora.com	是
+LinkedIn	LinkedIn	社交	职场,社交	职场社交	职场社交平台。	https://linkedin.com	是
+Signal	Signal	社交	通讯,加密	即时通讯	隐私通讯应用。	https://signal.org	是
+WhatsApp	WhatsApp	社交	通讯,聊天	即时通讯	全球聊天应用。	https://whatsapp.com	是
+Snapchat	Snapchat	社交	图片,社交	图片社交	阅后即焚应用。	https://snapchat.com	是
+Pinterest	Pinterest	社交	图片,灵感	灵感社区	图片灵感收藏。	https://pinterest.com	是
+Meetup	Meetup	社交	线下,活动	活动平台	线下活动组织。	https://meetup.com	是
+Flickr	Flickr	设计	摄影,社区	摄影社区	摄影师图片社区。	https://flickr.com	是
+Dribbble	Dribbble	设计	UI,作品	设计社区	UI 设计作品集。	https://dribbble.com	是
+Behance	Behance	设计	作品集,设计	设计社区	设计师作品集。	https://behance.net	是
+Figma	Figma	设计	UI,协作	设计工具	在线 UI 设计。	https://figma.com	是
+Canva	Canva	设计	平面,在线设计	设计工具	在线平面设计。	https://canva.com	是
+The Verge	The Verge	媒体	科技,资讯	科技媒体	科技新闻媒体。	https://www.theverge.com	是
+TechCrunch	TechCrunch	媒体	科技,资讯	科技媒体	科技创业媒体。	https://techcrunch.com	是
+Wired	Wired	媒体	科技,文化	科技媒体	《连线》杂志。	https://www.wired.com	是
+Ars Technica	Ars Technica	媒体	科技,深度	科技媒体	深度科技媒体。	https://arstechnica.com	是
+Engadget	Engadget	媒体	科技,资讯	科技媒体	消费电子媒体。	https://www.engadget.com	是
+CNET	CNET	媒体	科技,评测	科技媒体	科技评测媒体。	https://www.cnet.com	是
+Gizmodo	Gizmodo	媒体	科技,文化	科技媒体	科技文化媒体。	https://gizmodo.com	是
+Mashable	Mashable	媒体	科技,文化	科技媒体	数字文化媒体。	https://mashable.com	是
+Business Insider	Business Insider	媒体	财经,科技	财经媒体	商业科技媒体。	https://www.businessinsider.com	是
+CNBC	CNBC	媒体	财经,新闻	财经媒体	财经新闻媒体。	https://www.cnbc.com	是
+Fox News	Fox News	媒体	新闻,美国	新闻媒体	美国新闻媒体。	https://www.foxnews.com	是
+NBC News	NBC News	媒体	新闻,美国	新闻媒体	美国新闻媒体。	https://www.nbcnews.com	是
+CBS News	CBS News	媒体	新闻,美国	新闻媒体	美国新闻媒体。	https://www.cbsnews.com	是
+ABC News	ABC News	媒体	新闻,美国	新闻媒体	美国新闻媒体。	https://abcnews.go.com	是
+USA Today	USA Today	媒体	新闻,美国	新闻媒体	美国报纸。	https://www.usatoday.com	是
+Politico	Politico	媒体	新闻,政治	政治媒体	美国政治媒体。	https://www.politico.com	是
+The Atlantic	The Atlantic	媒体	新闻,文化	文化媒体	美国文化杂志。	https://www.theatlantic.com	是
+New Yorker	New Yorker	媒体	新闻,文化	文化媒体	《纽约客》。	https://www.newyorker.com	是
+TIME	TIME	媒体	新闻,时事	新闻杂志	《时代》杂志。	https://time.com	是
+Newsweek	Newsweek	媒体	新闻,时事	新闻杂志	《新闻周刊》。	https://www.newsweek.com	是
+Forbes	Forbes	媒体	财经,商业	财经媒体	《福布斯》杂志。	https://forbes.com	是
+The Guardian	The Guardian	媒体	新闻,国际	新闻媒体	英国《卫报》。	https://theguardian.com	是
+The Independent	The Independent	媒体	新闻,国际	新闻媒体	英国独立报。	https://www.independent.co.uk	是
+The Telegraph	The Telegraph	媒体	新闻,国际	新闻媒体	英国《每日电讯》。	https://www.telegraph.co.uk	是
+The Times	The Times	媒体	新闻,国际	新闻媒体	英国《泰晤士报》。	https://www.thetimes.co.uk	是
+The Sun	The Sun	媒体	新闻,国际	新闻媒体	英国《太阳报》。	https://www.thesun.co.uk	是
+Daily Mail	Daily Mail	媒体	新闻,国际	新闻媒体	英国《每日邮报》。	https://www.dailymail.co.uk	是
+Le Monde	Le Monde	媒体	新闻,法国	新闻媒体	法国《世界报》。	https://www.lemonde.fr	是
+Le Figaro	Le Figaro	媒体	新闻,法国	新闻媒体	法国《费加罗报》。	https://www.lefigaro.fr	是
+Der Spiegel	Der Spiegel	媒体	新闻,德国	新闻媒体	德国《明镜》。	https://www.spiegel.de	是
+Bild	Bild	媒体	新闻,德国	新闻媒体	德国《图片报》。	https://www.bild.de	是
+Corriere della Sera	晚邮报	媒体	新闻,意大利	新闻媒体	意大利《晚邮报》。	https://www.corriere.it	是
+El País	国家报	媒体	新闻,西班牙	新闻媒体	西班牙《国家报》。	https://elpais.com	是
+El Mundo	世界报	媒体	新闻,西班牙	新闻媒体	西班牙《世界报》。	https://www.elmundo.es	是
+Folha de São Paulo	圣保罗页报	媒体	新闻,巴西	新闻媒体	巴西《圣保罗页报》。	https://www.folha.uol.com.br	是
+钉钉	钉钉	工具	办公,协作	办公软件	企业办公协作平台。	https://www.dingtalk.com	否
+飞书	飞书	工具	办公,协作	办公软件	字节企业协作平台。	https://www.feishu.cn	否
+企业微信	企业微信	工具	办公,协作	办公软件	腾讯企业通讯。	https://work.weixin.qq.com	否
+腾讯文档	腾讯文档	工具	办公,文档	在线文档	腾讯在线文档。	https://docs.qq.com	否
+石墨文档	石墨文档	工具	办公,文档	在线文档	协同文档平台。	https://shimo.im	否
+语雀	语雀	工具	笔记,知识库	知识工具	蚂蚁知识库。	https://www.yuque.com	否
+幕布	幕布	工具	笔记,大纲	笔记工具	大纲笔记。	https://mubu.com	否
+XMind	XMind	工具	思维导图,效率	思维导图	思维导图软件。	https://www.xmind.cn	否
+ProcessOn	ProcessOn	工具	流程图,绘图	在线绘图	在线流程图工具。	https://www.processon.com	否
+滴答清单	滴答清单	工具	待办,效率	待办工具	待办事项管理。	https://www.dida365.com	否
+番茄Todo	番茄Todo	工具	番茄钟,专注	专注工具	番茄钟应用。	https://pomofocus.io	是
+Forest	Forest	工具	专注,效率	专注工具	种树专注应用。	https://www.forestapp.cc	否
+印象笔记	印象笔记	工具	笔记,效率	笔记工具	云笔记应用。	https://www.yinxiang.com	否
+为知笔记	为知笔记	工具	笔记,效率	笔记工具	个人笔记应用。	https://www.wiz.cn	否
+OneNote	OneNote	工具	笔记,效率	笔记工具	微软笔记。	https://www.onenote.com	是
+WPS	WPS	工具	办公,套件	办公软件	金山办公套件。	https://www.wps.cn	否
+腾讯会议	腾讯会议	工具	会议,视频	视频会议	腾讯视频会议。	https://meeting.tencent.com	否
+钉钉会议	钉钉会议	工具	会议,视频	视频会议	钉钉会议。	https://www.dingtalk.com	否
+飞书会议	飞书会议	工具	会议,视频	视频会议	飞书会议。	https://www.feishu.cn	否
+华为云会议	华为云会议	工具	会议,视频	视频会议	华为云会议。	https://www.huaweicloud.com	否
+好视通	好视通	工具	会议,视频	视频会议	国产视频会议。	https://www.hst.com	否
+网易邮箱	网易邮箱	工具	邮箱,通信	电子邮箱	免费邮箱服务。	https://mail.163.com	否
+QQ邮箱	QQ邮箱	工具	邮箱,通信	电子邮箱	腾讯免费邮箱。	https://mail.qq.com	否
+139邮箱	139邮箱	工具	邮箱,通信	电子邮箱	中国移动邮箱。	https://mail.10086.cn	否
+189邮箱	189邮箱	工具	邮箱,通信	电子邮箱	中国电信邮箱。	https://mail.189.cn	否
+阿里云	阿里云	工具	云计算,云服务	云计算	阿里巴巴云平台。	https://www.aliyun.com	否
+腾讯云	腾讯云	工具	云计算,云服务	云计算	腾讯云平台。	https://cloud.tencent.com	否
+华为云	华为云	工具	云计算,云服务	云计算	华为云平台。	https://www.huaweicloud.com	否
+百度智能云	百度智能云	工具	云计算,云服务	云计算	百度云平台。	https://cloud.baidu.com	否
+京东云	京东云	工具	云计算,云服务	云计算	京东云平台。	https://www.jdcloud.com	否
+金山云	金山云	工具	云计算,云服务	云计算	金山云平台。	https://www.ksyun.com	否
+UCloud	UCloud	工具	云计算,云服务	云计算	优刻得云。	https://www.ucloud.cn	否
+七牛云	七牛云	工具	云存储,CDN	云服务	七牛云存储。	https://www.qiniu.com	否
+青云	青云	工具	云计算,云服务	云计算	青云云计算。	https://www.qingcloud.com	否
+又拍云	又拍云	工具	云存储,CDN	云服务	又拍云存储。	https://www.upyun.com	否
+LeanCloud	LeanCloud	工具	后端,云服务	后端云	后端云服务。	https://leancloud.cn	否
+百度网盘	百度网盘	工具	网盘,云存储	云存储	百度网盘。	https://pan.baidu.com	否
+阿里云盘	阿里云盘	工具	网盘,云存储	云存储	阿里云盘。	https://www.alipan.com	否
+腾讯微云	腾讯微云	工具	网盘,云存储	云存储	腾讯微云。	https://www.weiyun.com	否
+123云盘	123云盘	工具	网盘,云存储	云存储	免费网盘。	https://www.123pan.com	否
+夸克网盘	夸克网盘	工具	网盘,云存储	云存储	夸克网盘。	https://pan.quark.cn	否
+115网盘	115网盘	工具	网盘,云存储	云存储	115 网盘。	https://115.com	否
+天翼云盘	天翼云盘	工具	网盘,云存储	云存储	天翼云盘。	https://cloud.189.cn	否
+迅雷云盘	迅雷云盘	工具	网盘,云存储	云存储	迅雷云盘。	https://pan.xunlei.com	否
+蓝奏云	蓝奏云	工具	网盘,云存储	云存储	轻量网盘。	https://www.lanzou.com	否
+华为云空间	华为云空间	工具	网盘,云存储	云存储	华为云空间。	https://cloud.huawei.com	否
+小米云	小米云服务	工具	网盘,云存储	云存储	小米云服务。	https://i.mi.com	否
+坚果云	坚果云	工具	网盘,云存储	云存储	同步网盘。	https://www.jianguoyun.com	否
+OneDrive	OneDrive	工具	网盘,微软	云存储	微软云盘。	https://onedrive.live.com	是
+新浪财经	新浪财经	金融	金融,股票	财经资讯	新浪财经频道。	https://finance.sina.com.cn	否
+网易财经	网易财经	金融	金融,股票	财经资讯	网易财经频道。	https://money.163.com	否
+和讯网	和讯网	金融	金融,股票	财经资讯	财经资讯网站。	https://www.hexun.com	否
+财联社	财联社	金融	金融,资讯	财经资讯	财经快讯平台。	https://www.cls.cn	否
+证券时报	证券时报	金融	金融,证券	财经资讯	证券时报网。	https://www.stcn.com	否
+中国证券报	中国证券报	金融	金融,证券	财经资讯	中国证券报。	https://www.cs.com.cn	否
+上海证券交易所	上交所	金融	金融,交易所	证券交易所	上交所官网。	https://www.sse.com.cn	否
+深圳证券交易所	深交所	金融	金融,交易所	证券交易所	深交所官网。	https://www.szse.cn	否
+北京证券交易所	北交所	金融	金融,交易所	证券交易所	北交所官网。	https://www.bse.cn	否
+天天基金	天天基金	金融	基金,理财	基金平台	基金交易平台。	https://fund.eastmoney.com	否
+蚂蚁财富	蚂蚁财富	金融	理财,基金	理财平台	支付宝理财。	https://www.antfortune.com	否
+华尔街见闻	华尔街见闻	金融	金融,资讯	财经资讯	财经资讯平台。	https://wallstreetcn.com	否
+英为财情	英为财情	金融	金融,行情	行情数据	全球财经数据。	https://cn.investing.com	否
+中关村在线	中关村在线	电子	数码,资讯	IT资讯	IT 数码资讯。	https://www.zol.com.cn	否
+太平洋电脑网	太平洋电脑网	电子	数码,资讯	IT资讯	IT 数码资讯。	https://www.pconline.com.cn	否
+IT之家	IT之家	电子	数码,资讯	IT资讯	科技数码资讯。	https://www.ithome.com	否
+驱动之家	驱动之家	电子	驱动,下载	驱动下载	电脑驱动下载。	https://www.mydrivers.com	否
+小米	小米	电子	数码,手机	品牌官网	小米官网。	https://www.mi.com	否
+华为	华为	电子	数码,手机	品牌官网	华为官网。	https://www.huawei.com	否
+OPPO	OPPO	电子	数码,手机	品牌官网	OPPO 官网。	https://www.oppo.com	否
+vivo	vivo	电子	数码,手机	品牌官网	vivo 官网。	https://www.vivo.com.cn	否
+荣耀	荣耀	电子	数码,手机	品牌官网	荣耀官网。	https://www.honor.com	否
+三星	三星	电子	数码,手机	品牌官网	三星官网。	https://www.samsung.com	是
+苹果	Apple	电子	数码,手机	品牌官网	苹果官网。	https://www.apple.com	是
+一加	OnePlus	电子	数码,手机	品牌官网	一加官网。	https://www.oneplus.com	是
+联想	联想	电子	数码,电脑	品牌官网	联想官网。	https://www.lenovo.com.cn	否
+戴尔	戴尔	电子	数码,电脑	品牌官网	戴尔官网。	https://www.dell.com	是
+惠普	惠普	电子	数码,电脑	品牌官网	惠普官网。	https://www.hp.com	是
+华硕	华硕	电子	数码,电脑	品牌官网	华硕官网。	https://www.asus.com.cn	否
+宏碁	Acer	电子	数码,电脑	品牌官网	宏碁官网。	https://www.acer.com	是
+索尼	索尼	电子	数码,影音	品牌官网	索尼官网。	https://www.sony.com.cn	否
+佳能	佳能	电子	数码,相机	品牌官网	佳能官网。	https://www.canon.com.cn	否
+尼康	尼康	电子	数码,相机	品牌官网	尼康官网。	https://www.nikon.com.cn	否
+大疆	大疆	电子	数码,无人机	品牌官网	大疆官网。	https://www.dji.com	是
+GoPro	GoPro	电子	数码,运动相机	品牌官网	GoPro 官网。	https://gopro.com	是
+DJI	DJI	电子	数码,无人机	品牌官网	大疆创新。	https://www.dji.com	是
+英特尔	英特尔	电子	芯片,硬件	品牌官网	英特尔官网。	https://www.intel.com	是
+AMD	AMD	电子	芯片,硬件	品牌官网	AMD 官网。	https://www.amd.com	是
+英伟达	英伟达	电子	芯片,显卡	品牌官网	英伟达官网。	https://www.nvidia.com	是
+高通	高通	电子	芯片,移动	品牌官网	高通官网。	https://www.qualcomm.com	是
+台积电	台积电	电子	芯片,制造	品牌官网	台积电官网。	https://www.tsmc.com	是
+人民网	人民网	媒体	新闻,权威	权威媒体	人民日报旗下。	http://www.people.com.cn	否
+新华网	新华网	媒体	新闻,权威	权威媒体	新华社旗下。	http://www.xinhuanet.com	否
+央视网	央视网	媒体	新闻,权威	权威媒体	央视旗下。	https://www.cctv.com	否
+环球网	环球网	媒体	新闻,国际	新闻媒体	环球时报旗下。	https://www.huanqiu.com	否
+中国新闻网	中国新闻网	媒体	新闻,资讯	新闻媒体	中国新闻社。	https://www.chinanews.com.cn	否
+光明网	光明网	媒体	新闻,权威	权威媒体	光明日报旗下。	https://www.gmw.cn	否
+观察者网	观察者网	媒体	新闻,时评	新闻媒体	时事评论网站。	https://www.guancha.cn	否
+参考消息	参考消息	媒体	新闻,国际	新闻媒体	参考消息报社。	http://www.cankaoxiaoxi.com	否
+澎湃新闻	澎湃新闻	媒体	新闻,时政	新闻媒体	上海报业集团。	https://www.thepaper.cn	否
+界面新闻	界面新闻	媒体	新闻,财经	新闻媒体	界面新闻。	https://www.jiemian.com	否
+财新网	财新网	媒体	新闻,财经	新闻媒体	财新传媒。	https://www.caixin.com	否
+36氪	36氪	媒体	科技,创投	科技媒体	科技创投媒体。	https://36kr.com	否
+虎嗅	虎嗅	媒体	科技,商业	科技媒体	商业科技媒体。	https://www.huxiu.com	否
+少数派	少数派	媒体	科技,数码	科技媒体	数字生活媒体。	https://sspai.com	否
+爱范儿	爱范儿	媒体	科技,数码	科技媒体	数字生活方式媒体。	https://www.ifanr.com	否
+极客公园	极客公园	媒体	科技,资讯	科技媒体	科技资讯媒体。	https://www.geekpark.net	否
+品玩	品玩	媒体	科技,资讯	科技媒体	科技资讯媒体。	https://www.pingwest.com	否
+数字尾巴	数字尾巴	媒体	科技,数码	科技媒体	数码产品社区。	https://www.dgtle.com	否
+今日头条	今日头条	媒体	资讯,新闻	资讯平台	字节资讯平台。	https://www.toutiao.com	否
+百家号	百家号	媒体	内容,自媒体	内容平台	百度自媒体。	https://baijiahao.baidu.com	否
+搜狐号	搜狐号	媒体	内容,自媒体	内容平台	搜狐自媒体。	https://mp.sohu.com	否
+网易号	网易号	媒体	内容,自媒体	内容平台	网易自媒体。	https://mp.163.com	否
+微信公众号	微信公众号	媒体	内容,自媒体	内容平台	微信公众平台。	https://mp.weixin.qq.com	否
+中国知网	中国知网	教育	学术,论文	学术文献	学术文献数据库。	https://www.cnki.net	否
+万方数据	万方数据	教育	学术,论文	学术文献	学术文献数据库。	https://www.wanfangdata.com.cn	否
+维普	维普	教育	学术,期刊	学术文献	期刊文献数据库。	https://www.cqvip.com	否
+百度学术	百度学术	教育	学术,搜索	学术搜索	学术文献搜索。	https://xueshu.baidu.com	否
+谷粉学术	谷粉学术	教育	学术,搜索	学术搜索	谷歌学术镜像。	https://gfsoso.99lb.net	否
+网易公开课	网易公开课	教育	课程,免费	在线课程	名校公开课。	https://open.163.com	否
+中国大学MOOC	中国大学MOOC	教育	课程,慕课	在线课程	高校慕课平台。	https://www.icourse163.org	否
+学堂在线	学堂在线	教育	课程,慕课	在线课程	清华慕课平台。	https://www.xuetangx.com	否
+慕课网	慕课网	教育	课程,IT	在线课程	IT 技能课程。	https://www.imooc.com	否
+极客时间	极客时间	教育	课程,IT	在线课程	开发者课程。	https://time.geekbang.org	否
+得到	得到	教育	课程,知识付费	知识平台	知识付费平台。	https://www.dedao.cn	否
+知乎	知乎	教育	问答,知识	问答社区	知识问答社区。	https://www.zhihu.com	否
+百度百科	百度百科	教育	百科,知识	在线百科	百度百科。	https://baike.baidu.com	否
+维基百科	维基百科	教育	百科,知识	在线百科	维基百科。	https://zh.wikipedia.org	是
+豆瓣	豆瓣	教育	书影音,社区	文化社区	书影音评分。	https://www.douban.com	否
+Adobe	Adobe	工具	创意,软件	创意软件	Adobe 创意云。	https://www.adobe.com	是
+Microsoft	微软	工具	软件,系统	科技公司	微软官网。	https://www.microsoft.com	是
+Apple	Apple	工具	硬件,软件	科技公司	苹果官网。	https://www.apple.com	是
+Google	Google	工具	搜索,科技	科技公司	谷歌官网。	https://www.google.com	是
+Amazon	Amazon	电商	电商,零售	电商平台	亚马逊官网。	https://www.amazon.com	是
+Meta	Meta	社交	社交,科技	科技公司	Meta 官网。	https://about.meta.com	是
+Tencent	腾讯	社交	通讯,科技	科技公司	腾讯官网。	https://www.tencent.com	否
+Alibaba	阿里巴巴	电商	电商,科技	科技公司	阿里巴巴官网。	https://www.alibaba.com	否
+ByteDance	字节跳动	媒体	科技,内容	科技公司	字节跳动官网。	https://www.bytedance.com	否
+IBM	IBM	开发	科技,云	科技公司	IBM 官网。	https://www.ibm.com	是
+Oracle	Oracle	开发	数据库,云	科技公司	甲骨文官网。	https://www.oracle.com	是
+Salesforce	Salesforce	开发	CRM,云	企业软件	Salesforce 官网。	https://www.salesforce.com	是
+SAP	SAP	开发	企业软件,云	企业软件	SAP 官网。	https://www.sap.com	是
+Adobe Creative Cloud	Adobe CC	工具	创意,订阅	创意软件	Adobe 订阅服务。	https://creativecloud.adobe.com	是
+Autodesk	Autodesk	设计	3D,工程	设计软件	Autodesk 官网。	https://www.autodesk.com	是
+Unity	Unity	游戏	游戏引擎,开发	游戏引擎	Unity 官网。	https://unity.com	是
+Unreal Engine	Unreal Engine	游戏	游戏引擎,开发	游戏引擎	虚幻引擎官网。	https://www.unrealengine.com	是
+NetEase	网易	媒体	门户,游戏	科技公司	网易官网。	https://www.163.com	否
+Baidu	百度	工具	搜索,AI	科技公司	百度官网。	https://www.baidu.com	否
+Huawei	华为	电子	通信,硬件	科技公司	华为官网。	https://www.huawei.com	否
+Xiaomi	小米	电子	手机,硬件	科技公司	小米官网。	https://www.mi.com	否
+Samsung	三星	电子	手机,硬件	科技公司	三星官网。	https://www.samsung.com	是
+Intel	英特尔	电子	芯片,硬件	科技公司	英特尔官网。	https://www.intel.com	是
+NVIDIA	NVIDIA	电子	显卡,AI	科技公司	英伟达官网。	https://www.nvidia.com	是
+AMD	AMD	电子	芯片,硬件	科技公司	AMD 官网。	https://www.amd.com	是
+Qualcomm	高通	电子	芯片,移动	科技公司	高通官网。	https://www.qualcomm.com	是
+TSMC	台积电	电子	芯片,制造	科技公司	台积电官网。	https://www.tsmc.com	是
+Automattic	Automattic	开发	开源,Web	科技公司	WordPress 母公司。	https://automattic.com	是
+Mozilla	Mozilla	开发	开源,浏览器	开源组织	Firefox 开发商。	https://www.mozilla.org	是
+Linux	Linux	开发	开源,操作系统	开源组织	Linux 官网。	https://www.linux.org	是
+Ubuntu	Ubuntu	开发	操作系统,开源	操作系统	Ubuntu 官网。	https://ubuntu.com	是
+Debian	Debian	开发	操作系统,开源	操作系统	Debian 官网。	https://www.debian.org	是
+Arch Linux	Arch Linux	开发	操作系统,开源	操作系统	Arch 官网。	https://archlinux.org	是
+FreeBSD	FreeBSD	开发	操作系统,开源	操作系统	FreeBSD 官网。	https://www.freebsd.org	是
+CentOS	CentOS	开发	操作系统,开源	操作系统	CentOS 官网。	https://www.centos.org	是
+Rocky Linux	Rocky Linux	开发	操作系统,开源	操作系统	Rocky 官网。	https://rockylinux.org	是
+AlmaLinux	AlmaLinux	开发	操作系统,开源	操作系统	Alma 官网。	https://almalinux.org	是
+Apache	Apache	开发	开源,服务器	开源组织	Apache 软件基金会。	https://www.apache.org	是
+Nginx	Nginx	开发	服务器,Web	Web服务器	Nginx 官网。	https://nginx.org	是
+Caddy	Caddy	开发	服务器,Web	Web服务器	Caddy 官网。	https://caddyserver.com	是
+HAProxy	HAProxy	开发	服务器,负载均衡	负载均衡	HAProxy 官网。	https://www.haproxy.org	是
+Varnish	Varnish Cache	开发	缓存,加速	缓存服务器	Varnish 官网。	https://varnish-cache.org	是
+Redis	Redis	开发	数据库,缓存	键值数据库	Redis 官网。	https://redis.io	是
+Memcached	Memcached	开发	数据库,缓存	缓存	Memcached 官网。	https://memcached.org	是
+RabbitMQ	RabbitMQ	开发	消息队列,中间件	消息队列	RabbitMQ 官网。	https://www.rabbitmq.com	是
+Kafka	Apache Kafka	开发	消息队列,流处理	消息队列	Kafka 官网。	https://kafka.apache.org	是
+Consul	Consul	开发	服务发现,中间件	服务发现	Consul 官网。	https://www.consul.io	是
+etcd	etcd	开发	分布式,键值	分布式存储	etcd 官网。	https://etcd.io	是
+Zookeeper	Zookeeper	开发	分布式,协调	分布式协调	ZooKeeper 官网。	https://zookeeper.apache.org	是
+Celery	Celery	开发	任务队列,异步	任务队列	Celery 官网。	https://docs.celeryq.dev	是
+gRPC	gRPC	开发	远程调用,框架	RPC框架	gRPC 官网。	https://grpc.io	是
+GraphQL	GraphQL	开发	API,查询	API规范	GraphQL 官网。	https://graphql.org	是
+RESTful	REST API	开发	API,规范	API规范	REST 规范文档。	https://restfulapi.net	是
+WebSocket	WebSocket	开发	协议,实时	通信协议	WebSocket 规范。	https://websocket.org	是
+OpenAPI	OpenAPI	开发	API,规范	API规范	OpenAPI 规范。	https://www.openapis.org	是
+JSON	JSON	开发	格式,数据	数据格式	JSON 官网。	https://www.json.org	是
+YAML	YAML	开发	格式,配置	配置格式	YAML 官网。	https://yaml.org	是
+HTML	HTML	开发	前端,标准	Web标准	HTML 规范。	https://html.spec.whatwg.org	是
+CSS	CSS	开发	前端,标准	Web标准	CSS 规范。	https://www.w3.org/Style/CSS/	是
+JavaScript	JavaScript	开发	编程语言,标准	编程语言	JavaScript 规范。	https://developer.mozilla.org	是
+TypeScript	TypeScript	开发	编程语言,类型	编程语言	TypeScript 官网。	https://www.typescriptlang.org	是
+Deno	Deno	开发	运行时,JavaScript	运行时	Deno 官网。	https://deno.com	是
+Bun	Bun	开发	运行时,JavaScript	运行时	Bun 官网。	https://bun.sh	是
+pnpm	pnpm	开发	包管理,前端	包管理	pnpm 官网。	https://pnpm.io	是
+Yarn	Yarn	开发	包管理,前端	包管理	Yarn 官网。	https://yarnpkg.com	是
+webpack	webpack	开发	构建,打包	构建工具	webpack 官网。	https://webpack.js.org	是
+Vite	Vite	开发	构建,打包	构建工具	Vite 官网。	https://vitejs.dev	是
+Rollup	Rollup	开发	构建,打包	构建工具	Rollup 官网。	https://rollupjs.org	是
+Parcel	Parcel	开发	构建,打包	构建工具	Parcel 官网。	https://parceljs.org	是
+esbuild	esbuild	开发	构建,打包	构建工具	esbuild 官网。	https://esbuild.github.io	是
+Babel	Babel	开发	转译,JavaScript	构建工具	Babel 官网。	https://babeljs.io	是
+ESLint	ESLint	开发	代码检查,规范	代码工具	ESLint 官网。	https://eslint.org	是
+Prettier	Prettier	开发	格式化,代码	代码工具	Prettier 官网。	https://prettier.io	是
+Husky	Husky	开发	Git钩子,工具	开发工具	Husky 官网。	https://typicode.github.io/husky	是
+Storybook	Storybook	开发	组件,UI	前端工具	组件开发工具。	https://storybook.js.org	是
+Playwright	Playwright	开发	测试,自动化	测试工具	Playwright 官网。	https://playwright.dev	是
+Cypress	Cypress	开发	测试,自动化	测试工具	Cypress 官网。	https://www.cypress.io	是
+Selenium	Selenium	开发	测试,自动化	测试工具	Selenium 官网。	https://www.selenium.dev	是
+Jest	Jest	开发	测试,单元	测试工具	Jest 官网。	https://jestjs.io	是
+Vitest	Vitest	开发	测试,单元	测试工具	Vitest 官网。	https://vitest.dev	是
+Slack	Slack	工具	通讯,协作	团队工具	团队通讯平台。	https://slack.com	是
+Notion	Notion	工具	笔记,协作	效率工具	一体化工作区。	https://www.notion.so	是
+Linear	Linear	工具	项目管理,研发	协作工具	研发管理工具。	https://linear.app	是
+Airtable	Airtable	工具	表格,数据库	协作工具	灵活数据库表格。	https://airtable.com	是
+Miro	Miro	工具	白板,协作	在线白板	在线白板工具。	https://miro.com	是
+Figma	Figma	工具	设计,协作	设计工具	在线 UI 设计。	https://www.figma.com	是
+Loom	Loom	工具	录屏,分享	效率工具	录屏分享工具。	https://www.loom.com	是
+Calendly	Calendly	工具	日程,预约	效率工具	在线预约工具。	https://calendly.com	是
+Zapier	Zapier	工具	自动化,集成	效率工具	应用自动化。	https://zapier.com	是
+IFTTT	IFTTT	工具	自动化,集成	效率工具	条件自动化。	https://ifttt.com	是
+Make	Make	工具	自动化,集成	效率工具	可视化自动化。	https://www.make.com	是
+n8n	n8n	工具	自动化,开源	效率工具	开源工作流。	https://n8n.io	是
+Retool	Retool	工具	低代码,内部工具	低代码	内部工具构建。	https://retool.com	是
+Bubble	Bubble	工具	低代码,建站	低代码	无代码应用构建。	https://bubble.io	是
+Glide	Glide	工具	低代码,应用	低代码	无代码应用平台。	https://www.glideapps.com	是
+Adalo	Adalo	工具	低代码,应用	低代码	无代码应用构建。	https://www.adalo.com	是
+Bildr	Bildr	工具	低代码,建站	低代码	无代码网站构建。	https://bildr.com	是
+Webflow	Webflow	工具	建站,设计	建站平台	可视化建站。	https://webflow.com	是
+Bubble	Bubble	工具	低代码,应用	低代码	无代码开发。	https://bubble.io	是
+Typeform	Typeform	工具	表单,问卷	表单工具	在线表单工具。	https://www.typeform.com	是
+SurveyMonkey	SurveyMonkey	工具	问卷,调查	表单工具	在线调查工具。	https://www.surveymonkey.com	是
+Google Forms	Google Forms	工具	表单,问卷	表单工具	谷歌表单。	https://docs.google.com/forms	是
+JotForm	JotForm	工具	表单,问卷	表单工具	在线表单工具。	https://www.jotform.com	是
+Typeform	Typeform	工具	表单,问卷	表单工具	在线表单。	https://www.typeform.com	是
+Mailchimp	Mailchimp	工具	邮件营销,通讯	营销工具	邮件营销平台。	https://mailchimp.com	是
+Sendinblue	Sendinblue	工具	邮件营销,通讯	营销工具	邮件营销平台。	https://www.brevo.com	是
+ConvertKit	ConvertKit	工具	邮件营销,创作者	营销工具	创作者邮件营销。	https://convertkit.com	是
+Buffer	Buffer	工具	社交媒体,排程	营销工具	社交媒体排程。	https://buffer.com	是
+Hootsuite	Hootsuite	工具	社交媒体,管理	营销工具	社交媒体管理。	https://www.hootsuite.com	是
+Sprout Social	Sprout Social	工具	社交媒体,管理	营销工具	社交媒体管理。	https://sproutsocial.com	是
+Later	Later	工具	社交媒体,排程	营销工具	社交媒体排程。	https://later.com	是
+Canva	Canva	设计	设计,模板	设计工具	在线设计模板。	https://www.canva.com	是
+Adobe Express	Adobe Express	设计	设计,模板	设计工具	在线快速设计。	https://www.adobe.com/express	是
+Photopea	Photopea	设计	图片,编辑	图片工具	在线图片编辑。	https://www.photopea.com	是
+Remove.bg	Remove.bg	设计	抠图,AI	图片工具	在线抠图工具。	https://www.remove.bg	是
+Upscale.media	Upscale.media	设计	图片,放大	图片工具	AI 图片放大。	https://upscale.media	是
+Bigjpg	Bigjpg	设计	图片,放大	图片工具	AI 图片无损放大。	https://bigjpg.com	否
+稿定设计	稿定设计	设计	设计,模板	设计工具	在线设计平台。	https://www.gaoding.com	否
+创客贴	创客贴	设计	设计,模板	设计工具	在线设计平台。	https://www.chuangkit.com	否
+图怪兽	图怪兽	设计	设计,模板	设计工具	在线设计平台。	https://818ps.com	否
+Canva可画	Canva可画	设计	设计,模板	设计工具	在线设计平台。	https://www.canva.cn	是
+Valve	Valve	游戏	游戏,公司	游戏公司	Valve 官网。	https://www.valvesoftware.com	是
+Riot Games	Riot Games	游戏	游戏,公司	游戏公司	拳头游戏。	https://www.riotgames.com	是
+Blizzard	暴雪	游戏	游戏,公司	游戏公司	暴雪官网。	https://www.blizzard.com	是
+Epic	Epic Games	游戏	游戏,公司	游戏公司	Epic 官网。	https://www.epicgames.com	是
+Electronic Arts	EA	游戏	游戏,公司	游戏公司	EA 官网。	https://www.ea.com	是
+Ubisoft	育碧	游戏	游戏,公司	游戏公司	育碧官网。	https://www.ubisoft.com	是
+Nintendo	Nintendo	游戏	游戏,公司	游戏公司	任天堂官网。	https://www.nintendo.com	是
+Square Enix	史克威尔	游戏	游戏,公司	游戏公司	SE 官网。	https://www.square-enix.com	是
+Capcom	卡普空	游戏	游戏,公司	游戏公司	卡普空官网。	https://www.capcom.com	是
+Bandai Namco	万代南梦宫	游戏	游戏,公司	游戏公司	万代南梦宫官网。	https://www.bandainamcoent.com	是
+Konami	科乐美	游戏	游戏,公司	游戏公司	科乐美官网。	https://www.konami.com	是
+Sega	世嘉	游戏	游戏,公司	游戏公司	世嘉官网。	https://www.sega.com	是
+Bethesda	Bethesda	游戏	游戏,公司	游戏公司	B 社官网。	https://bethesda.net	是
+CD Projekt	CD Projekt Red	游戏	游戏,公司	游戏公司	CDPR 官网。	https://www.cdprojektred.com	是
+Rockstar	Rockstar	游戏	游戏,公司	游戏公司	Rockstar 官网。	https://www.rockstargames.com	是
+Bungie	Bungie	游戏	游戏,公司	游戏公司	Bungie 官网。	https://www.bungie.net	是
+Supercell	Supercell	游戏	游戏,公司	游戏公司	Supercell 官网。	https://supercell.com	是
+Rovio	Rovio	游戏	游戏,公司	游戏公司	Rovio 官网。	https://www.rovio.com	是
+King	King	游戏	游戏,公司	游戏公司	King 官网。	https://king.com	是
+Mojang	Mojang	游戏	游戏,公司	游戏公司	《我的世界》开发商。	https://www.minecraft.net	是
+Ethereum	Ethereum	开发	区块链,Web3	区块链	以太坊官网。	https://ethereum.org	是
+Solana	Solana	开发	区块链,Web3	区块链	Solana 官网。	https://solana.com	是
+Cardano	Cardano	开发	区块链,Web3	区块链	Cardano 官网。	https://cardano.org	是
+Polkadot	Polkadot	开发	区块链,Web3	区块链	Polkadot 官网。	https://polkadot.network	是
+Avalanche	Avalanche	开发	区块链,Web3	区块链	Avalanche 官网。	https://www.avax.network	是
+Chainlink	Chainlink	开发	区块链,预言机	区块链	Chainlink 官网。	https://chain.link	是
+Aave	Aave	开发	区块链,DeFi	DeFi	Aave 官网。	https://aave.com	是
+Uniswap	Uniswap	开发	区块链,DeFi	DeFi	Uniswap 官网。	https://uniswap.org	是
+OpenSea	OpenSea	开发	区块链,NFT	NFT平台	OpenSea 官网。	https://opensea.io	是
+Magic Eden	Magic Eden	开发	区块链,NFT	NFT平台	Magic Eden 官网。	https://magiceden.io	是
+MetaMask	MetaMask	开发	钱包,Web3	加密钱包	MetaMask 官网。	https://metamask.io	是
+Ledger	Ledger	开发	钱包,硬件	加密钱包	Ledger 官网。	https://www.ledger.com	是
+Trezor	Trezor	开发	钱包,硬件	加密钱包	Trezor 官网。	https://trezor.io	是
+Etherscan	Etherscan	开发	区块链,浏览器	区块浏览器	Etherscan 官网。	https://etherscan.io	是
+CoinGecko	CoinGecko	开发	加密,数据	加密数据	CoinGecko 官网。	https://www.coingecko.com	是
+CoinMarketCap	CoinMarketCap	开发	加密,行情	加密行情	CMC 官网。	https://coinmarketcap.com	是
+DeFi Llama	DeFi Llama	开发	加密,DeFi	DeFi数据	DeFi Llama 官网。	https://defillama.com	是
+Glassnode	Glassnode	开发	加密,数据	链上数据	Glassnode 官网。	https://glassnode.com	是
+Messari	Messari	开发	加密,研究	加密研究	Messari 官网。	https://messari.io	是
+The Block	The Block	媒体	加密,资讯	加密媒体	The Block 官网。	https://www.theblock.co	是
+Ableton	Ableton	音乐	音乐制作,软件	音乐软件	Ableton Live 官网。	https://www.ableton.com	是
+FL Studio	FL Studio	音乐	音乐制作,软件	音乐软件	FL Studio 官网。	https://www.image-line.com	是
+Logic Pro	Logic Pro	音乐	音乐制作,软件	音乐软件	苹果音乐制作。	https://www.apple.com/logic-pro	是
+Pro Tools	Pro Tools	音乐	音乐制作,软件	音乐软件	Avid 音乐软件。	https://www.avid.com/pro-tools	是
+GarageBand	GarageBand	音乐	音乐制作,软件	音乐软件	苹果免费音乐软件。	https://www.apple.com/mac/garageband	是
+BandLab	BandLab	音乐	音乐制作,在线	音乐软件	在线音乐制作。	https://www.bandlab.com	是
+Soundtrap	Soundtrap	音乐	音乐制作,在线	音乐软件	在线音乐制作。	https://www.soundtrap.com	是
+Splice	Splice	音乐	素材,采样	音乐素材	音乐采样库。	https://splice.com	是
+LANDR	LANDR	音乐	母带,AI	音乐服务	在线母带处理。	https://www.landr.com	是
+DistroKid	DistroKid	音乐	发行,独立	音乐发行	音乐发行服务。	https://distrokid.com	是
+TuneCore	TuneCore	音乐	发行,独立	音乐发行	音乐发行服务。	https://www.tunecore.com	是
+CD Baby	CD Baby	音乐	发行,独立	音乐发行	音乐发行服务。	https://cdbaby.com	是
+BeatStars	BeatStars	音乐	beat,制作	音乐交易	音乐交易平台。	https://www.beatstars.com	是
+Native Instruments	Native Instruments	音乐	插件,乐器	音乐软件	NI 官网。	https://www.native-instruments.com	是
+Arturia	Arturia	音乐	插件,合成器	音乐软件	Arturia 官网。	https://www.arturia.com	是
+Focusrite	Focusrite	音乐	声卡,音频	音频设备	Focusrite 官网。	https://focusrite.com	是
+Shure	Shure	音乐	麦克风,音频	音频设备	舒尔官网。	https://www.shure.com	是
+Sennheiser	森海塞尔	音乐	耳机,音频	音频设备	森海塞尔官网。	https://www.sennheiser.com	是
+Audio-Technica	铁三角	音乐	耳机,音频	音频设备	铁三角官网。	https://www.audio-technica.com	是
+Bose	Bose	音乐	耳机,音响	音频设备	Bose 官网。	https://www.bose.com	是
+Sony Music	索尼音乐	音乐	音乐,唱片	音乐公司	索尼音乐官网。	https://www.sonymusic.com	是
+Universal Music	环球音乐	音乐	音乐,唱片	音乐公司	环球音乐官网。	https://www.universalmusic.com	是
+Warner Music	华纳音乐	音乐	音乐,唱片	音乐公司	华纳音乐官网。	https://www.wmg.com	是
+Billboard	Billboard	音乐	榜单,资讯	音乐媒体	Billboard 官网。	https://www.billboard.com	是
+NME	NME	音乐	资讯,媒体	音乐媒体	NME 官网。	https://www.nme.com	是
+Pitchfork	Pitchfork	音乐	乐评,媒体	音乐媒体	Pitchfork 官网。	https://pitchfork.com	是
+Rolling Stone	滚石	音乐	乐评,媒体	音乐媒体	《滚石》官网。	https://www.rollingstone.com	是
+Dpreview	DPReview	摄影	相机,评测	摄影媒体	相机评测网站。	https://www.dpreview.com	是
+PetaPixel	PetaPixel	摄影	摄影,资讯	摄影媒体	摄影新闻媒体。	https://petapixel.com	是
+Fstoppers	Fstoppers	摄影	摄影,教程	摄影媒体	摄影教程与资讯。	https://fstoppers.com	是
+Photography Life	Photography Life	摄影	摄影,教程	摄影媒体	摄影技巧网站。	https://photographylife.com	是
+SmugMug	SmugMug	摄影	摄影,图库	摄影平台	摄影师作品托管。	https://www.smugmug.com	是
+Zenfolio	Zenfolio	摄影	摄影,图库	摄影平台	摄影师作品站。	https://www.zenfolio.com	是
+Format	Format	摄影	摄影,建站	摄影平台	摄影师作品建站。	https://www.format.com	是
+Lightroom	Lightroom	摄影	修图,软件	摄影软件	Adobe 修图软件。	https://www.adobe.com/products/photoshop-lightroom.html	是
+Capture One	Capture One	摄影	修图,软件	摄影软件	专业修图软件。	https://www.captureone.com	是
+DxO	DxO	摄影	修图,软件	摄影软件	DxO 官网。	https://www.dxo.com	是
+Topaz Labs	Topaz Labs	摄影	修图,AI	摄影软件	AI 修图软件。	https://www.topazlabs.com	是
+GIMP	GIMP	摄影	修图,开源	图片软件	开源图片编辑。	https://www.gimp.org	是
+Darktable	Darktable	摄影	修图,开源	摄影软件	开源修图软件。	https://www.darktable.org	是
+RawTherapee	RawTherapee	摄影	修图,开源	摄影软件	开源 RAW 处理。	https://rawtherapee.com	是
+Notion	Notion	工具	笔记,知识管理	效率工具	一体化笔记。	https://www.notion.so	是
+Obsidian	Obsidian	工具	笔记,知识管理	效率工具	本地笔记。	https://obsidian.md	是
+Logseq	Logseq	工具	笔记,知识管理	效率工具	大纲笔记。	https://logseq.com	是
+Roam	Roam Research	工具	笔记,知识管理	效率工具	双向链接笔记。	https://roamresearch.com	是
+Bear	Bear	工具	笔记,写作	效率工具	Markdown 笔记。	https://bear.app	是
+Typora	Typora	工具	笔记,Markdown	效率工具	Markdown 编辑器。	https://typora.io	是
+Obsidian	Obsidian	工具	笔记,知识库	效率工具	知识管理。	https://obsidian.md	是
+Flomo	浮墨笔记	工具	笔记,轻量	效率工具	碎片化笔记。	https://flomoapp.com	否
+Memos	Memos	工具	笔记,轻量	效率工具	开源轻量笔记。	https://usememos.com	是
+GoodNotes	GoodNotes	工具	笔记,手写	效率工具	手写笔记应用。	https://www.goodnotes.com	是
+Notability	Notability	工具	笔记,手写	效率工具	手写笔记应用。	https://notability.com	是
+MarginNote	MarginNote	工具	笔记,阅读	效率工具	阅读笔记应用。	https://marginnote.com	是
+Zotero	Zotero	工具	文献,管理	学术工具	文献管理工具。	https://www.zotero.org	是
+EndNote	EndNote	工具	文献,管理	学术工具	文献管理工具。	https://endnote.com	是
+Mendeley	Mendeley	工具	文献,管理	学术工具	文献管理工具。	https://www.mendeley.com	是
+Grammarly	Grammarly	工具	写作,校对	写作工具	英语校对工具。	https://www.grammarly.com	是
+Hemingway	Hemingway	工具	写作,简化	写作工具	英文写作简化。	https://hemingwayapp.com	是
+ProWritingAid	ProWritingAid	工具	写作,校对	写作工具	写作辅助工具。	https://prowritingaid.com	是
+QuillBot	QuillBot	工具	写作,改写	写作工具	文章改写工具。	https://quillbot.com	是
+DeepL	DeepL	工具	翻译,AI	翻译工具	高质量翻译。	https://www.deepl.com	是
+Google Translate	谷歌翻译	工具	翻译,在线	翻译工具	在线翻译。	https://translate.google.com	是
+百度翻译	百度翻译	工具	翻译,在线	翻译工具	在线翻译。	https://fanyi.baidu.com	是
+有道翻译	有道翻译	工具	翻译,在线	翻译工具	在线翻译。	https://fanyi.youdao.com	是
+必应翻译	必应翻译	工具	翻译,在线	翻译工具	微软翻译。	https://www.bing.com/translator	是
+Reverso	Reverso	工具	翻译,例句	翻译工具	例句翻译工具。	https://www.reverso.net	是
+Papago	Papago	工具	翻译,韩语	翻译工具	韩语翻译。	https://papago.naver.com	是
+Cambridge Dictionary	剑桥词典	工具	词典,英语	词典工具	剑桥词典。	https://dictionary.cambridge.org	是
+Merriam-Webster	韦氏词典	工具	词典,英语	词典工具	韦氏词典。	https://www.merriam-webster.com	是
+Oxford Dictionary	牛津词典	工具	词典,英语	词典工具	牛津词典。	https://www.oxfordlearnersdictionaries.com	是
+Collins	柯林斯词典	工具	词典,英语	词典工具	柯林斯词典。	https://www.collinsdictionary.com	是
+Urban Dictionary	Urban Dictionary	工具	词典,俚语	词典工具	俚语词典。	https://www.urbandictionary.com	是
+BBC News	BBC News	媒体	新闻,国际	新闻媒体	BBC 新闻。	https://www.bbc.com/news	是
+Al Jazeera	半岛电视台	媒体	新闻,国际	新闻媒体	半岛电视台。	https://www.aljazeera.com	是
+The Times of India	印度时报	媒体	新闻,印度	新闻媒体	印度时报。	https://timesofindia.indiatimes.com	是
+The Hindu	印度教徒报	媒体	新闻,印度	新闻媒体	印度报纸。	https://www.thehindu.com	是
+Japan Times	日本时报	媒体	新闻,日本	新闻媒体	日本时报。	https://www.japantimes.co.jp	是
+Nikkei	日经	媒体	新闻,日本	新闻媒体	日本经济新闻。	https://www.nikkei.com	是
+The Straits Times	海峡时报	媒体	新闻,新加坡	新闻媒体	新加坡海峡时报。	https://www.straitstimes.com	是
+South China Morning Post	南华早报	媒体	新闻,香港	新闻媒体	香港南华早报。	https://www.scmp.com	是
+The Australian	澳大利亚人报	媒体	新闻,澳洲	新闻媒体	澳洲报纸。	https://www.theaustralian.com.au	是
+Sydney Morning Herald	悉尼先驱晨报	媒体	新闻,澳洲	新闻媒体	澳洲报纸。	https://www.smh.com.au	是
+Globe and Mail	环球邮报	媒体	新闻,加拿大	新闻媒体	加拿大报纸。	https://www.theglobeandmail.com	是
+Toronto Star	多伦多星报	媒体	新闻,加拿大	新闻媒体	加拿大报纸。	https://www.thestar.com	是
+Der Spiegel	明镜周刊	媒体	新闻,德国	新闻媒体	德国明镜。	https://www.spiegel.de	是
+Le Monde	世界报	媒体	新闻,法国	新闻媒体	法国世界报。	https://www.lemonde.fr	是
+La Repubblica	共和报	媒体	新闻,意大利	新闻媒体	意大利报纸。	https://www.repubblica.it	是
+Folha	圣保罗页报	媒体	新闻,巴西	新闻媒体	巴西报纸。	https://www.folha.uol.com.br	是
+Clarín	号角报	媒体	新闻,阿根廷	新闻媒体	阿根廷报纸。	https://www.clarin.com	是
+Haaretz	国土报	媒体	新闻,以色列	新闻媒体	以色列报纸。	https://www.haaretz.com	是
+Middle East Eye	中东之眼	媒体	新闻,中东	新闻媒体	中东媒体。	https://www.middleeasteye.net	是
+Arab News	阿拉伯新闻	媒体	新闻,中东	新闻媒体	沙特英文媒体。	https://www.arabnews.com	是
+Politico	政客	媒体	新闻,政治	政治媒体	美国政治新闻。	https://www.politico.com	是
+The Hill	国会山报	媒体	新闻,政治	政治媒体	美国政治新闻。	https://thehill.com	是
+Axios	Axios	媒体	新闻,简报	新闻媒体	美国新闻简报。	https://www.axios.com	是
+Vox	Vox	媒体	新闻,解释	新闻媒体	美国解释性新闻。	https://www.vox.com	是
+Quartz	Quartz	媒体	新闻,商业	商业媒体	商业新闻。	https://qz.com	是
+The Information	The Information	媒体	新闻,科技	科技媒体	科技订阅媒体。	https://www.theinformation.com	是
+Protocol	Protocol	媒体	新闻,科技	科技媒体	科技新闻。	https://www.protocol.com	是
+Rest of World	Rest of World	媒体	新闻,全球	科技媒体	全球科技新闻。	https://restofworld.org	是
+The Register	The Register	媒体	新闻,科技	科技媒体	英国科技新闻。	https://www.theregister.com	是
+InfoQ	InfoQ	媒体	开发,资讯	技术媒体	软件技术媒体。	https://www.infoq.com	是
+Hacker News	Hacker News	媒体	科技,社区	科技社区	黑客新闻。	https://news.ycombinator.com	是
+Slashdot	Slashdot	媒体	科技,社区	科技社区	老牌科技社区。	https://slashdot.org	是
+Lobsters	Lobsters	媒体	科技,社区	科技社区	技术链接社区。	https://lobste.rs	是
+Mastodon	Mastodon	社交	社交,去中心	社交平台	去中心化社交。	https://mastodon.social	是
+Threads	Threads	社交	社交,文字	社交平台	Meta 文字社交。	https://www.threads.net	是
+Bluesky	Bluesky	社交	社交,去中心	社交平台	去中心化社交。	https://bsky.app	是
+Clubhouse	Clubhouse	社交	语音,社交	语音社交	语音社交平台。	https://www.joinclubhouse.com	是
+VK	VK	社交	社交,俄罗斯	社交平台	俄罗斯社交平台。	https://vk.com	是
+Naver	Naver	社交	搜索,韩国	门户网站	韩国门户网站。	https://www.naver.com	是
+Daum	Daum	社交	门户,韩国	门户网站	韩国门户网站。	https://www.daum.net	是
+Line	Line	社交	通讯,日本	即时通讯	日本即时通讯。	https://line.me	是
+KakaoTalk	KakaoTalk	社交	通讯,韩国	即时通讯	韩国即时通讯。	https://www.kakaocorp.com	是
+Signal	Signal	社交	通讯,加密	即时通讯	加密通讯。	https://signal.org	是
+WeChat	微信	社交	通讯,中国	即时通讯	中国即时通讯。	https://weixin.qq.com	否
+QQ	QQ	社交	通讯,中国	即时通讯	腾讯即时通讯。	https://im.qq.com	否
+微博	微博	社交	社交,中国	社交平台	中国社交媒体。	https://weibo.com	否
+小红书	小红书	社交	社交,生活方式	内容社区	生活方式社区。	https://www.xiaohongshu.com	否
+知乎	知乎	社交	问答,知识	问答社区	知识问答社区。	https://www.zhihu.com	否
+豆瓣	豆瓣	社交	书影音,社区	文化社区	书影音社区。	https://www.douban.com	否
+虎扑	虎扑	社交	体育,社区	体育社区	篮球体育社区。	https://www.hupu.com	否
+贴吧	贴吧	社交	论坛,社区	中文社区	百度贴吧。	https://tieba.baidu.com	否
+即刻	即刻	社交	社区,兴趣	兴趣社区	兴趣社交平台。	https://web.okjike.com	否
+Lofter	Lofter	社交	博客,创作	创作社区	网易轻博客。	https://www.lofter.com	否
+堆糖	堆糖	社交	图片,收集	灵感社区	图片收集社区。	https://www.duitang.com	否
+探探	探探	社交	交友,社交	交友平台	社交交友应用。	https://www.tantanapp.com	否
+陌陌	陌陌	社交	交友,社交	交友平台	社交交友应用。	https://www.immomo.com	否
+Soul	Soul	社交	交友,社交	交友平台	灵魂社交应用。	https://www.soulapp.cn	否
+Blued	Blued	社交	交友,社交	交友平台	社交应用。	https://www.blued.com	否
+Wikipedia	Wikipedia	教育	百科,知识	在线百科	自由百科全书。	https://en.wikipedia.org	是
+Britannica	Britannica	教育	百科,知识	在线百科	大英百科全书。	https://www.britannica.com	是
+Merriam-Webster	Merriam-Webster	教育	词典,英语	词典工具	韦氏词典。	https://www.merriam-webster.com	是
+Oxford Learner	Oxford Learner	教育	词典,英语	词典工具	牛津学习者词典。	https://www.oxfordlearnersdictionaries.com	是
+Khan Academy	Khan Academy	教育	课程,免费	在线教育	免费课程平台。	https://www.khanacademy.org	是
+TED	TED	教育	演讲,知识	演讲平台	思想演讲。	https://www.ted.com	是
+Coursera	Coursera	教育	课程,名校	慕课平台	名校课程。	https://www.coursera.org	是
+edX	edX	教育	课程,名校	慕课平台	名校课程。	https://www.edx.org	是
+Udacity	Udacity	教育	课程,技术	在线课程	技术课程。	https://www.udacity.com	是
+Codecademy	Codecademy	教育	编程,学习	编程学习	交互式编程课。	https://www.codecademy.com	是
+freeCodeCamp	freeCodeCamp	教育	编程,免费	编程学习	免费编程课。	https://www.freecodecamp.org	是
+Duolingo	Duolingo	教育	语言,学习	语言学习	语言学习应用。	https://www.duolingo.com	是
+Babbel	Babbel	教育	语言,学习	语言学习	语言学习应用。	https://www.babbel.com	是
+Rosetta Stone	Rosetta Stone	教育	语言,学习	语言学习	语言学习应用。	https://www.rosettastone.com	是
+Busuu	Busuu	教育	语言,学习	语言学习	语言学习社区。	https://www.busuu.com	是
+iTalki	iTalki	教育	语言,外教	语言学习	外教一对一。	https://www.italki.com	是
+Preply	Preply	教育	语言,外教	语言学习	外教平台。	https://preply.com	是
+Quizlet	Quizlet	教育	学习,闪卡	学习工具	闪卡学习。	https://quizlet.com	是
+Anki	Anki	教育	学习,闪卡	学习工具	间隔重复学习。	https://apps.ankiweb.net	是
+Wolfram Alpha	Wolfram Alpha	教育	计算,引擎	计算工具	计算知识引擎。	https://www.wolframalpha.com	是
+Symbolab	Symbolab	教育	数学,求解	数学工具	数学求解器。	https://www.symbolab.com	是
+Mathway	Mathway	教育	数学,求解	数学工具	数学求解器。	https://www.mathway.com	是
+Desmos	Desmos	教育	数学,绘图	数学工具	数学绘图。	https://www.desmos.com	是
+GeoGebra	GeoGebra	教育	数学,几何	数学工具	动态数学。	https://www.geogebra.org	是
+Photomath	Photomath	教育	数学,解题	数学工具	拍照解题。	https://photomath.com	是
+Art of Problem Solving	AoPS	教育	数学,竞赛	数学竞赛	数学竞赛学习。	https://artofproblemsolving.com	是
+LeetCode	LeetCode	开发	算法,面试	刷题平台	算法刷题。	https://leetcode.com	是
+HackerRank	HackerRank	开发	算法,面试	刷题平台	编程刷题。	https://www.hackerrank.com	是
+Codeforces	Codeforces	开发	算法,竞赛	编程竞赛	算法竞赛平台。	https://codeforces.com	是
+AtCoder	AtCoder	开发	算法,竞赛	编程竞赛	算法竞赛平台。	https://atcoder.jp	是
+TopCoder	TopCoder	开发	算法,竞赛	编程竞赛	算法竞赛平台。	https://www.topcoder.com	是
+Codewars	Codewars	开发	算法,练习	编程练习	编程挑战。	https://www.codewars.com	是
+Exercism	Exercism	开发	编程,练习	编程练习	编程练习平台。	https://exercism.org	是
+CodinGame	CodinGame	开发	游戏,编程	编程游戏	游戏化编程。	https://www.codingame.com	是
+Project Euler	Project Euler	开发	数学,编程	编程挑战	数学编程挑战。	https://projecteuler.net	是
+Advent of Code	Advent of Code	开发	编程,挑战	编程挑战	编程挑战平台。	https://adventofcode.com	是
+Baidu	百度	工具	搜索,AI	搜索引擎	中文搜索引擎。	https://www.baidu.com	否
+Sogou	搜狗	工具	搜索,浏览器	搜索引擎	中文搜索。	https://www.sogou.com	否
+360	360搜索	工具	搜索,安全	搜索引擎	360 搜索。	https://www.so.com	否
+Quark	夸克	工具	搜索,浏览器	搜索引擎	阿里智能搜索。	https://www.quark.cn	否
+Google	Google	工具	搜索,科技	搜索引擎	全球搜索引擎。	https://www.google.com	是
+Bing	Bing	工具	搜索,微软	搜索引擎	微软搜索引擎。	https://www.bing.com	是
+DuckDuckGo	DuckDuckGo	工具	搜索,隐私	搜索引擎	隐私搜索引擎。	https://duckduckgo.com	是
+Brave Search	Brave Search	工具	搜索,隐私	搜索引擎	隐私搜索引擎。	https://search.brave.com	是
+Ecosia	Ecosia	工具	搜索,环保	搜索引擎	环保搜索引擎。	https://www.ecosia.org	是
+Startpage	Startpage	工具	搜索,隐私	搜索引擎	隐私搜索引擎。	https://www.startpage.com	是
+You.com	You.com	工具	搜索,AI	搜索引擎	AI 搜索引擎。	https://you.com	是
+Perplexity	Perplexity	工具	搜索,AI	AI搜索	AI 搜索引擎。	https://www.perplexity.ai	是
+Naver	Naver	工具	搜索,韩国	搜索引擎	韩国搜索引擎。	https://www.naver.com	是
+Yahoo	Yahoo	工具	搜索,门户	搜索引擎	雅虎门户。	https://www.yahoo.com	是
+Ask	Ask.com	工具	搜索,问答	搜索引擎	问答搜索引擎。	https://www.ask.com	是
+Yandex	Yandex	工具	搜索,俄罗斯	搜索引擎	俄罗斯搜索引擎。	https://yandex.com	是
+Seznam	Seznam	工具	搜索,捷克	搜索引擎	捷克搜索引擎。	https://www.seznam.cz	是
+Ahrefs	Ahrefs	工具	SEO,分析	SEO工具	SEO 分析工具。	https://ahrefs.com	是
+Semrush	Semrush	工具	SEO,营销	SEO工具	数字营销套件。	https://www.semrush.com	是
+Moz	Moz	工具	SEO,分析	SEO工具	SEO 工具。	https://moz.com	是
+Screaming Frog	Screaming Frog	工具	SEO,爬虫	SEO工具	网站爬虫工具。	https://www.screamingfrog.co.uk	是
+Google Analytics	Google Analytics	工具	分析,统计	数据分析	网站分析工具。	https://analytics.google.com	是
+Google Search Console	Google Search Console	工具	SEO,站长	站长工具	谷歌站长工具。	https://search.google.com/search-console	是
+SimilarWeb	SimilarWeb	工具	分析,流量	流量分析	网站流量分析。	https://www.similarweb.com	是
+Hotjar	Hotjar	工具	分析,热图	用户分析	用户行为分析。	https://www.hotjar.com	是
+FullStory	FullStory	工具	分析,回放	用户分析	用户会话回放。	https://www.fullstory.com	是
+Mixpanel	Mixpanel	工具	分析,产品	产品分析	产品数据分析。	https://mixpanel.com	是
+Amplitude	Amplitude	工具	分析,产品	产品分析	产品数据分析。	https://amplitude.com	是
+Segment	Segment	工具	数据,集成	数据平台	客户数据平台。	https://segment.com	是
+Intercom	Intercom	工具	客服,聊天	客服工具	客户沟通平台。	https://www.intercom.com	是
+Zendesk	Zendesk	工具	客服,工单	客服工具	客服工单系统。	https://www.zendesk.com	是
+Freshdesk	Freshdesk	工具	客服,工单	客服工具	客服工单系统。	https://freshdesk.com	是
+Help Scout	Help Scout	工具	客服,邮件	客服工具	邮件客服。	https://www.helpscout.com	是
+Drift	Drift	工具	客服,聊天	客服工具	对话式客服。	https://www.drift.com	是
+HubSpot	HubSpot	工具	CRM,营销	营销平台	集客营销平台。	https://www.hubspot.com	是
+Salesforce	Salesforce	工具	CRM,销售	CRM平台	销售云平台。	https://www.salesforce.com	是
+Pipedrive	Pipedrive	工具	CRM,销售	CRM平台	销售管理。	https://www.pipedrive.com	是
+Zoho CRM	Zoho CRM	工具	CRM,销售	CRM平台	客户管理。	https://www.zoho.com/crm	是
+Stripe	Stripe	工具	支付,开发者	支付平台	在线支付。	https://stripe.com	是
+Square	Square	工具	支付,商家	支付平台	商家支付。	https://squareup.com	是
+PayPal	PayPal	工具	支付,在线	支付平台	在线支付。	https://www.paypal.com	是
+Wise	Wise	工具	支付,跨境	支付平台	跨境汇款。	https://wise.com	是
+Revolut	Revolut	工具	支付,银行	数字银行	数字银行。	https://www.revolut.com	是
+Boardmix	Boardmix	工具	白板,协作	在线白板	国产在线白板。	https://boardmix.com	是
+Excalidraw	Excalidraw	工具	白板,手绘	在线白板	手绘风白板。	https://excalidraw.com	是
+tldraw	tldraw	工具	白板,绘图	在线白板	开源白板。	https://www.tldraw.com	是
+draw.io	draw.io	工具	流程图,绘图	在线绘图	免费流程图工具。	https://app.diagrams.net	是
+Lucidchart	Lucidchart	工具	流程图,绘图	在线绘图	专业绘图工具。	https://www.lucidchart.com	是
+Creately	Creately	工具	流程图,绘图	在线绘图	协作绘图工具。	https://creately.com	是
+Whimsical	Whimsical	工具	流程图,思维导图	在线绘图	可视化工具。	https://whimsical.com	是
+MindMeister	MindMeister	工具	思维导图,在线	思维导图	在线思维导图。	https://www.mindmeister.com	是
+MindNode	MindNode	工具	思维导图,Mac	思维导图	Mac 思维导图。	https://www.mindnode.com	是
+GitMind	GitMind	工具	思维导图,在线	思维导图	在线思维导图。	https://gitmind.com	是
+百度脑图	百度脑图	工具	思维导图,在线	思维导图	免费在线脑图。	https://naotu.baidu.com	否
+MindMaster	亿图脑图	工具	思维导图,在线	思维导图	在线思维导图。	https://www.edrawsoft.cn	否
+Xmind	Xmind	工具	思维导图,软件	思维导图	思维导图软件。	https://www.xmind.net	是
+Milanote	Milanote	工具	灵感,笔记	创意工具	创意收集工具。	https://www.milanote.com	是
+Notion	Notion	工具	笔记,协作	效率工具	一体化笔记。	https://www.notion.so	是
+Arena	Are.na	工具	灵感,收藏	创意工具	灵感收藏平台。	https://www.are.na	是
+Pinterest	Pinterest	设计	灵感,图片	灵感社区	图片灵感。	https://www.pinterest.com	是
+Behance	Behance	设计	作品集,设计	设计社区	设计作品集。	https://www.behance.net	是
+Dribbble	Dribbble	设计	作品,UI	设计社区	UI 设计社区。	https://dribbble.com	是
+Figma	Figma	设计	UI,协作	设计工具	在线 UI 设计。	https://www.figma.com	是
+Sketch	Sketch	设计	UI,Mac	设计工具	Mac 设计工具。	https://www.sketch.com	是
+Adobe XD	Adobe XD	设计	UI,原型	设计工具	Adobe UI 设计。	https://www.adobe.com/products/xd.html	是
+Framer	Framer	设计	网页,原型	设计工具	网页设计工具。	https://www.framer.com	是
+Principle	Principle	设计	动效,原型	设计工具	动效原型工具。	https://principleformac.com	是
+ProtoPie	ProtoPie	设计	原型,交互	设计工具	交互原型工具。	https://www.protopie.io	是
+Store.steampowered	Steam商店	游戏	游戏平台,PC	游戏平台	Steam 游戏商城。	https://store.steampowered.com	是
+Epic Store	Epic Store	游戏	游戏平台,商城	游戏平台	Epic 游戏商城。	https://store.epicgames.com	是
+GOG	GOG	游戏	游戏平台,DRM-Free	游戏平台	无 DRM 游戏商城。	https://www.gog.com	是
+itch.io	itch.io	游戏	独立游戏,平台	游戏平台	独立游戏平台。	https://itch.io	是
+Humble	Humble Bundle	游戏	游戏,慈善	游戏平台	慈善游戏捆绑。	https://www.humblebundle.com	是
+Fanatical	Fanatical	游戏	游戏,折扣	游戏平台	游戏折扣商城。	https://www.fanatical.com	是
+Green Man Gaming	Green Man Gaming	游戏	游戏,折扣	游戏平台	游戏折扣商城。	https://www.greenmangaming.com	是
+Instant Gaming	Instant Gaming	游戏	游戏,折扣	游戏平台	游戏折扣商城。	https://www.instant-gaming.com	是
+Gamesplanet	Gamesplanet	游戏	游戏,折扣	游戏平台	游戏折扣商城。	https://www.gamesplanet.com	是
+Roblox	Roblox	游戏	游戏,创作	游戏平台	玩家创作游戏。	https://www.roblox.com	是
+Newgrounds	Newgrounds	游戏	游戏,Flash	游戏社区	老牌游戏社区。	https://www.newgrounds.com	是
+Kongregate	Kongregate	游戏	网页游戏,社区	游戏社区	网页游戏社区。	https://www.kongregate.com	是
+CrazyGames	CrazyGames	游戏	网页游戏,在线	游戏平台	在线小游戏。	https://www.crazygames.com	是
+Miniclip	Miniclip	游戏	网页游戏,在线	游戏平台	在线小游戏。	https://www.miniclip.com	是
+Poki	Poki	游戏	网页游戏,在线	游戏平台	在线小游戏。	https://poki.com	是
+Bloomberg	Bloomberg	金融	金融,行情	财经资讯	彭博终端官网。	https://www.bloomberg.com	是
+Reuters	路透	金融	金融,新闻	财经资讯	路透财经。	https://www.reuters.com	是
+Yahoo Finance	雅虎财经	金融	金融,行情	财经资讯	雅虎财经。	https://finance.yahoo.com	是
+CNBC	CNBC	金融	金融,新闻	财经资讯	美国财经媒体。	https://www.cnbc.com	是
+Investing.com	英为财情	金融	金融,行情	行情数据	全球行情。	https://cn.investing.com	是
+MarketWatch	MarketWatch	金融	金融,行情	财经资讯	美股资讯。	https://www.marketwatch.com	是
+Seeking Alpha	Seeking Alpha	金融	投资,分析	投资社区	投资分析社区。	https://seekingalpha.com	是
+Motley Fool	Motley Fool	金融	投资,建议	投资建议	投资建议网站。	https://www.fool.com	是
+Zacks	Zacks	金融	股票,评级	投资研究	股票研究。	https://www.zacks.com	是
+TradingView	TradingView	金融	图表,交易	交易工具	专业图表工具。	https://www.tradingview.com	是
+Investopedia	Investopedia	金融	百科,教育	财经教育	投资百科。	https://www.investopedia.com	是
+Morningstar	Morningstar	金融	基金,评级	基金研究	基金评级。	https://www.morningstar.com	是
+K线	东方财富	金融	股票,行情	行情数据	股票行情。	https://www.eastmoney.com	否
+雪球	雪球	金融	投资,社区	投资社区	投资社区。	https://xueqiu.com	否
+同花顺	同花顺	金融	股票,行情	行情软件	股票软件。	https://www.10jqka.com.cn	否
+闲鱼	闲鱼	电商	二手闲置,电商	二手交易平台	阿里巴巴旗下二手闲置交易平台，官方 PC 网页版。	https://www.goofish.com	否
+七彩虹	七彩虹	电子	数码硬件,显卡	显卡品牌	七彩虹科技官网，主营显卡、主板等电脑硬件。	https://www.colorful.cn	否
+微星	微星	电子	数码硬件,主板	电脑硬件	微星中国大陆官网，主营主板、显卡、笔记本。	https://cn.msi.com	否
+三菱	三菱铅笔	文具	文具,书写	文具品牌	三菱铅笔日本官网，以 uni 系列书写工具著称。	https://www.mpuni.co.jp	是
+绝区零	绝区零	游戏	二次元游戏,游戏	米哈游游戏	米哈游《绝区零》国服官网。	https://zzz.mihoyo.com	否
+鸣潮	鸣潮	游戏	二次元游戏,游戏	库洛游戏	库洛游戏开放世界动作游戏《鸣潮》官网。	https://wutheringwaves.kurogames.com	是
+理财通	腾讯理财通	金融	金融理财,理财	理财平台	腾讯官方理财平台。	https://www.tencentwm.com	否
+UU远程	网易UU远程	工具	远程,效率工具	远程控制	网易旗下远程控制工具。	https://uuyc.163.com	否
+前行者	前行者科技	电子	数码硬件,外设	外设品牌	前行者科技官网，提供键鼠外设与驱动下载。	https://www.eweadn.cn	否
+白银	中国白银网	金融	金融理财,白银	贵金属	上海华通铂银交易市场（中国白银网），白银行情与交易。	https://www.huatongsilver.com	否
+波点音乐	波点音乐	音乐	音乐,音频	在线音乐	酷我旗下音乐 App 官网。	https://bodian.kuwo.cn	否
+Linux命令大全	Linux命令大全	开发	编程开发,Linux	Linux命令	Linux 命令查询网站。	https://www.linuxcool.com	否
+VG百科	VG百科	游戏	游戏百科,游戏	游戏百科	游戏维基百科网站。	https://www.vgbaike.com	否
+HMCL启动器	HMCL启动器	游戏	我的世界,游戏	游戏启动器	开源 Minecraft 启动器官网。	https://hmcl.huangyuhui.net	否
+Grok	xAI Grok	AI	人工智能,大模型	AI对话	xAI 出品的 AI 对话助手，网页版。	https://grok.com	是
+MiMo	小米MiMO	AI	人工智能,大模型	小米AI	小米出品的大模型 AI 对话服务。	https://mimo.mi.com	否
+即梦AI	即梦AI	AI	人工智能,AI绘画,AI视频	字节AI创作	字节跳动出品的 AI 图像与视频创作平台。	https://jimeng.jianying.com	否
+可灵AI	可灵AI	AI	人工智能,AI视频	快手AI视频	快手出品的 AI 视频生成平台。	https://klingai.kuaishou.com	否
+Sora	Sora	AI	人工智能,AI视频	OpenAI视频	OpenAI 出品的 AI 视频生成模型。	https://sora.com	是
+商量	SenseChat商量	AI	人工智能,大模型	商汤AI	商汤科技出品的 AI 对话助手。	https://chat.sensetime.com	否
+阶跃星辰	阶跃星辰	AI	人工智能,大模型	国产AI	阶跃星辰出品的多模态大模型平台。	https://www.stepfun.com	否
+零一万物	零一万物Yi	AI	人工智能,大模型	国产AI	零一万物出品的 Yi 系列大模型。	https://www.lingyiwanwu.com	否
+纳米AI	纳米AI	AI	人工智能,大模型	360AI	360 出品的 AI 聚合助手。	https://www.n.cn	否
+Mistral	Mistral AI	AI	人工智能,大模型	开源AI	欧洲开源大模型公司。	https://mistral.ai	是
+Meta AI	Meta AI	AI	人工智能,大模型	Llama	Meta 出品的 AI 助手与 Llama 模型。	https://www.meta.ai	是
+NotebookLM	NotebookLM	AI	人工智能,文档	谷歌AI笔记	谷歌出品的 AI 笔记与研究工具。	https://notebooklm.google.com	是
+Veo	Google Veo	AI	人工智能,AI视频	谷歌AI视频	谷歌出品的 AI 视频生成模型。	https://deepmind.google/technologies/veo/	是
+Udio	Udio	AI	人工智能,AI音乐	AI音乐	AI 音乐生成平台。	https://www.udio.com	是
+Luma Dream Machine	Luma AI	AI	人工智能,AI视频	AI视频生成	Luma 出品的 AI 视频生成工具。	https://lumalabs.ai	是
+Pika	Pika	AI	人工智能,AI视频	AI视频生成	Pika 出品的 AI 视频创作工具。	https://pika.art	是
+MiniMax	MiniMax	AI	人工智能,大模型	国产AI	MiniMax 出品的大模型平台。	https://www.minimaxi.com	否
+海螺AI	海螺AI	AI	人工智能,大模型	MiniMaxAI	MiniMax 出品的 AI 对话助手。	https://hailuoai.com	否

@@ -1,0 +1,12 @@
+{
+  "name": "屿航 · 探索每一座数字岛屿",
+  "short_name": "屿航",
+  "description": "数字岛屿网址导航：搜索、收藏、随机探索",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#10131c",
+  "theme_color": "#5b6cff",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

@@ -1,0 +1,479 @@
+[
+  {
+    "id": "s002",
+    "name": "九号",
+    "url": "https://www.ninebot.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 71,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s004",
+    "name": "哈啰",
+    "url": "https://www.hellobike.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 93,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s003",
+    "name": "台铃",
+    "url": "https://www.tailg.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 273,
+    "error": "ERR_TLS_CERT_ALTNAME_INVALID"
+  },
+  {
+    "id": "s075",
+    "name": "拼多多(特价)",
+    "url": "https://pdd.gt/duoduo",
+    "vpn": false,
+    "status": 0,
+    "ms": 203,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s079",
+    "name": "考拉海购",
+    "url": "https://www.kaola.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 284,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s008",
+    "name": "爱玛",
+    "url": "https://www.aima.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 7283,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s076",
+    "name": "新华书店",
+    "url": "https://www.xhsd.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 493,
+    "error": "ERR_TLS_CERT_ALTNAME_INVALID"
+  },
+  {
+    "id": "s084",
+    "name": "闲鱼",
+    "url": "https://www.xianyu.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 7211,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s145",
+    "name": "HCM启动器",
+    "url": "https://www.hcmct.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 203,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s149",
+    "name": "Lanerc资源",
+    "url": "https://lanerc.fun",
+    "vpn": false,
+    "status": 0,
+    "ms": 564,
+    "error": "CERT_HAS_EXPIRED"
+  },
+  {
+    "id": "s174",
+    "name": "UU远程",
+    "url": "https://remote.163.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 43,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s188",
+    "name": "前行者驱动",
+    "url": "https://www.ehubs.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 110,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s193",
+    "name": "图吧工具箱",
+    "url": "https://www.tubixiangtong.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 184,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s197",
+    "name": "小鸡词典",
+    "url": "https://jikipedia.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 137,
+    "error": "CERT_HAS_EXPIRED"
+  },
+  {
+    "id": "s206",
+    "name": "斗图啦",
+    "url": "https://www.doutula.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 184,
+    "error": "CERT_HAS_EXPIRED"
+  },
+  {
+    "id": "s211",
+    "name": "白银价格",
+    "url": "https://www.sjbaiyin.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 335,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s216",
+    "name": "米粒工作室",
+    "url": "https://www.miligong.work",
+    "vpn": false,
+    "status": 0,
+    "ms": 217,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s219",
+    "name": "老弟一号",
+    "url": "https://ld1y.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 198,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s245",
+    "name": "Lanerc",
+    "url": "https://dm.lanerc.app",
+    "vpn": false,
+    "status": 0,
+    "ms": 596,
+    "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+  },
+  {
+    "id": "s250",
+    "name": "Linux命令大全",
+    "url": "https://www.linuxcool.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 509,
+    "error": "ECONNREFUSED"
+  },
+  {
+    "id": "s286",
+    "name": "锤子便签",
+    "url": "https://www.tinymind.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 94,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s541",
+    "name": "建设银行",
+    "url": "https://www.ccb.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 101,
+    "error": "ERR_SSL_UNSAFE_LEGACY_RENEGOTIATION_DISABLED"
+  },
+  {
+    "id": "s571",
+    "name": "理财通",
+    "url": "https://licaitong.qq.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 70,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s881",
+    "name": "大众",
+    "url": "https://www.volkswagen.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 51,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s883",
+    "name": "奥迪",
+    "url": "https://www.audi.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 2287,
+    "error": "ECONNREFUSED"
+  },
+  {
+    "id": "s903",
+    "name": "莲花",
+    "url": "https://www.lotus.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 195,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s928",
+    "name": "绿源",
+    "url": "https://www.luyuan.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 177,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s910",
+    "name": "马自达",
+    "url": "https://www.mazda.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 2764,
+    "error": "ECONNREFUSED"
+  },
+  {
+    "id": "s1046",
+    "name": "天涯",
+    "url": "https://www.tianya.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 56,
+    "error": "EAI_AGAIN"
+  },
+  {
+    "id": "s1097",
+    "name": "国家电网",
+    "url": "http://www.sgcc.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 528,
+    "error": "ECONNRESET"
+  },
+  {
+    "id": "s1102",
+    "name": "中国银行保险",
+    "url": "https://www.cbirc.gov.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 72,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1103",
+    "name": "住房公积金",
+    "url": "http://www.cngjj.org.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 206,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1132",
+    "name": "ONLY",
+    "url": "https://www.only.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 420,
+    "error": "ERR_SSL_SSL/TLS_ALERT_HANDSHAKE_FAILURE"
+  },
+  {
+    "id": "s1181",
+    "name": "三菱",
+    "url": "https://www.mitsubishipencil.co.jp",
+    "vpn": false,
+    "status": 0,
+    "ms": 176,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1185",
+    "name": "晨光",
+    "url": "https://www.mg-pen.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 96,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1183",
+    "name": "得力",
+    "url": "https://www.deli.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 1065,
+    "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+  },
+  {
+    "id": "s1190",
+    "name": "国誉",
+    "url": "https://www.kokuyo.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 67,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1202",
+    "name": "波点音乐",
+    "url": "https://bdytmusic.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 200,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1250",
+    "name": "七彩虹",
+    "url": "https://www.colorful.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 35,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1261",
+    "name": "微星",
+    "url": "https://www.msi.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 130,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1255",
+    "name": "哈曼卡顿",
+    "url": "https://www.harman.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 679,
+    "error": "UNABLE_TO_VERIFY_LEAF_SIGNATURE"
+  },
+  {
+    "id": "s1259",
+    "name": "影驰",
+    "url": "https://www.galaxy.com.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 2438,
+    "error": "ECONNREFUSED"
+  },
+  {
+    "id": "s1283",
+    "name": "HMCL启动器",
+    "url": "https://hmcl.huangyuhao.net",
+    "vpn": false,
+    "status": 0,
+    "ms": 204,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1301",
+    "name": "和平精英",
+    "url": "https://hp.qq.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 75,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1312",
+    "name": "永劫无间",
+    "url": "https://ninja.163.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 41,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1311",
+    "name": "正点原子",
+    "url": "https://www.openedv.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 127,
+    "error": "CERT_HAS_EXPIRED"
+  },
+  {
+    "id": "s1317",
+    "name": "绝区零",
+    "url": "https://zenless.zenlesszero.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 208,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1323",
+    "name": "鸣潮",
+    "url": "https://mk.kurogame.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 24,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1344",
+    "name": "VG百科",
+    "url": "https://vgbaike.com",
+    "vpn": false,
+    "status": 0,
+    "ms": 133,
+    "error": "UNABLE_TO_GET_ISSUER_CERT_LOCALLY"
+  },
+  {
+    "id": "s1388",
+    "name": "笔趣阁",
+    "url": "https://www.bqg168.cc",
+    "vpn": false,
+    "status": 0,
+    "ms": 196,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1392",
+    "name": "凯乐石",
+    "url": "https://www.kailas.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 92,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1414",
+    "name": "12345政务服务",
+    "url": "https://www.12345.gov.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 108,
+    "error": "ENOTFOUND"
+  },
+  {
+    "id": "s1457",
+    "name": "360AI搜索",
+    "url": "https://www.360aichat.cn",
+    "vpn": false,
+    "status": 0,
+    "ms": 107,
+    "error": "ENOTFOUND"
+  }
+]

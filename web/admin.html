@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>屿航 · 后台管理</title>
+<link rel="stylesheet" href="admin/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">🏝️ 屿航 <span class="sub">后台管理</span></div>
+  <div class="stats">
+    <span class="stat">站点 <b id="stat-sites">0</b></span>
+    <span class="stat">来源 tsv <b id="stat-tsv">—</b></span>
+    <span class="stat">红旗 <b id="stat-red" class="red">0</b></span>
+    <span class="stat">黄旗 <b id="stat-yellow" class="yellow">0</b></span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <input id="search" type="search" placeholder="搜索名称 / 网址 / 简介 / 标签…">
+  <select id="filter-cat"><option value="">全部大类</option></select>
+  <select id="filter-tag"><option value="">全部标签</option></select>
+  <select id="filter-issue">
+    <option value="">全部问题状态</option>
+    <option value="red">仅红旗（严重）</option>
+    <option value="yellow">仅黄旗（提示）</option>
+    <option value="clean">无问题</option>
+  </select>
+  <select id="sort-by" title="排序方式">
+    <option value="default">排序：默认</option>
+    <option value="name">排序：名称</option>
+    <option value="cat">排序：大类</option>
+  </select>
+  <button id="btn-add" class="btn primary">＋ 新增站点</button>
+  <button id="btn-import" class="btn accent" title="从 TSV / JSON 文件批量导入站点">📥 导入</button>
+  <span class="spacer"></span>
+  <button id="btn-feedback" class="btn" title="查看用户提交的网站反馈（需用站长账号登录）">📣 反馈记录</button>
+  <button id="btn-export-js" class="btn accent" title="把当前数据写入 web/data/sites.js，主站刷新即生效">💾 保存到 sites.js（写入文件）</button>
+  <button id="btn-export-tsv" class="btn" title="导出 8 列 tsv，可用 node scripts/build.mjs 重新生成">⬇ 导出 sites.tsv</button>
+  <div id="save-hint" class="save-hint"></div>
+  <button id="btn-validate" class="btn" title="重新运行完整性校验">⟳ 重新校验</button>
+  <button id="btn-linkreport" class="btn" title="导入 scripts/linkcheck.mjs 生成的 data/linkcheck-report.json，标记失效链接">🔗 导入链接报告</button>
+  <input id="linkreport-file" type="file" accept=".json,application/json" hidden>
+</div>
+
+<div id="batch-bar" class="batch-bar" hidden>
+  <span class="batch-count">已选 <b id="batch-n">0</b> 项</span>
+  <label class="batch-applyall"><input id="batch-applyall" type="checkbox"> 应用到所有筛选结果</label>
+  <button id="batch-del" class="btn small danger">🗑 批量删除</button>
+  <button id="batch-tags" class="btn small">🏷 批量改标签</button>
+  <button id="batch-cat" class="btn small">📂 批量改大类</button>
+  <button id="batch-clear" class="btn small">✕ 取消选择</button>
+</div>
+
+<div id="banner" class="banner" hidden></div>
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<div id="issues-panel" class="issues" hidden>
+  <div class="issues-head">数据校验结果 <button id="issues-close" class="x">✕</button></div>
+  <ul id="issues-list" class="issues-list"></ul>
+</div>
+
+<div id="fb-panel" class="issues fb-panel" hidden>
+  <div class="issues-head">📣 反馈记录
+    <span id="fb-count" class="fb-count"></span>
+    <button id="fb-refresh" class="btn small">⟳ 刷新</button>
+    <button id="fb-logout" class="btn small" hidden>退出</button>
+    <button id="fb-close" class="x">✕</button>
+  </div>
+  <div id="fb-login" class="fb-login">
+    <input id="fb-email" type="email" placeholder="站长邮箱">
+    <input id="fb-pass" type="password" placeholder="密码">
+    <button id="fb-login-btn" class="btn primary small">登录查看</button>
+    <span id="fb-login-msg" class="f-msg"></span>
+  </div>
+  <ul id="fb-list" class="issues-list fb-list"></ul>
+</div>
+
+<!-- 批量修改弹窗 -->
+<div id="import-modal" class="modal" hidden>
+  <div class="modal-box modal-box-sm">
+    <div class="m-head"><span>📥 批量导入站点</span><button id="import-close" class="x">✕</button></div>
+    <div class="form">
+      <div class="import-tabs">
+        <button class="imp-tab active" data-tab="file">📁 文件导入</button>
+        <button class="imp-tab" data-tab="paste">📋 粘贴文本</button>
+      </div>
+      <div id="imp-file-panel">
+        <div class="imp-dropper">
+          <input id="import-file" type="file" accept=".tsv,.txt,.json" multiple>
+          <button id="import-file-btn" class="btn">选择文件</button>
+          <span class="imp-hint">拖放 TSV / JSON 文件到此处，或点击选择</span>
+          <span id="imp-file-list" class="imp-filelist"></span>
+        </div>
+        <label class="import-option"><input id="imp-skip-dup" type="checkbox" checked> 跳过已存在网址的条目</label>
+      </div>
+      <div id="imp-paste-panel" hidden>
+        <textarea id="imp-paste" rows="6" placeholder="粘贴 TSV 文本（8 列，制表符分隔）或 JSON 数组…"></textarea>
+        <label class="import-option"><input id="imp-paste-skip" type="checkbox" checked> 跳过已存在网址的条目</label>
+      </div>
+      <div id="imp-msg" class="f-msg"></div>
+      <div id="imp-preview" class="imp-preview" hidden>
+        <span>预览（前 5 条）：</span>
+        <ul id="imp-preview-list"></ul>
+      </div>
+    </div>
+    <div class="m-foot">
+      <button id="import-confirm" class="btn primary">导入</button>
+      <button id="import-cancel" class="btn">取消</button>
+    </div>
+  </div>
+</div>
+
+<div id="batch-modal" class="modal" hidden>
+  <div class="modal-box modal-box-sm">
+    <div class="m-head"><span id="batch-title">批量修改</span><button id="batch-modal-close" class="x">✕</button></div>
+    <div class="form">
+      <label id="batch-field-label"><span>标签（逗号分隔，留空=不修改）</span><input id="batch-field"></label>
+      <div id="batch-msg" class="f-msg"></div>
+    </div>
+    <div class="m-foot">
+      <button id="batch-save" class="btn primary">应用</button>
+      <button id="batch-cancel" class="btn">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="table-wrap">
+  <table id="tbl">
+    <thead>
+      <tr>
+        <th class="col-chk"><input type="checkbox" id="chk-all" title="全选"></th>
+        <th class="col-flag"></th>
+        <th class="col-name">名称</th>
+        <th class="col-cat">大类</th>
+        <th class="col-tags">标签</th>
+        <th class="col-brief">简介</th>
+        <th class="col-url">网址</th>
+        <th class="col-vpn">VPN</th>
+        <th class="col-ops">操作</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div id="admin-pager" class="pager" hidden></div>
+
+<div class="count-bar">共 <b id="count-show">0</b> 条（筛选后） · 总计 <b id="count-total">0</b> 条 · 已选 <b id="count-sel">0</b> 项
+  <span class="shortcut-hint"><span class="kbd">/</span> 搜索 · <span class="kbd">Ctrl+S</span> 保存 · <span class="kbd">Esc</span> 关闭弹窗</span>
+</div>
+
+<!-- 编辑 / 新增 弹窗 -->
+<div id="editor" class="modal" hidden>
+  <div class="modal-box">
+    <div class="m-head"><span id="editor-title">编辑网站</span><button id="editor-close" class="x">✕</button></div>
+    <div class="form">
+      <label class="row2">
+        <span>简称 <i>*</i></span><input id="f-name" placeholder="如：ChatGPT">
+        <span>详细名称</span><input id="f-full" placeholder="如：ChatGPT（OpenAI）">
+      </label>
+      <label class="row2">
+        <span>大类 <i>*</i></span><input id="f-cat" list="cat-list" placeholder="如：AI">
+        <datalist id="cat-list"></datalist>
+        <span>需要加速器</span><label class="check"><input id="f-vpn" type="checkbox"> ⚡ VPN</label>
+      </label>
+      <label>
+        <span>标签（逗号分隔，至少一个）<i>*</i>
+          <button id="btn-autotag" class="btn small" type="button" title="按智能分类规则自动填写">🤖 自动分类</button>
+        </span>
+        <input id="f-tags" placeholder="如：AI助手,大模型">
+      </label>
+      <label><span>简介 <i>*</i></span><input id="f-brief" placeholder="一句话简介"></label>
+      <label><span>详细简介</span><textarea id="f-detail" rows="4" placeholder="详细描述…"></textarea></label>
+      <label><span>网址 <i>*</i></span><input id="f-url" placeholder="https://…"></label>
+      <div id="f-msg" class="f-msg"></div>
+    </div>
+    <div class="m-foot">
+      <button id="editor-save" class="btn primary">保存</button>
+      <button id="editor-cancel" class="btn">取消</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="data/sites.js"></script>
+<script src="js/config.js"></script>
+<script src="js/sites-lib.js"></script>
+<script src="admin/admin.js"></script>
+</body>
+</html>
