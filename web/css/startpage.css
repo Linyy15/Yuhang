@@ -1,6 +1,6 @@
 /* ===== 青柠风格·整屏起始页（Yuhang-native）=====
- * 复用屿航现有视觉体系：透出主站极光背景 .bg，玻璃卡片 .glass，强调色 --accent，
- * 开场弹簧缓动；主题 [data-theme=...] 切换时通过 CSS 变量同步变。不硬编码色。
+ * 复用屿航现有视觉体系：不透明主题极光背景（随 9 套主题 × 7 色强调自动变），
+ * 玻璃卡片 .glass，强调色 --accent，开场弹簧缓动；不硬编码色。
  * 整屏覆盖层级高于 .modal(100)/cursor(999)/fab(62)。
  */
 #startpage.startpage {
@@ -9,19 +9,38 @@
   display: flex; flex-direction: column;
   padding: 26px 22px;
   overflow: hidden;
-  background: transparent; /* 透出主站 .bg 极光层 */
+  background: var(--bg-base, linear-gradient(165deg, #eef1ff 0%, #f7efff 48%, #eaf6ff 100%)); /* 不透明主题极光，遮住主站 */
   color: var(--text, #1c2333);
   font-family: inherit;
 }
 #startpage.startpage[hidden] { display: none; }
 body.sp-open { overflow: hidden; }
 
-/* 起始页专属层：壁纸层（极光之下之上）+ 暗角 */
+/* 起始页专属层：漂浮极光光斑（复用主站 --blob-* 主题色） */
+.startpage .sp-bg {
+  position: absolute; inset: 0; z-index: 0;
+  overflow: hidden; pointer-events: none;
+}
+.startpage .sp-bg i.sp-blob {
+  position: absolute; border-radius: 50%;
+  filter: blur(70px); opacity: .5;
+  will-change: transform;
+  animation: spBlobFloat 18s ease-in-out infinite alternate;
+}
+.startpage .sp-bg .sp-blob-1 { width: 46vw; height: 46vw; left: -8vw; top: -12vh; background: radial-gradient(circle, var(--blob-1, rgba(140,158,255,.4)), transparent 70%); }
+.startpage .sp-bg .sp-blob-2 { width: 38vw; height: 38vw; right: -6vw; bottom: -8vh; background: radial-gradient(circle, var(--blob-2, rgba(226,160,255,.36)), transparent 70%); animation-delay: -6s; }
+.startpage .sp-bg .sp-blob-3 { width: 30vw; height: 30vw; left: 30vw; top: 42vh; background: radial-gradient(circle, var(--blob-3, rgba(128,222,255,.34)), transparent 70%); animation-delay: -11s; }
+@keyframes spBlobFloat {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(4vw,-3vh,0) scale(1.12); }
+}
+
+/* 壁纸层（必应等，置于光斑之上、半透明染色） */
 .startpage .sp-wall {
   position: absolute; inset: 0; z-index: 0;
   background-size: cover; background-position: center;
   opacity: 0; transition: opacity .5s ease;
-  mix-blend-mode: multiply; /* 被极光/主题色调染色 */
+  mix-blend-mode: multiply; /* 被主题色调染色 */
   pointer-events: none;
 }
 .startpage .sp-wall.on { opacity: 1; }
@@ -333,6 +352,7 @@ body.sp-open { overflow: hidden; }
 /* 减少动态效果 */
 @media (prefers-reduced-motion: reduce) {
   .startpage .sp-main { animation: none; }
+  .startpage .sp-bg i.sp-blob { animation: none; }
 }
 
 /* 移动端 */
