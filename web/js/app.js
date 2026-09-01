@@ -3123,6 +3123,7 @@
     try { localStorage.setItem(ENGINE_KEY, engine); } catch (e) { /* 忽略 */ }
     renderEngineMenu();
     syncEngineUI();
+    if (window.YHStartPage && YHStartPage.setEngine) YHStartPage.setEngine(engine); // 同步青柠整屏起始页引擎
   }
   function syncEngineUI() {
     var eng = currentEngine();

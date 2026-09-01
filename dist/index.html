@@ -42,7 +42,25 @@
   --blob-3: rgba(128, 222, 255, 0.34);
   --petal: rgba(255, 158, 185, 0.5);
   --glow: rgba(255, 255, 255, 0.4);
+  /* ===== 动效节奏 token（9 套皮肤共用一套节奏，保证手感一致）===== */
+  --dur-instant: 0.01s;     /* 瞬时完成（prefers-reduced-motion 兜底用） */
+  --dur-fast: 0.15s;        /* 微交互反馈：按钮 hover、chip 切换、toast 滑入 */
+  --dur-normal: 0.25s;      /* 状态切换：卡片 hover、弹窗显隐、菜单展开 */
+  --dur-smooth: 0.35s;      /* 平滑过渡：弹窗 pop、卡片入场、视图切换 */
+  --dur-slow: 0.5s;         /* 慢节奏：开场页入场、滚动联动 */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.3, 1);   /* 默认缓出（操作反馈） */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* 弹簧缓动（开场页/入场） */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);    /* 平滑进出（滚动联动/视差） */
 }
+
+/* 无障碍：跳到主内容 / 跳到搜索的锚点链接，仅键盘聚焦时可见 */
+.skip-link {
+  position: absolute; top: -100%; left: 8px; z-index: 9999;
+  padding: 8px 14px; border-radius: 6px;
+  background: var(--accent); color: #fff; font-size: 13px; font-weight: 600;
+  text-decoration: none;
+}
+.skip-link:focus { top: 8px; outline: 2px solid var(--accent-2); outline-offset: 2px; }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -84,6 +102,23 @@ body {
 @keyframes petalFall {
   0%   { transform: translate(0, -5vh) rotate(0deg); }
   100% { transform: translate(var(--sway, 30px), 112vh) rotate(320deg); }
+}
+
+/* 背景飘雪：白色圆形小雪片，轻柔下落几乎不摇摆 */
+.fx-snow {
+  position: absolute;
+  top: -4%;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.8;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+  will-change: transform;
+  animation: snowFall linear infinite;
+}
+@keyframes snowFall {
+  0%   { transform: translate(0, -4vh) rotate(0deg); opacity: 0; }
+  8%   { opacity: 0.8; }
+  100% { transform: translate(var(--sway, 18px), 114vh) rotate(60deg); opacity: 0.75; }
 }
 
 /* 光标光晕：跟随鼠标的柔光，在背景层（小尺寸） */
@@ -667,6 +702,9 @@ body.instant .intro, body.instant .app { transition: none !important; }
   position: relative;
   overflow: hidden;
   transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.45s ease, border-color 0.45s ease, color 0.45s ease;
+  /* 滚动性能：视口外卡片跳过布局/渲染计算（低端机 2000+ 站点滚动流畅度立竿见影） */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 64px;
 }
 /* 新卡片入场（网格重排时仅新出现的卡片淡入） */
 .card.enter { animation: cardEnter 0.32s ease; }
@@ -912,13 +950,13 @@ body.instant .intro, body.instant .app { transition: none !important; }
   color: #fff; font-size: 20px; font-weight: 700;
   box-shadow: 0 8px 24px rgba(91, 108, 255, 0.4);
   display: grid; place-items: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, right 0.3s ease, bottom 0.3s ease, width 0.3s ease, height 0.3s ease, font-size 0.3s ease;
 }
 .back-top[hidden] { display: none; }
 .back-top:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(91, 108, 255, 0.5); }
 
-/* 悬浮操作球（登录/设置/随机/起始页） */
-.fab { position: fixed; right: 20px; bottom: 24px; z-index: 90; }
+/* 快捷菜单球（登录/设置/随机/起始页收纳于此）——常驻搜索栏右侧 */
+.fab { position: relative; z-index: 62; flex: 0 0 auto; transition: none; }
 .fab-btn {
   width: 52px; height: 52px; border-radius: 50%;
   border: none; cursor: pointer;
@@ -928,12 +966,21 @@ body.instant .intro, body.instant .app { transition: none !important; }
   display: grid; place-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+/* 搜索栏内的紧凑版：与"搜索"按钮等高 */
+.fab-btn-bar {
+  width: 34px; height: 34px;
+  background: transparent;
+  color: var(--accent);
+  box-shadow: none;
+  font-size: 17px;
+}
+.fab-btn-bar:hover { transform: none; background: var(--accent-soft); box-shadow: none; }
 .fab-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 12px 30px rgba(91, 108, 255, 0.5); }
 .fab-panel {
-  position: absolute; right: 0; bottom: calc(100% + 12px);
+  position: absolute; right: 0; top: calc(100% + 8px); bottom: auto;
   min-width: 172px; padding: 8px; border-radius: var(--radius-md);
   display: grid; gap: 4px;
-  box-shadow: var(--glass-shadow);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
   animation: pop 0.18s ease;
 }
 .fab-panel[hidden] { display: none; }
@@ -969,9 +1016,8 @@ body.instant .intro, body.instant .app { transition: none !important; }
 @media (max-width: 980px) {
   .bottom-nav { display: flex; }
   body { padding-bottom: 64px; }
-  .fab { right: 14px; bottom: 70px; }
+  /* ⚡ 快捷菜单已迁入搜索栏，无需 fixed 重排；仅调整回顶按钮避开底部导航 */
   .back-top { right: 22px; bottom: 132px; }
-  .fab-panel { bottom: calc(100% + 8px); }
 }
 
 /* 迷你提示（主页面） */
@@ -1079,6 +1125,21 @@ body.instant .intro, body.instant .app { transition: none !important; }
   .orbit-3 { width: 560px; height: 560px; }
   .hero-stats .stat { font-size: 11px; padding: 5px 10px; }
   .modal-box { width: calc(100% - 24px); padding: 14px 16px; }
+  /* 详情弹窗移动端全屏化：整屏展示避免挤压，头部紧凑、可滚动访问 */
+  @media (max-width: 640px) {
+    .modal { padding: 0; align-items: stretch; }
+    .modal-box {
+      width: 100%; max-width: 100%; max-height: 100vh; height: 100%;
+      border-radius: 0; padding: 18px 16px 24px; box-shadow: none;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+    }
+    .m-head { flex-wrap: wrap; gap: 10px; }
+    .m-head .icon { width: 48px; height: 48px; border-radius: 14px; }
+    .m-head .icon-letter { font-size: 21px; }
+    .m-name { font-size: 17px; }
+    .m-meta { margin-top: 10px; gap: 5px; }
+    .modal-close { top: 10px; right: 10px; width: 30px; height: 30px; font-size: 12px; }
+  }
   .rank-head { gap: 8px; }
   .rank-head .login-tabs { margin-left: 0; width: 100%; overflow-x: auto; flex-wrap: nowrap; }
   .podium-item { width: 96px; }
@@ -1093,13 +1154,53 @@ body.instant .intro, body.instant .app { transition: none !important; }
 
 /* 尊重系统"减少动态效果"设置 */
 @media (prefers-reduced-motion: reduce) {
-  .fx-petal, .cursor-glow, .hint-line, .empty .empty-icon { animation: none !important; }
+  .fx-petal, .fx-snow, .cursor-glow, .hint-line, .empty .empty-icon { animation: none !important; }
   .fx-petal { display: none; }
+  .fx-snow { display: none; }
   .cursor-glow { display: none; }
   .orbit, .fl-pt, .ring, .intro-avatar, .intro-name, .aurora, .morph-blob, .pulse-ring, .intro-name .nl { animation: none !important; }
   .fl-pt { display: none; }
   .aurora, .morph-blob { display: none; }
   .intro, .app, .app.revealed, .intro-inner > * { opacity: 1 !important; transform: none !important; transition: none !important; animation: none !important; }
+
+  /* 兜底：网格卡片入场/飞出/起飞、弹窗、toast、工具面板、排行、热搜等通用装饰动效关闭
+     —— 操作反馈类（如卡片 FLIP 回正）保留瞬时完成，避免视觉跳变但不做动画循环 */
+  .card, .card.enter, .card.card-out, .card.card-launch,
+  .m-toast, .view, .random-site, .swatch, .popup, .modal-box,
+  .engine-menu, .fab-panel, .search-hot, .search-ac,
+  .hot-item, .podium-item, .rank-item, .rank-list,
+  .tools-grid, .tool-row, .fb-btn, .ws-row, .reco-card,
+  .desc-item, .intro-stats .stat, .intro-meta, .chip,
+  .btn, .accent-chip, .cat-bar .chip, .topbar, .banner,
+  .fly-layer .card-out, .view-in, .loader-inner, .stat-num,
+  .avatar-ring, .hint-line, .toast-act {
+    animation: none !important;
+    transition: none !important;
+  }
+  /* 卡片 FLIP 回正动画改为瞬时完成（不是纯装饰，但减少运动量） */
+  .grid .card { transition: none !important; }
+}
+
+/* ===== 性能分级：data-perf=low 时隐藏/停止资源消耗最大的背景装饰动效 ===== */
+/* 与 prefers-reduced-motion 互补：reduced-motion 是用户选择，low-fx 是低端机自动降级 */
+[data-perf="low"] .aurora,
+[data-perf="low"] .morph-blob,
+[data-perf="low"] .pulse-ring,
+[data-perf="low"] .fl-pt,
+[data-perf="low"] .cursor-trail,
+[data-perf="low"] .cursor-glow,
+[data-perf="low"] .fx-petal,
+[data-perf="low"] .fx-snow {
+  display: none !important;
+  animation: none !important;
+}
+/* mid 档：保留极光（最轻量），关闭浮粒、光标光晕、花瓣飘落 */
+[data-perf="mid"] .cursor-trail,
+[data-perf="mid"] .fx-petal,
+[data-perf="mid"] .fx-snow,
+[data-perf="mid"] .pulse-ring {
+  display: none !important;
+  animation: none !important;
 }
 
 /* ===== 风格：终端命令行 ===== */
@@ -1711,6 +1812,24 @@ html[data-color="red"] {
 .fav-name { font-size: 13.5px; font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .fav-item .btn { padding: 4px 10px; font-size: 11.5px; flex: 0 0 auto; }
 .fav-actions { margin-top: 14px; display: flex; justify-content: flex-end; }
+/* 收藏批量操作工具栏 */
+.fav-check { flex: 0 0 auto; width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer; margin: 0; }
+.fav-item.sel { border-color: var(--accent); background: var(--accent-soft); }
+.fav-batch {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 12px; padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+}
+.fav-batch-check { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-sub); cursor: pointer; }
+.fav-batch-check input { width: 15px; height: 15px; accent-color: var(--accent); }
+.fav-batch-count { font-size: 12px; font-weight: 700; color: var(--accent); min-width: 58px; }
+.fav-batch-ops { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.fav-batch-select {
+  max-width: 170px; padding: 5px 8px; font-size: 12px;
+  border: 1px solid var(--glass-border); border-radius: var(--radius-sm);
+  background: var(--glass-bg-strong); color: var(--text); font-family: inherit;
+}
 /* ===== 全站排行界面 / 反馈 ===== */
 .rank-view { display: flex; flex-direction: column; gap: 18px; animation: viewIn .3s ease; }
 .rank-view[hidden] { display: none; }
@@ -1893,6 +2012,13 @@ html[data-color="red"] {
 .search-hot-title { font-size: 12px; color: var(--text-sub); margin-bottom: 8px; }
 .search-hot-chip { display: inline-block; margin: 3px; padding: 4px 10px; font-size: 12px; border-radius: 999px; border: 1px solid var(--glass-border); background: var(--glass-bg-strong); color: var(--text); cursor: pointer; transition: border-color .15s ease, color .15s ease; }
 .search-hot-chip:hover { border-color: var(--accent-2); color: var(--accent); }
+/* 最近搜索分组标题行的清空按钮 */
+.search-hot-clear {
+  border: none; background: transparent; color: var(--text-faint);
+  font-size: 11px; cursor: pointer; font-family: inherit;
+  margin-left: 6px; text-decoration: underline;
+}
+.search-hot-clear:hover { color: var(--accent); }
 /* 快捷键面板 */
 .help-list { display: flex; flex-direction: column; gap: 10px; padding: 6px 2px; }
 .help-row { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--text); }
@@ -2033,14 +2159,367 @@ body.is-loading .orbit {
 .search-ac[hidden] { display: none; }
 .ac-item { display: flex; align-items: center; gap: 8px; padding: 7px 10px; font-size: 13px; color: var(--text); border-radius: var(--radius-sm); cursor: pointer; }
 .ac-item:hover { background: var(--accent-soft); }
+/* 搜索联想键盘聚焦态：Tab / 方向键选中时高亮 */
+.ac-item.ac-focused { background: var(--accent-soft); outline: 1px solid var(--accent); outline-offset: -1px; }
 .ac-item b { color: var(--accent); font-weight: 700; }
 .ac-url { color: var(--accent); }
 .ac-tag { font-size: 10px; color: var(--text-sub); background: var(--glass-bg-strong); border: 1px solid var(--glass-border); padding: 1px 7px; border-radius: 999px; margin-left: auto; white-space: nowrap; }
 .ac-more { color: var(--text-sub); border-top: 1px solid var(--glass-border); margin-top: 4px; padding-top: 8px; }
 
 </style>
+  <style>
+/* ===== 青柠风格·整屏起始页（Yuhang-native）=====
+ * 复用屿航现有视觉体系：透出主站极光背景 .bg，玻璃卡片 .glass，强调色 --accent，
+ * 开场弹簧缓动；主题 [data-theme=...] 切换时通过 CSS 变量同步变。不硬编码色。
+ * 整屏覆盖层级高于 .modal(100)/cursor(999)/fab(62)。
+ */
+#startpage.startpage {
+  position: fixed; inset: 0;
+  z-index: 2000;
+  display: flex; flex-direction: column;
+  padding: 26px 22px;
+  overflow: hidden;
+  background: transparent; /* 透出主站 .bg 极光层 */
+  color: var(--text, #1c2333);
+  font-family: inherit;
+}
+#startpage.startpage[hidden] { display: none; }
+body.sp-open { overflow: hidden; }
+
+/* 起始页专属层：壁纸层（极光之下之上）+ 暗角 */
+.startpage .sp-wall {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center;
+  opacity: 0; transition: opacity .5s ease;
+  mix-blend-mode: multiply; /* 被极光/主题色调染色 */
+  pointer-events: none;
+}
+.startpage .sp-wall.on { opacity: 1; }
+.startpage .sp-veil {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: radial-gradient(120% 100% at 50% 6%, transparent 38%, rgba(10,16,40,.30) 100%);
+}
+
+/* 右上角：关闭 / 壁纸设置 */
+.startpage .sp-topbar {
+  position: relative; z-index: 3;
+  display: flex; justify-content: flex-end; gap: 8px;
+}
+.startpage .sp-topbar button {
+  border: none; cursor: pointer;
+  padding: 7px 12px; border-radius: 999px;
+  background: var(--glass-bg, rgba(255,255,255,.86));
+  color: var(--text-sub, #5b6478);
+  font-size: 13px; border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  box-shadow: var(--glass-shadow, 0 6px 18px rgba(38,46,80,.06));
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.startpage .sp-topbar button:hover { transform: translateY(-1px); color: var(--accent, #5b6cff); }
+
+/* 主体：垂直居中 */
+.startpage .sp-main {
+  position: relative; z-index: 2; flex: 1 1 auto;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; text-align: center;
+  animation: spIn .55s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+}
+@keyframes spIn {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 时钟 */
+.startpage .sp-time {
+  font-size: clamp(58px, 12vw, 124px);
+  font-weight: 200; line-height: 1; letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 2px 24px var(--glass-shadow, rgba(20,30,70,.18));
+  color: var(--text, #1c2333);
+}
+.startpage .sp-date {
+  font-size: clamp(14px, 2.3vw, 19px);
+  color: var(--text-sub, #5b6478); letter-spacing: 2px;
+}
+.startpage .sp-greet {
+  font-size: clamp(17px, 2.6vw, 22px); font-weight: 600;
+  color: var(--text, #1c2333);
+}
+.startpage .sp-quote {
+  font-size: 13.5px; color: var(--text-faint, #9aa2b8);
+  max-width: 600px; cursor: pointer; user-select: none; line-height: 1.5;
+}
+.startpage .sp-quote .sp-quote-letter { display: inline-block; }
+
+/* 搜索框：玻璃 + 右侧引擎下拉（和顶栏同款） */
+.startpage .sp-search {
+  display: flex; align-items: center; gap: 6px;
+  width: 100%; max-width: 660px;
+  padding: 10px 12px 10px 18px;
+  border-radius: 999px;
+  background: var(--glass-bg-strong, rgba(255,255,255,.94));
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  box-shadow: var(--glass-shadow, 0 10px 36px rgba(38,46,80,.12));
+  position: relative;
+  transition: box-shadow .2s ease, border-color .2s ease;
+}
+.startpage .sp-search:focus-within {
+  box-shadow: 0 0 0 3px var(--accent-soft, rgba(91,108,255,.12)), var(--glass-shadow);
+  border-color: var(--accent, #5b6cff);
+}
+.startpage .sp-ico { font-size: 17px; opacity: .65; flex: 0 0 auto; }
+.startpage .sp-input {
+  flex: 1 1 auto; min-width: 0;
+  border: none; outline: none; background: transparent;
+  font-size: 16px; color: var(--text, #1c2333);
+}
+.startpage .sp-input::placeholder { color: var(--text-faint, #9aa2b8); }
+.startpage .sp-engine {
+  position: relative; flex: 0 0 auto;
+}
+.startpage .sp-engine-btn {
+  border: none; cursor: pointer;
+  padding: 7px 14px; border-radius: 999px;
+  background: var(--accent-soft, rgba(91,108,255,.12));
+  color: var(--accent, #5b6cff);
+  font-size: 13px; font-weight: 600;
+  transition: background .15s ease;
+}
+.startpage .sp-engine-btn:hover { background: var(--accent-soft); filter: brightness(.92); }
+.startpage .sp-engine-menu {
+  position: absolute; top: calc(100% + 6px); right: 0;
+  min-width: 130px; z-index: 5;
+  border-radius: var(--radius-md, 16px);
+  background: var(--glass-bg-strong, rgba(255,255,255,.94));
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  box-shadow: var(--glass-shadow, 0 14px 40px rgba(38,46,80,.18));
+  padding: 6px; display: flex; flex-direction: column; gap: 2px;
+}
+.startpage .sp-engine-menu.hidden { display: none; }
+.startpage .sp-engine-menu button {
+  border: none; background: transparent; cursor: pointer;
+  padding: 8px 12px; border-radius: 10px; text-align: left;
+  font-size: 13.5px; color: var(--text, #1c2333);
+  transition: background .12s ease;
+}
+.startpage .sp-engine-menu button:hover,
+.startpage .sp-engine-menu button:focus-visible { background: var(--accent-soft, rgba(91,108,255,.12)); }
+.startpage .sp-engine-menu button.active {
+  background: var(--accent-soft, rgba(91,108,255,.12));
+  color: var(--accent, #5b6cff); font-weight: 600;
+}
+.startpage .sp-go {
+  flex: 0 0 auto; border: none; cursor: pointer;
+  padding: 8px 20px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+  color: #fff; font-size: 14px; font-weight: 600;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.startpage .sp-go:hover { opacity: .9; transform: translateY(-1px); }
+
+/* 联想下拉 */
+.startpage .sp-sugg {
+  width: 100%; max-width: 660px; text-align: left;
+  background: var(--glass-bg-strong, rgba(255,255,255,.94));
+  border-radius: var(--radius-md, 16px);
+  box-shadow: var(--glass-shadow, 0 10px 36px rgba(38,46,80,.12));
+  overflow: hidden; max-height: 40vh; overflow-y: auto;
+}
+.startpage .sp-sugg.hidden { display: none; }
+.startpage .sp-sugg button {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  border: none; background: transparent; cursor: pointer;
+  padding: 9px 16px; font-size: 14px; color: var(--text, #1c2333);
+  text-align: left; transition: background .12s ease;
+}
+.startpage .sp-sugg button:hover, .startpage .sp-sugg button:focus-visible { background: var(--accent-soft, rgba(91,108,255,.12)); }
+.startpage .sp-sugg .sp-sugg-ico {
+  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 7px; overflow: hidden;
+  display: inline-flex; align-items: center; justify-content: center; font-size: 14px;
+}
+.startpage .sp-sugg .sp-sugg-ico img { width: 100%; height: 100%; object-fit: cover; }
+.startpage .sp-sugg .sp-sugg-url { margin-left: auto; font-size: 12px; color: var(--text-faint, #9aa2b8); max-width: 42%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 快捷链接区块 */
+.startpage .sp-section-title {
+  display: flex; align-items: baseline; gap: 12px;
+  margin-top: 4px;
+}
+.startpage .sp-section-title .t {
+  font-size: 13.5px; font-weight: 600; color: var(--text-sub, #5b6478); letter-spacing: 2px;
+}
+.startpage .sp-section-title .hint { font-size: 12px; color: var(--text-faint, #9aa2b8); }
+.startpage .sp-section-title button {
+  border: none; background: transparent; color: var(--accent, #5b6cff);
+  cursor: pointer; font-size: 13px; padding: 3px 10px; border-radius: 999px;
+  transition: background .15s ease;
+}
+.startpage .sp-section-title button:hover { background: var(--accent-soft, rgba(91,108,255,.12)); }
+
+/* 只读投影：收藏 / 最常 */
+.startpage .sp-proj-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; max-width: 760px; }
+.startpage .sp-proj-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 12px; border-radius: 999px;
+  background: var(--glass-bg, rgba(255,255,255,.86));
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  color: var(--text-sub, #5b6478); font-size: 12.5px; cursor: pointer;
+  text-decoration: none; box-shadow: var(--glass-shadow, 0 4px 12px rgba(38,46,80,.05));
+  transition: transform .15s ease;
+}
+.startpage .sp-proj-chip:hover { transform: translateY(-1px); color: var(--accent, #5b6cff); }
+.startpage .sp-proj-chip .ico { width: 16px; height: 16px; border-radius: 4px; overflow: hidden; }
+.startpage .sp-proj-chip .ico img { width: 100%; height: 100%; object-fit: cover; }
+
+/* 常驻快捷卡片（复用屿航 .card 玻璃风格） */
+.startpage .sp-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 12px; width: 100%; max-width: 780px;
+}
+.startpage .sp-link {
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 13px 6px 10px; border-radius: var(--radius-md, 16px);
+  text-decoration: none; color: var(--text, #1c2333); cursor: pointer;
+  background: var(--glass-bg, rgba(255,255,255,.86));
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  box-shadow: var(--glass-shadow, 0 8px 22px rgba(38,46,80,.07));
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.startpage .sp-link:hover, .startpage .sp-link:focus-visible { transform: translateY(-3px); box-shadow: var(--glass-shadow, 0 12px 28px rgba(38,46,80,.14)); }
+.startpage .sp-link .sp-link-ico {
+  width: 42px; height: 42px; border-radius: 12px; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+}
+.startpage .sp-link .sp-link-ico img { width: 100%; height: 100%; object-fit: cover; }
+.startpage .sp-link .sp-link-name {
+  max-width: 100%; font-size: 12.5px; line-height: 1.25;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.startpage .sp-link .sp-link-del {
+  position: absolute; top: -6px; right: -6px; z-index: 2;
+  width: 20px; height: 20px; border: none; border-radius: 50%;
+  background: #ef4444; color: #fff; font-size: 11px; line-height: 1;
+  cursor: pointer; display: none; align-items: center; justify-content: center;
+}
+.startpage .sp-links.editing .sp-link { cursor: grab; }
+.startpage .sp-links.editing .sp-link .sp-link-del { display: inline-flex; }
+.startpage .sp-links.editing .sp-link.dragging { opacity: .45; }
+.startpage .sp-link.add-tile {
+  background: transparent; border: 1.5px dashed var(--accent-soft, rgba(91,108,255,.4));
+  box-shadow: none; color: var(--text-sub, #5b6478); font-size: 24px;
+}
+
+/* 添加表单 */
+.startpage .sp-manage {
+  display: flex; gap: 8px; width: 100%; max-width: 640px; flex-wrap: wrap; justify-content: center;
+}
+.startpage .sp-manage.hidden { display: none; }
+.startpage .sp-manage input {
+  flex: 1 1 180px; min-width: 0; padding: 9px 14px;
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  border-radius: 999px; font-size: 13.5px; outline: none;
+  background: var(--glass-bg-strong, rgba(255,255,255,.94));
+  color: var(--text, #1c2333);
+}
+.startpage .sp-manage input:focus { border-color: var(--accent, #5b6cff); box-shadow: 0 0 0 3px var(--accent-soft, rgba(91,108,255,.12)); }
+.startpage .sp-add-ok {
+  border: none; cursor: pointer; padding: 9px 18px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+  color: #fff; font-size: 13.5px; font-weight: 600;
+}
+
+/* 壁纸设置弹窗（起始页内小面板） */
+.startpage .sp-wallpanel {
+  position: absolute; top: 58px; right: 18px; z-index: 4;
+  width: 210px;
+  border-radius: var(--radius-md, 16px);
+  background: var(--glass-bg-strong, rgba(255,255,255,.94));
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  box-shadow: var(--glass-shadow, 0 16px 44px rgba(38,46,80,.2));
+  padding: 12px; display: flex; flex-direction: column; gap: 8px;
+}
+.startpage .sp-wallpanel.hidden { display: none; }
+.startpage .sp-wallpanel .ph { font-size: 13px; font-weight: 600; color: var(--text-sub, #5b6478); }
+.startpage .sp-wallpanel button {
+  display: flex; align-items: center; gap: 10px; width: 100%;
+  border: none; background: transparent; cursor: pointer;
+  padding: 8px 10px; border-radius: 10px;
+  font-size: 13px; color: var(--text, #1c2333);
+  transition: background .12s ease;
+}
+.startpage .sp-wallpanel button:hover { background: var(--accent-soft, rgba(91,108,255,.12)); }
+.startpage .sp-wallpanel button.active {
+  background: var(--accent-soft, rgba(91,108,255,.12));
+  color: var(--accent, #5b6cff); font-weight: 600;
+}
+.startpage .sp-wallpanel .sw {
+  width: 28px; height: 18px; border-radius: 6px; flex: 0 0 auto;
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+}
+.startpage .sp-wallpanel .sw-aurora { background: linear-gradient(135deg, #cfe9ff, #e6d6ff, #d6f4ff); }
+.startpage .sp-wallpanel .sw-ocean { background: linear-gradient(135deg, #9fd8ff, #cfeaff); }
+.startpage .sp-wallpanel .sw-bing { background: linear-gradient(135deg, #6ab7ff, #9be6a8, #ffb8c6); }
+.startpage .sp-wallpanel .sw-dark { background: linear-gradient(135deg, #0b1020, #141a33); }
+
+/* 底部导航回主站 + 操作 */
+.startpage .sp-foot {
+  position: relative; z-index: 3;
+  display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;
+  padding-bottom: 4px;
+}
+.startpage .sp-foot .sp-nav {
+  border: none; cursor: pointer;
+  padding: 11px 28px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+  color: #fff; font-size: 15px; font-weight: 600;
+  box-shadow: var(--glass-shadow, 0 12px 28px rgba(91,108,255,.45));
+  transition: transform .15s ease, opacity .15s ease;
+}
+.startpage .sp-foot .sp-nav:hover { transform: translateY(-2px); opacity: .94; }
+
+/* toast */
+.startpage .sp-toast {
+  position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%);
+  z-index: 2100; max-width: 86vw;
+  background: rgba(20,26,50,.82); color: #fff; font-size: 13px;
+  padding: 9px 18px; border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(8,12,28,.3);
+  animation: spIn .3s var(--ease-out, ease);
+}
+
+/* 暗角/海蓝/暗夜 壁纸基调（通过 data-sp-wall 切换；极光为默认透出主站 .bg） */
+#startpage.startpage[data-sp-wall="ocean"] .sp-veil {
+  background: linear-gradient(160deg, rgba(223,243,255,.0) 0%, rgba(207,234,255,.30) 100%),
+              radial-gradient(120% 100% at 50% 6%, transparent 40%, rgba(10,16,40,.28) 100%);
+}
+#startpage.startpage[data-sp-wall="dark"] .sp-veil {
+  background: linear-gradient(160deg, rgba(11,16,32,.0) 0%, rgba(20,26,51,.55) 100%),
+              radial-gradient(120% 100% at 50% 6%, transparent 40%, rgba(5,8,20,.55) 100%);
+}
+
+/* 减少动态效果 */
+@media (prefers-reduced-motion: reduce) {
+  .startpage .sp-main { animation: none; }
+}
+
+/* 移动端 */
+@media (max-width: 640px) {
+  #startpage.startpage { padding: 16px 14px; }
+  .startpage .sp-main { gap: 12px; }
+  .startpage .sp-links { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 9px; }
+  .startpage .sp-link { padding: 10px 4px 8px; }
+  .startpage .sp-link .sp-link-ico { width: 36px; height: 36px; border-radius: 10px; font-size: 17px; }
+  .startpage .sp-search { padding: 8px 10px 8px 14px; }
+  .startpage .sp-foot .sp-nav { padding: 10px 22px; font-size: 14px; }
+}
+
+</style>
 </head>
 <body>
+  <a id="skip-main" class="skip-link" href="#main-content">跳到主内容</a>
+  <a id="skip-search" class="skip-link" href="#search-input">跳到搜索</a>
   <!-- 加载界面（页面就绪后淡出） -->
   <div id="loader" class="loader" aria-hidden="true">
     <div class="loader-inner">
@@ -2072,9 +2551,30 @@ body.is-loading .orbit {
             <div id="engine-menu" class="theme-panel glass-2 engine-menu" hidden></div>
           </span>
           <input id="search-input" type="text" placeholder="搜索网站…" autocomplete="off">
-          <span id="search-result" class="search-result" hidden></span>
+          <span id="search-result" class="search-result" hidden aria-live="polite" aria-atomic="true"></span>
           <button id="btn-clear" class="btn-clear" hidden title="清空">✕</button>
           <button id="btn-search" class="btn-search" title="搜索" data-i18n="search_btn">搜索</button>
+          <!-- 快捷菜单（登录/设置/随机/起始页/统计等收纳）：从右下角悬浮球迁入搜索栏右侧 -->
+          <div class="fab" id="fab">
+            <button id="fab-btn" class="fab-btn fab-btn-bar" title="快捷菜单" aria-label="快捷菜单">⚡</button>
+            <div id="fab-panel" class="fab-panel glass-2" hidden>
+              <div class="theme-wrap">
+                <button id="btn-login" class="fab-item" data-i18n="login">🔑 登录</button>
+                <div id="login-menu" class="theme-panel glass-2" hidden>
+                  <button class="theme-option" data-login-action="my">📁 <span data-i18n="my_sites">我的网站</span></button>
+                  <button class="theme-option" data-login-action="add">＋ <span data-i18n="add_site">添加网站</span></button>
+                  <button class="theme-option" data-login-action="logout">🚪 <span data-i18n="logout">退出登录</span></button>
+                </div>
+              </div>
+              <button id="btn-settings" class="fab-item" title="打开设置" data-i18n="settings">⚙ 设置</button>
+              <button id="btn-random" class="fab-item" title="随机打开一个网站" data-i18n="random">🎲 今天去哪</button>
+              <button id="btn-submit" class="fab-item" title="推荐网站给站长" data-i18n="submit">📥 提交收录</button>
+              <button id="btn-wander" class="fab-item" title="连续自动随机打开网站" data-i18n="wander">🎠 漫游模式</button>
+              <button id="btn-stats" class="fab-item" title="本地数据统计" data-i18n="stats">📊 数据统计</button>
+              <button id="btn-startpage" class="fab-item" title="青柠风格整屏起始页：时钟 + 搜索 + 快捷链接">🍋 整屏起始页</button>
+              <button id="btn-back-intro" class="fab-item" data-i18n="back_intro">🏝 起始页</button>
+            </div>
+          </div>
           <div id="search-hot" class="search-hot glass-2" hidden></div>
           <div id="search-ac" class="search-hot glass-2 search-ac" hidden></div>
         </div>
@@ -2127,7 +2627,7 @@ body.is-loading .orbit {
       </div>
       <nav id="cat-bar" class="cat-bar"></nav>
     </aside>
-    <main class="main">
+    <main class="main" id="main-content">
       <div id="filter-bar" class="filter-bar glass" hidden></div>
       <div id="rank-view" class="rank-view" hidden>
         <div class="rank-head glass">
@@ -2169,28 +2669,54 @@ body.is-loading .orbit {
     <div class="footer-disclaimer" data-i18n="footer_disclaimer"></div>
   </footer>
 
-  <button id="back-top" class="back-top" title="回到顶部" aria-label="回到顶部" hidden>↑</button>
-
-  <!-- 悬浮操作球（登录/设置/随机/起始页收纳于此） -->
-  <div class="fab" id="fab">
-    <button id="fab-btn" class="fab-btn" title="快捷菜单" aria-label="快捷菜单">⚡</button>
-    <div id="fab-panel" class="fab-panel glass-2" hidden>
-      <div class="theme-wrap">
-        <button id="btn-login" class="fab-item" data-i18n="login">🔑 登录</button>
-        <div id="login-menu" class="theme-panel glass-2" hidden>
-          <button class="theme-option" data-login-action="my">📁 <span data-i18n="my_sites">我的网站</span></button>
-          <button class="theme-option" data-login-action="add">＋ <span data-i18n="add_site">添加网站</span></button>
-          <button class="theme-option" data-login-action="logout">🚪 <span data-i18n="logout">退出登录</span></button>
-        </div>
+  <!-- 青柠风格·整屏起始页（复用屿航极光背景 + 玻璃卡片 + 主题色；悬浮球「🍋」或 #startpage 进入） -->
+  <div id="startpage" class="startpage" hidden aria-hidden="true">
+    <div class="sp-wall" id="sp-wall" aria-hidden="true"></div>
+    <div class="sp-veil" aria-hidden="true"></div>
+    <div class="sp-topbar">
+      <button id="sp-wallset" type="button" title="切换壁纸">🖼 壁纸</button>
+      <button id="sp-close" type="button" title="关闭起始页">✕ 关闭</button>
+    </div>
+    <div class="sp-wallpanel hidden" id="sp-wallpanel"></div>
+    <div class="sp-main">
+      <div class="sp-time" id="sp-time">00:00:00</div>
+      <div class="sp-date" id="sp-date">····</div>
+      <div class="sp-greet" id="sp-greet">👋</div>
+      <p class="sp-quote" id="sp-quote" title="点击换一句"></p>
+      <form class="sp-search" id="sp-search" action="javascript:void 0" autocomplete="off">
+        <span class="sp-ico" aria-hidden="true">🔍</span>
+        <input id="sp-input" class="sp-input" type="text" placeholder="搜索网站 / 输入网址直达 / 切换引擎回车搜索" autocomplete="off" spellcheck="false">
+        <span class="sp-engine">
+          <button id="sp-engine-btn" class="sp-engine-btn" type="button">站内 ▾</button>
+          <div id="sp-engine-menu" class="sp-engine-menu hidden" role="listbox"></div>
+        </span>
+        <button id="sp-go" class="sp-go" type="submit">搜索</button>
+      </form>
+      <div class="sp-sugg hidden" id="sp-sugg"></div>
+      <div class="sp-section-title">
+        <span class="t">推荐</span>
+        <span class="hint">收藏 · 最常访问（只读）</span>
       </div>
-      <button id="btn-settings" class="fab-item" title="打开设置" data-i18n="settings">⚙ 设置</button>
-      <button id="btn-random" class="fab-item" title="随机打开一个网站" data-i18n="random">🎲 今天去哪</button>
-      <button id="btn-submit" class="fab-item" title="推荐网站给站长" data-i18n="submit">📥 提交收录</button>
-      <button id="btn-wander" class="fab-item" title="连续自动随机打开网站" data-i18n="wander">🎠 漫游模式</button>
-      <button id="btn-stats" class="fab-item" title="本地数据统计" data-i18n="stats">📊 数据统计</button>
-      <button id="btn-back-intro" class="fab-item" data-i18n="back_intro">🏝 起始页</button>
+      <div class="sp-proj-row favs"></div>
+      <div class="sp-proj-row hot"></div>
+      <div class="sp-section-title">
+        <span class="t">快捷链接</span>
+        <button id="sp-manage-btn" type="button">✎ 管理</button>
+        <span class="hint" id="sp-links-hint">点「✎ 管理」可增删排序</span>
+      </div>
+      <div class="sp-links" id="sp-links"></div>
+      <div class="sp-manage hidden" id="sp-manage">
+        <input id="sp-add-name" type="text" placeholder="名称" maxlength="20" autocomplete="off">
+        <input id="sp-add-url" type="text" placeholder="https://…" autocomplete="off" spellcheck="false">
+        <button id="sp-add-ok" type="button">＋ 添加</button>
+      </div>
+    </div>
+    <div class="sp-foot">
+      <button id="sp-nav" class="sp-nav" type="button">进入导航 ↓</button>
     </div>
   </div>
+
+  <button id="back-top" class="back-top" title="回到顶部" aria-label="回到顶部" hidden>↑</button>
 
   <!-- 移动端固定底部导航（快捷栏：首页 / 搜索 / 收藏 / 工具 / 我的） -->
   <nav id="bottom-nav" class="bottom-nav" aria-label="底部导航">
@@ -2293,6 +2819,7 @@ body.is-loading .orbit {
       <div class="s-group">
         <div class="s-label" data-i18n="fx_label">特效与行为</div>
         <div class="s-row"><span data-i18n="petals">落花效果</span><button class="switch" data-key="petals"></button></div>
+        <div class="s-row"><span data-i18n="snow">飘雪效果</span><button class="switch" data-key="snow"></button></div>
         <div class="s-row"><span data-i18n="cursor">鼠标轨迹光效</span><button class="switch" data-key="cursorFx"></button></div>
         <div class="s-row"><span data-i18n="intro_toggle">每次进入显示起始页</span><button class="switch" data-key="showIntro"></button></div>
         <div class="s-row"><span data-i18n="share_stats">共享数据参与全站统计</span><button class="switch" data-key="shareStats"></button></div>
@@ -2386,6 +2913,17 @@ body.is-loading .orbit {
       <button id="fav-close" class="modal-close" title="关闭">✕</button>
       <div class="s-head" data-i18n="fav_manage_title">⭐ 收藏管理</div>
       <div id="fav-list" class="fav-list"></div>
+      <div class="fav-batch" id="fav-batch">
+        <label class="fav-batch-check"><input type="checkbox" id="fav-selall"> <span data-i18n="fav_sel_all">全选</span></label>
+        <span class="fav-batch-count" id="fav-sel-count"></span>
+        <span class="fav-batch-ops">
+          <select id="fav-batch-ws" class="fav-batch-select" title="批量移入工作区">
+            <option value="__new" data-i18n="fav_batch_ws_new">＋ 移入新工作区…</option>
+          </select>
+          <button id="fav-batch-remove" class="btn btn-ghost" data-i18n="fav_batch_remove">批量移除</button>
+          <button id="fav-batch-export" class="btn btn-ghost" data-i18n="fav_batch_export">批量导出书签</button>
+        </span>
+      </div>
       <div class="fav-actions">
         <button id="fav-openall" class="btn btn-ghost" data-i18n="open_all">🚀 打开全部</button>
         <button id="fav-export-bm" class="btn btn-ghost" data-i18n="export_bm">🔖 导出书签</button>
@@ -3067,6 +3605,22 @@ window.APP_CONFIG = {
 (function () {
   'use strict';
 
+  // ---------- 性能分级：低端设备降级动效（与 prefers-reduced-motion 互补）
+  // 逻辑：reduced-motion 是用户主动选择；low-fx 是设备被动降级（低核数/慢网络/低端 GPU）
+  // 检测时机必须尽早（页面顶层），确保 CSS 在首次 layout 前生效
+  var perfLevel = 'high'; // high | mid | low
+  try {
+    var hc = (navigator.hardwareConcurrency || 0);
+    var net = (navigator.connection && navigator.connection.effectiveType) || '';
+    var isSlow = /2g|slow-2g|3g/.test(net);
+    var isLowCore = hc > 0 && hc <= 4;
+    if (isSlow || isLowCore) { perfLevel = 'low'; }
+    else if (hc > 0 && hc <= 6) { perfLevel = 'mid'; }
+  } catch (e) {}
+  if (perfLevel === 'low' || perfLevel === 'mid') {
+    try { document.documentElement.setAttribute('data-perf', perfLevel); } catch (e) {}
+  }
+
   // 每次进入都定位到网页顶部：禁止浏览器刷新时恢复上次滚动位置
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
@@ -3245,7 +3799,7 @@ window.APP_CONFIG = {
   var theme = localStorage.getItem(THEME_KEY) || 'brutalism';
   var color = localStorage.getItem(COLOR_KEY) || 'blue';
   var gridSize = localStorage.getItem(SIZE_KEY) || 'md';
-  var settings = Object.assign({ petals: true, cursorFx: false, showIntro: true, shareStats: true, cardIcon: 'favicon' }, readJSON(SETTINGS_KEY, {}));
+  var settings = Object.assign({ petals: true, snow: true, cursorFx: false, showIntro: true, shareStats: true, cardIcon: 'favicon' }, readJSON(SETTINGS_KEY, {}));
   var lang = localStorage.getItem(LANG_KEY) || 'zh';
   var accounts = readJSON(ACCOUNTS_KEY, {});
   var currentUser = null; // 由 Supabase 会话驱动（登录后为邮箱/用户ID）
@@ -3294,6 +3848,18 @@ window.APP_CONFIG = {
     if (recentIds.length > 30) recentIds.length = 30;
     saveRecent();
   }
+  var SEARCH_HISTORY_KEY = 'nav_search_hist_v1';
+  var searchHistory = readJSON(SEARCH_HISTORY_KEY, []); // [{ q, ts }] 最近 10 条
+  function saveSearchHistory() { try { localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(searchHistory)); } catch (e) {} }
+  // 记录最近搜索词：去重置顶，最多 10 条；空词不记
+  function recordSearchHistory(q) {
+    q = String(q || '').trim();
+    if (!q) return;
+    searchHistory = searchHistory.filter(function (h) { return h.q.toLowerCase() !== q.toLowerCase(); });
+    searchHistory.unshift({ q: q, ts: Date.now() });
+    if (searchHistory.length > 10) searchHistory.length = 10;
+    saveSearchHistory();
+  }
   function recordHotWord(q) {
     q = String(q || '').trim().toLowerCase();
     if (!q) return;
@@ -3335,6 +3901,7 @@ window.APP_CONFIG = {
     icon_letter: { zh: '首字', en: 'Letter' },
     fx_label: { zh: '特效与行为', en: 'Effects & behavior' },
     petals: { zh: '落花效果', en: 'Falling petals' },
+    snow: { zh: '飘雪效果', en: 'Falling snow' },
     cursor: { zh: '鼠标轨迹光效', en: 'Cursor trail' },
     intro_toggle: { zh: '每次进入显示起始页', en: 'Show intro on load' },
     back_intro: { zh: '🏝 回到起始页', en: '🏝 Back to intro' },
@@ -3544,6 +4111,16 @@ window.APP_CONFIG = {
     fav_manage_title: { zh: '⭐ 收藏管理', en: '⭐ Manage favorites' },
     clear_favs: { zh: '清空全部收藏', en: 'Clear all favorites' },
     clear_confirm: { zh: '确定清空全部收藏？', en: 'Clear all favorites?' },
+    fav_sel_all: { zh: '全选', en: 'Select all' },
+    fav_sel_n: { zh: '已选 {n} 项', en: '{n} selected' },
+    fav_sel_empty: { zh: '请先勾选要操作的收藏', en: 'Select favorites first' },
+    fav_batch_ws_new: { zh: '＋ 移入新工作区…', en: '＋ Move to new workspace…' },
+    fav_batch_ws_prompt: { zh: '新工作区名称：', en: 'New workspace name:' },
+    fav_batch_ws_done: { zh: '已移入工作区 {n} 项', en: 'Moved {n} to workspace' },
+    fav_batch_remove: { zh: '批量移除', en: 'Remove selected' },
+    fav_batch_remove_confirm: { zh: '确定移除选中的 {n} 个收藏？', en: 'Remove {n} selected favorites?' },
+    fav_batch_export: { zh: '批量导出书签', en: 'Export bookmarks' },
+    fav_batch_done: { zh: '✅ 批量操作完成', en: '✅ Done' },
     share_stats: { zh: '共享数据参与全站统计', en: 'Share data to site-wide stats' },
     rank_title: { zh: '🏆 全站排行', en: '🏆 Site ranking' },
     rank_fav: { zh: '收藏榜', en: 'By favorites' },
@@ -3587,6 +4164,9 @@ window.APP_CONFIG = {
     help_card: { zh: '在卡片上打开网站', en: 'Open site on card' },
     help_q: { zh: '显示本面板', en: 'Show this panel' },
     hot_search_title: { zh: '🔥 站内热门搜索', en: '🔥 Popular searches' },
+    recent_search_title: { zh: '🕘 最近搜索', en: '🕘 Recent searches' },
+    clear_search_hist: { zh: '清空', en: 'Clear' },
+    clear_search_hist_tip: { zh: '清空最近搜索记录', en: 'Clear search history' },
     hot_updated: { zh: '更新于', en: 'updated' },
     hot_count: { zh: '条', en: 'items' },
     hot_hits: { zh: '命中', en: 'hits' },
@@ -4081,17 +4661,35 @@ window.APP_CONFIG = {
     });
   });
 
-  // ---------- 收藏管理 ----------
+  // ---------- 收藏管理（含批量操作） ----------
+  var favSel = new Set(); // 批量选中的收藏 id
   function renderFavList() {
     if (!favList) return;
     var ids = Array.from(favs);
-    if (!ids.length) { favList.innerHTML = '<div class="ws-empty">' + t('empty_fav') + '</div>'; return; }
+    if (!ids.length) { favList.innerHTML = '<div class="ws-empty">' + t('empty_fav') + '</div>'; updateFavBatchUI(); return; }
     favList.innerHTML = ids.map(function (id) {
       var s = siteOf(id);
       var nm = s ? nameLabel(s) : id;
-      return '<div class="fav-item"><span class="fav-name">' + escapeHtml(nm) + '</span>' +
+      var checked = favSel.has(id) ? ' checked' : '';
+      return '<div class="fav-item' + (checked ? ' sel' : '') + '"><input type="checkbox" class="fav-check" data-fav-check="' + escapeHtml(id) + '"' + checked + '><span class="fav-name">' + escapeHtml(nm) + '</span>' +
         '<button class="btn btn-ghost" data-fav-rm="' + escapeHtml(id) + '">✕</button></div>';
     }).join('');
+    updateFavBatchUI();
+  }
+  // 更新批量操作条状态（计数 + 工作区下拉 + 全选框）
+  function updateFavBatchUI() {
+    var countEl = $('fav-sel-count');
+    if (countEl) countEl.textContent = favSel.size ? t('fav_sel_n').replace('{n}', favSel.size) : '';
+    var selAll = $('fav-selall');
+    if (selAll) { selAll.checked = favs.size > 0 && favSel.size === favs.size; }
+    var wsSel = $('fav-batch-ws');
+    if (wsSel) {
+      var opts = '<option value="__new">' + t('fav_batch_ws_new') + '</option>' +
+        Object.keys(workspaces).map(function (id) {
+          return '<option value="' + escapeHtml(id) + '">' + escapeHtml(workspaces[id].name) + '</option>';
+        }).join('');
+      if (wsSel.innerHTML !== opts) { wsSel.innerHTML = opts; }
+    }
   }
   function openFavManage() {
     if (!currentUser) { openLogin(t('need_login_fav')); return; }
@@ -4116,6 +4714,77 @@ window.APP_CONFIG = {
     renderFavList();
     renderCats();
     renderGrid();
+  });
+
+  // 收藏批量操作：勾选 / 全选 / 批量移除 / 批量导出 / 批量移入工作区
+  on(favList, 'change', function (e) {
+    var cb = e.target && e.target.matches && e.target.matches('[data-fav-check]') ? e.target : null;
+    if (!cb) return;
+    var id = cb.getAttribute('data-fav-check');
+    if (cb.checked) favSel.add(id); else favSel.delete(id);
+    renderFavList();
+  });
+  on($('fav-selall'), 'change', function (e) {
+    if (e.target.checked) {
+      Array.from(favs).forEach(function (id) { favSel.add(id); });
+    } else {
+      favSel.clear();
+    }
+    renderFavList();
+  });
+  on($('fav-batch-remove'), 'click', function () {
+    if (!favSel.size) { showMsg(t('fav_sel_empty')); return; }
+    if (!window.confirm(t('fav_batch_remove_confirm').replace('{n}', favSel.size))) return;
+    favSel.forEach(function (id) { favs.delete(id); });
+    favSel.clear();
+    saveAccountData();
+    renderFavList();
+    renderCats();
+    renderGrid();
+    showMsg(t('fav_batch_done'));
+  });
+  on($('fav-batch-export'), 'click', function () {
+    if (!favSel.size) { showMsg(t('fav_sel_empty')); return; }
+    var chosen = new Set(favSel);
+    // 导出选中收藏为书签 HTML（复用现有生成逻辑，但限定所选集合）
+    function exportSelBookmarks() {
+      var items = allSites().filter(function (s) { return chosen.has(s.id); });
+      var lines = items.map(function (s) {
+        return '    <DT><A HREF="' + escapeHtml(s.url || '') + '">' + escapeHtml(nameLabel(s)) + '</A>';
+      });
+      var html =
+        '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n' +
+        '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n' +
+        '<TITLE>' + t('export_bm') + '</TITLE>\n' +
+        '<H1>' + t('export_bm') + '</H1>\n' +
+        '<DL><p>\n  <DT><H3>' + t('export_bm') + '</H3>\n  <DL><p>\n' +
+        lines.join('\n') +
+        '\n  </DL><p>\n</DL><p>\n';
+      downloadText('yuhang-bookmarks.html', html, 'text/html');
+      showMsg(t('bm_exported'));
+    }
+    exportSelBookmarks();
+  });
+  on($('fav-batch-ws'), 'change', function (e) {
+    var val = e.target.value;
+    if (!val || !favSel.size) { e.target.value = '__new'; return; }
+    var targetId = val;
+    if (val === '__new') {
+      var name = window.prompt(t('fav_batch_ws_prompt'));
+      if (!name || !name.trim()) { return; }
+      targetId = 'w' + Date.now();
+      workspaces[targetId] = { name: name.trim(), ids: [] };
+    }
+    var ws = workspaces[targetId];
+    if (!ws) return;
+    favSel.forEach(function (id) {
+      if (ws.ids.indexOf(id) === -1) ws.ids.push(id);
+    });
+    saveAccountData();
+    renderCats();
+    renderGrid();
+    showMsg(t('fav_batch_ws_done').replace('{n}', favSel.size));
+    e.target.value = '__new';
   });
   // 收藏「一键全部打开」（超过 8 个先确认，避免误开一堆标签页）
   if (favOpenAll) favOpenAll.addEventListener('click', function () {
@@ -4358,26 +5027,58 @@ window.APP_CONFIG = {
     hotList.innerHTML = '<div class="ws-empty">' + t('hot_loading') + '</div>';
     setHotMeta(t('hot_fetching'));
     if (typeof fetch !== 'function') { renderHotFail(); return; }
-    fetchHotChain((HOT_APIS[hotPlatform] || []).slice(), 0);
+    fetchHotRace((HOT_APIS[hotPlatform] || []).slice());
   }
-  // 多源顺序回退：一个接口失败立刻换下一个（8 秒超时）
-  function fetchHotChain(urls, i) {
-    if (i >= urls.length) { renderHotFail(); return; }
-    var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, 8000) : null;
-    var clearT = function () { if (timer) { clearTimeout(timer); timer = null; } };
-    fetch(urls[i], { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
-      .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); })
-      .then(function (payload) {
-        clearT();
-        var rows = (window.YH && YH.parseHotlist) ? YH.parseHotlist(payload) : [];
-        if (!rows.length) throw new Error('empty');
-        hotCache[hotPlatform] = rows;
-        hotUpdatedAt[hotPlatform] = Date.now();
-        hotRows = rows;
-        renderHotList(rows);
-      })
-      .catch(function () { clearT(); fetchHotChain(urls, i + 1); });
+  // 多源竞速：同时发起全部接口，最快返回者胜出，其余自动取消（冷启动体感显著优于串行 fallback）
+  function fetchHotRace(urls) {
+    if (!urls.length) { renderHotFail(); return; }
+    var TIMEOUT = 5000;
+    var done = false;
+    var remaining = urls.length;
+    var ctrls = [];
+    var clearAll = function () {
+      for (var c = 0; c < ctrls.length; c++) {
+        if (ctrls[c]) { try { ctrls[c].abort(); } catch (e) {} }
+      }
+    };
+    var finish = function (rows) {
+      if (done) return;
+      done = true;
+      clearAll();
+      hotCache[hotPlatform] = rows;
+      hotUpdatedAt[hotPlatform] = Date.now();
+      hotRows = rows;
+      renderHotList(rows);
+    };
+    var allFailed = function () {
+      if (done) return;
+      done = true;
+      clearAll();
+      renderHotFail();
+    };
+    for (var i = 0; i < urls.length; i++) {
+      (function (url) {
+        var ctrl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+        ctrls.push(ctrl);
+        var timer = null;
+        if (ctrl) timer = setTimeout(function () { ctrl.abort(); }, TIMEOUT);
+        fetch(url, { cache: 'no-store', signal: ctrl ? ctrl.signal : undefined })
+          .then(function (r) { if (!r.ok) throw new Error('http'); return r.json(); })
+          .then(function (payload) {
+            if (timer) clearTimeout(timer);
+            var rows = (window.YH && YH.parseHotlist) ? YH.parseHotlist(payload) : [];
+            if (rows.length) finish(rows);
+          })
+          .catch(function () {
+            if (timer) clearTimeout(timer);
+            if (--remaining <= 0) allFailed();
+          });
+      })(urls[i]);
+    }
+    // 兜底：极端情况下 remaining 未归零时，超时后强制降级
+    setTimeout(function () {
+      if (!done) { done = true; renderHotFail(); }
+    }, TIMEOUT + 200);
   }
   function renderHotList(rows) {
     var kw = (hotFilter ? hotFilter.value : '').trim().toLowerCase();
@@ -5108,8 +5809,11 @@ window.APP_CONFIG = {
     }
   })();
   function applyTheme() {
+    // 保存当前滚动位置，防止 CSS 重排导致滚动跳跃
+    var y = (window.scrollY || document.documentElement.scrollTop || 0);
     document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.setAttribute('data-color', color);
+    requestAnimationFrame(function () { window.scrollTo(0, y); });
   }
   function spinActiveDot() {
     var dot = document.querySelector('#s-colors .color-dot.active');
@@ -5224,6 +5928,8 @@ window.APP_CONFIG = {
   function applySetting(key, val) {
     if (key === 'petals') {
       if (val) initParticles(); else disableParticles();
+    } else if (key === 'snow') {
+      if (val) initSnow(); else disableSnow();
     } else if (key === 'cursorFx') {
       if (val) enableCursorFx(); else disableCursorFx();
     } else if (key === 'showIntro') {
@@ -5385,9 +6091,24 @@ window.APP_CONFIG = {
   }
 
   // ---------- 背景落花 ----------
+  // 按 class 独立增删：花瓣与雪花互不干扰（各操作只清理自己的类型）
+  function clearFxClass(cls) {
+    if (!fxEl || !fxEl.querySelectorAll) return;
+    var els = fxEl.querySelectorAll('.' + cls);
+    for (var i = els.length - 1; i >= 0; i--) {
+      var p = els[i].parentNode;
+      if (p && p.removeChild) p.removeChild(els[i]);
+    }
+  }
+  function appendFxHTML(html) {
+    if (!fxEl) return;
+    // 真实浏览器用 insertAdjacentHTML；测试桩无此方法时退化为 innerHTML 拼接
+    if (typeof fxEl.insertAdjacentHTML === 'function') { fxEl.insertAdjacentHTML('beforeend', html); return; }
+    fxEl.innerHTML += html;
+  }
   function initParticles() {
     if (!fxEl || !settings.petals) return;
-    fxEl.innerHTML = '';
+    clearFxClass('fx-petal');
     var html = '';
     for (var i = 0; i < 16; i++) {
       var size = 6 + Math.random() * 9;
@@ -5398,9 +6119,27 @@ window.APP_CONFIG = {
       html += '<i class="fx-petal" style="left:' + left.toFixed(1) + '%;width:' + size.toFixed(1) + 'px;height:' + size.toFixed(1) +
         'px;animation-duration:' + dur.toFixed(1) + 's;animation-delay:' + delay.toFixed(1) + 's;--sway:' + sway + '"></i>';
     }
-    fxEl.innerHTML = html;
+    appendFxHTML(html);
   }
-  function disableParticles() { if (fxEl) fxEl.innerHTML = ''; }
+  function disableParticles() { clearFxClass('fx-petal'); }
+
+  // ---------- 背景飘雪 ----------
+  function initSnow() {
+    if (!fxEl || !settings.snow) return;
+    clearFxClass('fx-snow');
+    var html = '';
+    for (var i = 0; i < 12; i++) {
+      var size = 3 + Math.random() * 5;
+      var left = Math.random() * 100;
+      var dur = 14 + Math.random() * 12;
+      var delay = -Math.random() * 20;
+      var sway = (Math.random() * 50 - 25).toFixed(0) + 'px';
+      html += '<i class="fx-snow" style="left:' + left.toFixed(1) + '%;width:' + size.toFixed(1) + 'px;height:' + size.toFixed(1) +
+        'px;animation-duration:' + dur.toFixed(1) + 's;animation-delay:' + delay.toFixed(1) + 's;--sway:' + sway + '"></i>';
+    }
+    appendFxHTML(html);
+  }
+  function disableSnow() { clearFxClass('fx-snow'); }
 
   // ---------- 光标光晕 + 拖尾 ----------
   var mouseX = -9999, mouseY = -9999;
@@ -5413,7 +6152,10 @@ window.APP_CONFIG = {
     if (glowEl) glowEl.style.opacity = '1';
     if (trailEl) trailEl.style.opacity = '1';
   }
+  var mouseIdleMs = 0;
   function fxFrame() {
+    // 光标静止超 60ms 停止 rAF 循环，避免空闲时持续消耗 GPU/CPU
+    if (mouseIdleMs > 60) { fxRaf = null; return; }
     glowX += (mouseX - glowX) * 0.1;
     glowY += (mouseY - glowY) * 0.1;
     if (glowEl) glowEl.style.transform = 'translate(' + (glowX - 75) + 'px,' + (glowY - 75) + 'px)';
@@ -5428,6 +6170,7 @@ window.APP_CONFIG = {
   }
   function initCursorFx() {
     if (!settings.cursorFx) return;
+    if (perfLevel === 'low') return; // 低端机关闭光标特效
     document.addEventListener('mousemove', onMouseMove);
     if (trailEl) trailEl.style.opacity = '0';
     if (!fxRaf) fxRaf = requestAnimationFrame(fxFrame);
@@ -5437,8 +6180,10 @@ window.APP_CONFIG = {
     if (fxRaf) { cancelAnimationFrame(fxRaf); fxRaf = null; }
     if (glowEl) glowEl.style.opacity = '0';
     if (trailEl) trailEl.style.opacity = '0';
+    mouseIdleMs = 0;
   }
   function enableCursorFx() {
+    if (perfLevel === 'low') return;
     if (trailEl) trailEl.style.opacity = '0';
     if (!fxRaf) fxRaf = requestAnimationFrame(fxFrame);
     document.addEventListener('mousemove', onMouseMove);
@@ -5826,15 +6571,19 @@ window.APP_CONFIG = {
     var recs = (currentUser && activeCat === '全部' && !kw && !selectedTags.size && !activeWs) ? getRecommendations() : [];
     var list = filterSites();
 
+    // 性能降级：低端机跳过 FLIP 布局读（避免 2000+ 卡片 getBoundingClientRect 卡顿）
+    var doFlip = perfLevel !== 'low' && list.length <= 200;
     var first = {};
     var oldEls = [];
-    var oldCards = grid.querySelectorAll('.card');
-    for (var i = 0; i < oldCards.length; i++) {
-      var oid = oldCards[i].getAttribute('data-id');
-      if (!oid) continue;
-      var or = oldCards[i].getBoundingClientRect();
-      first[oid] = { x: or.left, y: or.top };
-      oldEls.push({ id: oid, el: oldCards[i], rect: or });
+    if (doFlip) {
+      var oldCards = grid.querySelectorAll('.card');
+      for (var i = 0; i < oldCards.length; i++) {
+        var oid = oldCards[i].getAttribute('data-id');
+        if (!oid) continue;
+        var or = oldCards[i].getBoundingClientRect();
+        first[oid] = { x: or.left, y: or.top };
+        oldEls.push({ id: oid, el: oldCards[i], rect: or });
+      }
     }
 
     var html = '';
@@ -5854,10 +6603,12 @@ window.APP_CONFIG = {
     grid.innerHTML = html;
 
     var newCards = grid.querySelectorAll('.card');
-    for (var j = 0; j < newCards.length; j++) {
-      var c = newCards[j];
-      var nid = c.getAttribute('data-id');
-      var nr = c.getBoundingClientRect();
+    if (doFlip) {
+      requestAnimationFrame(function () {
+        for (var j = 0; j < newCards.length; j++) {
+          var c = newCards[j];
+          var nid = c.getAttribute('data-id');
+          var nr = c.getBoundingClientRect();
       if (nid && first[nid]) {
         var dx = first[nid].x - nr.left;
         var dy = first[nid].y - nr.top;
@@ -5874,10 +6625,18 @@ window.APP_CONFIG = {
       } else {
         c.classList.add('enter');
       }
+    }});
+    } else {
+      // 低端机/大列表：跳过 FLIP 逐卡动画，保留飞出场动画（已有 <=60 保护）
+      for (var j = 0; j < newCards.length; j++) {
+        if (newCards[j].getAttribute('data-id') && !first[newCards[j].getAttribute('data-id')]) {
+          newCards[j].classList.add('enter');
+        }
+      }
     }
 
-    // FLIP-out：被筛选/搜索移除的旧卡片从原位置飞出，而不是瞬间消失
-    if (oldEls.length) {
+    // FLIP-out：被筛选/搜索移除的旧卡片从原位置飞出，而不是瞬间消失（低端机同样跳过）
+    if (doFlip && oldEls.length) {
       var newIds = {};
       for (var k = 0; k < newCards.length; k++) {
         var nk = newCards[k].getAttribute('data-id');
@@ -5888,7 +6647,7 @@ window.APP_CONFIG = {
         if (!newIds[oldEls[m].id]) removed.push(oldEls[m]);
       }
       // 数量过多（首次整页/清空大列表）时不做成群飞出，避免卡顿
-      if (removed.length && removed.length <= 60) flyOutCards(removed);
+      if (perfLevel !== 'low' && removed.length && removed.length <= 60) flyOutCards(removed);
     }
 
     if (searchResult) {
@@ -5967,6 +6726,7 @@ window.APP_CONFIG = {
     try { localStorage.setItem(ENGINE_KEY, engine); } catch (e) { /* 忽略 */ }
     renderEngineMenu();
     syncEngineUI();
+    if (window.YHStartPage && YHStartPage.setEngine) YHStartPage.setEngine(engine); // 同步青柠整屏起始页引擎
   }
   function syncEngineUI() {
     var eng = currentEngine();
@@ -6004,7 +6764,7 @@ window.APP_CONFIG = {
     var kw = keyword.trim();
     var eng = currentEngine();
     if (eng !== 'local') { webSearch(kw, eng); return; }
-    if (kw) recordHotWord(kw); // 站内搜索热词
+    if (kw) { recordHotWord(kw); recordSearchHistory(kw); } // 站内搜索热词 + 最近搜索历史
     hideSearchHot();
     hideSearchAc();
     if (rankActive || hotActive || toolsActive) exitAllViews();
@@ -6022,20 +6782,41 @@ window.APP_CONFIG = {
   });
   on(searchInput, 'focus', showSearchHot);
   on(searchInput, 'blur', function () { setTimeout(function () { hideSearchHot(); hideSearchAc(); }, 150); });
-  // 站内搜索热词面板：点击即搜索
+  // 搜索建议面板：🕘 最近搜索 + 🔥 站内热词（点击即搜索）
   function showSearchHot() {
     if (!searchHot) return;
     if (currentEngine() !== 'local' || (searchInput && searchInput.value)) { searchHot.hidden = true; return; }
-    var keys = Object.keys(hotWords).sort(function (a, b) { return hotWords[b] - hotWords[a]; }).slice(0, 10);
-    if (!keys.length) { searchHot.hidden = true; return; }
-    searchHot.innerHTML = '<div class="search-hot-title">' + t('hot_search_title') + '</div>' +
-      keys.map(function (k) {
-        return '<button class="search-hot-chip" data-q="' + escapeHtml(k) + '">' + escapeHtml(k) + '</button>';
+    var html = '';
+    // ① 最近搜索（个人历史，带清空入口）
+    if (searchHistory.length) {
+      html += '<div class="search-hot-title">🕘 ' + t('recent_search_title') +
+        ' <button class="search-hot-clear" data-clear-hist="1" title="' + t('clear_search_hist_tip') + '">' + t('clear_search_hist') + '</button></div>';
+      html += searchHistory.map(function (h) {
+        return '<button class="search-hot-chip" data-q="' + escapeHtml(h.q) + '">' + escapeHtml(h.q) + '</button>';
       }).join('');
+    }
+    // ② 站内热词
+    var keys = Object.keys(hotWords).sort(function (a, b) { return hotWords[b] - hotWords[a]; }).slice(0, 10);
+    if (keys.length) {
+      html += '<div class="search-hot-title">' + t('hot_search_title') + '</div>' +
+        keys.map(function (k) {
+          return '<button class="search-hot-chip" data-q="' + escapeHtml(k) + '">' + escapeHtml(k) + '</button>';
+        }).join('');
+    }
+    if (!html) { searchHot.hidden = true; return; }
+    searchHot.innerHTML = html;
     searchHot.hidden = false;
   }
   function hideSearchHot() { if (searchHot) searchHot.hidden = true; }
   on(searchHot, 'click', function (e) {
+    // 清空搜索历史
+    var clearBtn = e.target.closest ? e.target.closest('[data-clear-hist]') : null;
+    if (clearBtn) {
+      searchHistory = [];
+      saveSearchHistory();
+      showSearchHot();
+      return;
+    }
     var b = e.target.closest ? e.target.closest('[data-q]') : null;
     if (!b) return;
     var q = b.getAttribute('data-q');
@@ -6100,7 +6881,31 @@ window.APP_CONFIG = {
     }
   });
   on(searchInput, 'keydown', function (e) {
-    if (e.key === 'Enter') {
+    var acItems = (searchAc && !searchAc.hidden) ? searchAc.querySelectorAll('.ac-item') : [];
+    var idx = -1;
+    for (var i = 0; i < acItems.length; i++) {
+      if (acItems[i] === document.activeElement) { idx = i; break; }
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (acItems.length) {
+        var next = (idx + 1) % acItems.length;
+        focusAcItem(acItems[next]);
+      }
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (acItems.length) {
+        var prev = (idx - 1 + acItems.length) % acItems.length;
+        if (idx === 0) { searchInput.focus(); } else { focusAcItem(acItems[prev]); }
+      }
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      hideSearchAc(); hideSearchHot();
+      searchInput.focus();
+    } else if (e.key === 'Enter' && idx >= 0) {
+      e.preventDefault();
+      acItems[idx].click();
+    } else if (e.key === 'Enter') {
       e.preventDefault();
       doSearch();
       if (appEl && !appEl.classList.contains('revealed')) {
@@ -6109,6 +6914,15 @@ window.APP_CONFIG = {
       }
     }
   });
+  // 搜索联想：方向键聚焦某项（键盘流闭环：方向键/Tab 选中 + Enter 触发）
+  function focusAcItem(el) {
+    if (!el) return;
+    var old = searchAc.querySelectorAll('.ac-focused');
+    for (var k = 0; k < old.length; k++) { old[k].classList.remove('ac-focused'); }
+    el.classList.add('ac-focused');
+    try { if (el.scrollIntoView) el.scrollIntoView({ block: 'nearest' }); } catch (e) {}
+    try { el.focus(); } catch (e) {}
+  }
   on(btnSearch, 'click', doSearch);
   on(btnClear, 'click', function () {
     searchInput.value = '';
@@ -6127,6 +6941,8 @@ window.APP_CONFIG = {
       revealed = true;
       appEl.classList.add('revealed');
       document.body.classList.add('entered');
+      // 开场页收缩到 0 高度时，保持滚动位置在顶部，避免页尾内容上移导致'跳到底部'
+      window.scrollTo(0, 0);
     }
     if (settings.showIntro === false) {
       document.body.classList.add('entered', 'instant');
@@ -6174,6 +6990,8 @@ window.APP_CONFIG = {
   function renderModal() {
     var s = currentSite;
     if (!s || !modalBody) return;
+    // 动态 aria-label：随卡片内容变化更新，读屏用户可感知当前是哪个网站的详情
+    if (modal) { modal.setAttribute('aria-label', escapeHtml(nameLabel(s)) + ' - ' + t('site_detail')); }
     var isFav = favs.has(s.id);
     var count = clicks[s.id] || 0;
     var tags = (s.tags || []).map(function (tn) {
@@ -6318,6 +7136,14 @@ window.APP_CONFIG = {
       else if (modal && !modal.hidden) closeModal();
       return;
     }
+    // 弹窗焦点 trap：Tab / Shift+Tab 在可见弹窗内循环，避免焦点漏到背景
+    if (e.key === 'Tab') {
+      var activeModal = findVisibleModal();
+      if (activeModal) {
+        trapTabFocus(e, activeModal);
+        return;
+      }
+    }
     // 快捷键：/ 聚焦搜索、? 快捷键说明（输入框内不拦截）
     if (e.key === '/' || e.key === '?') {
       var tag = (e.target && e.target.tagName) || '';
@@ -6330,6 +7156,26 @@ window.APP_CONFIG = {
       }
     }
   });
+  // 找到当前可见的弹窗（优先返回最"上层"——最近被打开的）
+  function findVisibleModal() {
+    var candidates = [disclaimerModal, randomModal, submitModal, helpModal, statModal, settingsModal, loginModal, addModal, passModal, favModal, fbModal, wsModal, modal];
+    for (var i = 0; i < candidates.length; i++) {
+      if (candidates[i] && !candidates[i].hidden) return candidates[i];
+    }
+    return null;
+  }
+  // Tab 焦点在弹窗内循环
+  function trapTabFocus(e, modalEl) {
+    var focusable = modalEl.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    var list = Array.prototype.slice.call(focusable);
+    var first = list[0], last = list[list.length - 1];
+    if (e.shiftKey) {
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+    } else {
+      if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  }
   function toggleHelp() {
     if (!helpModal) return;
     helpModal.hidden = !helpModal.hidden;
@@ -6824,6 +7670,7 @@ window.APP_CONFIG = {
   }
   initReveal();
   if (settings.petals) initParticles();
+  if (settings.snow) initSnow();
   if (settings.cursorFx) initCursorFx();
 
   // PWA：注册 Service Worker（需 HTTPS 或 localhost；file:// 直接打开时跳过）
@@ -6836,6 +7683,8 @@ window.APP_CONFIG = {
   // 起始页统计数字滚动
   function animateCount(el, target) {
     if (!el || target === undefined) return;
+    // 低端机跳过数字滚动动画，直接显示最终值（避免 3 个并发 rAF 循环）
+    if (perfLevel === 'low') { el.textContent = target; return; }
     var start = 0, t0 = null, dur = 1100;
     function step(ts) {
       if (t0 === null) t0 = ts;
@@ -6853,11 +7702,12 @@ window.APP_CONFIG = {
 
   // ---------- 起始页：拖拽回弹 + 滚动联动视差（尊重减少动态效果） ----------
   (function initIntroFx() {
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduce = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || (perfLevel === 'low');
     var wrap = $('avatar-drag');
     var inner = $('intro-inner');
     var bg = document.querySelector ? document.querySelector('.intro-bg') : null;
     // 1) 拖拽头像 → 弹簧回弹（鼠标拖；触屏不拖，避免与滚动冲突）
+    // 降级：low 设备关闭弹簧回弹动画，直接复位
     if (wrap && !reduce) {
       var dragging = false, sx = 0, sy = 0;
       wrap.addEventListener('pointerdown', function (e) {
@@ -6881,6 +7731,7 @@ window.APP_CONFIG = {
       });
     }
     // 2) 滚动联动视差：滚动时内容下沉/缩小/淡出，背景反向移动
+    // 降级：low 设备关闭（持续监听 + transform 在低端机掉帧主因之一）；mid 设备保留内容动画、关闭背景反向移动
     if (inner && !reduce) {
       var ticking = false;
       function onScroll() {
@@ -6895,7 +7746,7 @@ window.APP_CONFIG = {
           var p = Math.min((window.scrollY || 0) / h, 1);
           inner.style.transform = 'translateY(' + (p * 70) + 'px) scale(' + (1 - p * 0.1) + ')';
           inner.style.opacity = String(1 - p * 0.4);
-          if (bg) bg.style.transform = 'translateY(' + (p * -46) + 'px)';
+          if (bg && perfLevel !== 'mid') { bg.style.transform = 'translateY(' + (p * -46) + 'px)'; }
         });
       }
       window.addEventListener('scroll', onScroll, { passive: true });
@@ -6903,6 +7754,526 @@ window.APP_CONFIG = {
     }
   })();
 
+  // 弹窗打开自动聚焦：监听所有 .modal 的 hidden 属性变化，打开时将焦点移到首个可聚焦元素
+  // （配合上面的 Tab trap 形成完整键盘流；避免弹窗打开后焦点仍在触发按钮导致键盘操作错位）
+  (function initModalFocus() {
+    if (typeof MutationObserver === 'undefined') return;
+    var modals = document.querySelectorAll('.modal');
+    if (!modals.length) return;
+    var obs = new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i++) {
+        var m = mutations[i];
+        if (m.attributeName !== 'hidden') continue;
+        var el = m.target;
+        if (el.hidden) continue; // 只处理打开事件
+        var focusable = el.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (focusable.length) {
+          try { focusable[0].focus(); } catch (e) {}
+        }
+      }
+    });
+    for (var j = 0; j < modals.length; j++) {
+      obs.observe(modals[j], { attributes: true, attributeFilter: ['hidden'] });
+    }
+  })();
+
+})();
+
+</script>
+  <script>
+/* ===== 青柠风格·整屏起始页（Yuhang-native）=====
+ * 独立新增功能，IIFE 自包含。只通过 DOM + localStorage 与主站协作：
+ *  - 引擎：自建同款下拉，选引擎时写 nav_engine_v1 + 触发主站 setEngine（若其引擎菜单已渲染），
+ *          主站 setEngine 反过来通过 window.YHStartPage.setEngine 同步本页（app.js 加一行钩子）。
+ *  - 数据：从 nav_favs_v1 / nav_click_count_v1（读 JSON）+ window.SITES 映射，只读投影收藏/最常。
+ *  - 数据/壁纸 存 nav_startpage_v1（nav_ 前缀，与主站同构）。
+ *  - 全部 try/catch，单元素缺失不崩溃。
+ */
+(function () {
+  'use strict';
+
+  var SP_KEY = 'nav_startpage_v1';
+  var ENGINE_KEY = 'nav_engine_v1';
+  var FAVS_KEY = 'nav_favs_v1';
+  var CLICKS_KEY = 'nav_click_count_v1';
+  var LANG_KEY = 'nav_lang_v1';
+
+  function $(id) { return document.getElementById(id); }
+  function on(el, evt, fn) { if (el) el.addEventListener(evt, fn); }
+  function readLS(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+  function writeLS(key, val) { try { localStorage.setItem(key, val); } catch (e) {} }
+  function readJSON(key, fb) { var v = readLS(key); try { return (v && JSON.parse(v)) || fb; } catch (e) { return fb; } }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  }); }
+  function hostOf(url) {
+    try { return new URL(url).hostname; } catch (e) {
+      var m = /^https?:\/\/([^/]+)/i.exec(url); return m ? m[1] : '';
+    }
+  }
+  function lookUrl(s) { return /^(https?:\/\/|\/\/)/i.test(s) || /^[\w-]+(\.[\w-]+)+/.test(s); }
+  function isEn() { return readLS(LANG_KEY) === 'en'; }
+
+  // ---------- 搜索引擎（与主站 ENGINE_URLS 一致） ----------
+  var ENGINES = [
+    { code: 'local', labelZh: '站内', labelEn: 'Local', url: null },
+    { code: 'baidu', labelZh: '百度', labelEn: 'Baidu', url: 'https://www.baidu.com/s?wd=' },
+    { code: 'google', labelZh: '谷歌', labelEn: 'Google', url: 'https://www.google.com/search?q=' },
+    { code: 'bing', labelZh: '必应', labelEn: 'Bing', url: 'https://www.bing.com/search?q=' },
+    { code: 'bili', labelZh: 'B站', labelEn: 'Bili', url: 'https://search.bilibili.com/all?keyword=' },
+    { code: 'zhihu', labelZh: '知乎', labelEn: 'Zhihu', url: 'https://www.zhihu.com/search?type=content&q=' },
+    { code: 'github', labelZh: 'GitHub', labelEn: 'GitHub', url: 'https://github.com/search?q=' },
+  ];
+
+  var DEFAULT_LINKS = [
+    { name: '哔哩哔哩', url: 'https://www.bilibili.com' },
+    { name: '知乎', url: 'https://www.zhihu.com' },
+    { name: '微博', url: 'https://weibo.com' },
+    { name: '百度', url: 'https://www.baidu.com' },
+    { name: '淘宝', url: 'https://www.taobao.com' },
+    { name: '京东', url: 'https://www.jd.com' },
+    { name: '腾讯视频', url: 'https://v.qq.com' },
+    { name: '网易云音乐', url: 'https://music.163.com' },
+    { name: 'GitHub', url: 'https://github.com' },
+    { name: 'CSDN', url: 'https://www.csdn.net' },
+    { name: '豆瓣', url: 'https://www.douban.com' },
+    { name: '抖音', url: 'https://www.douyin.com' },
+  ];
+
+  var WALLS = [
+    { code: 'aurora', labelZh: '极光', labelEn: 'Aurora' },
+    { code: 'ocean', labelZh: '海蓝', labelEn: 'Ocean' },
+    { code: 'bing', labelZh: '必应壁纸', labelEn: 'Bing' },
+    { code: 'dark', labelZh: '暗夜', labelEn: 'Dark' },
+  ];
+  var BING_URLS = ['https://bing.img.run/1920x1080.php', 'https://api.dujin.org/bing/1920.php'];
+
+  var QUOTES = [
+    '行到水穷处，坐看云起时。', '凡是过往，皆为序章。',
+    '星光不问赶路人，时光不负有心人。', '博观而约取，厚积而薄发。',
+    '大鹏一日同风起，扶摇直上九万里。', '长风破浪会有时，直挂云帆济沧海。',
+    '不驰于空想，不骛于虚声。', 'Stay hungry, stay foolish.',
+    'Less, but better.', '知不足而奋进，望远山而前行。',
+    '博观约取，厚积薄发。', '落其实者思其树，饮其流者怀其源。',
+  ];
+
+  // ---------- 状态 ----------
+  var state = { links: [], engine: 'local', wall: 'aurora', bingOk: true };
+  var dragIdx = -1;
+
+  function cloneLinks(a) { return a.map(function (l) { return { name: l.name, url: l.url }; }); }
+  function loadState() {
+    var d = { links: cloneLinks(DEFAULT_LINKS), engine: 'local', wall: 'aurora', bingOk: true };
+    try {
+      var raw = JSON.parse(localStorage.getItem(SP_KEY) || 'null');
+      if (raw) {
+        if (Array.isArray(raw.links) && raw.links.length) d.links = raw.links;
+        if (raw.engine) d.engine = raw.engine;
+        if (raw.wall) d.wall = raw.wall;
+        if (raw.bingOk === false) d.bingOk = false;
+      }
+    } catch (e) {}
+    var en = readLS(ENGINE_KEY);
+    if (en) d.engine = en;
+    return d;
+  }
+  function saveState() { try { localStorage.setItem(SP_KEY, JSON.stringify(state)); } catch (e) {} }
+
+  // ---------- 站点映射（window.SITES，sites.js 写入全局） ----------
+  function siteMap() {
+    var out = {};
+    if (!window.SITES) return out;
+    for (var i = 0; i < window.SITES.length; i++) { if (window.SITES[i] && window.SITES[i].id) out[window.SITES[i].id] = window.SITES[i]; }
+    return out;
+  }
+
+  // ---------- 引擎 ----------
+  function engineLabel(code) {
+    var e = ENGINES.filter(function (x) { return x.code === code; })[0];
+    return e ? (isEn() ? e.labelEn : e.labelZh) : code;
+  }
+
+  function renderEngines() {
+    var btn = $('sp-engine-btn'), menu = $('sp-engine-menu');
+    if (btn) btn.textContent = engineLabel(state.engine) + ' ▾';
+    if (menu) {
+      menu.innerHTML = ENGINES.map(function (e) {
+        return '<button type="button" data-engine="' + e.code + '" class="' + (state.engine === e.code ? 'active' : '') + '">' + esc(engineLabel(e.code)) + '</button>';
+      }).join('');
+    }
+  }
+
+  function closeEngineMenu() { var m = $('sp-engine-menu'); if (m) m.classList.add('hidden'); }
+  function toggleEngineMenu() { var m = $('sp-engine-menu'); if (m) m.classList.toggle('hidden'); }
+
+  // 触发主站 setEngine（若主站引擎菜单已渲染）：点击其对应项 → app.setEngine → 双向同步
+  function nudgeMainEngine(code) {
+    var item = document.querySelector('#engine-menu [data-engine="' + code + '"]');
+    if (item && item.click) { try { item.click(); } catch (e) {} return; }
+    var btn = $('engine-btn');
+    if (btn) try { btn.innerHTML = esc(engineLabel(code)) + ' ▾'; } catch (e) {}
+  }
+
+  function selectEngine(code) {
+    state.engine = code;
+    writeLS(ENGINE_KEY, code);
+    saveState();
+    renderEngines();
+    nudgeMainEngine(code);
+    renderSugg();
+  }
+
+  // 主站 setEngine 回调（app.js 在 setEngine 内加一行调用），仅同步本页 UI，不再回写（避免循环）
+  window.YHStartPage = {
+    setEngine: function (code) { if (code) { state.engine = code; renderEngines(); renderSugg(); } },
+    open: openStartPage,
+    close: function () { closeStartPage(false); },
+  };
+
+  // ---------- 壁纸 ----------
+  function renderWallPanel() {
+    var p = $('sp-wallpanel');
+    if (!p) return;
+    p.innerHTML = '<div class="ph">' + (isEn() ? 'Wallpaper' : '壁纸') + '</div>' +
+      WALLS.map(function (w) {
+        return '<button type="button" data-wall="' + w.code + '" class="' + (state.wall === w.code ? 'active' : '') + '">' +
+          '<span class="sw sw-' + w.code + '"></span>' +
+          (isEn() ? w.labelEn : w.labelZh) + '</button>';
+      }).join('');
+  }
+  function applyWall() {
+    var sp = $('startpage'); if (sp) sp.setAttribute('data-sp-wall', state.wall);
+    var w = $('sp-wall'); if (!w) return;
+    w.onload = null; w.onerror = null;
+    w.style.backgroundImage = 'none'; w.classList.remove('on');
+    if (state.wall === 'bing' && state.bingOk) {
+      var idx = 0;
+      w.onload = function () { w.classList.add('on'); };
+      w.onerror = function () {
+        idx++;
+        if (idx < BING_URLS.length) { w.style.backgroundImage = 'url(' + BING_URLS[idx] + ')'; }
+        else {
+          state.bingOk = false; state.wall = 'aurora'; saveState(); applyWall();
+          renderWallPanel();
+          toast(isEn() ? 'Wallpaper failed, fallback to aurora' : '壁纸加载失败，已回落极光');
+        }
+      };
+      w.style.backgroundImage = 'url(' + BING_URLS[0] + ')';
+    }
+  }
+
+  // ---------- 时钟 / 问候 / 一言 ----------
+  var WEEK_ZH = ['日', '一', '二', '三', '四', '五', '六'];
+  var WEEK_EN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function tickClock() {
+    var t = $('sp-time'), d = $('sp-date'), g = $('sp-greet');
+    if (!t && !d && !g) return;
+    var now = new Date();
+    if (t) t.textContent = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+    if (d) d.textContent = isEn()
+      ? (now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate()) + ' ' + WEEK_EN[now.getDay()])
+      : (now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日 星期' + WEEK_ZH[now.getDay()]);
+    if (g) {
+      var h = now.getHours();
+      g.textContent = isEn()
+        ? (h < 6 ? '🌙 Good night' : h < 12 ? '☀️ Good morning' : h < 14 ? '🌤 Good noon' : h < 18 ? '🌤 Good afternoon' : '🌙 Good evening')
+        : (h < 6 ? '🌙 夜深了，注意休息' : h < 9 ? '🌤 早上好' : h < 12 ? '☀️ 上午好' : h < 14 ? '🌤 中午好' : h < 18 ? '🌤 下午好' : '🌙 晚上好');
+    }
+  }
+
+  function reduceMotion() {
+    return (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+      || document.documentElement.getAttribute('data-perf') === 'low';
+  }
+  function pickQuote() {
+    var el = $('sp-quote');
+    if (!el) return;
+    var q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    if (reduceMotion()) { el.innerHTML = '✨ ' + esc(q); return; }
+    var reduce = reduceMotion();
+    el.innerHTML = '✨ ' + q.split('').map(function (ch) {
+      return '<span class="sp-quote-letter" style="opacity:0;display:inline-block;transform:translateY(8px)">' + esc(ch) + '</span>';
+    }).join('');
+    var spans = el.querySelectorAll('.sp-quote-letter');
+    for (var i = 0; i < spans.length; i++) {
+      (function (s, i) { setTimeout(function () {
+        s.style.transition = 'opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1)';
+        s.style.opacity = '1'; s.style.transform = 'none';
+      }, 320 + i * 40); })(spans[i], i);
+    }
+  }
+
+  // ---------- 快捷链接（增删 / 拖拽排序） ----------
+  function renderLinks() {
+    var box = $('sp-links'); if (!box) return;
+    var editing = box.classList.contains('editing');
+    var html = '';
+    for (var i = 0; i < state.links.length; i++) {
+      var l = state.links[i];
+      var host = hostOf(l.url);
+      html += '<a class="sp-link" href="' + esc(l.url) + '" target="_blank" rel="noopener" ' +
+        'draggable="' + (editing ? 'true' : 'false') + '" data-idx="' + i + '" title="' + esc(l.name) + '">' +
+        '<span class="sp-link-ico">' +
+        '<img src="https://favicon.im/' + esc(host) + '" alt="" loading="lazy" data-host="' + esc(host) + '" data-src="0" ' +
+        'onerror="var e=this;var h=e.getAttribute(\'data-host\');var i=parseInt(e.getAttribute(\'data-src\')||\'0\',10)+1;var ls=[\'https://favicon.im/\'+h,\'https://icons.duckduckgo.com/ip3/\'+h+\'.ico\',\'https://www.google.com/s2/favicons?domain=\'+h+\'&sz=64\'];if(i<ls.length){e.setAttribute(\'data-src\',String(i));e.src=ls[i];}else{e.parentNode.removeChild(e);}">' +
+        '<span class="sp-link-letter">' + esc(l.name.slice(0, 1)) + '</span></span>' +
+        '<span class="sp-link-name">' + esc(l.name) + '</span>' +
+        (editing ? '<button class="sp-link-del" data-del="' + i + '" type="button">✕</button>' : '') + '</a>';
+    }
+    if (editing) html += '<button class="sp-link add-tile" id="sp-add-tile" type="button">＋</button>';
+    box.innerHTML = html;
+  }
+
+  function toggleEdit() {
+    var box = $('sp-links'), man = $('sp-manage'), hint = $('sp-links-hint');
+    var on = box.classList.toggle('editing');
+    if (man) man.classList.toggle('hidden', !on);
+    if (hint) hint.textContent = on ? (isEn() ? 'Drag to sort · ✕ delete · ＋ add' : '拖动排序，✕ 删除，＋ 添加') : (isEn() ? 'Tap ✎ to manage' : '点「✎ 管理」可增删排序');
+    renderLinks();
+    if (on) { var ni = $('sp-add-name'); if (ni) ni.focus(); }
+  }
+  function addLink(name, url) {
+    name = (name || '').trim(); url = (url || '').trim();
+    if (!name || !url) { toast(isEn() ? 'Name and URL required' : '名称和网址都要填哦'); return; }
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    state.links.push({ name: name.slice(0, 30), url: url });
+    saveState(); renderLinks();
+    var ni = $('sp-add-name'), ui = $('sp-add-url');
+    if (ni) ni.value = ''; if (ui) ui.value = ''; if (ni) ni.focus();
+    toast((isEn() ? 'Added: ' : '已添加：') + name);
+  }
+  function removeLink(idx) {
+    state.links.splice(idx, 1); saveState(); renderLinks();
+    toast(isEn() ? 'Removed' : '已删除');
+  }
+
+  function bindDrag() {
+    var box = $('sp-links'); if (!box) return;
+    on(box, 'dragstart', function (e) {
+      var a = e.target.closest ? e.target.closest('.sp-link') : null;
+      if (!a) return;
+      dragIdx = parseInt(a.getAttribute('data-idx'), 10);
+      a.classList.add('dragging');
+    });
+    on(box, 'dragend', function (e) {
+      var a = e.target.closest ? e.target.closest('.sp-link') : null;
+      if (a) a.classList.remove('dragging');
+      dragIdx = -1;
+    });
+    on(box, 'dragover', function (e) { e.preventDefault(); });
+    on(box, 'drop', function (e) {
+      e.preventDefault();
+      var a = e.target.closest ? e.target.closest('.sp-link') : null;
+      if (!a || dragIdx < 0) return;
+      var to = parseInt(a.getAttribute('data-idx'), 10);
+      if (to === dragIdx) { renderLinks(); return; }
+      var item = state.links.splice(dragIdx, 1)[0];
+      state.links.splice(to, 0, item);
+      saveState(); renderLinks();
+    });
+  }
+
+  // ---------- 只读投影：收藏 / 最常访问 ----------
+  function gatherFavIds() {
+    var fa = readJSON(FAVS_KEY, {}); if (!fa) return [];
+    var out = [];
+    if (Array.isArray(fa)) out = out.concat(fa);
+    else {
+      for (var k in fa) { if (Array.isArray(fa[k])) out = out.concat(fa[k]); }
+    }
+    // 去重保序
+    var seen = {}, r = [];
+    for (var i = 0; i < out.length; i++) { if (!seen[out[i]]) { seen[out[i]] = 1; r.push(out[i]); } }
+    return r;
+  }
+  function gatherClickTop() {
+    var c = readJSON(CLICKS_KEY, {}); if (!c) return [];
+    var arr = [];
+    for (var k in c) { arr.push({ id: k, n: c[k] || 0 }); }
+    arr.sort(function (a, b) { return b.n - a.n; });
+    return arr.slice(0, 8);
+  }
+  function renderProjection() {
+    var sm = siteMap();
+    var favs = gatherFavIds().slice(0, 8).map(function (id) { return sm[id]; }).filter(Boolean);
+    var hot = gatherClickTop().map(function (x) { return sm[x.id]; }).filter(Boolean).slice(0, 8);
+
+    function row(list, tag, hint) {
+      var wrap = document.querySelector('.sp-proj-row.' + tag);
+      if (!wrap) return;
+      var title = document.querySelector('.sp-proj-row.' + tag + ' .sp-proj-head');
+      if (!list.length) { wrap.innerHTML = ''; return; }
+      var html = '<span class="sp-proj-head" style="font-size:12px;color:var(--text-faint);">' + esc(hint) + '</span>';
+      for (var i = 0; i < list.length; i++) {
+        var s = list[i];
+        html += '<a class="sp-proj-chip" href="' + esc(s.url || '') + '" target="_blank" rel="noopener">' +
+          '<span class="ico"><img src="https://favicon.im/' + esc(hostOf(s.url || '')) + '" alt=""></span>' +
+          esc(s.name) + '</a>';
+      }
+      wrap.innerHTML = html;
+    }
+    row(favs, 'favs', isEn() ? 'Favorites' : '⭐ 收藏');
+    row(hot, 'hot', isEn() ? 'Most visited' : '🔥 最常访问');
+  }
+
+  // ---------- 搜索 / 联想 / 直达 ----------
+  function renderSugg() {
+    var box = $('sp-sugg'), input = $('sp-input');
+    if (!box || !input) return;
+    var q = input.value.trim();
+    if (!q) { box.classList.add('hidden'); return; }
+    var html = '';
+    if (lookUrl(q)) {
+      var u = /^https?:\/\//i.test(q) ? q : 'https://' + q;
+      html += '<button type="button" data-direct="' + esc(u) + '"><span class="sp-sugg-ico">➡️</span>' +
+        (isEn() ? 'Open' : '直达') + ' ' + esc(hostOf(u)) +
+        '<span class="sp-sugg-url">' + esc(u) + '</span></button>';
+    }
+    if (state.engine === 'local' && window.SITES && window.SITES.length) {
+      var kw = q.toLowerCase();
+      var hits = [];
+      for (var i = 0; i < window.SITES.length && hits.length < 6; i++) {
+        var s = window.SITES[i];
+        if (s && (s.name || '').toLowerCase().indexOf(kw) !== -1) hits.push(s);
+      }
+      hits.forEach(function (s) {
+        var h = hostOf(s.url || '');
+        html += '<button type="button" data-site="' + esc(s.id || s.name) + '">' +
+          '<span class="sp-sugg-ico"><img src="https://favicon.im/' + esc(h) + '" alt=""></span>' +
+          esc(s.name) + '<span class="sp-sugg-url">' + esc(h) + '</span></button>';
+      });
+    }
+    box.innerHTML = html;
+    if (html) box.classList.remove('hidden'); else box.classList.add('hidden');
+  }
+
+  function doSearch(q) {
+    q = (q || '').trim(); if (!q) return;
+    if (lookUrl(q)) { window.open(/^https?:\/\//i.test(q) ? q : 'https://' + q, '_blank'); return; }
+    var e = ENGINES.filter(function (x) { return x.code === state.engine; })[0];
+    if (e && e.url) { window.open(e.url + encodeURIComponent(q), '_blank'); return; }
+    // 站内：交给主站搜索框，关闭起始页，回主站
+    var inp = $('search-input');
+    if (inp) {
+      inp.value = q;
+      try { inp.dispatchEvent(new Event('input', { bubbles: true })); } catch (err) {}
+    }
+    closeStartPage(true);
+  }
+
+  // ---------- 打开 / 关闭 ----------
+  function openStartPage() {
+    var sp = $('startpage'); if (!sp) return;
+    state = loadState();
+    sp.hidden = false; sp.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('sp-open');
+    applyWall();
+    renderEngines();
+    renderWallPanel();
+    renderLinks();
+    renderProjection();
+    pickQuote();
+    tickClock();
+    var inp = $('sp-input'); if (inp) inp.value = '';
+    var sug = $('sp-sugg'); if (sug) sug.classList.add('hidden');
+    var man = $('sp-manage'); if (man) man.classList.add('hidden');
+    var box = $('sp-links'); if (box) box.classList.remove('editing');
+    closeEngineMenu();
+    closeWallPanel();
+    setTimeout(function () { if (inp) { try { inp.focus(); } catch (e) {} } }, 60);
+  }
+  function closeStartPage(goNav) {
+    var sp = $('startpage');
+    if (sp) { sp.hidden = true; sp.setAttribute('aria-hidden', 'true'); }
+    document.body.classList.remove('sp-open');
+    if (goNav) {
+      var appEl = $('app');
+      if (appEl) {
+        var top = (appEl.getBoundingClientRect ? (appEl.getBoundingClientRect().top + window.pageYOffset - 8) : 0) || 0;
+        try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, top); }
+      }
+    }
+  }
+  function closeWallPanel() { var p = $('sp-wallpanel'); if (p) p.classList.add('hidden'); }
+
+  // ---------- Toast ----------
+  var toastTimer = null;
+  function toast(text) {
+    var old = document.querySelector('#startpage .sp-toast');
+    if (old && old.parentNode) old.parentNode.removeChild(old);
+    var el = document.createElement('div');
+    el.className = 'sp-toast'; el.textContent = text;
+    $('startpage').appendChild(el);
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 1800);
+  }
+
+  // ---------- 初始化 ----------
+  function init() {
+    var sp = $('startpage'); if (!sp) return;
+    tickClock();
+    setInterval(tickClock, 1000);
+
+    on($('btn-startpage'), 'click', function (e) {
+      e.preventDefault(); e.stopPropagation();
+      openStartPage();
+      var fp = $('fab-panel'); if (fp) fp.hidden = true;
+    });
+    on($('sp-close'), 'click', function () { closeStartPage(false); });
+    on(sp, 'click', function (e) { if (e.target === sp) closeStartPage(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !sp.hidden) {
+        closeWallPanel(); closeEngineMenu(); closeStartPage(false);
+      }
+    });
+
+    on($('sp-search'), 'submit', function (e) { e.preventDefault(); doSearch(($('sp-input') || {}).value); });
+    on($('sp-input'), 'input', renderSugg);
+    on($('sp-engine-btn'), 'click', function (e) { e.stopPropagation(); toggleEngineMenu(); });
+    on($('sp-engine-menu'), 'click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-engine]') : null;
+      if (b) { selectEngine(b.getAttribute('data-engine')); closeEngineMenu(); }
+    });
+
+    on($('sp-sugg'), 'click', function (e) {
+      var b = e.target.closest ? e.target.closest('button') : null;
+      if (!b) return;
+      var direct = b.getAttribute('data-direct');
+      var site = b.getAttribute('data-site');
+      if (direct) { window.open(direct, '_blank'); closeStartPage(false); }
+      else if (site && window.SITES) {
+        var sm = siteMap();
+        if (sm[site] && sm[site].url) { window.open(sm[site].url, '_blank'); closeStartPage(false); }
+      }
+    });
+
+    on($('sp-links'), 'click', function (e) {
+      var del = e.target.closest ? e.target.closest('.sp-link-del') : null;
+      if (del) { e.preventDefault(); e.stopPropagation(); removeLink(parseInt(del.getAttribute('data-del'), 10)); return; }
+      var add = e.target.closest ? e.target.closest('#sp-add-tile') : null;
+      if (add) { e.preventDefault(); var man = $('sp-manage'); if (man) man.classList.remove('hidden'); if ($('sp-add-name')) $('sp-add-name').focus(); }
+    });
+    bindDrag();
+
+    on($('sp-manage-btn'), 'click', toggleEdit);
+    on($('sp-add-ok'), 'click', function () { addLink(($('sp-add-name') || {}).value, ($('sp-add-url') || {}).value); });
+    on($('sp-add-name'), 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); ($('sp-add-ok') || {}).click && $('sp-add-ok').click(); } });
+    on($('sp-add-url'), 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); ($('sp-add-ok') || {}).click && $('sp-add-ok').click(); } });
+
+    on($('sp-wallset'), 'click', function (e) { e.stopPropagation(); var p = $('sp-wallpanel'); if (p) p.classList.toggle('hidden'); });
+    on($('sp-wallpanel'), 'click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-wall]') : null;
+      if (b) { state.wall = b.getAttribute('data-wall'); saveState(); applyWall(); renderWallPanel(); }
+    });
+    on($('sp-quote'), 'click', pickQuote);
+    on($('sp-nav'), 'click', function () { closeStartPage(true); });
+
+    if (location && location.hash === '#startpage') setTimeout(openStartPage, 400);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
 
 </script>

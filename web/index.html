@@ -18,6 +18,7 @@
   <link rel="dns-prefetch" href="https://www.google.com">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6cff'/%3E%3Cstop offset='1' stop-color='%239a5bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='3' y='3' width='58' height='58' rx='16' fill='url(%23g)'/%3E%3Cpath fill='%23fff' d='M32 15l4.4 13-4.4-2.3-4.4 2.3z'/%3E%3Cpath fill='%23fff' d='M12 46a20 20 0 0 1 40 0z'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/startpage.css">
 </head>
 <body>
   <a id="skip-main" class="skip-link" href="#main-content">跳到主内容</a>
@@ -73,6 +74,7 @@
               <button id="btn-submit" class="fab-item" title="推荐网站给站长" data-i18n="submit">📥 提交收录</button>
               <button id="btn-wander" class="fab-item" title="连续自动随机打开网站" data-i18n="wander">🎠 漫游模式</button>
               <button id="btn-stats" class="fab-item" title="本地数据统计" data-i18n="stats">📊 数据统计</button>
+              <button id="btn-startpage" class="fab-item" title="青柠风格整屏起始页：时钟 + 搜索 + 快捷链接">🍋 整屏起始页</button>
               <button id="btn-back-intro" class="fab-item" data-i18n="back_intro">🏝 起始页</button>
             </div>
           </div>
@@ -169,6 +171,53 @@
     <div class="legend">官方QQ群：<a class="link-btn" href="https://qun.qq.com/universal-share/share?ac=1&authKey=4uJOzbw8BFhBfoKGvEDq6jboxE37Bts1fVm0NU31Ge6iYErjSPoLIBNZhArXODM9&busi_data=eyJncm91cENvZGUiOiIxMDAxMDEyMTMzIiwidG9rZW4iOiJ2VXNobDNaTWJmNWJ6VHFCY2dBUHo1SFQ1RE1sajcxSGdWMG1mMFBCNmw4ZkdjdzhlR25XaDI4NHFpYm42YjZYIiwidWluIjoiMzQ1Nzk3MTA1MiJ9&data=yBuxTw453ySbByFng65GOY3cwqw451D68E0zHqiBklUwuue1IjyNFzDsX4oOHBFbIxR6I_6eFMTzRgMW98gRbw&svctype=4&tempid=h5_group_info" target="_blank" rel="noopener">1001012133</a></div>
     <div class="footer-disclaimer" data-i18n="footer_disclaimer"></div>
   </footer>
+
+  <!-- 青柠风格·整屏起始页（复用屿航极光背景 + 玻璃卡片 + 主题色；悬浮球「🍋」或 #startpage 进入） -->
+  <div id="startpage" class="startpage" hidden aria-hidden="true">
+    <div class="sp-wall" id="sp-wall" aria-hidden="true"></div>
+    <div class="sp-veil" aria-hidden="true"></div>
+    <div class="sp-topbar">
+      <button id="sp-wallset" type="button" title="切换壁纸">🖼 壁纸</button>
+      <button id="sp-close" type="button" title="关闭起始页">✕ 关闭</button>
+    </div>
+    <div class="sp-wallpanel hidden" id="sp-wallpanel"></div>
+    <div class="sp-main">
+      <div class="sp-time" id="sp-time">00:00:00</div>
+      <div class="sp-date" id="sp-date">····</div>
+      <div class="sp-greet" id="sp-greet">👋</div>
+      <p class="sp-quote" id="sp-quote" title="点击换一句"></p>
+      <form class="sp-search" id="sp-search" action="javascript:void 0" autocomplete="off">
+        <span class="sp-ico" aria-hidden="true">🔍</span>
+        <input id="sp-input" class="sp-input" type="text" placeholder="搜索网站 / 输入网址直达 / 切换引擎回车搜索" autocomplete="off" spellcheck="false">
+        <span class="sp-engine">
+          <button id="sp-engine-btn" class="sp-engine-btn" type="button">站内 ▾</button>
+          <div id="sp-engine-menu" class="sp-engine-menu hidden" role="listbox"></div>
+        </span>
+        <button id="sp-go" class="sp-go" type="submit">搜索</button>
+      </form>
+      <div class="sp-sugg hidden" id="sp-sugg"></div>
+      <div class="sp-section-title">
+        <span class="t">推荐</span>
+        <span class="hint">收藏 · 最常访问（只读）</span>
+      </div>
+      <div class="sp-proj-row favs"></div>
+      <div class="sp-proj-row hot"></div>
+      <div class="sp-section-title">
+        <span class="t">快捷链接</span>
+        <button id="sp-manage-btn" type="button">✎ 管理</button>
+        <span class="hint" id="sp-links-hint">点「✎ 管理」可增删排序</span>
+      </div>
+      <div class="sp-links" id="sp-links"></div>
+      <div class="sp-manage hidden" id="sp-manage">
+        <input id="sp-add-name" type="text" placeholder="名称" maxlength="20" autocomplete="off">
+        <input id="sp-add-url" type="text" placeholder="https://…" autocomplete="off" spellcheck="false">
+        <button id="sp-add-ok" type="button">＋ 添加</button>
+      </div>
+    </div>
+    <div class="sp-foot">
+      <button id="sp-nav" class="sp-nav" type="button">进入导航 ↓</button>
+    </div>
+  </div>
 
   <button id="back-top" class="back-top" title="回到顶部" aria-label="回到顶部" hidden>↑</button>
 
@@ -471,5 +520,6 @@
   <script src="js/sites-lib.js" defer></script>
   <script src="js/config.js" defer></script>
   <script src="js/app.js" defer></script>
+  <script src="js/startpage.js" defer></script>
 </body>
 </html>
