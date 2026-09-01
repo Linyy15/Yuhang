@@ -390,8 +390,6 @@
   function openStartPage() {
     var sp = $('startpage'); if (!sp) return;
     state = loadState();
-    sp.hidden = false; sp.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('sp-open');
     applyWall();
     renderEngines();
     renderWallPanel();
@@ -405,11 +403,17 @@
     var box = $('sp-links'); if (box) box.classList.remove('editing');
     closeEngineMenu();
     closeWallPanel();
+    // 移除 hidden（display:flex，此时容器 opacity:0 仍不可见）→ 强制回流 → 加 .open 触发 opacity 0→1 平滑淡入
+    sp.removeAttribute('hidden'); sp.setAttribute('aria-hidden', 'false');
+    void sp.offsetWidth;
+    sp.classList.add('open');
+    document.body.classList.add('sp-open');
     setTimeout(function () { if (inp) { try { inp.focus(); } catch (e) {} } }, 60);
   }
   function closeStartPage(goNav) {
     var sp = $('startpage');
-    if (sp) { sp.hidden = true; sp.setAttribute('aria-hidden', 'true'); }
+    // 去 .open：opacity 1→0 平滑淡出，随后 visibility 自动变 hidden；主站内容同时淡入
+    sp.classList.remove('open');
     document.body.classList.remove('sp-open');
     if (goNav) {
       var appEl = $('app');
@@ -418,6 +422,8 @@
         try { window.scrollTo({ top: top, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, top); }
       }
     }
+    // 过渡结束后把 startpage 重新置为 hidden，彻底退出布局
+    setTimeout(function () { if (sp && !sp.classList.contains('open')) { sp.setAttribute('hidden', ''); sp.setAttribute('aria-hidden', 'true'); } }, 320);
   }
   function closeWallPanel() { var p = $('sp-wallpanel'); if (p) p.classList.add('hidden'); }
 

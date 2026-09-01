@@ -3,18 +3,36 @@
  * 玻璃卡片 .glass，强调色 --accent，开场弹簧缓动；不硬编码色。
  * 整屏覆盖层级高于 .modal(100)/cursor(999)/fab(62)。
  */
+/* 容器：默认透明隐藏；.open 时平滑淡入（opacity+visibility，根除 display 切换的单帧闪烁/透传）*/
 #startpage.startpage {
   position: fixed; inset: 0;
   z-index: 2000;
   display: flex; flex-direction: column;
   padding: 26px 22px;
-  overflow: hidden;
-  background: var(--bg-base, linear-gradient(165deg, #eef1ff 0%, #f7efff 48%, #eaf6ff 100%)); /* 不透明主题极光，遮住主站 */
+  background: var(--bg-base, linear-gradient(165deg, #eef1ff 0%, #f7efff 48%, #eaf6ff 100%));
   color: var(--text, #1c2333);
   font-family: inherit;
+  opacity: 0; visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+  overflow: hidden;
 }
 #startpage.startpage[hidden] { display: none; }
-body.sp-open { overflow: hidden; }
+#startpage.startpage.open {
+  opacity: 1; visibility: visible;
+  transition: opacity .3s ease, visibility 0s linear 0s;
+  overflow: visible; /* 下拉菜单不被裁切（光斑仍由 .sp-bg 自身 overflow:hidden 裁剪）*/
+}
+/* 起始页打开时：主站内容淡出 + 隐藏（顶栏/入场页/卡片/底栏/悬浮球/极光/弹窗全部消失，防闪烁与遮挡）*/
+body .topbar, body .intro, body .app, body .footer,
+body #back-top, body #bottom-nav, body .loader, body .bg,
+body .skip-link { transition: opacity .28s ease; }
+body.sp-open .topbar, body.sp-open .intro, body.sp-open .app, body.sp-open .footer,
+body.sp-open #back-top, body.sp-open #bottom-nav, body.sp-open .loader, body.sp-open .bg,
+body.sp-open .skip-link {
+  opacity: 0; visibility: hidden; pointer-events: none;
+}
+body.sp-open [id$="-modal"], body.sp-open #modal { opacity: 0; visibility: hidden; pointer-events: none; }
+body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 
 /* 起始页专属层：漂浮极光光斑（复用主站 --blob-* 主题色） */
 .startpage .sp-bg {
@@ -65,18 +83,18 @@ body.sp-open { overflow: hidden; }
 }
 .startpage .sp-topbar button:hover { transform: translateY(-1px); color: var(--accent, #5b6cff); }
 
-/* 主体：垂直居中 */
+/* 主体：垂直居中（淡入由容器 opacity 负责，这里只留轻弹簧缩放，消除双重淡入跳动）*/
 .startpage .sp-main {
   position: relative; z-index: 2; flex: 1 1 auto;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 16px; text-align: center;
   overflow-y: auto; /* 内容超高时滚动，避免遮住顶部 ✕/壁纸 或底部「进入导航」 */
-  animation: spIn .55s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
+  transform: scale(.98);
+  transition: transform .5s cubic-bezier(.34,1.56,.64,1);
 }
-@keyframes spIn {
-  from { opacity: 0; transform: translateY(18px) scale(.97); }
-  to   { opacity: 1; transform: none; }
-}
+#startpage.startpage.open .sp-main { transform: scale(1); }
+/* toast 淡入 */
+@keyframes spIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* 时钟 */
 .startpage .sp-time {
@@ -351,7 +369,8 @@ body.sp-open { overflow: hidden; }
 
 /* 减少动态效果 */
 @media (prefers-reduced-motion: reduce) {
-  .startpage .sp-main { animation: none; }
+  #startpage.startpage { transition: none; }
+  .startpage .sp-main { transition: none; transform: scale(1); }
   .startpage .sp-bg i.sp-blob { animation: none; }
 }
 
