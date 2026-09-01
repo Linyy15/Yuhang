@@ -7911,6 +7911,18 @@ window.APP_CONFIG = {
   function lookUrl(s) { return /^(https?:\/\/|\/\/)/i.test(s) || /^[\w-]+(\.[\w-]+)+/.test(s); }
   function isEn() { return readLS(LANG_KEY) === 'en'; }
 
+  // favicon 多源回退（favicon.im → DuckDuckGo → Google，全失败移除图片露出首字/占位）
+  // opts.letter: 前置首字节点时，加载成功后隐藏它（onload 隐藏 previousSibling）
+  function favIcon(host, opts) {
+    opts = opts || {};
+    var lazy = opts.lazy === false ? '' : ' loading="lazy"';
+    var onload = opts.letter
+      ? 'onload="var l=this.previousSibling;if(l&&l.classList)l.classList.add(\'hide\');" '
+      : '';
+    var onerror = 'var e=this;var h=e.getAttribute(\'data-host\');var i=parseInt(e.getAttribute(\'data-src\')||\'0\',10)+1;var ls=[\'https://favicon.im/\'+h,\'https://icons.duckduckgo.com/ip3/\'+h+\'.ico\',\'https://www.google.com/s2/favicons?domain=\'+h+\'&sz=64\'];if(i<ls.length){e.setAttribute(\'data-src\',String(i));e.src=ls[i];}else{e.parentNode.removeChild(e);}';
+    return '<img src="https://favicon.im/' + esc(host) + '" alt=""' + lazy + ' data-host="' + esc(host) + '" data-src="0" ' + onload + 'onerror="' + onerror + '">';
+  }
+
   // ---------- 搜索引擎（与主站 ENGINE_URLS 一致） ----------
   var ENGINES = [
     { code: 'local', labelZh: '站内', labelEn: 'Local', url: null },
@@ -8133,9 +8145,7 @@ window.APP_CONFIG = {
         'draggable="' + (editing ? 'true' : 'false') + '" data-idx="' + i + '" title="' + esc(l.name) + '">' +
         '<span class="sp-link-ico">' +
         '<span class="sp-link-letter">' + esc(l.name.slice(0, 1)) + '</span>' +
-        '<img src="https://favicon.im/' + esc(host) + '" alt="" loading="lazy" data-host="' + esc(host) + '" data-src="0" ' +
-        'onload="var l=this.previousSibling;if(l&&l.classList)l.classList.add(\'hide\');" ' +
-        'onerror="var e=this;var h=e.getAttribute(\'data-host\');var i=parseInt(e.getAttribute(\'data-src\')||\'0\',10)+1;var ls=[\'https://favicon.im/\'+h,\'https://icons.duckduckgo.com/ip3/\'+h+\'.ico\',\'https://www.google.com/s2/favicons?domain=\'+h+\'&sz=64\'];if(i<ls.length){e.setAttribute(\'data-src\',String(i));e.src=ls[i];}else{e.parentNode.removeChild(e);}">' +
+        favIcon(host, { letter: true }) +
         '</span>' +
         '<span class="sp-link-name">' + esc(l.name) + '</span>' +
         (editing ? '<button class="sp-link-del" data-del="' + i + '" type="button">✕</button>' : '') + '</a>';
@@ -8228,13 +8238,12 @@ window.APP_CONFIG = {
     function row(list, tag, hint) {
       var wrap = document.querySelector('.sp-proj-row.' + tag);
       if (!wrap) return;
-      var title = document.querySelector('.sp-proj-row.' + tag + ' .sp-proj-head');
       if (!list.length) { wrap.innerHTML = ''; return; }
       var html = '<span class="sp-proj-head" style="font-size:12px;color:var(--text-faint);">' + esc(hint) + '</span>';
       for (var i = 0; i < list.length; i++) {
         var s = list[i];
         html += '<a class="sp-proj-chip" href="' + esc(s.url || '') + '" target="_blank" rel="noopener">' +
-          '<span class="ico"><img src="https://favicon.im/' + esc(hostOf(s.url || '')) + '" alt="" onerror="this.style.display=\'none\'"></span>' +
+          '<span class="ico">' + favIcon(hostOf(s.url || '')) + '</span>' +
           esc(s.name) + '</a>';
       }
       wrap.innerHTML = html;
@@ -8294,7 +8303,7 @@ window.APP_CONFIG = {
       hits.forEach(function (s) {
         var h = hostOf(s.url || '');
         html += '<button type="button" data-site="' + esc(s.id || s.name) + '">' +
-          '<span class="sp-sugg-ico"><img src="https://favicon.im/' + esc(h) + '" alt="" onerror="this.style.display=\'none\'"></span>' +
+          '<span class="sp-sugg-ico">' + favIcon(h) + '</span>' +
           esc(s.name) + '<span class="sp-sugg-url">' + esc(h) + '</span></button>';
       });
     }
