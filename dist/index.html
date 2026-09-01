@@ -7917,7 +7917,7 @@ window.APP_CONFIG = {
     opts = opts || {};
     var lazy = opts.lazy === false ? '' : ' loading="lazy"';
     var onload = opts.letter
-      ? 'onload="var l=this.previousSibling;if(l&&l.classList)l.classList.add(\'hide\');" '
+      ? 'onload="var p=this.parentNode;var l=p?p.querySelector(\'.sp-link-letter\'):null;if(l)l.classList.add(\'hide\');" '
       : '';
     var onerror = 'var e=this;var h=e.getAttribute(\'data-host\');var i=parseInt(e.getAttribute(\'data-src\')||\'0\',10)+1;var ls=[\'https://favicon.im/\'+h,\'https://icons.duckduckgo.com/ip3/\'+h+\'.ico\',\'https://www.google.com/s2/favicons?domain=\'+h+\'&sz=64\'];if(i<ls.length){e.setAttribute(\'data-src\',String(i));e.src=ls[i];}else{e.parentNode.removeChild(e);}';
     return '<img src="https://favicon.im/' + esc(host) + '" alt=""' + lazy + ' data-host="' + esc(host) + '" data-src="0" ' + onload + 'onerror="' + onerror + '">';
