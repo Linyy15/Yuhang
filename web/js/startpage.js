@@ -208,7 +208,6 @@
     if (!el) return;
     var q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
     if (reduceMotion()) { el.innerHTML = '✨ ' + esc(q); return; }
-    var reduce = reduceMotion();
     el.innerHTML = '✨ ' + q.split('').map(function (ch) {
       return '<span class="sp-quote-letter" style="opacity:0;display:inline-block;transform:translateY(8px)">' + esc(ch) + '</span>';
     }).join('');
@@ -216,6 +215,7 @@
     for (var i = 0; i < spans.length; i++) {
       (function (s, i) { setTimeout(function () {
         s.style.transition = 'opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1)';
+        s.offsetWidth; // 强制回流，确保 transition 与属性变更分开两个帧，动画才生效
         s.style.opacity = '1'; s.style.transform = 'none';
       }, 320 + i * 40); })(spans[i], i);
     }
@@ -304,10 +304,17 @@
     for (var i = 0; i < out.length; i++) { if (!seen[out[i]]) { seen[out[i]] = 1; r.push(out[i]); } }
     return r;
   }
-  function gatherClickTop() {
+   function gatherClickTop() {
     var c = readJSON(CLICKS_KEY, {}); if (!c) return [];
+    // nav_click_count_v1 结构为 { 账号: { 网址: 次数 } }，需两层遍历并按网址累加（跨账号合并投影）
+    var summed = {};
+    for (var acc in c) {
+      var map = c[acc];
+      if (!map) continue;
+      for (var sid in map) { summed[sid] = (summed[sid] || 0) + (map[sid] || 0); }
+    }
     var arr = [];
-    for (var k in c) { arr.push({ id: k, n: c[k] || 0 }); }
+    for (var k in summed) { arr.push({ id: k, n: summed[k] }); }
     arr.sort(function (a, b) { return b.n - a.n; });
     return arr.slice(0, 8);
   }
@@ -325,7 +332,7 @@
       for (var i = 0; i < list.length; i++) {
         var s = list[i];
         html += '<a class="sp-proj-chip" href="' + esc(s.url || '') + '" target="_blank" rel="noopener">' +
-          '<span class="ico"><img src="https://favicon.im/' + esc(hostOf(s.url || '')) + '" alt=""></span>' +
+          '<span class="ico"><img src="https://favicon.im/' + esc(hostOf(s.url || '')) + '" alt="" onerror="this.style.display=\'none\'"></span>' +
           esc(s.name) + '</a>';
       }
       wrap.innerHTML = html;
@@ -357,7 +364,7 @@
       hits.forEach(function (s) {
         var h = hostOf(s.url || '');
         html += '<button type="button" data-site="' + esc(s.id || s.name) + '">' +
-          '<span class="sp-sugg-ico"><img src="https://favicon.im/' + esc(h) + '" alt=""></span>' +
+          '<span class="sp-sugg-ico"><img src="https://favicon.im/' + esc(h) + '" alt="" onerror="this.style.display=\'none\'"></span>' +
           esc(s.name) + '<span class="sp-sugg-url">' + esc(h) + '</span></button>';
       });
     }
@@ -438,7 +445,16 @@
       var fp = $('fab-panel'); if (fp) fp.hidden = true;
     });
     on($('sp-close'), 'click', function () { closeStartPage(false); });
-    on(sp, 'click', function (e) { if (e.target === sp) closeStartPage(false); });
+    on(sp, 'click', function (e) {
+      if (e.target === sp) { closeStartPage(false); return; }
+      // 引擎下拉 / 壁纸面板 / 联想：点外部关闭
+      var eng = $('sp-engine-menu');
+      if (eng && !eng.classList.contains('hidden') && !e.target.closest('.sp-engine')) closeEngineMenu();
+      var wp = $('sp-wallpanel');
+      if (wp && !wp.classList.contains('hidden') && !e.target.closest('.sp-wallpanel') && e.target.id !== 'sp-wallset') closeWallPanel();
+      var sug = $('sp-sugg');
+      if (sug && !sug.classList.contains('hidden') && !e.target.closest('#sp-sugg') && !e.target.closest('#sp-input')) sug.classList.add('hidden');
+    });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !sp.hidden) {
         closeWallPanel(); closeEngineMenu(); closeStartPage(false);

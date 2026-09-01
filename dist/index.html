@@ -2221,6 +2221,7 @@ body.sp-open { overflow: hidden; }
   position: relative; z-index: 2; flex: 1 1 auto;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 16px; text-align: center;
+  overflow-y: auto; /* 内容超高时滚动，避免遮住顶部 ✕/壁纸 或底部「进入导航」 */
   animation: spIn .55s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
 }
 @keyframes spIn {
@@ -2506,12 +2507,12 @@ body.sp-open { overflow: hidden; }
 
 /* 移动端 */
 @media (max-width: 640px) {
-  #startpage.startpage { padding: 16px 14px; }
-  .startpage .sp-main { gap: 12px; }
-  .startpage .sp-links { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 9px; }
-  .startpage .sp-link { padding: 10px 4px 8px; }
-  .startpage .sp-link .sp-link-ico { width: 36px; height: 36px; border-radius: 10px; font-size: 17px; }
-  .startpage .sp-search { padding: 8px 10px 8px 14px; }
+  #startpage.startpage { padding: 14px 12px; }
+  .startpage .sp-main { gap: 11px; }
+  .startpage .sp-links { grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 8px; }
+  .startpage .sp-link { padding: 9px 4px 7px; }
+  .startpage .sp-link .sp-link-ico { width: 34px; height: 34px; border-radius: 9px; font-size: 16px; }
+  .startpage .sp-search { padding: 7px 9px 7px 13px; }
   .startpage .sp-foot .sp-nav { padding: 10px 22px; font-size: 14px; }
 }
 
@@ -7991,7 +7992,6 @@ window.APP_CONFIG = {
     if (!el) return;
     var q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
     if (reduceMotion()) { el.innerHTML = '✨ ' + esc(q); return; }
-    var reduce = reduceMotion();
     el.innerHTML = '✨ ' + q.split('').map(function (ch) {
       return '<span class="sp-quote-letter" style="opacity:0;display:inline-block;transform:translateY(8px)">' + esc(ch) + '</span>';
     }).join('');
@@ -7999,6 +7999,7 @@ window.APP_CONFIG = {
     for (var i = 0; i < spans.length; i++) {
       (function (s, i) { setTimeout(function () {
         s.style.transition = 'opacity .4s ease, transform .5s cubic-bezier(.34,1.56,.64,1)';
+        s.offsetWidth; // 强制回流，确保 transition 与属性变更分开两个帧，动画才生效
         s.style.opacity = '1'; s.style.transform = 'none';
       }, 320 + i * 40); })(spans[i], i);
     }
@@ -8087,10 +8088,17 @@ window.APP_CONFIG = {
     for (var i = 0; i < out.length; i++) { if (!seen[out[i]]) { seen[out[i]] = 1; r.push(out[i]); } }
     return r;
   }
-  function gatherClickTop() {
+   function gatherClickTop() {
     var c = readJSON(CLICKS_KEY, {}); if (!c) return [];
+    // nav_click_count_v1 结构为 { 账号: { 网址: 次数 } }，需两层遍历并按网址累加（跨账号合并投影）
+    var summed = {};
+    for (var acc in c) {
+      var map = c[acc];
+      if (!map) continue;
+      for (var sid in map) { summed[sid] = (summed[sid] || 0) + (map[sid] || 0); }
+    }
     var arr = [];
-    for (var k in c) { arr.push({ id: k, n: c[k] || 0 }); }
+    for (var k in summed) { arr.push({ id: k, n: summed[k] }); }
     arr.sort(function (a, b) { return b.n - a.n; });
     return arr.slice(0, 8);
   }
@@ -8108,7 +8116,7 @@ window.APP_CONFIG = {
       for (var i = 0; i < list.length; i++) {
         var s = list[i];
         html += '<a class="sp-proj-chip" href="' + esc(s.url || '') + '" target="_blank" rel="noopener">' +
-          '<span class="ico"><img src="https://favicon.im/' + esc(hostOf(s.url || '')) + '" alt=""></span>' +
+          '<span class="ico"><img src="https://favicon.im/' + esc(hostOf(s.url || '')) + '" alt="" onerror="this.style.display=\'none\'"></span>' +
           esc(s.name) + '</a>';
       }
       wrap.innerHTML = html;
@@ -8140,7 +8148,7 @@ window.APP_CONFIG = {
       hits.forEach(function (s) {
         var h = hostOf(s.url || '');
         html += '<button type="button" data-site="' + esc(s.id || s.name) + '">' +
-          '<span class="sp-sugg-ico"><img src="https://favicon.im/' + esc(h) + '" alt=""></span>' +
+          '<span class="sp-sugg-ico"><img src="https://favicon.im/' + esc(h) + '" alt="" onerror="this.style.display=\'none\'"></span>' +
           esc(s.name) + '<span class="sp-sugg-url">' + esc(h) + '</span></button>';
       });
     }
@@ -8221,7 +8229,16 @@ window.APP_CONFIG = {
       var fp = $('fab-panel'); if (fp) fp.hidden = true;
     });
     on($('sp-close'), 'click', function () { closeStartPage(false); });
-    on(sp, 'click', function (e) { if (e.target === sp) closeStartPage(false); });
+    on(sp, 'click', function (e) {
+      if (e.target === sp) { closeStartPage(false); return; }
+      // 引擎下拉 / 壁纸面板 / 联想：点外部关闭
+      var eng = $('sp-engine-menu');
+      if (eng && !eng.classList.contains('hidden') && !e.target.closest('.sp-engine')) closeEngineMenu();
+      var wp = $('sp-wallpanel');
+      if (wp && !wp.classList.contains('hidden') && !e.target.closest('.sp-wallpanel') && e.target.id !== 'sp-wallset') closeWallPanel();
+      var sug = $('sp-sugg');
+      if (sug && !sug.classList.contains('hidden') && !e.target.closest('#sp-sugg') && !e.target.closest('#sp-input')) sug.classList.add('hidden');
+    });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !sp.hidden) {
         closeWallPanel(); closeEngineMenu(); closeStartPage(false);

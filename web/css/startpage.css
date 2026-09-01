@@ -51,6 +51,7 @@ body.sp-open { overflow: hidden; }
   position: relative; z-index: 2; flex: 1 1 auto;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   gap: 16px; text-align: center;
+  overflow-y: auto; /* 内容超高时滚动，避免遮住顶部 ✕/壁纸 或底部「进入导航」 */
   animation: spIn .55s var(--ease-spring, cubic-bezier(.34,1.56,.64,1));
 }
 @keyframes spIn {
@@ -336,11 +337,11 @@ body.sp-open { overflow: hidden; }
 
 /* 移动端 */
 @media (max-width: 640px) {
-  #startpage.startpage { padding: 16px 14px; }
-  .startpage .sp-main { gap: 12px; }
-  .startpage .sp-links { grid-template-columns: repeat(auto-fill, minmax(68px, 1fr)); gap: 9px; }
-  .startpage .sp-link { padding: 10px 4px 8px; }
-  .startpage .sp-link .sp-link-ico { width: 36px; height: 36px; border-radius: 10px; font-size: 17px; }
-  .startpage .sp-search { padding: 8px 10px 8px 14px; }
+  #startpage.startpage { padding: 14px 12px; }
+  .startpage .sp-main { gap: 11px; }
+  .startpage .sp-links { grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 8px; }
+  .startpage .sp-link { padding: 9px 4px 7px; }
+  .startpage .sp-link .sp-link-ico { width: 34px; height: 34px; border-radius: 9px; font-size: 16px; }
+  .startpage .sp-search { padding: 7px 9px 7px 13px; }
   .startpage .sp-foot .sp-nav { padding: 10px 22px; font-size: 14px; }
 }
