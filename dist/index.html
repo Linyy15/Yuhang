@@ -2220,6 +2220,15 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 .startpage .sp-bg .sp-blob-3 { width: 30vw; height: 30vw; left: 30vw; top: 42vh; background: radial-gradient(circle, var(--blob-3, rgba(128,222,255,.34)), transparent 70%); animation-delay: -11s; }
 .startpage .sp-bg .sp-blob-4 { width: 22vw; height: 22vw; left: 8vw; bottom: 4vh; background: radial-gradient(circle, var(--blob-1, rgba(140,158,255,.4)), transparent 70%); animation-delay: -3s; }
 .startpage .sp-bg .sp-blob-5 { width: 18vw; height: 18vw; right: 12vw; top: 14vh; background: radial-gradient(circle, var(--blob-2, rgba(226,160,255,.36)), transparent 70%); animation-delay: -15s; }
+/* 柔光层：主题强调色径向光晕，随 9 套主题 × 7 色强调自动染色 */
+.startpage .sp-bg::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(55% 45% at 12% 0%, var(--accent-soft, rgba(91,108,255,.16)), transparent 62%),
+    radial-gradient(48% 40% at 92% 8%, var(--accent-soft, rgba(91,108,255,.12)), transparent 62%),
+    radial-gradient(40% 36% at 50% 108%, var(--accent-soft, rgba(91,108,255,.10)), transparent 70%);
+}
 /* 星光/粒子层：微缩圆点缓慢闪烁，丰富背景层次 */
 .startpage .sp-bg .sp-stars {
   position: absolute; inset: 0;
