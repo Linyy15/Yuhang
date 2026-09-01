@@ -505,11 +505,11 @@
     tickClock();
     setInterval(tickClock, 1000);
 
-    on($('btn-startpage'), 'click', function (e) {
+    document.querySelectorAll('#btn-startpage').forEach(function (b) { on(b, 'click', function (e) {
       e.preventDefault(); e.stopPropagation();
       openStartPage();
-      var fp = $('fab-panel'); if (fp) fp.hidden = true;
-    });
+      document.querySelectorAll('#fab-panel').forEach(function (fp) { fp.hidden = true; });
+    }); });
     on($('sp-close'), 'click', function () { closeStartPage(false); });
     on(sp, 'click', function (e) {
       if (e.target === sp) { closeStartPage(false); return; }

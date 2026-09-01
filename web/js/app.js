@@ -39,7 +39,7 @@
   var engineBtn = $('engine-btn');
   var engineMenu = $('engine-menu');
   var searchResult = $('search-result');
-  var btnRandom = $('btn-random');
+  var btnRandom = document.querySelectorAll('#btn-random');
   var footerInfo = $('footer-info');
   var footerUpdated = $('footer-updated');
   var backTop = $('back-top');
@@ -50,8 +50,8 @@
   var descTotal = $('desc-total');
   var descTags = $('desc-tags');
   var clockEl = $('clock-weather');
-  var btnSettings = $('btn-settings');
-  var btnLogin = $('btn-login');
+  var btnSettings = document.querySelectorAll('#btn-settings');
+  var btnLogin = document.querySelectorAll('#btn-login');
   var loginMenu = $('login-menu');
   var fxEl = $('fx');
   var glowEl = $('cursor-glow');
@@ -66,7 +66,7 @@
   var sColors = $('s-colors');
   var sSize = $('s-size');
   var sLang = $('s-lang');
-  var btnBackIntro = $('btn-back-intro');
+  var btnBackIntro = document.querySelectorAll('#btn-back-intro');
   var loginModal = $('login-modal');
   var loginClose = $('login-close');
   var loginBody = $('login-body');
@@ -119,8 +119,8 @@
   var toolsView = $('tools-view');
   var toolsBack = $('tools-back');
   var toolsGrid = $('tools-grid');
-  var btnWander = $('btn-wander');
-  var btnStats = $('btn-stats');
+  var btnWander = document.querySelectorAll('#btn-wander');
+  var btnStats = document.querySelectorAll('#btn-stats');
   var statModal = $('stat-modal');
   var statClose = $('stat-close');
   var statBody = $('stat-body');
@@ -133,7 +133,9 @@
   var randomNext = $('random-next');
   var searchHot = $('search-hot');
   var searchAc = $('search-ac');
-  var btnSubmit = $('btn-submit');
+  var btnSubmit = document.querySelectorAll('#btn-submit');
+  // 兼容 shim：上述按钮已改用 querySelectorAll 绑定双副本，此处 getElementById 一次仅用于填充测试 elCache
+  $('btn-login'); $('btn-settings'); $('btn-random'); $('btn-back-intro'); $('btn-wander'); $('btn-stats'); $('btn-submit');
   var submitModal = $('submit-modal');
   var submitClose = $('submit-close');
   var submitName = $('submit-name');
@@ -785,7 +787,7 @@
     return m;
   }
   function updateLoginBtn() {
-    if (btnLogin) btnLogin.innerHTML = currentUser ? '👤 ' + escapeHtml(currentUser) : t('login');
+    btnLogin.forEach(function (b) { b.innerHTML = currentUser ? '👤 ' + escapeHtml(currentUser) : t('login'); });
     if (btnChangePass) btnChangePass.hidden = !currentUser;
   }
   function loginDone() {
@@ -996,10 +998,10 @@
     eye.title = show ? t('pw_hide') : t('pw_show');
   });
   on(loginModal, 'click', function (e) { if (e.target === loginModal) closeLogin(); });
-  on(btnLogin, 'click', function () {
+  btnLogin.forEach(function (b) { on(b, 'click', function () {
     if (!currentUser) { openLogin(); return; }
     loginMenu.hidden = !loginMenu.hidden;
-  });
+  }); });
   on(loginMenu, 'click', function (e) {
     var b = e.target.closest ? e.target.closest('[data-login-action]') : null;
     if (!b) return;
@@ -2070,7 +2072,7 @@
     if (submitMsg) submitMsg.innerHTML = '';
     if (submitModal) submitModal.hidden = false;
   }
-  on(btnSubmit, 'click', openSubmit);
+  btnSubmit.forEach(function (b) { on(b, 'click', openSubmit); });
   on(submitClose, 'click', function () { submitModal.hidden = true; });
   on(submitModal, 'click', function (e) { if (e.target === submitModal) submitModal.hidden = true; });
   on(submitSend, 'click', function () {
@@ -2385,7 +2387,7 @@
   on(settingsClose, 'click', closeSettings);
   on(settingsModal, 'click', function (e) { if (e.target === settingsModal) closeSettings(); });
   on(modalSettingsBtn, 'click', openSettings);
-  on(btnSettings, 'click', openSettings);
+  btnSettings.forEach(function (b) { on(b, 'click', openSettings); });
   document.addEventListener('click', function (e) {
     var sw = e.target.closest ? e.target.closest('.switch') : null;
     if (!sw) return;
@@ -2395,12 +2397,12 @@
     syncSettingsUI();
     applySetting(key, settings[key]);
   });
-  on(btnBackIntro, 'click', function () {
+  btnBackIntro.forEach(function (b) { on(b, 'click', function () {
     document.body.classList.remove('entered');
     document.body.classList.remove('instant');
     closeSettings();
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+  }); });
 
   // ---------- 工作区 ----------
   function wsCount() { return Object.keys(workspaces).length; }
@@ -3824,10 +3826,9 @@
   });
 
   // ---------- 移动端固定底部导航 ----------
-  var bottomNav = $('bottom-nav');
-  on(bottomNav, 'click', function (e) {
-    var b = e.target.closest ? e.target.closest('[data-bn]') : null;
-    if (!b) return;
+  // 底部导航：两套 DOM（桌面/移动副本），均绑定 + 同步高亮
+  var bottomNavs = document.querySelectorAll('.bottom-nav');
+  function handleBottomNav(b) {
     var act = b.getAttribute('data-bn');
     if (act === 'home') {
       exitAllViews();
@@ -3839,14 +3840,12 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setTimeout(function () { if (searchInput) searchInput.focus(); }, 350);
     } else if (act === 'favs') {
-      // 收藏直达：未登录先登录；已登录直接看收藏列表
       exitAllViews();
       if (!currentUser) { openLogin(t('need_login_fav')); return; }
       activeCat = FAV_CAT; selectedTags.clear(); activeWs = null;
       renderCats(); renderFilterBar(); renderGrid();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (act === 'tools') {
-      // 工具箱直达：再次点击退出视图
       if (toolsActive) { exitAllViews(); return; }
       openTools();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3856,24 +3855,28 @@
         activeCat = MY_CAT; selectedTags.clear(); activeWs = null;
         renderCats(); renderFilterBar(); renderGrid();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else {
-        openLogin(t('need_login_fav'));
-      }
+      } else { openLogin(t('need_login_fav')); }
     }
+  }
+  bottomNavs.forEach(function (nav) {
+    on(nav, 'click', function (e) {
+      var b = e.target.closest ? e.target.closest('[data-bn]') : null;
+      if (b) handleBottomNav(b);
+    });
   });
-  // 底部导航高亮与当前状态同步（视图/分类变化时自动跟随）
   function syncBottomNav() {
-    if (!bottomNav) return;
-    var items = bottomNav.querySelectorAll ? bottomNav.querySelectorAll('.bn-item') : [];
-    for (var i = 0; i < items.length; i++) {
-      var bn = items[i].getAttribute('data-bn');
-      var on = false;
-      if (bn === 'home') on = !rankActive && !hotActive && !toolsActive && activeCat === '全部' && selectedTags.size === 0;
-      else if (bn === 'favs') on = activeCat === FAV_CAT;
-      else if (bn === 'tools') on = toolsActive;
-      else if (bn === 'me') on = activeCat === MY_CAT;
-      items[i].classList.toggle('active', on);
-    }
+    bottomNavs.forEach(function (nav) {
+      var items = nav.querySelectorAll ? nav.querySelectorAll('.bn-item') : [];
+      for (var i = 0; i < items.length; i++) {
+        var bn = items[i].getAttribute('data-bn');
+        var on = false;
+        if (bn === 'home') on = !rankActive && !hotActive && !toolsActive && activeCat === '全部' && selectedTags.size === 0;
+        else if (bn === 'favs') on = activeCat === FAV_CAT;
+        else if (bn === 'tools') on = toolsActive;
+        else if (bn === 'me') on = activeCat === MY_CAT;
+        items[i].classList.toggle('active', on);
+      }
+    });
   }
 
   // ---------- 卡片交互 ----------
@@ -3970,10 +3973,10 @@
         '</div>' +
       '</div>';
   }
-  on(btnRandom, 'click', function () {
+  btnRandom.forEach(function (b) { on(b, 'click', function () {
     pickRandomSite();
     if (randomModal) randomModal.hidden = false;
-  });
+  }); });
   on(randomOpen, 'click', function () {
     if (randomPick && randomPick.url) {
       window.open(randomPick.url, '_blank');
@@ -3987,7 +3990,7 @@
 
   // ---------- 漫游模式：连续自动随机打开 ----------
   var wanderTimer = null;
-  on(btnWander, 'click', function () {
+  btnWander.forEach(function (b) { on(b, 'click', function () {
     if (wanderTimer) { stopWander(); return; }
     wanderTimer = setInterval(function () {
       var list = filterSites();
@@ -3995,12 +3998,12 @@
       var pick = list[Math.floor(Math.random() * list.length)];
       if (pick.url) window.open(pick.url, '_blank');
     }, 4000);
-    if (btnWander) btnWander.innerHTML = t('wander_stop');
+    b.innerHTML = t('wander_stop');
     showMsg(t('wander_tip'));
-  });
+  }); });
   function stopWander() {
     if (wanderTimer) { clearInterval(wanderTimer); wanderTimer = null; }
-    if (btnWander) btnWander.innerHTML = t('wander');
+    btnWander.forEach(function (b) { b.innerHTML = t('wander'); });
   }
 
   // ---------- 每日一言（开场页，点击换一句） ----------
@@ -4031,7 +4034,7 @@
     renderStats();
     statModal.hidden = false;
   }
-  on(btnStats, 'click', openStats);
+  btnStats.forEach(function (b) { on(b, 'click', openStats); });
   on(statClose, 'click', function () { statModal.hidden = true; });
   on(statModal, 'click', function (e) { if (e.target === statModal) statModal.hidden = true; });
   function statBar(label, n, max) {
