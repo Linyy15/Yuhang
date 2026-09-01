@@ -2196,6 +2196,48 @@
     }, 600);
   });
 
+  // ---------- 添加弹窗：手动 / 从收录中选 双标签 + 收录搜索 ----------
+  var addManual = $('add-manual'), addPick = $('add-pick'), addSearch = $('add-search'), addSugg = $('add-sugg');
+  function switchAddTab(tab) {
+    addManual && addManual.classList.toggle('hidden', tab !== 'manual');
+    addPick && addPick.classList.toggle('hidden', tab !== 'pick');
+    document.querySelectorAll('.add-tab').forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-addtab') === tab); });
+    if (tab === 'pick' && addSearch) addSearch.focus();
+  }
+  document.querySelectorAll('.add-tab').forEach(function (b) {
+    on(b, 'click', function () { switchAddTab(b.getAttribute('data-addtab')); });
+  });
+  function renderAddSugg() {
+    if (!addSugg || !addSearch) return;
+    var q = (addSearch.value || '').trim().toLowerCase();
+    if (!q) { addSugg.innerHTML = ''; return; }
+    var sites = (window.SITES || []);
+    var hits = [];
+    for (var i = 0; i < sites.length && hits.length < 8; i++) {
+      var s = sites[i], hay = ((s.name || '') + ' ' + (s.fullName || '') + ' ' + (s.url || '') + ' ' + (s.brief || '')).toLowerCase();
+      if (hay.indexOf(q) !== -1) hits.push(s);
+    }
+    if (!hits.length) { addSugg.innerHTML = '<div class="add-sugg-item" style="justify-content:center;color:var(--text-faint);cursor:default">未找到匹配</div>'; return; }
+    addSugg.innerHTML = hits.map(function (s) {
+      return '<button type="button" class="add-sugg-item" data-pick-idx="' + (window.SITES.indexOf(s)) + '">' +
+        '<span class="add-sugg-name">' + esc(s.name) + '</span>' +
+        '<span class="add-sugg-url">' + esc(hostOf(s.url || '')) + '</span></button>';
+    }).join('');
+  }
+  on(addSearch, 'input', renderAddSugg);
+  on(addSugg, 'click', function (e) {
+    var b = e.target.closest ? e.target.closest('.add-sugg-item[data-pick-idx]') : null;
+    if (!b) return;
+    var s = window.SITES[parseInt(b.getAttribute('data-pick-idx'), 10)];
+    if (!s) return;
+    addName.value = s.name || '';
+    addUrl.value = s.url || '';
+    addBrief.value = s.brief || '';
+    addTags.value = (s.tags || []).join(',');
+    addMsg.innerHTML = '';
+    switchAddTab('manual');
+  });
+
   // ---------- 主题：风格 + 颜色 ----------
   (function migrateTheme() {
     var old = localStorage.getItem(THEME_KEY);
@@ -3752,18 +3794,33 @@
   });
   updateBackTop();
 
-  // ---------- 悬浮操作球（登录/设置/随机/起始页） ----------
-  var fabBtn = $('fab-btn'), fabPanel = $('fab-panel');
-  on(fabBtn, 'click', function (e) {
-    e.stopPropagation();
-    if (fabPanel) fabPanel.hidden = !fabPanel.hidden;
+  // ---------- 悬浮操作球（登录/设置/随机/起始页）：桌面/移动各一套，相对父 .fab 找 panel ----------
+  // 先 getElementById 一次以建立测试缓存；实际绑定用 querySelectorAll（桌面/移动各一套）
+  $('fab-btn'); $('fab-panel');
+  var fabButtons = document.querySelectorAll('.fab-btn');
+  function toggleFabPanel(btn) {
+    var panel = btn.parentElement ? btn.parentElement.querySelector('.fab-panel') : null;
+    if (panel) panel.hidden = !panel.hidden;
+  }
+  function closeAllFab() {
+    document.querySelectorAll('.fab-panel').forEach(function (p) { p.hidden = true; });
+  }
+  fabButtons.forEach(function (btn) {
+    on(btn, 'click', function (e) {
+      e.stopPropagation();
+      if (!btn.parentElement.querySelector('.fab-panel')) return;
+      var alreadyOpen = btn.parentElement.querySelector('.fab-panel[hidden]') === null;
+      closeAllFab();
+      if (!alreadyOpen) toggleFabPanel(btn);
+    });
   });
-  on(fabPanel, 'click', function (e) {
-    // 非登录下拉区域的操作 → 收起面板
-    if (!(e.target.closest && e.target.closest('.theme-wrap'))) fabPanel.hidden = true;
+  document.querySelectorAll('.fab-panel').forEach(function (panel) {
+    on(panel, 'click', function (e) {
+      if (!(e.target.closest && e.target.closest('.theme-wrap'))) closeAllFab();
+    });
   });
   document.addEventListener('click', function (e) {
-    if (fabPanel && !fabPanel.hidden && !(e.target.closest && e.target.closest('.fab'))) fabPanel.hidden = true;
+    if (!(e.target.closest && e.target.closest('.fab'))) closeAllFab();
   });
 
   // ---------- 移动端固定底部导航 ----------
