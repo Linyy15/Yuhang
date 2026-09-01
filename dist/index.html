@@ -2218,6 +2218,24 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 .startpage .sp-bg .sp-blob-1 { width: 46vw; height: 46vw; left: -8vw; top: -12vh; background: radial-gradient(circle, var(--blob-1, rgba(140,158,255,.4)), transparent 70%); }
 .startpage .sp-bg .sp-blob-2 { width: 38vw; height: 38vw; right: -6vw; bottom: -8vh; background: radial-gradient(circle, var(--blob-2, rgba(226,160,255,.36)), transparent 70%); animation-delay: -6s; }
 .startpage .sp-bg .sp-blob-3 { width: 30vw; height: 30vw; left: 30vw; top: 42vh; background: radial-gradient(circle, var(--blob-3, rgba(128,222,255,.34)), transparent 70%); animation-delay: -11s; }
+.startpage .sp-bg .sp-blob-4 { width: 22vw; height: 22vw; left: 8vw; bottom: 4vh; background: radial-gradient(circle, var(--blob-1, rgba(140,158,255,.4)), transparent 70%); animation-delay: -3s; }
+.startpage .sp-bg .sp-blob-5 { width: 18vw; height: 18vw; right: 12vw; top: 14vh; background: radial-gradient(circle, var(--blob-2, rgba(226,160,255,.36)), transparent 70%); animation-delay: -15s; }
+/* 星光/粒子层：微缩圆点缓慢闪烁，丰富背景层次 */
+.startpage .sp-bg .sp-stars {
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 15% 20%, rgba(255,255,255,.7), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,.5), transparent),
+    radial-gradient(2px 2px at 55% 25%, rgba(255,255,255,.6), transparent),
+    radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,.45), transparent),
+    radial-gradient(1.5px 1.5px at 85% 30%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1px 1px at 45% 85%, rgba(255,255,255,.4), transparent),
+    radial-gradient(1.5px 1.5px at 10% 55%, rgba(255,255,255,.5), transparent),
+    radial-gradient(1px 1px at 92% 78%, rgba(255,255,255,.45), transparent),
+    radial-gradient(1px 1px at 64% 90%, rgba(255,255,255,.4), transparent);
+  animation: spStars 6s ease-in-out infinite alternate;
+}
+@keyframes spStars { from { opacity: .35; } to { opacity: .85; } }
 @keyframes spBlobFloat {
   from { transform: translate3d(0,0,0) scale(1); }
   to   { transform: translate3d(4vw,-3vh,0) scale(1.12); }
@@ -2393,6 +2411,28 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 }
 .startpage .sp-section-title button:hover { background: var(--accent-soft, rgba(91,108,255,.12)); }
 
+/* 分类直达 chips（快捷链接与网站分类关联） */
+.startpage .sp-cats {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 8px; width: 100%; max-width: 760px;
+}
+.startpage .sp-cats.hidden { display: none; }
+.startpage .sp-cat-label {
+  font-size: 12px; color: var(--text-faint, #9aa2b8); margin-right: 2px;
+}
+.startpage .sp-cat-chip {
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
+  background: var(--glass-bg, rgba(255,255,255,.86));
+  color: var(--text-sub, #5b6478); font-size: 12.5px;
+  padding: 5px 13px; border-radius: 999px; cursor: pointer;
+  box-shadow: var(--glass-shadow, 0 4px 12px rgba(38,46,80,.05));
+  transition: all .15s ease;
+}
+.startpage .sp-cat-chip:hover {
+  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+  border-color: transparent; color: #fff; transform: translateY(-1px);
+}
+
 /* 只读投影：收藏 / 最常 */
 .startpage .sp-proj-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; max-width: 760px; }
 .startpage .sp-proj-chip {
@@ -2411,28 +2451,41 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 /* 常驻快捷卡片（复用屿航 .card 玻璃风格） */
 .startpage .sp-links {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 12px; width: 100%; max-width: 780px;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 14px; width: 100%; max-width: 800px;
 }
 .startpage .sp-link {
-  position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px;
-  padding: 13px 6px 10px; border-radius: var(--radius-md, 16px);
+  position: relative; display: flex; flex-direction: column; align-items: center; gap: 9px;
+  padding: 16px 6px 12px; border-radius: var(--radius-md, 16px);
   text-decoration: none; color: var(--text, #1c2333); cursor: pointer;
-  background: var(--glass-bg, rgba(255,255,255,.86));
-  border: 1.5px solid var(--glass-border, rgba(255,255,255,.9));
-  box-shadow: var(--glass-shadow, 0 8px 22px rgba(38,46,80,.07));
-  transition: transform .15s ease, box-shadow .15s ease;
+  background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78));
+  border: 1.5px solid var(--glass-border, rgba(255,255,255,.95));
+  box-shadow: var(--glass-shadow, 0 8px 22px rgba(38,46,80,.08));
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.startpage .sp-link:hover, .startpage .sp-link:focus-visible { transform: translateY(-3px); box-shadow: var(--glass-shadow, 0 12px 28px rgba(38,46,80,.14)); }
+.startpage .sp-link:hover, .startpage .sp-link:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--glass-shadow, 0 14px 32px rgba(38,46,80,.16)), 0 0 0 3px var(--accent-soft, rgba(91,108,255,.12));
+  border-color: var(--accent, #5b6cff);
+}
 .startpage .sp-link .sp-link-ico {
-  width: 42px; height: 42px; border-radius: 12px; overflow: hidden;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px; font-weight: 600; color: #fff;
-  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+  position: relative; width: 46px; height: 46px; border-radius: 13px; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.5), 0 4px 12px rgba(38,46,80,.14);
 }
-.startpage .sp-link .sp-link-ico img { width: 100%; height: 100%; object-fit: cover; }
+.startpage .sp-link .sp-link-ico .sp-link-letter {
+  position: absolute; inset: 0; z-index: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 21px; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, var(--accent, #5b6cff), var(--accent-2, #9a5bff));
+  transition: opacity .2s ease;
+}
+.startpage .sp-link .sp-link-ico .sp-link-letter.hide { opacity: 0; }
+.startpage .sp-link .sp-link-ico img {
+  position: absolute; inset: 0; z-index: 1;
+  width: 100%; height: 100%; object-fit: cover;
+}
 .startpage .sp-link .sp-link-name {
-  max-width: 100%; font-size: 12.5px; line-height: 1.25;
+  max-width: 100%; font-size: 12.5px; font-weight: 600; line-height: 1.25;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .startpage .sp-link .sp-link-del {
@@ -2542,6 +2595,7 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
   #startpage.startpage { transition: none; }
   .startpage .sp-main { transition: none; transform: scale(1); }
   .startpage .sp-bg i.sp-blob { animation: none; }
+  .startpage .sp-bg .sp-stars { animation: none; }
 }
 
 /* 移动端 */
@@ -2549,8 +2603,9 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
   #startpage.startpage { padding: 14px 12px; }
   .startpage .sp-main { gap: 11px; }
   .startpage .sp-links { grid-template-columns: repeat(auto-fill, minmax(62px, 1fr)); gap: 8px; }
-  .startpage .sp-link { padding: 9px 4px 7px; }
-  .startpage .sp-link .sp-link-ico { width: 34px; height: 34px; border-radius: 9px; font-size: 16px; }
+  .startpage .sp-link { padding: 10px 4px 8px; }
+  .startpage .sp-link .sp-link-ico { width: 36px; height: 36px; border-radius: 10px; }
+  .startpage .sp-link .sp-link-ico .sp-link-letter { font-size: 16px; }
   .startpage .sp-search { padding: 7px 9px 7px 13px; }
   .startpage .sp-foot .sp-nav { padding: 10px 22px; font-size: 14px; }
 }
@@ -2711,7 +2766,7 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 
   <!-- 青柠风格·整屏起始页（复用屿航极光背景 + 玻璃卡片 + 主题色；悬浮球「🍋」或 #startpage 进入） -->
   <div id="startpage" class="startpage" hidden aria-hidden="true">
-    <div class="sp-bg" aria-hidden="true"><i class="sp-blob sp-blob-1"></i><i class="sp-blob sp-blob-2"></i><i class="sp-blob sp-blob-3"></i></div>
+    <div class="sp-bg" aria-hidden="true"><i class="sp-blob sp-blob-1"></i><i class="sp-blob sp-blob-2"></i><i class="sp-blob sp-blob-3"></i><i class="sp-blob sp-blob-4"></i><i class="sp-blob sp-blob-5"></i><i class="sp-stars"></i></div>
     <div class="sp-wall" id="sp-wall" aria-hidden="true"></div>
     <div class="sp-veil" aria-hidden="true"></div>
     <div class="sp-topbar">
@@ -2734,6 +2789,7 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
         <button id="sp-go" class="sp-go" type="submit">搜索</button>
       </form>
       <div class="sp-sugg hidden" id="sp-sugg"></div>
+      <div class="sp-cats hidden" id="sp-cats"></div>
       <div class="sp-section-title">
         <span class="t">推荐</span>
         <span class="hint">收藏 · 最常访问（只读）</span>
@@ -7866,7 +7922,8 @@ window.APP_CONFIG = {
     { code: 'github', labelZh: 'GitHub', labelEn: 'GitHub', url: 'https://github.com/search?q=' },
   ];
 
-  var DEFAULT_LINKS = [
+  // 兜底链接（仅当从 SITES 找不到足够真实站点时填充）
+  var FALLBACK_LINKS = [
     { name: '哔哩哔哩', url: 'https://www.bilibili.com' },
     { name: '知乎', url: 'https://www.zhihu.com' },
     { name: '微博', url: 'https://weibo.com' },
@@ -7880,6 +7937,25 @@ window.APP_CONFIG = {
     { name: '豆瓣', url: 'https://www.douban.com' },
     { name: '抖音', url: 'https://www.douyin.com' },
   ];
+  // 优先从网站自己的 SITES 数据取真实条目（名称匹配），快捷链接与导航站强关联
+  function buildDefaultLinks() {
+    var names = ['哔哩哔哩', '知乎', '微博', '百度', '淘宝', '京东', '腾讯视频', '网易云音乐', 'GitHub', 'CSDN', '豆瓣', '抖音'];
+    var out = [];
+    if (window.SITES && window.SITES.length) {
+      for (var i = 0; i < names.length; i++) {
+        for (var j = 0; j < window.SITES.length; j++) {
+          var s = window.SITES[j];
+          if (s && s.name === names[i]) { out.push({ name: s.name, url: s.url }); break; }
+        }
+      }
+    }
+    // 用兜底补齐到 12 个（去掉已存在的 URL）
+    for (var k = 0; k < FALLBACK_LINKS.length && out.length < 12; k++) {
+      var exists = out.some(function (x) { return x.url === FALLBACK_LINKS[k].url; });
+      if (!exists) out.push(FALLBACK_LINKS[k]);
+    }
+    return out.length ? out : cloneLinks(FALLBACK_LINKS);
+  }
 
   var WALLS = [
     { code: 'aurora', labelZh: '极光', labelEn: 'Aurora' },
@@ -7904,7 +7980,7 @@ window.APP_CONFIG = {
 
   function cloneLinks(a) { return a.map(function (l) { return { name: l.name, url: l.url }; }); }
   function loadState() {
-    var d = { links: cloneLinks(DEFAULT_LINKS), engine: 'local', wall: 'aurora', bingOk: true };
+    var d = { links: buildDefaultLinks(), engine: 'local', wall: 'aurora', bingOk: true };
     try {
       var raw = JSON.parse(localStorage.getItem(SP_KEY) || 'null');
       if (raw) {
@@ -8056,9 +8132,11 @@ window.APP_CONFIG = {
       html += '<a class="sp-link" href="' + esc(l.url) + '" target="_blank" rel="noopener" ' +
         'draggable="' + (editing ? 'true' : 'false') + '" data-idx="' + i + '" title="' + esc(l.name) + '">' +
         '<span class="sp-link-ico">' +
+        '<span class="sp-link-letter">' + esc(l.name.slice(0, 1)) + '</span>' +
         '<img src="https://favicon.im/' + esc(host) + '" alt="" loading="lazy" data-host="' + esc(host) + '" data-src="0" ' +
+        'onload="var l=this.previousSibling;if(l&&l.classList)l.classList.add(\'hide\');" ' +
         'onerror="var e=this;var h=e.getAttribute(\'data-host\');var i=parseInt(e.getAttribute(\'data-src\')||\'0\',10)+1;var ls=[\'https://favicon.im/\'+h,\'https://icons.duckduckgo.com/ip3/\'+h+\'.ico\',\'https://www.google.com/s2/favicons?domain=\'+h+\'&sz=64\'];if(i<ls.length){e.setAttribute(\'data-src\',String(i));e.src=ls[i];}else{e.parentNode.removeChild(e);}">' +
-        '<span class="sp-link-letter">' + esc(l.name.slice(0, 1)) + '</span></span>' +
+        '</span>' +
         '<span class="sp-link-name">' + esc(l.name) + '</span>' +
         (editing ? '<button class="sp-link-del" data-del="' + i + '" type="button">✕</button>' : '') + '</a>';
     }
@@ -8165,6 +8243,34 @@ window.APP_CONFIG = {
     row(hot, 'hot', isEn() ? 'Most visited' : '🔥 最常访问');
   }
 
+  // ---------- 分类直达（快捷链接与网站分类强关联） ----------
+  function renderCatChips() {
+    var box = $('sp-cats');
+    if (!box) return;
+    var tags = (window.SITES_META && window.SITES_META.tags) || [];
+    if (!tags.length) { box.innerHTML = ''; box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    var html = '<span class="sp-cat-label">' + (isEn() ? 'Category' : '分类') + '</span>';
+    // 优先展示收录数量多的前 12 个分类
+    var top = tags.slice().sort(function (a, b) { return (b.count || 0) - (a.count || 0); }).slice(0, 12);
+    for (var i = 0; i < top.length; i++) {
+      html += '<button type="button" class="sp-cat-chip" data-cat="' + esc(top[i].name) + '">' + esc(top[i].name) + '</button>';
+    }
+    box.innerHTML = html;
+  }
+  // 点击分类 → 触发主站分类栏对应 chip（data-cat 即分类名）
+  function gotoCategory(name) {
+    if (!name) return;
+    var chips = document.querySelectorAll('#cat-bar .chip, #cat-dropdown .chip');
+    var clicked = false;
+    for (var i = 0; i < chips.length; i++) {
+      var label = chips[i].querySelector('span:not(.chip-count)');
+      var txt = (label && label.textContent) || '';
+      if (txt.trim() === name) { try { chips[i].click(); clicked = true; } catch (e) {} break; }
+    }
+    closeStartPage(true);
+  }
+
   // ---------- 搜索 / 联想 / 直达 ----------
   function renderSugg() {
     var box = $('sp-sugg'), input = $('sp-input');
@@ -8219,6 +8325,7 @@ window.APP_CONFIG = {
     renderWallPanel();
     renderLinks();
     renderProjection();
+    renderCatChips();
     pickQuote();
     tickClock();
     var inp = $('sp-input'); if (inp) inp.value = '';
@@ -8316,6 +8423,10 @@ window.APP_CONFIG = {
       if (del) { e.preventDefault(); e.stopPropagation(); removeLink(parseInt(del.getAttribute('data-del'), 10)); return; }
       var add = e.target.closest ? e.target.closest('#sp-add-tile') : null;
       if (add) { e.preventDefault(); var man = $('sp-manage'); if (man) man.classList.remove('hidden'); if ($('sp-add-name')) $('sp-add-name').focus(); }
+    });
+    on($('sp-cats'), 'click', function (e) {
+      var b = e.target.closest ? e.target.closest('.sp-cat-chip') : null;
+      if (b) gotoCategory(b.getAttribute('data-cat'));
     });
     bindDrag();
 

@@ -42,7 +42,8 @@
     { code: 'github', labelZh: 'GitHub', labelEn: 'GitHub', url: 'https://github.com/search?q=' },
   ];
 
-  var DEFAULT_LINKS = [
+  // 兜底链接（仅当从 SITES 找不到足够真实站点时填充）
+  var FALLBACK_LINKS = [
     { name: '哔哩哔哩', url: 'https://www.bilibili.com' },
     { name: '知乎', url: 'https://www.zhihu.com' },
     { name: '微博', url: 'https://weibo.com' },
@@ -56,6 +57,25 @@
     { name: '豆瓣', url: 'https://www.douban.com' },
     { name: '抖音', url: 'https://www.douyin.com' },
   ];
+  // 优先从网站自己的 SITES 数据取真实条目（名称匹配），快捷链接与导航站强关联
+  function buildDefaultLinks() {
+    var names = ['哔哩哔哩', '知乎', '微博', '百度', '淘宝', '京东', '腾讯视频', '网易云音乐', 'GitHub', 'CSDN', '豆瓣', '抖音'];
+    var out = [];
+    if (window.SITES && window.SITES.length) {
+      for (var i = 0; i < names.length; i++) {
+        for (var j = 0; j < window.SITES.length; j++) {
+          var s = window.SITES[j];
+          if (s && s.name === names[i]) { out.push({ name: s.name, url: s.url }); break; }
+        }
+      }
+    }
+    // 用兜底补齐到 12 个（去掉已存在的 URL）
+    for (var k = 0; k < FALLBACK_LINKS.length && out.length < 12; k++) {
+      var exists = out.some(function (x) { return x.url === FALLBACK_LINKS[k].url; });
+      if (!exists) out.push(FALLBACK_LINKS[k]);
+    }
+    return out.length ? out : cloneLinks(FALLBACK_LINKS);
+  }
 
   var WALLS = [
     { code: 'aurora', labelZh: '极光', labelEn: 'Aurora' },
@@ -80,7 +100,7 @@
 
   function cloneLinks(a) { return a.map(function (l) { return { name: l.name, url: l.url }; }); }
   function loadState() {
-    var d = { links: cloneLinks(DEFAULT_LINKS), engine: 'local', wall: 'aurora', bingOk: true };
+    var d = { links: buildDefaultLinks(), engine: 'local', wall: 'aurora', bingOk: true };
     try {
       var raw = JSON.parse(localStorage.getItem(SP_KEY) || 'null');
       if (raw) {
@@ -232,9 +252,11 @@
       html += '<a class="sp-link" href="' + esc(l.url) + '" target="_blank" rel="noopener" ' +
         'draggable="' + (editing ? 'true' : 'false') + '" data-idx="' + i + '" title="' + esc(l.name) + '">' +
         '<span class="sp-link-ico">' +
+        '<span class="sp-link-letter">' + esc(l.name.slice(0, 1)) + '</span>' +
         '<img src="https://favicon.im/' + esc(host) + '" alt="" loading="lazy" data-host="' + esc(host) + '" data-src="0" ' +
+        'onload="var l=this.previousSibling;if(l&&l.classList)l.classList.add(\'hide\');" ' +
         'onerror="var e=this;var h=e.getAttribute(\'data-host\');var i=parseInt(e.getAttribute(\'data-src\')||\'0\',10)+1;var ls=[\'https://favicon.im/\'+h,\'https://icons.duckduckgo.com/ip3/\'+h+\'.ico\',\'https://www.google.com/s2/favicons?domain=\'+h+\'&sz=64\'];if(i<ls.length){e.setAttribute(\'data-src\',String(i));e.src=ls[i];}else{e.parentNode.removeChild(e);}">' +
-        '<span class="sp-link-letter">' + esc(l.name.slice(0, 1)) + '</span></span>' +
+        '</span>' +
         '<span class="sp-link-name">' + esc(l.name) + '</span>' +
         (editing ? '<button class="sp-link-del" data-del="' + i + '" type="button">✕</button>' : '') + '</a>';
     }
@@ -341,6 +363,34 @@
     row(hot, 'hot', isEn() ? 'Most visited' : '🔥 最常访问');
   }
 
+  // ---------- 分类直达（快捷链接与网站分类强关联） ----------
+  function renderCatChips() {
+    var box = $('sp-cats');
+    if (!box) return;
+    var tags = (window.SITES_META && window.SITES_META.tags) || [];
+    if (!tags.length) { box.innerHTML = ''; box.classList.add('hidden'); return; }
+    box.classList.remove('hidden');
+    var html = '<span class="sp-cat-label">' + (isEn() ? 'Category' : '分类') + '</span>';
+    // 优先展示收录数量多的前 12 个分类
+    var top = tags.slice().sort(function (a, b) { return (b.count || 0) - (a.count || 0); }).slice(0, 12);
+    for (var i = 0; i < top.length; i++) {
+      html += '<button type="button" class="sp-cat-chip" data-cat="' + esc(top[i].name) + '">' + esc(top[i].name) + '</button>';
+    }
+    box.innerHTML = html;
+  }
+  // 点击分类 → 触发主站分类栏对应 chip（data-cat 即分类名）
+  function gotoCategory(name) {
+    if (!name) return;
+    var chips = document.querySelectorAll('#cat-bar .chip, #cat-dropdown .chip');
+    var clicked = false;
+    for (var i = 0; i < chips.length; i++) {
+      var label = chips[i].querySelector('span:not(.chip-count)');
+      var txt = (label && label.textContent) || '';
+      if (txt.trim() === name) { try { chips[i].click(); clicked = true; } catch (e) {} break; }
+    }
+    closeStartPage(true);
+  }
+
   // ---------- 搜索 / 联想 / 直达 ----------
   function renderSugg() {
     var box = $('sp-sugg'), input = $('sp-input');
@@ -395,6 +445,7 @@
     renderWallPanel();
     renderLinks();
     renderProjection();
+    renderCatChips();
     pickQuote();
     tickClock();
     var inp = $('sp-input'); if (inp) inp.value = '';
@@ -492,6 +543,10 @@
       if (del) { e.preventDefault(); e.stopPropagation(); removeLink(parseInt(del.getAttribute('data-del'), 10)); return; }
       var add = e.target.closest ? e.target.closest('#sp-add-tile') : null;
       if (add) { e.preventDefault(); var man = $('sp-manage'); if (man) man.classList.remove('hidden'); if ($('sp-add-name')) $('sp-add-name').focus(); }
+    });
+    on($('sp-cats'), 'click', function (e) {
+      var b = e.target.closest ? e.target.closest('.sp-cat-chip') : null;
+      if (b) gotoCategory(b.getAttribute('data-cat'));
     });
     bindDrag();
 
