@@ -667,7 +667,7 @@
   // 返回 "hue sat%" 字符串，作为单个 CSS 变量 --card-c / --chip-c，
   // 便于用纯 style 字符串注入（兼容旧环境，同时真实浏览器正常解析）。
   function tagHue(name) {
-    if (!name || !name.length) return '228 70%';
+    if (!name || !name.length) return '228 28%';
     var h = 0;
     for (var i = 0; i < name.length; i++) {
       var c = name.charCodeAt(i);
@@ -675,7 +675,7 @@
     }
     var hue = h % 360;
     if (hue < 14) hue += 20;
-    var sat = 58 + (h % 26);
+    var sat = 28 + (h % 10);
     return hue + ' ' + sat + '%';
   }
   // 返回完整 hsl 字符串，light% 默认 62
