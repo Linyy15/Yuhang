@@ -1,0 +1,29 @@
+/* 屿航 · 共享基础 token
+ * 主站、todo、ip 等页面共用同一套设计语言（背景 / 字体 / 强调色 / 圆角 / 阴影）。
+ * 各页面可在自身 <style> 中覆盖，但基础基调以此为准。 */
+:root {
+  --text: #1c2333;
+  --text-sub: #5b6478;
+  --text-faint: #9aa2b8;
+  --bg-base: #f5f7fc;
+  --accent: #5b6cff;
+  --accent-2: #9a5bff;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 11px;
+  --shadow: 0 10px 36px rgba(38, 46, 80, 0.10);
+  --shadow-lift: 0 8px 22px rgba(38, 46, 80, 0.16);
+  --font: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* 兼容别名（todo 等历史页面沿用旧变量名，此处映射到统一 token） */
+  --bg: var(--bg-base);
+  --panel: #ffffff;
+  --panel-2: #fbfcff;
+  --border: #e6e8f0;
+  --border-soft: #eef0f6;
+  --text-2: var(--text-sub);
+  --faint: var(--text-faint);
+  --accent-soft: #eef0ff;
+  --radius: var(--radius-md);
+  --radius-sm: var(--radius-sm);
+}
