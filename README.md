@@ -1,4 +1,4 @@
-﻿# 🏝️ 屿航 · 探索每一座数字岛屿
+# 🏝️ 屿航 · 探索每一座数字岛屿
 
 一个本地优先的网址导航网站：极简展示风 + 极光背景 + 毛玻璃卡片，多标签分类导航。每一个网站都是一座数字小岛，这里是你的航行起点。
 
@@ -8,7 +8,7 @@
 
 后台管理页：双击打开 `web/admin.html`（纯本地，编辑数据后导出下载替换）。
 
-## 功能一览（v11）
+## 功能一览
 
 - 🏠 **个人主页式头部**：居中大头像 + 名字 + 标语 + 数据统计（收录/标签/收藏）
 - 🎨 **9 套界面风格 × 7 种强调色**：终端 / 杂志 / 粗野主义 / 赛博霓虹 / 像素 / 瑞士极简 / 玻璃拟态 / 手帐 / 3D空间（**默认粗野主义**，风格与颜色独立设置，自动记忆；浅色基底不变）
@@ -43,15 +43,16 @@
 - 🔑 **登录（Supabase）**：邮箱登录、忘记密码、修改密码；**注册需管理员开通**——按「用户名 / 密码」格式发邮件至站长邮箱（面板提供**一键复制申请内容**），等待官方添加账号后即可登录；登录后解锁个人网站 / 收藏 / 最常 / 工作区 / 排行榜 / 为你推荐
 - ☁️ **云同步**：收藏、点击统计、个人网站随账号跨设备同步（RLS 行级权限，个人数据仅自己可见；分享开关可关闭排行榜贡献）
 - 🏆 **全站排行界面**：前三名金银铜领奖台 + 第四名起平铺列表（收藏榜 / 点击榜）
-- 📈 **全网热搜** + 🧰 **工具箱**：热搜聚合、12 个纯本地小工具（见上）
 - ⬆️ **一键回到顶部**：滚动后右下角悬浮按钮，平滑回顶
 - 📣 **网站反馈**：官方站点可一键提交问题反馈；**反馈与「提交收录」都可直接📧发给站长**（在邮箱客户端打开一封发往站长邮箱的邮件）；**后台管理页可查看/删除所有用户反馈**（需站长账号登录）
 - 📜 **免责声明**：进入时弹窗说明（仅一次，可不再提醒）+ 页脚简短免责说明
+- 🐱 **屿咪 IP 角色**：「屿咪 · 数字岛屿领航员」——紫蓝极光渐变毛色、星尖尾巴、圆润大眼的猫系吉祥物；在待办清单中伴随用户，根据任务状态切换开心/惊讶/打盹等表情，点击触发庆祝动画；`web/ip.html` 查看角色图鉴与互动；`web/ip/ip.css` 为独立角色样式
+- 📋 **待办清单**：`web/todo.html` 独立待办页——增删/完成/优先级（高/中/低）/分类标签/进度统计/多维筛选/localStorage 持久化；屿咪角色伴随，完成待办触发庆祝动画；深色模式自适应
 - 🛡️ 所有元素绑定做了空值保护（单个元素缺失不会导致整页脚本崩溃）
 
 ## 数据与测试
 
-- `data/sites.tsv` — 原始网站数据（1462 条，8 列制表符分隔；已治理去重，`data/sites.tsv.bak` 为治理前备份）
+- `data/sites.tsv` — 原始网站数据（1462 条，8 列制表符分隔，UTF-8）
 - `web/js/sites-lib.js` — **公共数据模块**（浏览器 + Node 双端共用，置于 web/js 下保证站点自包含）：TSV 解析、网址修正、去重合并、灰色站点删除、多标签智能分类、序列化（sites.js / sites.tsv）、数据校验
 - `scripts/build.mjs` — CLI 构建入口（复用 `web/js/sites-lib.js`），清洗 + 分类 + 生成 `web/data/sites.js` 与 `data/sites.json`
 - `scripts/clean-tsv.mjs` — **数据源头治理**：按 build 同一套清洗逻辑把 `data/sites.tsv` 就地瘦身（去重/删灰色/归一），`--dry` 仅预览不写文件；原文件自动备份为 `.bak`（`node scripts/clean-tsv.mjs --dry` / `node scripts/clean-tsv.mjs`）
@@ -60,7 +61,7 @@
 - `scripts/test-roundtrip.mjs` — 数据链路回归测试：build 输出与基线逐字节一致 + tsv 导出再生成自洽（`node scripts/test-roundtrip.mjs`）
 - `scripts/smoke-admin.mjs` — 管理页冒烟测试：列表渲染 / 搜索过滤 / 增删改 / 导出链路（`node scripts/smoke-admin.mjs`）
 - `scripts/smoke-app.mjs` — 主页面冒烟测试：启动 / 热搜降级 / 工具箱 / 多引擎搜索（`node scripts/smoke-app.mjs`）
-- `scripts/package.mjs` — **打包成单文件**：把 web/ 的本地 CSS/JS 全部内联为 `dist/index.html`（约 340KB）。Supabase 已改为**按需懒加载**（非阻塞），单文件离线即可打开、浏览/搜索/收藏/工具全可用；登录/云同步/反馈/排行在使用时才动态加载 supabase-js（优先国内可达 CDN）。（`node scripts/package.mjs`）
+- `scripts/package.mjs` — **打包成单文件**：把 web/ 的本地 CSS/JS 全部内联为 `dist/index.html`（约 836 KB）。Supabase 已改为**按需懒加载**（非阻塞），单文件离线即可打开、浏览/搜索/收藏/工具全可用；登录/云同步/反馈/排行在使用时才动态加载 supabase-js（优先国内可达 CDN）。（`node scripts/package.mjs`）
   - **想完全零外链**：下载 supabase-js 的 UMD 包保存为 `web/js/vendor/supabase.js`，再运行 `node scripts/package.mjs`，会一并内联 → 单文件连登录都离线可用。
   - 下载地址（任选其一保存为该文件）：`https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js` 或 `https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js`
 - `scripts/check-package.mjs` — 校验单文件：内联一致 + 真实引导启动 + 渲染卡片（`node scripts/check-package.mjs`）
@@ -72,9 +73,8 @@
 ```
 0827/
 ├── data/
-│   ├── sites.tsv            ← 原始网站数据（2081 条）
-│   ├── sites.json           ← 清洗后的数据（参考用）
-│   └── analysis-report.json ← 数据体检报告
+│   ├── sites.tsv            ← 原始网站数据（1462 条，UTF-8）
+│   └── sites.json           ← 清洗后的数据（参考用）
 ├── scripts/
 │   ├── build.mjs            ← 数据清洗 + 生成站点数据（CLI 构建）
 │   ├── test-search.mjs      ← 搜索/筛选回归测试
@@ -85,15 +85,28 @@
 └── web/                     ← 整个站点，自包含，上传这一整个目录即可部署
     ├── index.html           ← 主页面（双击打开）
     ├── admin.html           ← 后台管理页（双击打开，纯本地）
+    ├── todo.html            ← 待办清单（双击打开，屿咪伴随）
+    ├── ip.html              ← 屿咪角色图鉴 + 互动页（双击打开）
+    ├── ip/
+    │   └── ip.css           ← 屿咪角色独立样式（多页面复用）
     ├── admin/
     │   ├── admin.js         ← 管理页逻辑
     │   └── style.css        ← 管理页样式
     ├── css/style.css        ← 主页面毛玻璃风格样式
     ├── css/startpage.css    ← 青柠风格·整屏起始页样式（复用主站极光/玻璃/主题色）
-    ├── js/app.js            ← 主页面逻辑（搜索/分类/随机/点击统计/登录/云同步）
-    ├── js/startpage.js      ← 整屏起始页逻辑（时钟/多引擎搜索/快捷链接/壁纸，与主站引擎双向同步、投影收藏与最常访问）
-    ├── js/config.js         ← Supabase 项目配置（URL + anon 公钥）
-    └── data/sites.js        ← 构建脚本生成的站点数据（主页面读取它）
+    ├── js/
+    │   ├── state.js         ← 应用状态收口 + 持久化
+    │   ├── tools.js         ← 15 个本地小工具
+    │   ├── search.js        ← 站内模糊搜索 + 多引擎
+    │   ├── cards.js         ← 卡片筛选/推荐/FLIP 动效
+    │   ├── auth.js          ← 登录/收藏/Supabase 云同步
+    │   ├── nav.js           ← 视图切换/排行/热搜/导航
+    │   ├── app.js           ← 胶水层（分类/筛选/工作区/初始化编排）
+    │   ├── startpage.js    ← 整屏起始页逻辑
+    │   ├── config.js        ← Supabase 项目配置（URL + anon 公钥）
+    │   ├── sites-lib.js     ← 公共数据模块（浏览器 + Node 双端）
+    │   └── data/sites.js    ← 构建脚本生成的站点数据（主页面读取）
+    └── ...
 ```
 
 ## 怎么改数据
@@ -125,12 +138,12 @@
 
 后台管理页的「📣 反馈记录」面板可查看所有用户提交的网站反馈（含提交者邮箱、时间），并可删除已处理的反馈。
 
-- 权限模型：新增的 `get_all_feedback()` / `delete_feedback()` 两个 SECURITY DEFINER 函数在服务端校验**站长 JWT 邮箱**（默认 `xvwang99@126.com`），非站长调用返回空，普通用户仍只能看自己的反馈
-- **需要在 Supabase 控制台重新运行** `scripts/supabase-schema.sql`（第 6 节新增，`create or replace` 幂等，可重复执行）
-- 站长邮箱在两处保持一致：`scripts/supabase-schema.sql` 第 6 节 + `web/admin/admin.js` 顶部 `ADMIN_EMAIL`；改邮箱需同步修改两处
+- 权限模型：新增的 `get_all_feedback()` / `delete_feedback()` 两个 SECURITY DEFINER 函数在服务端校验**站长 JWT 邮箱**（`xvwang99@126.com`），非站长调用返回空，普通用户仍只能看自己的反馈
+- **需要在 Supabase 控制台重新运行** `scripts/supabase-schema.sql`（`create or replace` 幂等，可重复执行）
+- 站长登录校验邮箱 `xvwang99@126.com` 在 `web/admin/admin.js`（`ADMIN_EMAIL`）与 `scripts/supabase-schema.sql` 两处保持一致；站内反馈与注册申请收件邮箱 `jubei516206@163.com` 在 `web/js/app.js`（`CONTACT_EMAIL`）与 `web/js/auth.js` 两处保持一致——改任一邮箱需同步核对对应的另一处
 - 打开 `web/admin.html` → 点「📣 反馈记录」→ 用站长账号登录 → 即可看到反馈列表
 
-## 数据清洗记录（2025-02）
+## 数据治理说明
 
 - 合并同网址重复条目 29 组（详见构建时输出的合并明细）
 - 修正 8 条缺失网址、若干可疑网址（详见 `web/js/sites-lib.js` 中的 `FIX_URL` 注释）
