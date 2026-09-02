@@ -84,6 +84,12 @@ const YH = require('../web/js/sites-lib.js');
 global.YH = YH;
 eval(readFileSync('web/data/sites.js', 'utf8'));
 eval(readFileSync('web/js/config.js', 'utf8'));
+eval(readFileSync('web/js/state.js', 'utf8'));
+eval(readFileSync('web/js/tools.js', 'utf8'));
+eval(readFileSync('web/js/search.js', 'utf8'));
+eval(readFileSync('web/js/cards.js', 'utf8'));
+eval(readFileSync('web/js/auth.js', 'utf8'));
+eval(readFileSync('web/js/nav.js', 'utf8'));
 try {
   eval(readFileSync('web/js/app.js', 'utf8'));
   check('app.js 启动无异常', true, '');
@@ -231,7 +237,7 @@ check('卡片已精简（无简介行）', !elCache['grid'].innerHTML.includes('
 check('卡片仅一个标签', (elCache['grid'].innerHTML.match(/class="tag"/g) || []).length <= 450, `(tags=${(elCache['grid'].innerHTML.match(/class="tag"/g) || []).length})`);
 
 // ---------- 15. 注册邮件申请 / 新工具 / 焦点修复 ----------
-const appSrc = fs8.readFileSync('web/js/app.js', 'utf8');
+const appSrc = fs8.readFileSync('web/js/app.js', 'utf8') + '\n' + fs8.readFileSync('web/js/search.js', 'utf8') + '\n' + fs8.readFileSync('web/js/cards.js', 'utf8') + '\n' + fs8.readFileSync('web/js/auth.js', 'utf8') + '\n' + fs8.readFileSync('web/js/nav.js', 'utf8');
 check('注册改为邮件申请', appSrc.includes('jubei516206@163.com') && appSrc.includes('reg_mail_title') && appSrc.includes('mailto:'), '');
 check('工具箱含计算器', tgrid2.includes('计算器'), '');
 check('工具箱含函数图像', tgrid2.includes('函数图像'), '');

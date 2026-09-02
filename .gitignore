@@ -1,0 +1,13 @@
+# 屿航 · git ignore
+# 本地工具/依赖目录，不进仓库
+/.browser-tools
+/.ppt-tools
+node_modules
+/.npm-cache
+# 构建产物，可从 source 重建
+/dist
+# 打磨期回滚备份
+*.prepolish.bak
+# OS / 编辑残留
+.DS_Store
+Thumbs.db

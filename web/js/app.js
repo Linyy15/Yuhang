@@ -1,6 +1,7 @@
 /* ===== 屿航 - 前端逻辑（v11：登录 + 个人网站） ===== */
 (function () {
   'use strict';
+  var S = window.YHState;
 
   // ---------- 性能分级：低端设备降级动效（与 prefers-reduced-motion 互补）
   // 逻辑：reduced-motion 是用户主动选择；low-fx 是设备被动降级（低核数/慢网络/低端 GPU）
@@ -159,7 +160,6 @@
   var editingPersonalId = null; // 正在编辑的个人网站 id（null=新增）
   var keyword = '';
   var currentSite = null;
-  var searchTimer = null;
   var FAV_CAT = '⭐ 收藏';
   var HOT_CAT = '🔥 最常';
   var WS_CAT = '🗂 工作区';
@@ -170,107 +170,68 @@
   var RECENT_CAT = '🕘 最近';
 
   // ---------- 本地存储 ----------
-  var CLICKS_KEY = 'nav_click_count_v1';
-  var FAVS_KEY = 'nav_favs_v1';
-  var THEME_KEY = 'nav_theme_v1';
-  var COLOR_KEY = 'nav_color_v1';
-  var SIZE_KEY = 'nav_grid_size';
-  var SETTINGS_KEY = 'nav_settings_v1';
-  var WORKSPACES_KEY = 'nav_workspaces_v1';
   var DISCLAIMER_KEY = 'nav_disclaimer_v1';
-  var LANG_KEY = 'nav_lang_v1';
-  var ENGINE_KEY = 'nav_engine_v1';
-  var ACCOUNTS_KEY = 'nav_accounts_v1';
   var SESSION_KEY = 'nav_session_v1';
-  var PERSONAL_KEY = 'nav_personal_v1';
 
-  function readJSON(key, fallback) {
-    try {
-      var v = JSON.parse(localStorage.getItem(key));
-      return v == null ? fallback : v;
-    } catch (e) { return fallback; }
-  }
   // 账号数据：按账号隔离（收藏 / 工作区 / 点击统计 均为个人专属）
-  var clicksAll = readJSON(CLICKS_KEY, {});           // 账号 -> { siteId: 次数 }
-  var favsAll = readJSON(FAVS_KEY, {});               // 账号 -> [siteId]
-  var workspacesAll = readJSON(WORKSPACES_KEY, {});   // 账号 -> { wsId: {name, ids} }
-  var clicks = {};      // 当前账号的点击统计
-  var favs = new Set(); // 当前账号的收藏
-  var workspaces = {};  // 当前账号的工作区
-  var theme = localStorage.getItem(THEME_KEY) || 'brutalism';
-  var color = localStorage.getItem(COLOR_KEY) || 'blue';
-  var gridSize = localStorage.getItem(SIZE_KEY) || 'md';
-  var settings = Object.assign({ petals: true, snow: true, cursorFx: false, showIntro: true, shareStats: true, cardIcon: 'favicon' }, readJSON(SETTINGS_KEY, {}));
-  var lang = localStorage.getItem(LANG_KEY) || 'zh';
-  var accounts = readJSON(ACCOUNTS_KEY, {});
-  var currentUser = null; // 由 Supabase 会话驱动（登录后为邮箱/用户ID）
-  var personalSites = readJSON(PERSONAL_KEY, {});
 
   function loadAccountData() {
-    if (currentUser) {
-      clicks = clicksAll[currentUser] || {};
-      favs = new Set(favsAll[currentUser] || []);
-      workspaces = workspacesAll[currentUser] || {};
+    if (S.currentUser) {
+      S.clicks = S.clicksAll[S.currentUser] || {};
+      S.favs = new Set(S.favsAll[S.currentUser] || []);
+      S.workspaces = S.workspacesAll[S.currentUser] || {};
     } else {
-      clicks = {};
-      favs = new Set();
-      workspaces = {};
+      S.clicks = {};
+      S.favs = new Set();
+      S.workspaces = {};
     }
   }
   function saveAccountData() {
-    if (currentUser) {
-      clicksAll[currentUser] = clicks;
-      favsAll[currentUser] = Array.from(favs);
-      workspacesAll[currentUser] = workspaces;
+    if (S.currentUser) {
+      S.clicksAll[S.currentUser] = S.clicks;
+      S.favsAll[S.currentUser] = Array.from(S.favs);
+      S.workspacesAll[S.currentUser] = S.workspaces;
     }
     try {
-      localStorage.setItem(CLICKS_KEY, JSON.stringify(clicksAll));
-      localStorage.setItem(FAVS_KEY, JSON.stringify(favsAll));
-      localStorage.setItem(WORKSPACES_KEY, JSON.stringify(workspacesAll));
+      S.persist.accountData();
     } catch (e) { /* 忽略 */ }
-    scheduleCloudPush();
+    YHAuth.scheduleCloudPush();
   }
 
-  function saveSettings() { try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); } catch (e) {} }
-  function saveAccounts() { try { localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(accounts)); } catch (e) {} }
-  function savePersonal() { try { localStorage.setItem(PERSONAL_KEY, JSON.stringify(personalSites)); } catch (e) {} scheduleCloudPush(); }
+  function saveSettings() { try { S.persist.settings(); } catch (e) {} }
+  function saveAccounts() { try { S.persist.accounts(); } catch (e) {} }
+  function savePersonal() { try { S.persist.personal(); } catch (e) {} YHAuth.scheduleCloudPush(); }
 
   // 最近访问 / 站内搜索热词（轻量本地记录，游客也可用，不随账号走）
-  var RECENT_KEY = 'nav_recent_v1';
-  var HOTWORDS_KEY = 'nav_hotwords_v1';
-  var recentIds = readJSON(RECENT_KEY, []);
-  var hotWords = readJSON(HOTWORDS_KEY, {}); // { 词: 次数 }
-  function saveRecent() { try { localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds)); } catch (e) {} }
-  function saveHotWords() { try { localStorage.setItem(HOTWORDS_KEY, JSON.stringify(hotWords)); } catch (e) {} }
+  function saveRecent() { try { S.persist.recent(); } catch (e) {} }
+  function saveHotWords() { try { S.persist.hotWords(); } catch (e) {} }
   function addRecent(id) {
-    var i = recentIds.indexOf(id);
-    if (i !== -1) recentIds.splice(i, 1);
-    recentIds.unshift(id);
-    if (recentIds.length > 30) recentIds.length = 30;
+    var i = S.recentIds.indexOf(id);
+    if (i !== -1) S.recentIds.splice(i, 1);
+    S.recentIds.unshift(id);
+    if (S.recentIds.length > 30) S.recentIds.length = 30;
     saveRecent();
   }
-  var SEARCH_HISTORY_KEY = 'nav_search_hist_v1';
-  var searchHistory = readJSON(SEARCH_HISTORY_KEY, []); // [{ q, ts }] 最近 10 条
-  function saveSearchHistory() { try { localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(searchHistory)); } catch (e) {} }
+  function saveSearchHistory() { try { S.persist.searchHistory(); } catch (e) {} }
   // 记录最近搜索词：去重置顶，最多 10 条；空词不记
   function recordSearchHistory(q) {
     q = String(q || '').trim();
     if (!q) return;
-    searchHistory = searchHistory.filter(function (h) { return h.q.toLowerCase() !== q.toLowerCase(); });
-    searchHistory.unshift({ q: q, ts: Date.now() });
-    if (searchHistory.length > 10) searchHistory.length = 10;
+    S.searchHistory = S.searchHistory.filter(function (h) { return h.q.toLowerCase() !== q.toLowerCase(); });
+    S.searchHistory.unshift({ q: q, ts: Date.now() });
+    if (S.searchHistory.length > 10) S.searchHistory.length = 10;
     saveSearchHistory();
   }
   function recordHotWord(q) {
     q = String(q || '').trim().toLowerCase();
     if (!q) return;
-    hotWords[q] = (hotWords[q] || 0) + 1;
-    var keys = Object.keys(hotWords);
+    S.hotWords[q] = (S.hotWords[q] || 0) + 1;
+    var keys = Object.keys(S.hotWords);
     if (keys.length > 60) {
-      keys.sort(function (a, b) { return hotWords[b] - hotWords[a]; });
+      keys.sort(function (a, b) { return S.hotWords[b] - S.hotWords[a]; });
       var keep = keys.slice(0, 60), next = {};
-      keep.forEach(function (k) { next[k] = hotWords[k]; });
-      hotWords = next;
+      keep.forEach(function (k) { next[k] = S.hotWords[k]; });
+      S.hotWords = next;
     }
     saveHotWords();
   }
@@ -279,14 +240,14 @@
   SITES.forEach(function (s) { siteById[s.id] = s; });
   function siteOf(id) {
     if (siteById[id]) return siteById[id];
-    if (currentUser) {
-      var mine = personalSites[currentUser] || [];
+    if (S.currentUser) {
+      var mine = S.personalSites[S.currentUser] || [];
       for (var i = 0; i < mine.length; i++) if (mine[i].id === id) return mine[i];
     }
     return null;
   }
   function allSites() {
-    var mine = currentUser ? (personalSites[currentUser] || []) : [];
+    var mine = S.currentUser ? (S.personalSites[S.currentUser] || []) : [];
     return SITES.concat(mine);
   }
 
@@ -472,6 +433,7 @@
       zh: '本导航为个人兴趣收集，仅供学习交流，不构成任何推广或担保；使用各网站请遵守其条款与法律法规。',
       en: 'A personal interest collection for learning and sharing only — not an endorsement or guarantee. Use each site at your own discretion and follow the law.'
     },
+    slogan: { zh: '探索每一座数字岛屿', en: 'Explore every digital island' },
     // 登录 / 个人网站
     login: { zh: '🔑 登录', en: '🔑 Sign in' },
     logout: { zh: '退出登录', en: 'Sign out' },
@@ -695,10 +657,45 @@
   function t(k) {
     var v = DICT[k];
     if (!v) return k;
-    return v[lang] != null ? v[lang] : v['zh'];
+    return v[S.lang] != null ? v[S.lang] : v['zh'];
   }
-  function tagLabel(name) { return lang === 'en' && TAG_EN[name] ? TAG_EN[name] : name; }
-  function nameLabel(s) { return lang === 'en' && NAME_EN[s.name] ? NAME_EN[s.name] : s.name; }
+  function tagLabel(name) { return S.lang === 'en' && TAG_EN[name] ? TAG_EN[name] : name; }
+  function nameLabel(s) { return S.lang === 'en' && NAME_EN[s.name] ? NAME_EN[s.name] : s.name; }
+
+  // 类目色：按首个标签（无则按 category）名哈希为稳定的 HSL 色相 + 饱和度，
+  // 用于卡片顶部渐变条、图标光晕环、侧栏筛选色点。同一标签全站同色。
+  // 返回 "hue sat%" 字符串，作为单个 CSS 变量 --card-c / --chip-c，
+  // 便于用纯 style 字符串注入（兼容旧环境，同时真实浏览器正常解析）。
+  function tagHue(name) {
+    if (!name || !name.length) return '228 70%';
+    var h = 0;
+    for (var i = 0; i < name.length; i++) {
+      var c = name.charCodeAt(i);
+      h = (h * 31 + c) >>> 0;
+    }
+    var hue = h % 360;
+    if (hue < 14) hue += 20;
+    var sat = 58 + (h % 26);
+    return hue + ' ' + sat + '%';
+  }
+  // 返回完整 hsl 字符串，light% 默认 62
+  function tagHsl(name, l) { return 'hsl(' + tagHue(name) + (l == null ? ' 62%' : ' ' + l + '%') + ')'; }
+  // 数字滚动动画（统计页 + hero）
+  function countUp(el) {
+    if (!el) return;
+    var target = parseInt(el.dataset.target, 10);
+    if (isNaN(target)) return;
+    var start = 0, t0 = null, dur = 900;
+    function step(ts) {
+      if (t0 === null) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(start + (target - start) * eased);
+      if (p < 1) requestAnimationFrame(step);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(step);
+  }
   function applyLang() {
     var nodes = document.querySelectorAll('[data-i18n]');
     for (var i = 0; i < nodes.length; i++) {
@@ -711,25 +708,25 @@
     descTags = $('desc-tags');
     if (searchInput) searchInput.placeholder = t('search_ph');
     if (hotFilter) hotFilter.placeholder = t('hot_filter_ph');
-    renderEngineMenu();
-    syncEngineUI();
+    YHSearch.renderEngineMenu();
+    YHSearch.syncEngineUI();
     if (sStyle) {
       var opts = sStyle.querySelectorAll('.style-opt');
       for (var j = 0; j < opts.length; j++) {
         var sv = opts[j].getAttribute('data-style');
         var nm = opts[j].querySelector('.style-name');
-        if (nm && STYLE_NAME[sv]) nm.textContent = STYLE_NAME[sv][lang] || STYLE_NAME[sv]['zh'];
+        if (nm && STYLE_NAME[sv]) nm.textContent = STYLE_NAME[sv][S.lang] || STYLE_NAME[sv]['zh'];
       }
     }
-    updateLoginBtn();
+    YHAuth.updateLoginBtn();
     renderCats();
     renderFilterBar();
-    renderGrid();
+    YHCards.render();
     if (modal && !modal.hidden && currentSite) renderModal();
   }
   function setLang(l) {
-    lang = l;
-    try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+    S.lang = l;
+    try { S.persist.lang(); } catch (e) {}
     applyLang();
     syncThemeUI();
   }
@@ -739,549 +736,39 @@
     setLang(btn.getAttribute('data-lang'));
   });
 
-  // ---------- 登录 / 注册（邮箱 + 密码 + 确认密码 + 密码强度与风险提示） ----------
-  // Supabase 按需懒加载：页面不依赖外部脚本即可打开（离线可用），
-  // 使用云功能时才动态注入 supabase-js（需联网，优先国内可达 CDN）。
-  var SUPABASE_CDNS = [
-    'https://registry.npmmirror.com/@supabase/supabase-js/2/files/dist/umd/supabase.min.js',
-    'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
-    'https://unpkg.com/@supabase/supabase-js@2',
-  ];
-  var supabaseClient = null;
-  var _supabasePromise = null;
-  function loadSupabaseLib() {
-    if (_supabasePromise) return _supabasePromise;
-    _supabasePromise = new Promise(function (resolve) {
-      if (window.supabase) return resolve();
-      var urls = SUPABASE_CDNS.slice();
-      function tryNext() {
-        if (!urls.length || !document || !document.createElement) return resolve();
-        var s = document.createElement('script');
-        s.src = urls.shift();
-        s.onload = function () { if (window.supabase) resolve(); else tryNext(); };
-        s.onerror = function () { tryNext(); };
-        if (document.head) document.head.appendChild(s); else tryNext();
-      }
-      tryNext();
-    });
-    return _supabasePromise;
-  }
-  function ensureSupabase() {
-    return loadSupabaseLib().then(function () {
-      if (supabaseClient) return supabaseClient;
-      if (window.supabase && window.APP_CONFIG && window.APP_CONFIG.supabaseUrl) {
-        try { supabaseClient = window.supabase.createClient(window.APP_CONFIG.supabaseUrl, window.APP_CONFIG.supabaseAnonKey); }
-        catch (e) { supabaseClient = null; }
-      }
-      return supabaseClient;
-    });
-  }
-  var supabaseUser = null;
-  var authMode = 'login'; // 'login' | 'register'
-
-  function setLoginMsg(html) { if (loginMsg) loginMsg.innerHTML = html; }
-  function authErrorMsg(err) {
-    var m = (err && err.message) || '';
-    if (/invalid login credentials/i.test(m)) return t('err_bad_creds');
-    if (/email not confirmed/i.test(m)) return t('err_not_confirmed');
-    if (/already registered/i.test(m)) return t('err_already_registered');
-    if (/rate limit/i.test(m)) return t('err_rate_limit');
-    return m;
-  }
-  function updateLoginBtn() {
-    btnLogin.forEach(function (b) { b.innerHTML = currentUser ? '👤 ' + escapeHtml(currentUser) : t('login'); });
-    if (btnChangePass) btnChangePass.hidden = !currentUser;
-  }
-  function loginDone() {
-    loadAccountData();
-    closeLogin();
-    updateLoginBtn();
-    renderCats();
-    renderFilterBar();
-    renderGrid();
-  }
-  function logout() {
-    currentUser = null;
-    if (supabaseClient) supabaseClient.auth.signOut().catch(function () {});
-    if (activeCat === MY_CAT || activeCat === FAV_CAT || activeCat === HOT_CAT || activeCat === WS_CAT || activeCat === RECENT_CAT) activeCat = '全部';
-    activeWs = null;
-    loadAccountData();
-    updateLoginBtn();
-    renderCats();
-    renderFilterBar();
-    renderGrid();
-  }
-  function openLogin(hint) {
-    setLoginMsg('');
-    loginModal.hidden = false;
-    renderAuthForm();
-    if (hint && loginMsg) loginMsg.innerHTML = hint;
-  }
-  function closeLogin() { loginModal.hidden = true; }
-
-  // 密码强度评分
-  function passwordStrength(p) {
-    var score = 0, tips = [];
-    if (!p) return { score: 0, label: '', tips: [] };
-    if (p.length < 8) tips.push(t('pw_short')); else score += 1;
-    if (/[a-z]/.test(p)) score += 1; else tips.push(t('pw_lower'));
-    if (/[A-Z]/.test(p)) score += 1; else tips.push(t('pw_upper'));
-    if (/[0-9]/.test(p)) score += 1; else tips.push(t('pw_num'));
-    if (/[^A-Za-z0-9]/.test(p)) score += 1; else tips.push(t('pw_special'));
-    var label = score >= 5 ? t('pw_strong') : (score >= 3 ? t('pw_medium') : t('pw_weak'));
-    return { score: Math.min(score, 5), label: label, tips: tips };
-  }
-
-  function renderAuthForm() {
-    if (!loginBody) return;
-    setLoginMsg('');
-    var isReg = authMode === 'register';
-    var isReset = authMode === 'reset';
-    if (isReset) {
-      // 找回密码：邮箱 + 发送重置邮件
-      loginBody.innerHTML =
-        '<div class="form">' +
-          '<input id="rs-email" type="email" placeholder="' + t('email_ph') + '" autocomplete="off">' +
-          '<button id="rs-send" class="btn btn-primary">' + t('send_reset') + '</button>' +
-          '<button id="rs-back" class="btn btn-ghost">' + t('back_login') + '</button>' +
-        '</div>';
-      var rsEmail = loginBody.querySelector('#rs-email');
-      var rsSend = loginBody.querySelector('#rs-send');
-      var rsBack = loginBody.querySelector('#rs-back');
-      if (rsSend) rsSend.addEventListener('click', function () {
-        var email = (rsEmail.value || '').trim();
-        if (!email) { setLoginMsg(t('login_need')); return; }
-        ensureSupabase().then(function (client) {
-          if (!client) { setLoginMsg(t('no_supabase')); return; }
-          client.auth.resetPasswordForEmail(email, {
-            redirectTo: window.location.origin + window.location.pathname
-          }).then(function (res) {
-            if (res.error) { setLoginMsg(t('auth_err') + ': ' + authErrorMsg(res.error)); return; }
-            setLoginMsg(t('reset_sent'));
-          });
-        });
-      });
-      if (rsBack) rsBack.addEventListener('click', function () {
-        authMode = 'login';
-        renderAuthForm();
-      });
-      return;
-    }
-    if (isReg) {
-      // 注册改为邮件申请：按「用户名 / 密码」格式发邮件，等待管理员开通
-      var ownerMail = 'jubei516206@163.com';
-      var mailto = 'mailto:' + ownerMail +
-        '?subject=' + encodeURIComponent('屿航注册申请') +
-        '&body=' + encodeURIComponent('用户名：\n密码：\n\n（请按以上格式填写，等待官方添加账号后即可登录）');
-      loginBody.innerHTML =
-        '<div class="reg-mail">' +
-          '<div class="reg-mail-icon">📮</div>' +
-          '<p class="reg-mail-title">' + t('reg_mail_title') + '</p>' +
-          '<p class="reg-mail-text">' + t('reg_mail_text') + '</p>' +
-          '<div class="reg-mail-fmt">' + t('reg_mail_fmt') + '</div>' +
-          '<div class="reg-mail-mail">' + ownerMail + '</div>' +
-          '<div class="form-actions">' +
-            '<a class="btn btn-primary" href="' + mailto + '">' + t('reg_mail_btn') + '</a>' +
-            '<button id="au-copy-mail" class="btn btn-ghost">' + t('reg_mail_copy') + '</button>' +
-            '<button id="au-copy-content" class="btn btn-ghost">' + t('reg_mail_copy_content') + '</button>' +
-          '</div>' +
-          '<button id="au-toggle" class="btn btn-ghost">' + t('to_login') + '</button>' +
-        '</div>';
-      var toggleEl2 = loginBody.querySelector('#au-toggle');
-      if (toggleEl2) toggleEl2.addEventListener('click', function () {
-        authMode = 'login';
-        renderAuthForm();
-      });
-      var copyMailEl = loginBody.querySelector('#au-copy-mail');
-      if (copyMailEl) copyMailEl.addEventListener('click', function () {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(ownerMail).catch(function () {});
-        }
-        setLoginMsg(t('reg_mail_copied'));
-      });
-      var copyContentEl = loginBody.querySelector('#au-copy-content');
-      if (copyContentEl) copyContentEl.addEventListener('click', function () {
-        var content = '屿航注册申请\n\n用户名：你的用户名\n密码：你的密码\n\n（请按以上格式填写，等待官方添加账号后即可登录）';
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(content).catch(function () {});
-        }
-        setLoginMsg(t('reg_mail_content_copied'));
-      });
-      return;
-    }
-    loginBody.innerHTML =
-      '<div class="form">' +
-        '<input id="au-email" type="email" placeholder="' + t('email_ph') + '" autocomplete="off">' +
-        '<div class="pw-field">' +
-          '<input id="au-pass" type="password" placeholder="' + t('pass_ph') + '" autocomplete="new-password">' +
-          '<button type="button" class="pw-eye" data-target="au-pass" title="' + t('pw_show') + '">👁</button>' +
-        '</div>' +
-        (isReg
-          ? '<div class="pw-meter" id="au-meter">' +
-              '<div class="pw-bar"><i id="au-bar"></i></div>' +
-              '<div class="pw-meta"><span id="au-strength" class="pw-strength"></span><span id="au-hints" class="pw-hints"></span></div>' +
-            '</div>' +
-            '<div class="pw-field">' +
-              '<input id="au-pass2" type="password" placeholder="' + t('login_pass2_ph') + '" autocomplete="new-password">' +
-              '<button type="button" class="pw-eye" data-target="au-pass2" title="' + t('pw_show') + '">👁</button>' +
-            '</div>'
-          : '') +
-        '<div class="form-actions">' +
-          '<button id="au-submit" class="btn btn-primary">' + (isReg ? t('email_register') : t('email_login')) + '</button>' +
-          '<button id="au-toggle" class="btn btn-ghost">' + (isReg ? t('to_login') : t('to_register')) + '</button>' +
-        '</div>' +
-        (!isReg ? '<button id="au-forgot" class="link-btn">' + t('forgot_pass') + '</button>' : '') +
-        '<div class="form-hint">' + t('login_hint') + '</div>' +
-      '</div>';
-    var emailEl = loginBody.querySelector('#au-email');
-    var passEl = loginBody.querySelector('#au-pass');
-    var pass2El = loginBody.querySelector('#au-pass2');
-    var barEl = loginBody.querySelector('#au-bar');
-    var strengthEl = loginBody.querySelector('#au-strength');
-    var hintsEl = loginBody.querySelector('#au-hints');
-    var submitEl = loginBody.querySelector('#au-submit');
-    var toggleEl = loginBody.querySelector('#au-toggle');
-    var forgotEl = loginBody.querySelector('#au-forgot');
-
-    if (passEl && isReg) passEl.addEventListener('input', function () {
-      var st = passwordStrength(passEl.value);
-      if (!barEl) return;
-      barEl.style.width = (st.score * 20) + '%';
-      barEl.className = 'bar-' + (st.score >= 5 ? 'strong' : (st.score >= 3 ? 'medium' : 'weak'));
-      if (strengthEl) strengthEl.textContent = st.label ? (t('pw_strength_label') + '：' + st.label) : '';
-      if (hintsEl) hintsEl.textContent = st.tips.map(function (x) { return x; }).join(' · ');
-    });
-    if (forgotEl) forgotEl.addEventListener('click', function () {
-      authMode = 'reset';
-      renderAuthForm();
-    });
-    if (toggleEl) toggleEl.addEventListener('click', function () {
-      authMode = isReg ? 'login' : 'register';
-      renderAuthForm();
-    });
-    if (submitEl) submitEl.addEventListener('click', function () {
-      var email = (emailEl.value || '').trim();
-      var pass = passEl.value;
-      if (!email || !pass) { setLoginMsg(t('login_need')); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setLoginMsg(t('email_invalid')); return; }
-      if (isReg) {
-        if (pass.length < 8) { setLoginMsg(t('pw_short_err')); return; }
-        if (pass !== pass2El.value) { setLoginMsg(t('login_mismatch')); return; }
-        ensureSupabase().then(function (client) {
-          if (!client) { setLoginMsg(t('no_supabase')); return; }
-          client.auth.signUp({ email: email, password: pass }).then(function (res) {
-            if (res.error) { setLoginMsg(t('auth_err') + ': ' + authErrorMsg(res.error)); return; }
-            if (res.data && res.data.session) loginDone();
-            else setLoginMsg(t('confirm_email'));
-          });
-        });
-      } else {
-        ensureSupabase().then(function (client) {
-          if (!client) { setLoginMsg(t('no_supabase')); return; }
-          client.auth.signInWithPassword({ email: email, password: pass }).then(function (res) {
-            if (res.error) { setLoginMsg(t('auth_err') + ': ' + authErrorMsg(res.error)); return; }
-            loginDone();
-          });
-        });
-      }
-    });
-  }
-
-  on(loginClose, 'click', closeLogin);
-  // 密码显示/隐藏（全局委托，登录/修改密码弹窗通用）
-  document.addEventListener('click', function (e) {
-    var eye = e.target.closest ? e.target.closest('.pw-eye') : null;
-    if (!eye) return;
-    var target = document.getElementById(eye.getAttribute('data-target'));
-    if (!target) return;
-    var show = target.type === 'password';
-    target.type = show ? 'text' : 'password';
-    eye.textContent = show ? '🙈' : '👁';
-    eye.title = show ? t('pw_hide') : t('pw_show');
-  });
-  on(loginModal, 'click', function (e) { if (e.target === loginModal) closeLogin(); });
-  btnLogin.forEach(function (b) { on(b, 'click', function () {
-    if (!currentUser) { openLogin(); return; }
-    loginMenu.hidden = !loginMenu.hidden;
-  }); });
-  on(loginMenu, 'click', function (e) {
-    var b = e.target.closest ? e.target.closest('[data-login-action]') : null;
-    if (!b) return;
-    var act = b.getAttribute('data-login-action');
-    loginMenu.hidden = true;
-    if (act === 'my') {
-      activeCat = MY_CAT;
-      selectedTags.clear();
-      activeWs = null;
-      renderCats();
-      renderFilterBar();
-      renderGrid();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (act === 'add') {
-      openAdd();
-    } else if (act === 'logout') {
-      logout();
-    }
-  });
-  document.addEventListener('click', function (e) {
-    if (loginMenu && !loginMenu.hidden && !(e.target.closest && e.target.closest('.theme-wrap'))) loginMenu.hidden = true;
-  });
-
-  // ---------- 修改密码（Supabase updateUser） ----------
-  on(btnChangePass, 'click', function () {
-    if (!currentUser) { openLogin(t('need_login_fav')); return; }
-    passNew.value = '';
-    passNew2.value = '';
-    passMsg.innerHTML = '';
-    passBar.style.width = '0';
-    passBar.className = '';
-    passStrength.textContent = '';
-    passHints.textContent = '';
-    passModal.hidden = false;
-  });
-  on(passClose, 'click', function () { passModal.hidden = true; });
-  on(passModal, 'click', function (e) { if (e.target === passModal) passModal.hidden = true; });
-  on(passNew, 'input', function () {
-    var st = passwordStrength(passNew.value);
-    passBar.style.width = (st.score * 20) + '%';
-    passBar.className = 'bar-' + (st.score >= 5 ? 'strong' : (st.score >= 3 ? 'medium' : 'weak'));
-    passStrength.textContent = st.label ? (t('pw_strength_label') + '：' + st.label) : '';
-    passHints.textContent = st.tips.join(' · ');
-  });
-  on(passSubmit, 'click', function () {
-    var p = passNew.value;
-    if (p.length < 8) { passMsg.innerHTML = t('pw_short_err'); return; }
-    if (p !== passNew2.value) { passMsg.innerHTML = t('login_mismatch'); return; }
-    ensureSupabase().then(function (client) {
-      if (!client) { passMsg.innerHTML = t('no_supabase'); return; }
-      client.auth.updateUser({ password: p }).then(function (res) {
-        if (res.error) { passMsg.innerHTML = t('auth_err') + ': ' + authErrorMsg(res.error); return; }
-        passMsg.innerHTML = t('pass_changed');
-        setTimeout(function () { passModal.hidden = true; }, 1200);
-      });
-    });
-  });
-
-  // ---------- 收藏管理（含批量操作） ----------
-  var favSel = new Set(); // 批量选中的收藏 id
-  function renderFavList() {
-    if (!favList) return;
-    var ids = Array.from(favs);
-    if (!ids.length) { favList.innerHTML = '<div class="ws-empty">' + t('empty_fav') + '</div>'; updateFavBatchUI(); return; }
-    favList.innerHTML = ids.map(function (id) {
-      var s = siteOf(id);
-      var nm = s ? nameLabel(s) : id;
-      var checked = favSel.has(id) ? ' checked' : '';
-      return '<div class="fav-item' + (checked ? ' sel' : '') + '"><input type="checkbox" class="fav-check" data-fav-check="' + escapeHtml(id) + '"' + checked + '><span class="fav-name">' + escapeHtml(nm) + '</span>' +
-        '<button class="btn btn-ghost" data-fav-rm="' + escapeHtml(id) + '">✕</button></div>';
-    }).join('');
-    updateFavBatchUI();
-  }
-  // 更新批量操作条状态（计数 + 工作区下拉 + 全选框）
-  function updateFavBatchUI() {
-    var countEl = $('fav-sel-count');
-    if (countEl) countEl.textContent = favSel.size ? t('fav_sel_n').replace('{n}', favSel.size) : '';
-    var selAll = $('fav-selall');
-    if (selAll) { selAll.checked = favs.size > 0 && favSel.size === favs.size; }
-    var wsSel = $('fav-batch-ws');
-    if (wsSel) {
-      var opts = '<option value="__new">' + t('fav_batch_ws_new') + '</option>' +
-        Object.keys(workspaces).map(function (id) {
-          return '<option value="' + escapeHtml(id) + '">' + escapeHtml(workspaces[id].name) + '</option>';
-        }).join('');
-      if (wsSel.innerHTML !== opts) { wsSel.innerHTML = opts; }
-    }
-  }
-  function openFavManage() {
-    if (!currentUser) { openLogin(t('need_login_fav')); return; }
-    renderFavList();
-    favModal.hidden = false;
-  }
-  on(favClose, 'click', function () { favModal.hidden = true; });
-  on(favModal, 'click', function (e) { if (e.target === favModal) favModal.hidden = true; });
-  on(favList, 'click', function (e) {
-    var b = e.target.closest ? e.target.closest('[data-fav-rm]') : null;
-    if (!b) return;
-    favs.delete(b.getAttribute('data-fav-rm'));
-    saveAccountData();
-    renderFavList();
-    renderCats();
-    renderGrid();
-  });
-  on(favClear, 'click', function () {
-    if (!window.confirm(t('clear_confirm'))) return;
-    favs.clear();
-    saveAccountData();
-    renderFavList();
-    renderCats();
-    renderGrid();
-  });
-
-  // 收藏批量操作：勾选 / 全选 / 批量移除 / 批量导出 / 批量移入工作区
-  on(favList, 'change', function (e) {
-    var cb = e.target && e.target.matches && e.target.matches('[data-fav-check]') ? e.target : null;
-    if (!cb) return;
-    var id = cb.getAttribute('data-fav-check');
-    if (cb.checked) favSel.add(id); else favSel.delete(id);
-    renderFavList();
-  });
-  on($('fav-selall'), 'change', function (e) {
-    if (e.target.checked) {
-      Array.from(favs).forEach(function (id) { favSel.add(id); });
-    } else {
-      favSel.clear();
-    }
-    renderFavList();
-  });
-  on($('fav-batch-remove'), 'click', function () {
-    if (!favSel.size) { showMsg(t('fav_sel_empty')); return; }
-    if (!window.confirm(t('fav_batch_remove_confirm').replace('{n}', favSel.size))) return;
-    favSel.forEach(function (id) { favs.delete(id); });
-    favSel.clear();
-    saveAccountData();
-    renderFavList();
-    renderCats();
-    renderGrid();
-    showMsg(t('fav_batch_done'));
-  });
-  on($('fav-batch-export'), 'click', function () {
-    if (!favSel.size) { showMsg(t('fav_sel_empty')); return; }
-    var chosen = new Set(favSel);
-    // 导出选中收藏为书签 HTML（复用现有生成逻辑，但限定所选集合）
-    function exportSelBookmarks() {
-      var items = allSites().filter(function (s) { return chosen.has(s.id); });
-      var lines = items.map(function (s) {
-        return '    <DT><A HREF="' + escapeHtml(s.url || '') + '">' + escapeHtml(nameLabel(s)) + '</A>';
-      });
-      var html =
-        '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n' +
-        '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n' +
-        '<TITLE>' + t('export_bm') + '</TITLE>\n' +
-        '<H1>' + t('export_bm') + '</H1>\n' +
-        '<DL><p>\n  <DT><H3>' + t('export_bm') + '</H3>\n  <DL><p>\n' +
-        lines.join('\n') +
-        '\n  </DL><p>\n</DL><p>\n';
-      downloadText('yuhang-bookmarks.html', html, 'text/html');
-      showMsg(t('bm_exported'));
-    }
-    exportSelBookmarks();
-  });
-  on($('fav-batch-ws'), 'change', function (e) {
-    var val = e.target.value;
-    if (!val || !favSel.size) { e.target.value = '__new'; return; }
-    var targetId = val;
-    if (val === '__new') {
-      var name = window.prompt(t('fav_batch_ws_prompt'));
-      if (!name || !name.trim()) { return; }
-      targetId = 'w' + Date.now();
-      workspaces[targetId] = { name: name.trim(), ids: [] };
-    }
-    var ws = workspaces[targetId];
-    if (!ws) return;
-    favSel.forEach(function (id) {
-      if (ws.ids.indexOf(id) === -1) ws.ids.push(id);
-    });
-    saveAccountData();
-    renderCats();
-    renderGrid();
-    showMsg(t('fav_batch_ws_done').replace('{n}', favSel.size));
-    e.target.value = '__new';
-  });
-  // 收藏「一键全部打开」（超过 8 个先确认，避免误开一堆标签页）
-  if (favOpenAll) favOpenAll.addEventListener('click', function () {
-    openSitesInTabs(allSites().filter(function (s) { return favs.has(s.id); }));
-  });
-  function openSitesInTabs(list) {
-    var urls = [];
-    list.forEach(function (s) { if (s && s.url) urls.push(s.url); });
-    if (!urls.length) return;
-    if (urls.length > 8 && !window.confirm(t('open_all_confirm').replace('{n}', urls.length))) return;
-    urls.forEach(function (u) { window.open(u, '_blank'); });
-  }
-
-  // ---------- 云端同步（数据跟账号走；RLS 保证仅本人可见） ----------
-  var cloudTimer = null;
-  function cloudUid() { return supabaseUser ? supabaseUser.id : null; }
-  function pullFromCloud() {
-    if (!supabaseClient || !currentUser || !cloudUid()) return Promise.resolve(false);
-    var u = cloudUid();
-    return Promise.all([
-      supabaseClient.from('favorites').select('site_id').eq('user_id', u),
-      supabaseClient.from('clicks').select('site_id,count').eq('user_id', u),
-      supabaseClient.from('personal_sites').select('*').eq('user_id', u)
-    ]).then(function (res) {
-      favsAll[currentUser] = (res[0].data || []).map(function (r) { return r.site_id; });
-      var c = {};
-      (res[1].data || []).forEach(function (r) { c[r.site_id] = r.count; });
-      clicksAll[currentUser] = c;
-      personalSites[currentUser] = (res[2].data || []).map(function (r) {
-        return { id: r.id, owner: currentUser, name: r.name, fullName: r.name, url: r.url, brief: r.brief || '', detail: '', category: '', tags: r.tags || [], vpn: false, source: 'personal' };
-      });
-      loadAccountData();
-      return true;
-    }).catch(function () { return false; });
-  }
-  function pushFavs() {
-    if (!supabaseClient || !currentUser || !cloudUid() || !settings.shareStats) return Promise.resolve();
-    var u = cloudUid();
-    return supabaseClient.from('favorites').delete().eq('user_id', u).then(function () {
-      var rows = Array.from(favs).map(function (sid) { return { user_id: u, site_id: sid }; });
-      return rows.length ? supabaseClient.from('favorites').insert(rows) : Promise.resolve();
-    }).catch(function () {});
-  }
-  function pushClicks() {
-    if (!supabaseClient || !currentUser || !cloudUid() || !settings.shareStats) return Promise.resolve();
-    var u = cloudUid();
-    return supabaseClient.from('clicks').delete().eq('user_id', u).then(function () {
-      var rows = Object.keys(clicks).map(function (sid) { return { user_id: u, site_id: sid, count: clicks[sid] }; });
-      return rows.length ? supabaseClient.from('clicks').insert(rows) : Promise.resolve();
-    }).catch(function () {});
-  }
-  function pushPersonal() {
-    if (!supabaseClient || !currentUser || !cloudUid()) return Promise.resolve();
-    var u = cloudUid();
-    var mine = personalSites[currentUser] || [];
-    return supabaseClient.from('personal_sites').delete().eq('user_id', u).then(function () {
-      var rows = mine.map(function (s) { return { user_id: u, name: s.name, url: s.url, brief: s.brief || '', tags: s.tags || [] }; });
-      return rows.length ? supabaseClient.from('personal_sites').insert(rows) : Promise.resolve();
-    }).catch(function () {});
-  }
-  function pushAllToCloud() { pushFavs(); pushClicks(); pushPersonal(); }
-  function scheduleCloudPush() {
-    if (cloudTimer) clearTimeout(cloudTimer);
-    cloudTimer = setTimeout(pushAllToCloud, 600);
-  }
-
   // ---------- 视图管理：排行 / 热搜 / 工具箱（互斥整页视图） ----------
   var rankMode = 'fav';
-  var rankActive = false, hotActive = false, toolsActive = false;
+  var hideTimer = null;
+  function fadeHide(el) { if (!el) return; el.classList.add('fading'); clearTimeout(hideTimer); hideTimer = setTimeout(function () { hideTimer = null; el.hidden = true; el.classList.remove('fading'); }, 280); }
+  function showNow(el) { if (!el) return; clearTimeout(hideTimer); el.hidden = false; el.classList.remove('fading'); }
+  function fadeInView(el) { if (!el) return; el.hidden = false; el.classList.add('fading'); requestAnimationFrame(function () { requestAnimationFrame(function () { el.classList.remove('fading'); }); }); }
   function exitAllViews() {
-    var changed = rankActive || hotActive || toolsActive;
-    rankActive = hotActive = toolsActive = false;
+    S.rankActive = S.hotActive = S.toolsActive = false;
     if (rankView) rankView.hidden = true;
     if (hotView) hotView.hidden = true;
     if (toolsView) toolsView.hidden = true;
-    if (grid) grid.hidden = false;
+    // 退出视图 = 回到 grid，一律立即显形（保证搜索恢复/连续切换不留滞留隐藏）
+    if (grid) { clearTimeout(hideTimer); grid.hidden = false; grid.classList.remove('fading'); }
     if (filterBar) filterBar.hidden = false;
-    if (changed) renderCats(); // 让视图 chip 取消高亮
+    renderCats();
   }
   function enterView(mode) {
     exitAllViews();
-    if (grid) grid.hidden = true;
+    if (grid) { grid.hidden = true; grid.classList.remove('fading'); }
     if (filterBar) filterBar.hidden = true;
-    if (mode === 'rank') rankActive = true;
-    else if (mode === 'hot') hotActive = true;
-    else if (mode === 'tools') toolsActive = true;
+    if (mode === 'rank') { S.rankActive = true; fadeInView(rankView); }
+    else if (mode === 'hot') { S.hotActive = true; fadeInView(hotView); }
+    else if (mode === 'tools') { S.toolsActive = true; fadeInView(toolsView); }
     renderCats();
   }
   // ---------- 全站排行（只读聚合，不暴露个人） ----------
   function openRank() {
-    if (!currentUser) { openLogin(t('need_login_fav')); return; }
+    if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
     enterView('rank');
-    rankView.hidden = false;
+    rankView.hidden = false; fadeInView(rankView);
     renderRankTabs();
   }
-  function exitRank() { exitAllViews(); }
+  function exitRank() { fadeHide(rankView); exitAllViews(); }
   function renderRankTabs() {
     if (!rankTabs) return;
     rankTabs.innerHTML =
@@ -1300,7 +787,7 @@
     if (!rankPodium || !rankTable) return;
     rankPodium.innerHTML = '<div class="ws-empty">' + t('rank_empty') + '</div>';
     rankTable.innerHTML = '';
-    ensureSupabase().then(function (client) {
+    YHAuth.ensureSupabase().then(function (client) {
       if (!client) { rankPodium.innerHTML = '<div class="ws-empty">' + t('rank_empty') + '</div>'; return; }
       client.rpc('get_site_stats').then(function (res) {
         if (res.error) { rankPodium.innerHTML = '<div class="ws-empty">' + t('rank_empty') + '</div>'; return; }
@@ -1390,7 +877,7 @@
   var hotRows = [];           // 当前平台的完整榜单（用于本地过滤）
   function openHot() {
     enterView('hot');
-    hotView.hidden = false;
+    hotView.hidden = false; fadeInView(hotView);
     renderHotTabs();
     loadHot();
   }
@@ -1408,7 +895,7 @@
     renderHotTabs();
     loadHot();
   });
-  on(hotBack, 'click', exitAllViews);
+  on(hotBack, 'click', function () { fadeHide(hotView); exitAllViews(); });
   on(hotRefresh, 'click', function () { loadHot(true); });
   on(hotFilter, 'input', function () {
     if (hotRows.length) renderHotList(hotRows); // 重新按过滤词渲染
@@ -1425,7 +912,7 @@
     }
     hotRows = [];
     if (hotFilter) hotFilter.value = '';
-    hotList.innerHTML = '<div class="ws-empty">' + t('hot_loading') + '</div>';
+    hotList.innerHTML = '<div class="skeleton-grid">' + (function(){var h='';for(var i=0;i<5;i++){h+='<div class="skeleton"><div class="skeleton-row tall"></div><div class="skeleton-row w90"></div><div class="skeleton-row w40"></div></div>';}return h;})() + '</div>';
     setHotMeta(t('hot_fetching'));
     if (typeof fetch !== 'function') { renderHotFail(); return; }
     fetchHotRace((HOT_APIS[hotPlatform] || []).slice());
@@ -1522,504 +1009,10 @@
     setHotMeta(t('hot_direct'));
   }
 
-  // ---------- 工具箱（纯前端小工具 + 快捷查询） ----------
-  var TOOLS = [
-    {
-      id: 'pw', icon: '🔐', key: 'tool_pw',
-      body: '<div class="tool-row"><label>' + '<input id="tl-pw-len" type="number" value="16" min="4" max="64" title="长度">' + '</label>' +
-        '<label class="tool-check"><input id="tl-pw-sym" type="checkbox" checked> 符号</label>' +
-        '<button class="btn small" data-act="pw-gen">' + '生成' + '</button>' +
-        '<input id="tl-pw-out" class="tool-out" readonly></div>'
-    },
-    {
-      id: 'b64', icon: '🔤', key: 'tool_b64',
-      body: '<textarea id="tl-b64-in" class="tool-ta" placeholder="输入文本…"></textarea>' +
-        '<div class="tool-row"><button class="btn small" data-act="b64-enc">' + '编码' + '</button>' +
-        '<button class="btn small" data-act="b64-dec">' + '解码' + '</button></div>' +
-        '<textarea id="tl-b64-out" class="tool-ta" readonly></textarea>'
-    },
-    {
-      id: 'ts', icon: '🕐', key: 'tool_ts',
-      body: '<div class="tool-row"><input id="tl-ts-num" class="tool-out" placeholder="时间戳（秒）"><button class="btn small" data-act="ts-num">' + '→ 日期' + '</button><span id="tl-ts-date" class="tool-result"></span></div>' +
-        '<div class="tool-row"><input id="tl-ts-datein" class="tool-out" placeholder="2026-01-01 12:00:00"><button class="btn small" data-act="ts-date">' + '→ 时间戳' + '</button><span id="tl-ts-num2" class="tool-result"></span></div>'
-    },
-    {
-      id: 'json', icon: '🧾', key: 'tool_json',
-      body: '<textarea id="tl-json-in" class="tool-ta" placeholder="粘贴 JSON…"></textarea>' +
-        '<div class="tool-row"><button class="btn small" data-act="json-fmt">' + '格式化' + '</button>' +
-        '<button class="btn small" data-act="json-min">' + '压缩' + '</button>' +
-        '<button class="btn small" data-act="json-val">' + '校验' + '</button></div>' +
-        '<textarea id="tl-json-out" class="tool-ta" readonly></textarea>'
-    },
-    {
-      id: 'cnt', icon: '🔢', key: 'tool_cnt',
-      body: '<textarea id="tl-cnt-in" class="tool-ta" placeholder="输入文本…"></textarea>' +
-        '<div class="tool-row"><span id="tl-cnt-out" class="tool-result">0 字</span></div>'
-    },
-    {
-      id: 'uuid', icon: '🆔', key: 'tool_uuid',
-      body: '<div class="tool-row"><input id="tl-uuid-out" class="tool-out" readonly><button class="btn small" data-act="uuid-gen">' + '生成' + '</button></div>'
-    },
-    {
-      id: 'color', icon: '🎨', key: 'tool_color',
-      body: '<div class="tool-row"><input id="tl-color-hex" class="tool-out" placeholder="#4f6ef7"><button class="btn small" data-act="hex-rgb">' + 'HEX → RGB' + '</button><span id="tl-color-rgb" class="tool-result"></span></div>' +
-        '<div class="tool-row"><input id="tl-color-rgbin" class="tool-out" placeholder="79,110,247"><button class="btn small" data-act="rgb-hex">' + 'RGB → HEX' + '</button><span id="tl-color-hex2" class="tool-result"></span></div>'
-    },
-    {
-      id: 'url', icon: '🔗', key: 'tool_url',
-      body: '<div class="tool-row"><input id="tl-url-in" class="tool-out" placeholder="https://…"><button class="btn small" data-act="url-enc">' + '编码' + '</button><button class="btn small" data-act="url-dec">' + '解码' + '</button></div>' +
-        '<textarea id="tl-url-out" class="tool-ta" readonly></textarea>'
-    },
-    {
-      id: 'regex', icon: '🔍', key: 'tool_regex',
-      body: '<div class="tool-row"><input id="tl-regex-pat" class="tool-out" placeholder="正则表达式，如 \\d+"><input id="tl-regex-flags" class="tool-out tl-short" placeholder="标志，如 gi"></div>' +
-        '<textarea id="tl-regex-in" class="tool-ta" placeholder="要匹配的文本…"></textarea>' +
-        '<div class="tool-row"><button class="btn small" data-act="regex-run">' + '测试' + '</button><span id="tl-regex-out" class="tool-result"></span></div>'
-    },
-    {
-      id: 'unit', icon: '📏', key: 'tool_unit',
-      body: '<div class="tool-row"><select id="tl-unit-type" class="tool-out tl-select">' +
-        '<option value="len">长度 km ↔ mile</option><option value="weight">重量 kg ↔ lb</option>' +
-        '<option value="temp">温度 °C ↔ °F</option></select></div>' +
-        '<div class="tool-row"><input id="tl-unit-in" class="tool-out" placeholder="输入数值"><button class="btn small" data-act="unit-run">' + '换算' + '</button></div>' +
-        '<div class="tool-row"><span id="tl-unit-out" class="tool-result"></span></div>'
-    },
-    {
-      id: 'calc', icon: '🧮', key: 'tool_calc',
-      body: '<div class="calc-disp" id="tl-calc-disp">0</div>' +
-        '<div class="calc-grid">' +
-          ['7','8','9','÷','4','5','6','×','1','2','3','−','0','.','C','+','='].map(function (k) {
-            return '<button class="calc-key' + (k === '=' ? ' calc-eq' : '') + '" data-calc="' + k + '">' + k + '</button>';
-          }).join('') +
-        '</div>'
-    },
-    {
-      id: 'graph', icon: '📈', key: 'tool_graph',
-      body: '<div class="tool-row"><input id="tl-graph-fn" class="tool-out" placeholder="如 x^2、sin(x)、x*2+1"><button class="btn small" data-act="graph-run">' + '绘制' + '</button></div>' +
-        '<canvas id="tl-graph-cv" class="tool-cv" width="300" height="190"></canvas>' +
-        '<div class="tool-row"><span id="tl-graph-msg" class="tool-result"></span></div>'
-    },
-    {
-      id: 'pomo', icon: '🍅', key: 'tool_pomo',
-      body: '<div class="pomo-disp" id="tl-pomo-time">25:00</div>' +
-        '<div class="tool-row">' +
-          '<button class="btn small" data-act="pomo-set" data-min="25">25分</button>' +
-          '<button class="btn small" data-act="pomo-set" data-min="10">10分</button>' +
-          '<button class="btn small" data-act="pomo-set" data-min="5">5分</button>' +
-          '<button class="btn small" data-act="pomo-toggle">' + '开始' + '</button>' +
-          '<button class="btn small" data-act="pomo-reset">' + '重置' + '</button>' +
-        '</div>' +
-        '<div class="tool-row"><span id="tl-pomo-msg" class="tool-result"></span></div>'
-    },
-    {
-      id: 'qr', icon: '▦', key: 'tool_qr',
-      body: '<div class="tool-row"><input id="tl-qr-in" class="tool-out" placeholder="输入网址或文本…"><button class="btn small" data-act="qr-now">' + '当前页' + '</button><button class="btn small" data-act="qr-gen">' + '生成' + '</button></div>' +
-        '<div class="qr-out"><img id="tl-qr-img" alt="二维码" hidden><span id="tl-qr-msg" class="tool-result"></span></div>'
-    },
-    {
-      id: 'ip', icon: '🌐', key: 'tool_ip',
-      body: '<div class="tool-row"><button class="btn small" data-act="ip-lookup">' + '查询我的 IP' + '</button></div>' +
-        '<div class="tool-row"><span id="tl-ip-out" class="tool-result"></span></div>'
-    },
-  ];
-  var TOOL_QUICK = [
-    { name: '📦 快递查询', url: 'https://www.kuaidi100.com' },
-    { name: '✈️ 航班查询', url: 'https://zh.flightaware.com' },
-    { name: '💱 汇率换算', url: 'https://www.huilv.cc' },
-    { name: '🌐 翻译', url: 'https://fanyi.baidu.com' },
-    { name: '🗺 地图', url: 'https://www.amap.com' },
-    { name: '📰 今日头条', url: 'https://www.toutiao.com' },
-  ];
-  function openTools() {
-    enterView('tools');
-    toolsView.hidden = false;
-    renderTools();
-  }
-  on(toolsBack, 'click', exitAllViews);
-  function renderTools() {
-    if (!toolsGrid) return;
-    toolsGrid.innerHTML =
-      '<div class="tools-sec">' + t('tool_sec_local') + '</div>' +
-      TOOLS.map(function (tl, ti) {
-        // 小卡片：点击头部展开/折叠（手风琴）
-        return '<div class="tool-card"' + (ti === 0 ? ' open' : '') + ' data-tool="' + tl.id + '">' +
-          '<div class="tool-head">' +
-            '<span class="tool-ico">' + tl.icon + '</span>' +
-            '<span class="tool-name">' + t(tl.key) + '</span>' +
-            '<span class="tool-arrow">▾</span>' +
-          '</div>' +
-          '<div class="tool-body">' + tl.body + '</div>' +
-        '</div>';
-      }).join('') +
-      '<div class="tools-sec">' + t('tool_sec_quick') + '</div>' +
-      TOOL_QUICK.map(function (q) {
-        return '<a class="tool-card tool-link" href="' + q.url + '" target="_blank" rel="noopener">' +
-          '<div class="tool-head">' +
-            '<span class="tool-ico tool-ico-q">🔗</span>' +
-            '<span class="tool-name">' + q.name + '</span>' +
-            '<span class="tool-open-hint">' + t('tool_open') + ' <b>→</b></span>' +
-          '</div>' +
-        '</a>';
-      }).join('');
-  }
-  on(toolsGrid, 'click', function (e) {
-    // 小卡片点击头部 → 展开/折叠（手风琴）
-    var head = e.target.closest ? e.target.closest('.tool-head') : null;
-    if (head && !(e.target.closest && e.target.closest('.tool-link'))) {
-      var tcard = head.closest ? head.closest('.tool-card') : null;
-      if (tcard) {
-        var wasOpen = tcard.classList.contains('open');
-        var opened = toolsGrid.querySelectorAll('.tool-card.open');
-        for (var i = 0; i < opened.length; i++) opened[i].classList.remove('open');
-        if (!wasOpen) tcard.classList.add('open');
-      }
-      return;
-    }
-    // 计算器按键
-    var ck = e.target.closest ? e.target.closest('[data-calc]') : null;
-    if (ck) { calcKey(ck.getAttribute('data-calc')); if (ck.blur) ck.blur(); return; }
-    var btn = e.target.closest ? e.target.closest('[data-act]') : null;
-    if (!btn) return;
-    var act = btn.getAttribute('data-act');
-    var tool = btn.closest('.tool-card');
-    var tid = tool ? tool.getAttribute('data-tool') : '';
-    if (act === 'pw-gen') {
-      var len = parseInt($('tl-pw-len').value, 10) || 16;
-      var sym = $('tl-pw-sym').checked;
-      $('tl-pw-out').value = genPassword(len, sym);
-    } else if (act === 'b64-enc') {
-      try { $('tl-b64-out').value = btoa(unescape(encodeURIComponent($('tl-b64-in').value))); } catch (err) { $('tl-b64-out').value = '编码失败'; }
-    } else if (act === 'b64-dec') {
-      try { $('tl-b64-out').value = decodeURIComponent(escape(atob($('tl-b64-in').value.trim()))); } catch (err) { $('tl-b64-out').value = '解码失败（非有效 Base64）'; }
-    } else if (act === 'ts-num') {
-      var ts = parseInt($('tl-ts-num').value, 10);
-      $('tl-ts-date').textContent = isNaN(ts) ? '请输入秒级时间戳' : fmtDateTime(new Date(ts * 1000));
-    } else if (act === 'ts-date') {
-      var d = new Date($('tl-ts-datein').value.replace(' ', 'T'));
-      $('tl-ts-num2').textContent = isNaN(d.getTime()) ? '格式：2026-01-01 12:00:00' : String(Math.floor(d.getTime() / 1000));
-    } else if (act === 'json-fmt') {
-      try { $('tl-json-out').value = JSON.stringify(JSON.parse($('tl-json-in').value), null, 2); } catch (err) { $('tl-json-out').value = 'JSON 解析失败'; }
-    } else if (act === 'json-min') {
-      try { $('tl-json-out').value = JSON.stringify(JSON.parse($('tl-json-in').value)); } catch (err) { $('tl-json-out').value = 'JSON 解析失败'; }
-    } else if (act === 'json-val') {
-      try { JSON.parse($('tl-json-in').value); $('tl-json-out').value = '✅ 合法 JSON'; } catch (err) { $('tl-json-out').value = '❌ 非法 JSON'; }
-    } else if (act === 'uuid-gen') {
-      $('tl-uuid-out').value = genUUID();
-    } else if (act === 'hex-rgb') {
-      var hx = ($('tl-color-hex').value || '').trim().replace('#', '');
-      var m = /^([0-9a-f]{6})$/i.exec(hx);
-      $('tl-color-rgb').textContent = m
-        ? 'rgb(' + parseInt(m[1].slice(0, 2), 16) + ', ' + parseInt(m[1].slice(2, 4), 16) + ', ' + parseInt(m[1].slice(4, 6), 16) + ')'
-        : '请输入 6 位 HEX（如 4f6ef7）';
-    } else if (act === 'rgb-hex') {
-      var p = ($('tl-color-rgbin').value || '').split(/[,，\s]+/).map(function (x) { return parseInt(x, 10); });
-      var ok = p.length === 3 && p.every(function (x) { return x >= 0 && x <= 255; });
-      $('tl-color-hex2').textContent = ok
-        ? '#' + p.map(function (x) { return ('0' + x.toString(16)).slice(-2); }).join('')
-        : '请输入 0-255 的三个数（如 79,110,247）';
-    } else if (act === 'url-enc') {
-      try { $('tl-url-out').value = encodeURIComponent($('tl-url-in').value); } catch (err) { $('tl-url-out').value = '编码失败'; }
-    } else if (act === 'url-dec') {
-      try { $('tl-url-out').value = decodeURIComponent($('tl-url-in').value); } catch (err) { $('tl-url-out').value = '解码失败'; }
-    } else if (act === 'regex-run') {
-      try {
-        var pat = $('tl-regex-pat').value;
-        var flags = $('tl-regex-flags').value;
-        var re = new RegExp(pat, flags.indexOf('g') === -1 ? flags + 'g' : flags);
-        var text = $('tl-regex-in').value;
-        var ms = text.match(re) || [];
-        var preview = ms.slice(0, 6).map(function (m) { return JSON.stringify(m); }).join('、');
-        $('tl-regex-out').textContent = '匹配 ' + ms.length + ' 处' + (ms.length ? '：' + preview + (ms.length > 6 ? ' …' : '') : '');
-      } catch (err) { $('tl-regex-out').textContent = '正则错误：' + err.message; }
-    } else if (act === 'unit-run') {
-      var uv = parseFloat($('tl-unit-in').value);
-      var ut = $('tl-unit-type').value;
-      if (isNaN(uv)) { $('tl-unit-out').textContent = '请输入数值'; }
-      else if (ut === 'len') {
-        $('tl-unit-out').textContent = uv + ' km = ' + (uv * 0.621371).toFixed(4) + ' mile · ' + uv + ' mile = ' + (uv / 0.621371).toFixed(4) + ' km';
-      } else if (ut === 'weight') {
-        $('tl-unit-out').textContent = uv + ' kg = ' + (uv * 2.20462).toFixed(4) + ' lb · ' + uv + ' lb = ' + (uv / 2.20462).toFixed(4) + ' kg';
-      } else {
-        $('tl-unit-out').textContent = uv + ' °C = ' + (uv * 9 / 5 + 32).toFixed(2) + ' °F · ' + uv + ' °F = ' + ((uv - 32) * 5 / 9).toFixed(2) + ' °C';
-      }
-    } else if (act === 'graph-run') {
-      var expr = $('tl-graph-fn').value.trim();
-      var cv = $('tl-graph-cv');
-      var msgEl = $('tl-graph-msg');
-      if (!expr || !cv || typeof cv.getContext !== 'function') { if (msgEl) msgEl.textContent = '请输入函数（如 x^2、sin(x)）'; }
-      else {
-        var cctx = cv.getContext('2d');
-        if (!cctx) { if (msgEl) msgEl.textContent = '当前环境不支持绘图'; }
-        else {
-          try {
-            var fn = new Function('x', 'return (' + safeMathExpr(expr) + ');');
-            fn(1); // 校验可执行
-            drawGraph(cctx, cv, fn);
-            if (msgEl) msgEl.textContent = '';
-          } catch (err) { if (msgEl) msgEl.textContent = '表达式错误：' + err.message; }
-        }
-      }
-    } else if (act === 'pomo-set') {
-      pomoReset(parseInt(btn.getAttribute('data-min'), 10) || 25);
-    } else if (act === 'pomo-toggle') {
-      pomoToggle();
-    } else if (act === 'pomo-reset') {
-      pomoReset(25);
-    } else if (act === 'qr-now') {
-      var qrIn = $('tl-qr-in');
-      if (qrIn) qrIn.value = window.location.href;
-      qrGen();
-    } else if (act === 'qr-gen') {
-      qrGen();
-    } else if (act === 'ip-lookup') {
-      ipLookup();
-    }
-    // 点击后释放焦点，避免多个按钮同时保持高亮
-    if (btn && btn.blur) btn.blur();
-  });
-  // ---------- 番茄钟 ----------
-  var pomoState = { total: 25 * 60, left: 25 * 60, timer: null };
-  function pomoRender() {
-    var m = Math.floor(pomoState.left / 60), s = pomoState.left % 60;
-    var d = $('tl-pomo-time');
-    if (d) d.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-  }
-  function pomoBeep() {
-    try {
-      var Ctx = window.AudioContext || window.webkitAudioContext;
-      if (!Ctx) return;
-      var ac = new Ctx();
-      var osc = ac.createOscillator(), gain = ac.createGain();
-      osc.connect(gain); gain.connect(ac.destination);
-      osc.frequency.value = 880;
-      gain.gain.setValueAtTime(0.2, ac.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.8);
-      osc.start(); osc.stop(ac.currentTime + 0.8);
-    } catch (err) { /* 忽略 */ }
-  }
-  function pomoReset(min) {
-    if (pomoState.timer) { clearInterval(pomoState.timer); pomoState.timer = null; }
-    pomoState.total = pomoState.left = (min || 25) * 60;
-    var msg = $('tl-pomo-msg'); if (msg) msg.textContent = '';
-    pomoRender();
-  }
-  function pomoToggle() {
-    if (pomoState.timer) {
-      clearInterval(pomoState.timer);
-      pomoState.timer = null;
-      var m2 = $('tl-pomo-msg'); if (m2) m2.textContent = t('pomo_paused');
-      return;
-    }
-    if (pomoState.left <= 0) pomoReset(Math.round(pomoState.total / 60) || 25);
-    pomoState.timer = setInterval(function () {
-      pomoState.left--;
-      pomoRender();
-      if (pomoState.left <= 0) {
-        clearInterval(pomoState.timer);
-        pomoState.timer = null;
-        pomoBeep();
-        var m3 = $('tl-pomo-msg'); if (m3) m3.textContent = t('pomo_done');
-      }
-    }, 1000);
-    var m4 = $('tl-pomo-msg'); if (m4) m4.textContent = t('pomo_running');
-  }
-  // ---------- 二维码（多源图片接口回退） ----------
-  var QR_SOURCES = [
-    'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=',
-    'https://api.pwmqr.com/qrcode/create/?url=',
-  ];
-  function qrGen() {
-    var input = $('tl-qr-in');
-    var img = $('tl-qr-img');
-    var msg = $('tl-qr-msg');
-    if (!input || !img || !msg) return;
-    var text = input.value.trim();
-    if (!text) { msg.textContent = t('qr_need'); return; }
-    if (!/^https?:\/\//i.test(text) && text.indexOf('.') !== -1 && text.indexOf(' ') === -1) text = 'https://' + text;
-    msg.textContent = '';
-    img.hidden = true;
-    var idx = 0;
-    function tryNext() {
-      if (idx >= QR_SOURCES.length) {
-        msg.textContent = t('qr_fail') + ' ' + text;
-        return;
-      }
-      var src = QR_SOURCES[idx++];
-      if (src.indexOf('pwmqr') !== -1) {
-        // pwmqr 返回 JSON：{ code, data: { qr_url } }
-        if (typeof fetch !== 'function') { tryNext(); return; }
-        fetch(src + encodeURIComponent(text), { cache: 'no-store' })
-          .then(function (r) { return r.json(); })
-          .then(function (j) {
-            var u = j && j.data && (j.data.qr_url || j.data.url);
-            if (!u) throw new Error('empty');
-            img.src = u;
-            img.onerror = tryNext;
-            img.hidden = false;
-          })
-          .catch(tryNext);
-      } else {
-        img.src = src + encodeURIComponent(text);
-        img.onerror = tryNext;
-        img.hidden = false;
-      }
-    }
-    tryNext();
-  }
-  // ---------- IP 查询（多源回退） ----------
-  var IP_SOURCES = [
-    function (cb) {
-      fetch('https://qifu-api.baidubce.com/ip/local/geo/v1/district', { cache: 'no-store' })
-        .then(function (r) { return r.json(); })
-        .then(function (j) {
-          if (!j || !j.data || !j.data.ip) throw new Error('empty');
-          cb(j.data.ip + ' · ' + [j.data.country, j.data.province, j.data.city, j.data.isp].filter(Boolean).join(' '));
-        })
-        .catch(function () { cb(null); });
-    },
-    function (cb) {
-      fetch('https://ip.useragentinfo.com/json', { cache: 'no-store' })
-        .then(function (r) { return r.json(); })
-        .then(function (j) {
-          if (!j || !j.ip) throw new Error('empty');
-          cb(j.ip + ' · ' + [j.country, j.province, j.city, j.isp].filter(Boolean).join(' '));
-        })
-        .catch(function () { cb(null); });
-    },
-    function (cb) {
-      fetch('https://api.ip.sb/geoip', { cache: 'no-store' })
-        .then(function (r) { return r.json(); })
-        .then(function (j) {
-          if (!j || !j.ip) throw new Error('empty');
-          cb(j.ip + ' · ' + [j.country, j.region, j.city, j.organisation].filter(Boolean).join(' '));
-        })
-        .catch(function () { cb(null); });
-    },
-  ];
-  function ipLookup() {
-    var out = $('tl-ip-out');
-    if (!out) return;
-    if (typeof fetch !== 'function') { out.textContent = t('ip_fail'); return; }
-    out.textContent = t('ip_loading');
-    var i = 0;
-    (function next() {
-      if (i >= IP_SOURCES.length) { out.textContent = t('ip_fail'); return; }
-      IP_SOURCES[i++](function (res) {
-        if (res) out.textContent = '📍 ' + res;
-        else next();
-      });
-    })();
-  }
-  // ---------- 计算器 ----------
-  var calcState = { disp: '0', acc: null, op: null, fresh: true };
-  function calcKey(k) {
-    var c = $('tl-calc-disp');
-    if (!c) return;
-    if (k === 'C') {
-      calcState = { disp: '0', acc: null, op: null, fresh: true };
-    } else if (k === '=') {
-      if (calcState.op && calcState.acc !== null && !calcState.fresh) {
-        var bv = parseFloat(calcState.disp);
-        var av = calcState.acc;
-        var r = calcState.op === '+' ? av + bv
-          : calcState.op === '−' ? av - bv
-          : calcState.op === '×' ? av * bv
-          : (bv === 0 ? NaN : av / bv);
-        calcState.disp = isNaN(r) ? '错误' : String(Math.round(r * 1e10) / 1e10);
-        calcState.acc = null; calcState.op = null; calcState.fresh = true;
-      }
-    } else if (['+', '−', '×', '÷'].indexOf(k) !== -1) {
-      calcState.acc = parseFloat(calcState.disp);
-      calcState.op = k;
-      calcState.fresh = true;
-    } else {
-      if (calcState.fresh || calcState.disp === '0') {
-        calcState.disp = k === '.' ? '0.' : k;
-        calcState.fresh = false;
-      } else if (k === '.' && calcState.disp.indexOf('.') === -1) {
-        calcState.disp += '.';
-      } else if (k !== '.') {
-        calcState.disp += k;
-      }
-    }
-    c.textContent = calcState.disp;
-  }
-  // ---------- 函数图像 ----------
-  function safeMathExpr(e) {
-    return String(e)
-      .replace(/\^/g, '**')
-      .replace(/\bsin\s*\(/g, 'Math.sin(')
-      .replace(/\bcos\s*\(/g, 'Math.cos(')
-      .replace(/\btan\s*\(/g, 'Math.tan(')
-      .replace(/\bsqrt\s*\(/g, 'Math.sqrt(')
-      .replace(/\babs\s*\(/g, 'Math.abs(')
-      .replace(/\blog\s*\(/g, 'Math.log(')
-      .replace(/\bexp\s*\(/g, 'Math.exp(')
-      .replace(/\bpi\b/gi, 'Math.PI');
-  }
-  function drawGraph(ctx, cv, fn) {
-    var w = cv.width || 300, h = cv.height || 190;
-    var xMin = -10, xMax = 10, yMin = -6, yMax = 6;
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(0, 0, w, h);
-    function sx(x) { return (x - xMin) / (xMax - xMin) * w; }
-    function sy(y) { return h - (y - yMin) / (yMax - yMin) * h; }
-    ctx.strokeStyle = '#e6e8ef'; ctx.lineWidth = 1;
-    for (var gx = Math.ceil(xMin); gx <= xMax; gx++) { ctx.beginPath(); ctx.moveTo(sx(gx), 0); ctx.lineTo(sx(gx), h); ctx.stroke(); }
-    for (var gy = Math.ceil(yMin); gy <= yMax; gy++) { ctx.beginPath(); ctx.moveTo(0, sy(gy)); ctx.lineTo(w, sy(gy)); ctx.stroke(); }
-    ctx.strokeStyle = '#9aa3b2'; ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.moveTo(sx(0), 0); ctx.lineTo(sx(0), h); ctx.stroke();
-    ctx.beginPath(); ctx.moveTo(0, sy(0)); ctx.lineTo(w, sy(0)); ctx.stroke();
-    ctx.strokeStyle = '#5b6cff'; ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    var started = false;
-    var N = 400;
-    for (var i = 0; i <= N; i++) {
-      var x = xMin + (xMax - xMin) * i / N;
-      var y = fn(x);
-      if (y === undefined || isNaN(y) || !isFinite(y)) { started = false; continue; }
-      var px = sx(x), py = sy(y);
-      if (py < -h || py > 2 * h) { started = false; continue; }
-      if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
-    }
-    ctx.stroke();
-  }
-  on(toolsGrid, 'input', function (e) {
-    if (!e.target || e.target.id !== 'tl-cnt-in') return;
-    var v = e.target.value;
-    var han = (v.match(/[\u4e00-\u9fff]/g) || []).length;
-    var chars = v.length;
-    var lines = v ? v.split(/\n/).length : 0;
-    $('tl-cnt-out').textContent = chars + ' 字符 · ' + han + ' 汉字 · ' + lines + ' 行';
-  });
-  function genPassword(len, useSym) {
-    var low = 'abcdefghijkmnpqrstuvwxyz', up = 'ABCDEFGHJKLMNPQRSTUVWXYZ', num = '23456789';
-    var pool = low + up + num + (useSym ? '!@#$%^&*_-+=?' : '');
-    var out = '';
-    for (var i = 0; i < len; i++) out += pool[Math.floor(Math.random() * pool.length)];
-    return out;
-  }
-  function genUUID() {
-    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0;
-      var v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
-  function fmtDateTime(d) {
-    function p(n) { return (n < 10 ? '0' : '') + n; }
-    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
-  }
-  function fmtTime(d) {
-    function p(n) { return (n < 10 ? '0' : '') + n; }
-    return p(d.getHours()) + ':' + p(d.getMinutes());
-  }
 
   // ---------- 官方网站反馈 ----------
   function openFeedback() {
-    if (!currentUser) { openLogin(t('fb_need_login')); return; }
+    if (!S.currentUser) { YHAuth.openLogin(t('fb_need_login')); return; }
     if (!currentSite) return;
     fbText.value = '';
     fbMsg.innerHTML = '';
@@ -2044,7 +1037,7 @@
     if (!currentSite) { fbMsg.innerHTML = t('no_supabase'); return; }
     var msg = fbText.value.trim();
     if (!msg) { fbMsg.innerHTML = t('login_need'); return; }
-    ensureSupabase().then(function (client) {
+    YHAuth.ensureSupabase().then(function (client) {
       if (!client) { fbMsg.innerHTML = t('no_supabase'); return; }
       client.from('feedback').insert({ user_id: cloudUid(), site_id: currentSite.id, message: msg }).then(function (res) {
         if (res.error) { fbMsg.innerHTML = t('auth_err') + ': ' + authErrorMsg(res.error); return; }
@@ -2093,50 +1086,49 @@
     setTimeout(function () { if (submitModal) submitModal.hidden = true; }, 1200);
   });
 
-  // Supabase 会话初始化与状态监听（懒加载完成后注册）
+    // Supabase 会话初始化与状态监听（懒加载完成后注册，走 YHAuth 接口）
   function initSupabase() {
-    ensureSupabase().then(function (client) {
-      if (!client) return; // 离线 / 未配置：静默，页面仍可用
-      supabaseClient.auth.getSession().then(function (res) {
+    YHAuth.ensureSupabase().then(function (client) {
+      if (!client) return;
+      YHAuth.supabaseClient.auth.getSession().then(function (res) {
         if (res && res.data && res.data.session && res.data.session.user) {
-          supabaseUser = res.data.session.user;
-          currentUser = supabaseUser.email || supabaseUser.id;
+          YHAuth.setSupabaseUser(res.data.session.user);
+          S.currentUser = YHAuth.supabaseUser.email || YHAuth.supabaseUser.id;
           loadAccountData();
-          pullFromCloud().then(function () {
-            updateLoginBtn();
+          YHAuth.pullFromCloud().then(function () {
+            YHAuth.YHAuth.updateLoginBtn();
             renderCats();
             renderFilterBar();
-            renderGrid();
+            YHCards.render();
           });
         }
       });
-      supabaseClient.auth.onAuthStateChange(function (event, session) {
+      YHAuth.supabaseClient.auth.onAuthStateChange(function (event, session) {
         if (session && session.user) {
-          supabaseUser = session.user;
-          currentUser = supabaseUser.email || session.user.id;
+          YHAuth.setSupabaseUser(session.user);
+          S.currentUser = YHAuth.supabaseUser.email || session.user.id;
           loadAccountData();
           if (event === 'SIGNED_IN') {
-            pullFromCloud().then(function () {
-              updateLoginBtn();
+            YHAuth.pullFromCloud().then(function () {
+              YHAuth.YHAuth.updateLoginBtn();
               renderCats();
               renderFilterBar();
-              renderGrid();
+              YHCards.render();
             });
           }
         } else {
-          supabaseUser = null;
-          currentUser = null;
+          YHAuth.setSupabaseUser(null);
+          S.currentUser = null;
           loadAccountData();
-          updateLoginBtn();
+          YHAuth.YHAuth.updateLoginBtn();
           renderCats();
           renderFilterBar();
-          renderGrid();
+          YHCards.render();
         }
       });
     });
   }
-
-  // ---------- 添加个人网站 ----------
+// ---------- 添加个人网站 ----------
   function openAdd(site) {
     editingPersonalId = site ? site.id : null;
     addName.value = site ? site.name : '';
@@ -2153,7 +1145,7 @@
   on(addClose, 'click', closeAdd);
   on(addModal, 'click', function (e) { if (e.target === addModal) closeAdd(); });
   on(addSubmit, 'click', function () {
-    if (!currentUser) { addMsg.innerHTML = t('login_need'); return; }
+    if (!S.currentUser) { addMsg.innerHTML = t('login_need'); return; }
     var name = (addName.value || '').trim();
     var url = (addUrl.value || '').trim();
     if (!name || !url) { addMsg.innerHTML = t('add_err'); return; }
@@ -2161,7 +1153,7 @@
     var tags = (addTags.value || '').split(/[,，]/).map(function (x) { return x.trim(); }).filter(Boolean);
     if (editingPersonalId) {
       // 编辑已有个人网站
-      var mine = personalSites[currentUser] || [];
+      var mine = S.personalSites[S.currentUser] || [];
       for (var i = 0; i < mine.length; i++) {
         if (mine[i].id === editingPersonalId) {
           mine[i].name = name;
@@ -2176,7 +1168,7 @@
     } else {
       var site = {
         id: 'p' + Date.now(),
-        owner: currentUser,
+        owner: S.currentUser,
         name: name,
         fullName: name,
         url: url,
@@ -2187,8 +1179,8 @@
         vpn: false,
         source: 'personal'
       };
-      if (!personalSites[currentUser]) personalSites[currentUser] = [];
-      personalSites[currentUser].push(site);
+      if (!S.personalSites[S.currentUser]) S.personalSites[S.currentUser] = [];
+      S.personalSites[S.currentUser].push(site);
       addMsg.innerHTML = t('add_ok');
     }
     savePersonal();
@@ -2196,7 +1188,7 @@
       closeAdd();
       renderCats();
       renderFilterBar();
-      renderGrid();
+      YHCards.render();
     }, 600);
   });
 
@@ -2244,18 +1236,18 @@
 
   // ---------- 主题：风格 + 颜色 ----------
   (function migrateTheme() {
-    var old = localStorage.getItem(THEME_KEY);
+    var old = localStorage.getItem('nav_theme_v1');
     var oldStyles = ['light', 'dark', 'aurora', 'sunset', 'forest', 'mono', 'violet', 'mint'];
     if (oldStyles.indexOf(old) !== -1) {
-      if (old === 'violet' || old === 'mint') color = old;
-      theme = 'brutalism';
+      if (old === 'violet' || old === 'mint') S.color = old;
+      S.theme = 'brutalism';
     }
   })();
   function applyTheme() {
     // 保存当前滚动位置，防止 CSS 重排导致滚动跳跃
     var y = (window.scrollY || document.documentElement.scrollTop || 0);
-    document.documentElement.setAttribute('data-theme', theme);
-    document.documentElement.setAttribute('data-color', color);
+    document.documentElement.setAttribute('data-theme', S.theme);
+    document.documentElement.setAttribute('data-color', S.color);
     requestAnimationFrame(function () { window.scrollTo(0, y); });
   }
   function spinActiveDot() {
@@ -2268,22 +1260,22 @@
   function syncThemeUI() {
     if (sStyle) {
       var opts = sStyle.querySelectorAll('.style-opt');
-      for (var i = 0; i < opts.length; i++) opts[i].classList.toggle('active', opts[i].getAttribute('data-style') === theme);
+      for (var i = 0; i < opts.length; i++) opts[i].classList.toggle('active', opts[i].getAttribute('data-style') === S.theme);
     }
     var dots = document.querySelectorAll('#s-colors .color-dot');
-    for (var j = 0; j < dots.length; j++) dots[j].classList.toggle('active', dots[j].getAttribute('data-color') === color);
+    for (var j = 0; j < dots.length; j++) dots[j].classList.toggle('active', dots[j].getAttribute('data-color') === S.color);
     if (sLang) {
       var lb = sLang.querySelectorAll('button');
-      for (var k = 0; k < lb.length; k++) lb[k].classList.toggle('active', lb[k].getAttribute('data-lang') === lang);
+      for (var k = 0; k < lb.length; k++) lb[k].classList.toggle('active', lb[k].getAttribute('data-lang') === S.lang);
       updatePill(sLang);
     }
   }
   on(sStyle, 'click', function (e) {
     var btn = e.target.closest ? e.target.closest('button') : null;
     if (!btn) return;
-    theme = btn.getAttribute('data-style');
-    if (STYLE_COLOR[theme]) color = STYLE_COLOR[theme];
-    try { localStorage.setItem(THEME_KEY, theme); localStorage.setItem(COLOR_KEY, color); } catch (err) {}
+    S.theme = btn.getAttribute('data-style');
+    if (STYLE_COLOR[S.theme]) S.color = STYLE_COLOR[S.theme];
+    try { S.persist.theme(); S.persist.color(); } catch (err) {}
     applyTheme();
     syncThemeUI();
     spinActiveDot();
@@ -2291,8 +1283,8 @@
   on(sColors, 'click', function (e) {
     var dot = e.target.closest ? e.target.closest('.color-dot') : null;
     if (!dot) return;
-    color = dot.getAttribute('data-color');
-    try { localStorage.setItem(COLOR_KEY, color); } catch (err) {}
+    S.color = dot.getAttribute('data-color');
+    try { S.persist.color(); } catch (err) {}
     applyTheme();
     syncThemeUI();
     spinActiveDot();
@@ -2330,16 +1322,16 @@
   function syncSizeBtns() {
     if (!sSize) return;
     var btns = sSize.querySelectorAll('button');
-    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute('data-size') === gridSize);
+    for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute('data-size') === S.gridSize);
     updatePill(sSize);
   }
   on(sSize, 'click', function (e) {
     var btn = e.target.closest ? e.target.closest('button') : null;
     if (!btn) return;
-    gridSize = btn.getAttribute('data-size');
-    try { localStorage.setItem(SIZE_KEY, gridSize); } catch (err) {}
+    S.gridSize = btn.getAttribute('data-size');
+    try { S.persist.gridSize(); } catch (err) {}
     syncSizeBtns();
-    renderGrid();
+    YHCards.render();
   });
 
   // ---------- 设置面板 ----------
@@ -2348,23 +1340,23 @@
     if (!sIcon) return;
     var btns = sIcon.querySelectorAll('button');
     for (var i = 0; i < btns.length; i++) {
-      btns[i].classList.toggle('active', btns[i].getAttribute('data-iconmode') === settings.cardIcon);
+      btns[i].classList.toggle('active', btns[i].getAttribute('data-iconmode') === S.settings.cardIcon);
     }
     updatePill(sIcon);
   }
   on(sIcon, 'click', function (e) {
     var btn = e.target.closest ? e.target.closest('button') : null;
     if (!btn) return;
-    settings.cardIcon = btn.getAttribute('data-iconmode');
+    S.settings.cardIcon = btn.getAttribute('data-iconmode');
     saveSettings();
     syncIconModeBtns();
-    renderGrid();
+    YHCards.render();
   });
   function syncSettingsUI() {
     var switches = document.querySelectorAll('.switch');
     for (var i = 0; i < switches.length; i++) {
       var key = switches[i].getAttribute('data-key');
-      switches[i].classList.toggle('on', !!settings[key]);
+      switches[i].classList.toggle('on', !!S.settings[key]);
     }
     syncIconModeBtns();
   }
@@ -2394,10 +1386,10 @@
     var sw = e.target.closest ? e.target.closest('.switch') : null;
     if (!sw) return;
     var key = sw.getAttribute('data-key');
-    settings[key] = !settings[key];
+    S.settings[key] = !S.settings[key];
     saveSettings();
     syncSettingsUI();
-    applySetting(key, settings[key]);
+    applySetting(key, S.settings[key]);
   });
   btnBackIntro.forEach(function (b) { on(b, 'click', function () {
     document.body.classList.remove('entered');
@@ -2407,22 +1399,22 @@
   }); });
 
   // ---------- 工作区 ----------
-  function wsCount() { return Object.keys(workspaces).length; }
+  function wsCount() { return Object.keys(S.workspaces).length; }
   function openWsManager() {
-    if (!currentUser) { openLogin(t('need_login_fav')); return; }
+    if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
     renderWsList();
     wsModal.hidden = false;
   }
   function closeWsManager() { wsModal.hidden = true; }
   function renderWsList() {
     if (!wsList) return;
-    var keys = Object.keys(workspaces);
+    var keys = Object.keys(S.workspaces);
     if (!keys.length) { wsList.innerHTML = '<div class="ws-empty">' + t('ws_empty') + '</div>'; return; }
     wsList.innerHTML = keys.map(function (id) {
-      var ws = workspaces[id];
+      var ws = S.workspaces[id];
       return '<div class="ws-item" draggable="true" data-wsid="' + id + '">' +
         '<span class="ws-drag" title="拖拽排序">⋮⋮</span>' +
-        '<div class="ws-info"><span class="ws-name">' + escapeHtml(ws.name) + '</span><span class="ws-count">' + ws.ids.length + ' ' + (lang === 'en' ? 'sites' : '个网站') + '</span></div>' +
+        '<div class="ws-info"><span class="ws-name">' + escapeHtml(ws.name) + '</span><span class="ws-count">' + ws.ids.length + ' ' + (S.lang === 'en' ? 'sites' : '个网站') + '</span></div>' +
         '<div class="ws-actions">' +
           '<button class="btn btn-ghost" data-ws-open="' + id + '">' + t('open_all') + '</button>' +
           '<button class="btn btn-ghost" data-ws-view="' + id + '">' + t('view') + '</button>' +
@@ -2435,14 +1427,14 @@
   var wsDragId = null;
   function reorderWs(fromId, toId) {
     if (fromId === toId) return;
-    var keys = Object.keys(workspaces);
+    var keys = Object.keys(S.workspaces);
     var fi = keys.indexOf(fromId), ti = keys.indexOf(toId);
     if (fi < 0 || ti < 0) return;
     keys.splice(fi, 1);
     keys.splice(ti, 0, fromId);
     var next = {};
-    keys.forEach(function (k) { next[k] = workspaces[k]; });
-    workspaces = next;
+    keys.forEach(function (k) { next[k] = S.workspaces[k]; });
+    S.workspaces = next;
     saveAccountData();
     renderWsList();
   }
@@ -2466,7 +1458,7 @@
     var btn = e.target.closest ? e.target.closest('[data-ws-open],[data-ws-view],[data-ws-del],[data-ws-ren]') : null;
     if (!btn) return;
     var id = btn.getAttribute('data-ws-open') || btn.getAttribute('data-ws-view') || btn.getAttribute('data-ws-del') || btn.getAttribute('data-ws-ren');
-    var ws = workspaces[id];
+    var ws = S.workspaces[id];
     if (!ws) return;
     if (btn.hasAttribute('data-ws-open')) {
       ws.ids.forEach(function (sid) {
@@ -2485,18 +1477,18 @@
       closeWsManager();
       activeWs = id;
       activeCat = WS_CAT;
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
     } else if (btn.hasAttribute('data-ws-del')) {
-      delete workspaces[id];
+      delete S.workspaces[id];
       saveAccountData();
       renderWsList(); renderCats();
-      if (activeWs === id) { activeWs = null; activeCat = '全部'; renderFilterBar(); renderGrid(); }
+      if (activeWs === id) { activeWs = null; activeCat = '全部'; renderFilterBar(); YHCards.render(); }
     }
   });
   on(wsAddBtn, 'click', function () {
     var name = (wsNameInput.value || '').trim();
     if (!name) return;
-    workspaces['w' + Date.now()] = { name: name, ids: [] };
+    S.workspaces['w' + Date.now()] = { name: name, ids: [] };
     saveAccountData();
     wsNameInput.value = '';
     renderWsList(); renderCats();
@@ -2504,9 +1496,9 @@
 
   // ---------- 收藏（个人专属） ----------
   function toggleFav(id) {
-    if (favs.has(id)) favs.delete(id); else favs.add(id);
+    if (S.favs.has(id)) S.favs.delete(id); else S.favs.add(id);
     saveAccountData();
-    renderCats(); renderGrid();
+    renderCats(); YHCards.render();
     if (modal && !modal.hidden && currentSite && currentSite.id === id) renderModal();
   }
 
@@ -2518,7 +1510,7 @@
     var d = new Date();
     cwTime.textContent = pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds());
     var m = d.getMonth() + 1, day = d.getDate();
-    if (lang === 'en') {
+    if (S.lang === 'en') {
       cwDate.textContent = m + '/' + day + ' ' + ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][d.getDay()];
     } else {
       cwDate.textContent = m + '月' + day + '日 · 周' + '日一二三四五六'[d.getDay()];
@@ -2550,7 +1542,7 @@
     fxEl.innerHTML += html;
   }
   function initParticles() {
-    if (!fxEl || !settings.petals) return;
+    if (!fxEl || !S.settings.petals) return;
     clearFxClass('fx-petal');
     var html = '';
     for (var i = 0; i < 16; i++) {
@@ -2568,7 +1560,7 @@
 
   // ---------- 背景飘雪 ----------
   function initSnow() {
-    if (!fxEl || !settings.snow) return;
+    if (!fxEl || !S.settings.snow) return;
     clearFxClass('fx-snow');
     var html = '';
     for (var i = 0; i < 12; i++) {
@@ -2590,10 +1582,16 @@
   var glowX = -9999, glowY = -9999;
   var fxRaf = null;
   var trailDots = trailEl ? trailEl.querySelectorAll('i') : [];
+  var mouseMovePending = false;
   function onMouseMove(e) {
+    // 节流：多个 mousemove 事件只在上一次 rAF 处理完后再读一次坐标
+    // 高频显示器上 mousemove 可达 200+/s，此处节流至 1/rAF-frame
+    if (mouseMovePending) return;
+    mouseMovePending = true;
     mouseX = e.clientX; mouseY = e.clientY;
     if (glowEl) glowEl.style.opacity = '1';
     if (trailEl) trailEl.style.opacity = '1';
+    requestAnimationFrame(function () { mouseMovePending = false; });
   }
   var mouseIdleMs = 0;
   function fxFrame() {
@@ -2612,7 +1610,7 @@
     fxRaf = requestAnimationFrame(fxFrame);
   }
   function initCursorFx() {
-    if (!settings.cursorFx) return;
+    if (!S.settings.cursorFx) return;
     if (perfLevel === 'low') return; // 低端机关闭光标特效
     document.addEventListener('mousemove', onMouseMove);
     if (trailEl) trailEl.style.opacity = '0';
@@ -2638,6 +1636,20 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
+  // 涟漪反馈：在容器内创建白色圆从点击点扩散
+  function makeRipple(el, x, y) {
+    if (!el || !el.getBoundingClientRect) return;
+    var r = el.getBoundingClientRect();
+    var dx = (x - r.left), dy = (y - r.top);
+    var sz = Math.max(r.width, r.height) * 2;
+    var d = document.createElement('span');
+    d.className = 'ripple';
+    d.style.width = d.style.height = sz + 'px';
+    d.style.left = (dx - sz / 2) + 'px';
+    d.style.top = (dy - sz / 2) + 'px';
+    el.appendChild(d);
+    setTimeout(function () { if (d.parentNode) d.parentNode.removeChild(d); }, 600);
+  }
   function letterHue(name) {
     var h = 0;
     for (var i = 0; i < name.length; i++) h = (h * 31 + name.charCodeAt(i)) % 360;
@@ -2645,7 +1657,7 @@
   }
   function clickedCount() {
     var n = 0;
-    for (var k in clicks) if (clicks[k] > 0) n++;
+    for (var k in S.clicks) if (S.clicks[k] > 0) n++;
     return n;
   }
   function iconHTML(s, big) {
@@ -2653,9 +1665,11 @@
     var host = '';
     try { if (s.url) host = new URL(s.url).hostname; } catch (e) { /* 忽略非法网址 */ }
     var img = '';
-    if (host && settings.cardIcon !== 'letter' && !badIconHosts[host]) {
-      // 网站图标优先：加载成功隐藏首字；失败走多源回退，最终仍失败则移除图片露出首字
-      img = '<img class="icon-img" data-host="' + escapeHtml(host) + '" data-src="0" src="' + FAV_SOURCES[0](host) + '" alt="" loading="lazy" ' +
+    if (host && S.settings.cardIcon !== 'letter' && !badIconHosts[host]) {
+      // 网站图标：懒加载（data-src 占位，IntersectionObserver 进入视口时再设 src）
+      // 避免大网格 1000+ 站点同时发起全量网络请求
+      img = '<img class="icon-img" data-host="' + escapeHtml(host) + '" data-src="0" ' +
+        'alt="" decoding="async" loading="lazy" ' +
         'onload="var l=this.parentNode.querySelector(\'.icon-letter\');if(l)l.style.display=\'none\';">';
     }
     return '<span class="icon' + (big ? ' icon-lg' : '') + '" style="--h:' + letterHue(s.name) + 'deg">' +
@@ -2684,85 +1698,36 @@
       if (l) l.style.display = '';
     }
   }, true);
+
+  // 懒加载 favicon：IntersectionObserver 进入视口时再设 src
+  var favLazyIo = null;
+  function lazyLoadIcons() {
+   var imgs = grid ? grid.querySelectorAll('.icon-img[data-src="0"]:not([src])') : [];
+   if (imgs.length === 0) return;
+   if (!('IntersectionObserver' in window)) {
+     imgs.forEach(function (im) { im.src = FAV_SOURCES[0](im.getAttribute('data-host')); });
+     return;
+   }
+   if (!favLazyIo) {
+     favLazyIo = new IntersectionObserver(function (entries) {
+       entries.forEach(function (en) {
+         if (en.isIntersecting) {
+           var im = en.target;
+           if (im.getAttribute('data-src') === '0' && !im.src) {
+             im.src = FAV_SOURCES[0](im.getAttribute('data-host'));
+           }
+           favLazyIo.unobserve(im);
+         }
+       });
+     }, { rootMargin: '200px' });
+   }
+   imgs.forEach(function (im) { favLazyIo.observe(im); });
+  }
+
   function sourceBadge(s) {
     return s.source === 'personal'
       ? '<span class="tag tag-me">' + t('personal') + '</span>'
       : '<span class="tag tag-off">' + t('official') + '</span>';
-  }
-
-  // ---------- 筛选 ----------
-  // 字母排序（中文按拼音，英文按字母；优先简称）
-  function byName(a, b) {
-    return String(a.name || '').localeCompare(String(b.name || ''), 'zh');
-  }
-  function filterSites() {
-    var kw = keyword.trim().toLowerCase();
-    var base;
-    if (activeWs) {
-      var ws = workspaces[activeWs];
-      base = (ws ? ws.ids : []).map(function (id) { return siteOf(id); }).filter(Boolean);
-    } else if (activeCat === MY_CAT) {
-      base = currentUser ? (personalSites[currentUser] || []) : [];
-    } else if (activeCat === FAV_CAT) {
-      base = allSites().filter(function (s) { return favs.has(s.id); }).sort(byName);
-    } else if (activeCat === HOT_CAT) {
-      base = allSites()
-        .filter(function (s) { return (clicks[s.id] || 0) > 0; })
-        .sort(function (a, b) { return (clicks[b.id] || 0) - (clicks[a.id] || 0); })
-        .slice(0, 12);
-    } else if (activeCat === RECENT_CAT) {
-      // 最近访问：按打开时间倒序（本地记录，游客也可用）
-      base = recentIds.map(function (id) { return siteOf(id); }).filter(Boolean);
-    } else if (selectedTags.size) {
-      base = allSites().filter(function (s) {
-        return (s.tags || []).some(function (tn) { return selectedTags.has(tn); });
-      }).sort(byName);
-    } else {
-      // 默认/全部：按名称字母排序
-      base = allSites().sort(byName);
-    }
-    if (kw) {
-      // 模糊搜索：名称/全名/标签/大类支持错别字容错，简介/详情/网址也参与匹配；
-      // 按分数排序（同分按名称字母），精确命中置顶。
-      var fuzzy = (window.YH && YH.fuzzySearch) ||
-        function (q, t) { return t.indexOf(q) !== -1 ? 100 : null; }; // lib 缺失时退化为子串匹配
-      var scored = [];
-      base.forEach(function (s) {
-        var best = null;
-        function bump(sc) { if (sc !== null && (best === null || sc > best)) best = sc; }
-        bump(fuzzy(kw, s.name, 'fuzzy'));
-        bump(fuzzy(kw, s.fullName, 'fuzzy'));
-        bump(fuzzy(kw, (s.tags || []).join(' '), 'fuzzy'));
-        bump(fuzzy(kw, s.category, 'fuzzy'));
-        bump(fuzzy(kw, s.brief, 'fuzzy'));
-        bump(fuzzy(kw, s.detail, 'fuzzy'));
-        bump(fuzzy(kw, s.url, 'exact'));
-        if (best !== null) scored.push({ s: s, score: best });
-      });
-      scored.sort(function (a, b) { return b.score - a.score || byName(a.s, b.s); });
-      base = scored.map(function (x) { return x.s; });
-    }
-    return base;
-  }
-
-  // ---------- 为你推荐 ----------
-  function getRecommendations() {
-    var clicked = SITES.filter(function (s) { return (clicks[s.id] || 0) > 0; });
-    if (clicked.length < 3) return [];
-    var pool = {};
-    clicked.forEach(function (s) {
-      var w = clicks[s.id] || 1;
-      (s.tags || []).forEach(function (tn) { pool[tn] = (pool[tn] || 0) + w; });
-    });
-    var scored = [];
-    SITES.forEach(function (s) {
-      if ((clicks[s.id] || 0) > 0 || favs.has(s.id)) return;
-      var score = 0;
-      (s.tags || []).forEach(function (tn) { if (pool[tn]) score += pool[tn]; });
-      if (score > 0) scored.push({ s: s, score: score });
-    });
-    scored.sort(function (a, b) { return b.score - a.score; });
-    return scored.slice(0, 8).map(function (x) { return x.s; });
   }
 
   // ---------- 左侧导航 ----------
@@ -2773,10 +1738,10 @@
       { name: HOT_NEW_CAT, label: t('hot_new'), count: '' },
       { name: TOOLS_CAT, label: t('tools_title'), count: '' },
     ];
-    if (currentUser) {
+    if (S.currentUser) {
       // 登录后专属：个人网站 / 收藏 / 最常 / 工作区
-      specials.push({ name: MY_CAT, label: t('my_sites'), count: (personalSites[currentUser] || []).length });
-      specials.push({ name: FAV_CAT, label: t('favs'), count: favs.size });
+      specials.push({ name: MY_CAT, label: t('my_sites'), count: (S.personalSites[S.currentUser] || []).length });
+      specials.push({ name: FAV_CAT, label: t('favs'), count: S.favs.size });
       specials.push({ name: HOT_CAT, label: t('hot'), count: clickedCount() });
       specials.push({ name: WS_CAT, label: t('ws'), count: wsCount() });
       specials.push({ name: RANK_CAT, label: t('rank_title'), count: '' });
@@ -2784,29 +1749,34 @@
       // 未登录：登录解锁提示
       specials.push({ name: '__login', label: t('login_hint_short'), count: '' });
     }
-    if (recentIds.length) {
+    if (S.recentIds.length) {
       // 最近访问（本地记录，登录与否都可用）
-      specials.push({ name: RECENT_CAT, label: t('recent'), count: recentIds.length });
+      specials.push({ name: RECENT_CAT, label: t('recent'), count: S.recentIds.length });
     }
     var tags = (META.tags || []).map(function (tt) { return { name: tt.name, label: tagLabel(tt.name), count: tt.count }; });
     var items = specials.concat(tags);
     // 生成单个分类项（桌面分类栏与移动端筛选下拉共用）
     function makeItem(item) {
-      var viewOn = rankActive || hotActive || toolsActive; // 视图打开时，普通分类不高亮
+      var viewOn = S.rankActive || S.hotActive || S.toolsActive; // 视图打开时，普通分类不高亮
       var isSpecial = (item.name === '全部' || item.name === MY_CAT || item.name === FAV_CAT || item.name === HOT_CAT || item.name === WS_CAT || item.name === RANK_CAT || item.name === HOT_NEW_CAT || item.name === TOOLS_CAT || item.name === RECENT_CAT || item.name === '__login');
-      var viewActive = (item.name === RANK_CAT && rankActive) || (item.name === HOT_NEW_CAT && hotActive) || (item.name === TOOLS_CAT && toolsActive);
+      var viewActive = (item.name === RANK_CAT && S.rankActive) || (item.name === HOT_NEW_CAT && S.hotActive) || (item.name === TOOLS_CAT && S.toolsActive);
       var isActive = isSpecial
         ? (viewOn ? viewActive : activeCat === item.name)
         : selectedTags.has(item.name);
       var b = document.createElement('button');
       b.className = 'chip' + (item.name === '__login' ? ' chip-login' : '') + (isActive ? ' active' : '');
+      if (!isSpecial) { b.dataset.hue = '1'; b.style = '--chip-h ' + tagHue(item.name); }
       var label = document.createElement('span');
       label.textContent = item.label;
       var cnt = document.createElement('span');
       cnt.className = 'chip-count';
       if (item.count !== '') cnt.textContent = item.count;
       b.appendChild(label); b.appendChild(cnt);
-      b.addEventListener('click', onCatItemClick(item.name));
+      b.addEventListener('click', function (e) {
+        var tgt = e && e.currentTarget ? e.currentTarget : b;
+        if (e && e.clientX != null) makeRipple(tgt, e.clientX, e.clientY);
+        onCatItemClick(item.name)(e);
+      });
       return b;
     }
     if (catBar) {
@@ -2824,11 +1794,11 @@
   function onCatItemClick(name) {
     return function () {
       if (name !== RANK_CAT && name !== HOT_NEW_CAT && name !== TOOLS_CAT) exitAllViews();
-      if (name === '__login') { openLogin(t('need_login_fav')); closeCatDropdown(); return; }
+      if (name === '__login') { YHAuth.openLogin(t('need_login_fav')); closeCatDropdown(); return; }
       if (name === WS_CAT) { openWsManager(); closeCatDropdown(); return; }
       if (name === RANK_CAT) { openRank(); closeCatDropdown(); return; }
       if (name === HOT_NEW_CAT) { openHot(); closeCatDropdown(); return; }
-      if (name === TOOLS_CAT) { openTools(); closeCatDropdown(); return; }
+      if (name === TOOLS_CAT) { YHTools.open(); closeCatDropdown(); return; }
       if (name === '全部' || name === MY_CAT || name === FAV_CAT || name === HOT_CAT || name === RECENT_CAT) {
         activeCat = name;
         selectedTags.clear();
@@ -2840,7 +1810,7 @@
         if (selectedTags.size === 0) activeCat = '全部';
       }
       closeCatDropdown();
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
     };
   }
   // 移动端筛选按钮：显示当前所处分类
@@ -2849,9 +1819,9 @@
     var label = t('all');
     if (selectedTags.size === 1) label = tagLabel(Array.from(selectedTags)[0]);
     else if (selectedTags.size > 1) label = t('filter_n').replace('{n}', selectedTags.size);
-    else if (rankActive) label = t('rank_title');
-    else if (hotActive) label = t('hot_new');
-    else if (toolsActive) label = t('tools_title');
+    else if (S.rankActive) label = t('rank_title');
+    else if (S.hotActive) label = t('hot_new');
+    else if (S.toolsActive) label = t('tools_title');
     else if (activeCat === MY_CAT) label = t('my_sites');
     else if (activeCat === FAV_CAT) label = t('favs');
     else if (activeCat === HOT_CAT) label = t('hot');
@@ -2882,7 +1852,7 @@
   function renderFilterBar() {
     if (!filterBar) return;
     if (activeWs) {
-      var ws = workspaces[activeWs];
+      var ws = S.workspaces[activeWs];
       filterBar.hidden = false;
       filterBar.innerHTML = '<span class="filter-label">' + t('current_ws') + '</span>' +
         '<button class="filter-chip" data-ws-exit="1">' + escapeHtml(ws ? ws.name : '') + ' ✕</button>';
@@ -2922,14 +1892,14 @@
   on(filterBar, 'click', function (e) {
     var myAdd = e.target.closest ? e.target.closest('[data-my-add]') : null;
     if (myAdd) {
-      if (!currentUser) { openLogin(t('need_login_fav')); return; }
+      if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
       openAdd();
       return;
     }
     var myExit = e.target.closest ? e.target.closest('[data-my-exit]') : null;
     if (myExit) {
       activeCat = '全部';
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       return;
     }
     var favMan = e.target.closest ? e.target.closest('[data-fav-manage]') : null;
@@ -2937,447 +1907,50 @@
     var favClr = e.target.closest ? e.target.closest('[data-fav-clear]') : null;
     if (favClr) {
       if (window.confirm(t('clear_confirm'))) {
-        favs.clear();
+        S.favs.clear();
         saveAccountData();
-        renderCats(); renderGrid();
+        renderCats(); YHCards.render();
       }
       return;
     }
     var favOpen = e.target.closest ? e.target.closest('[data-fav-openall]') : null;
     if (favOpen) {
-      openSitesInTabs(allSites().filter(function (s) { return favs.has(s.id); }));
+      openSitesInTabs(allSites().filter(function (s) { return S.favs.has(s.id); }));
       return;
     }
     var recentClear = e.target.closest ? e.target.closest('[data-recent-clear]') : null;
     if (recentClear) {
-      recentIds = [];
+      S.recentIds = [];
       saveRecent();
       activeCat = '全部';
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       return;
     }
     var recentExit = e.target.closest ? e.target.closest('[data-recent-exit]') : null;
     if (recentExit) {
       activeCat = '全部';
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       return;
     }
     var wsExit = e.target.closest ? e.target.closest('[data-ws-exit]') : null;
     if (wsExit) {
       activeWs = null;
       activeCat = '全部';
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       return;
     }
     var chip = e.target.closest ? e.target.closest('.filter-chip') : null;
     if (chip) {
       selectedTags.delete(chip.getAttribute('data-tag'));
       if (selectedTags.size === 0) activeCat = '全部';
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       return;
     }
     if (e.target.closest && e.target.closest('.filter-clear')) {
       selectedTags.clear();
       activeCat = '全部';
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
     }
-  });
-
-  // ---------- 卡片 ----------
-  function cardHTML(s, showCount) {
-    var isFav = favs.has(s.id);
-    var star = '<button class="star' + (isFav ? ' on' : '') + '" data-id="' + escapeHtml(s.id) + '" title="' + (isFav ? t('un_fav') : t('add_fav')) + '">' + (isFav ? '★' : '☆') + '</button>';
-    var more = '<button class="more" data-id="' + escapeHtml(s.id) + '" title="⋯">⋯</button>';
-    // 精简元数据：仅 核心图标 + 主标题 + 单一属性标签
-    var tag = (s.tags && s.tags.length) ? '<span class="tag">' + escapeHtml(tagLabel(s.tags[0])) + '</span>' : '';
-    var srcTag = s.source === 'personal' ? '<span class="tag tag-me">' + t('personal') + '</span>' : '';
-    var count = showCount && clicks[s.id] ? '<span class="card-count">👁' + clicks[s.id] + '</span>' : '';
-    return (
-      '<div class="card" role="link" tabindex="0" data-id="' + escapeHtml(s.id) + '" data-url="' + escapeHtml(s.url || '') + '" title="' + escapeHtml(s.detail || s.brief || '') + '">' +
-        '<div class="card-head">' +
-          iconHTML(s) +
-          '<span class="card-title">' + escapeHtml(nameLabel(s)) + '</span>' +
-          '<span class="card-badges">' + star + more + '</span>' +
-        '</div>' +
-        '<div class="card-tags">' + srcTag + tag + count + '</div>' +
-      '</div>'
-    );
-  }
-
-  function emptyMessage() {
-    if (activeWs) return t('empty_ws');
-    if (activeCat === MY_CAT) return t('empty_my');
-    if (activeCat === FAV_CAT) return t('empty_fav');
-    if (activeCat === HOT_CAT) return t('empty_hot');
-    if (selectedTags.size) return t('empty_tags');
-    return t('empty_all');
-  }
-
-  // ---------- 渲染（FLIP） ----------
-  function renderGrid() {
-    var kw = keyword.trim();
-    var recs = (currentUser && activeCat === '全部' && !kw && !selectedTags.size && !activeWs) ? getRecommendations() : [];
-    var list = filterSites();
-
-    // 性能降级：低端机跳过 FLIP 布局读（避免 2000+ 卡片 getBoundingClientRect 卡顿）
-    var doFlip = perfLevel !== 'low' && list.length <= 200;
-    var first = {};
-    var oldEls = [];
-    if (doFlip) {
-      var oldCards = grid.querySelectorAll('.card');
-      for (var i = 0; i < oldCards.length; i++) {
-        var oid = oldCards[i].getAttribute('data-id');
-        if (!oid) continue;
-        var or = oldCards[i].getBoundingClientRect();
-        first[oid] = { x: or.left, y: or.top };
-        oldEls.push({ id: oid, el: oldCards[i], rect: or });
-      }
-    }
-
-    var html = '';
-    if (recs.length) {
-      html += '<div class="section-head"><span class="section-title">' + t('reco') + '</span><span class="section-sub">' + t('reco_sub') + '</span></div>';
-      recs.forEach(function (s) { html += cardHTML(s, false); });
-    }
-    if (!list.length && !recs.length) {
-      var addBtnHtml = (activeCat === MY_CAT && currentUser)
-        ? '<br><br><button class="btn btn-primary empty-add" data-empty-add="1">＋ ' + t('add_site') + '</button>'
-        : '';
-      html = '<div class="empty"><span class="empty-icon">🔭</span>' + escapeHtml(emptyMessage()) + addBtnHtml + '</div>';
-    } else if (list.length) {
-      list.forEach(function (s) { html += cardHTML(s, activeCat === HOT_CAT); });
-    }
-    grid.className = 'grid ' + gridSize;
-    grid.innerHTML = html;
-
-    var newCards = grid.querySelectorAll('.card');
-    if (doFlip) {
-      requestAnimationFrame(function () {
-        for (var j = 0; j < newCards.length; j++) {
-          var c = newCards[j];
-          var nid = c.getAttribute('data-id');
-          var nr = c.getBoundingClientRect();
-      if (nid && first[nid]) {
-        var dx = first[nid].x - nr.left;
-        var dy = first[nid].y - nr.top;
-        if (Math.abs(dx) > 0.5 || Math.abs(dy) > 0.5) {
-          c.style.transition = 'none';
-          c.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-          void c.offsetWidth;
-          c.style.transition = 'transform 0.38s cubic-bezier(0.2, 0.7, 0.3, 1)';
-          c.style.transform = '';
-          (function (el) {
-            setTimeout(function () { el.style.transition = ''; el.style.transform = ''; }, 420);
-          })(c);
-        }
-      } else {
-        c.classList.add('enter');
-      }
-    }});
-    } else {
-      // 低端机/大列表：跳过 FLIP 逐卡动画，保留飞出场动画（已有 <=60 保护）
-      for (var j = 0; j < newCards.length; j++) {
-        if (newCards[j].getAttribute('data-id') && !first[newCards[j].getAttribute('data-id')]) {
-          newCards[j].classList.add('enter');
-        }
-      }
-    }
-
-    // FLIP-out：被筛选/搜索移除的旧卡片从原位置飞出，而不是瞬间消失（低端机同样跳过）
-    if (doFlip && oldEls.length) {
-      var newIds = {};
-      for (var k = 0; k < newCards.length; k++) {
-        var nk = newCards[k].getAttribute('data-id');
-        if (nk) newIds[nk] = 1;
-      }
-      var removed = [];
-      for (var m = 0; m < oldEls.length; m++) {
-        if (!newIds[oldEls[m].id]) removed.push(oldEls[m]);
-      }
-      // 数量过多（首次整页/清空大列表）时不做成群飞出，避免卡顿
-      if (perfLevel !== 'low' && removed.length && removed.length <= 60) flyOutCards(removed);
-    }
-
-    if (searchResult) {
-      searchResult.hidden = !keyword;
-      searchResult.textContent = keyword ? list.length + (lang === 'en' ? ' results' : ' 个结果') : '';
-    }
-    if (footerInfo) footerInfo.textContent = (lang === 'en'
-      ? allSites().length + ' sites · showing ' + list.length + ' · ' + favs.size + ' favorites'
-      : '共收录 ' + allSites().length + ' 个网站 · 当前显示 ' + list.length + ' 个 · 已收藏 ' + favs.size + ' 个');
-    if (footerUpdated) footerUpdated.textContent = META.updatedAt || '';
-    if (statTotal) statTotal.textContent = allSites().length;
-    if (statTags) statTags.textContent = (META.tags || []).length;
-    if (statFavs) statFavs.textContent = favs.size;
-    if (descTotal) descTotal.textContent = allSites().length;
-    if (descTags) descTags.textContent = (META.tags || []).length;
-  }
-
-  // ---------- 卡片飞出：被移除的卡片在原位飞出（FLIP-out） ----------
-  var flyLayer = null;
-  function flyOutCards(removed) {
-    if (!removed.length) return;
-    if (!flyLayer) {
-      flyLayer = document.createElement('div');
-      flyLayer.className = 'fly-layer';
-      flyLayer.setAttribute('aria-hidden', 'true');
-      document.body.appendChild(flyLayer);
-    }
-    removed.forEach(function (item) {
-      var el = item.el;
-      if (!el || !el.classList || el.parentNode === flyLayer) return;
-      el.classList.add('card-out');
-      el.style.position = 'fixed';
-      el.style.left = item.rect.left + 'px';
-      el.style.top = item.rect.top + 'px';
-      el.style.width = item.rect.width + 'px';
-      el.style.height = item.rect.height + 'px';
-      el.style.margin = '0';
-      el.style.zIndex = '60';
-      flyLayer.appendChild(el);
-      (function (e) {
-        setTimeout(function () { if (e.parentNode) e.parentNode.removeChild(e); }, 400);
-      })(el);
-    });
-  }
-
-  // ---------- 搜索（站内模糊 / 多引擎直达） ----------
-  var ENGINE_URLS = {
-    baidu: 'https://www.baidu.com/s?wd=',
-    google: 'https://www.google.com/search?q=',
-    bing: 'https://www.bing.com/search?q=',
-    bili: 'https://search.bilibili.com/all?keyword=',
-    zhihu: 'https://www.zhihu.com/search?type=content&q=',
-    github: 'https://github.com/search?q=',
-  };
-  var ENGINE_CODES = ['local', 'baidu', 'google', 'bing', 'bili', 'zhihu', 'github'];
-  var engine = localStorage.getItem(ENGINE_KEY) || 'local';
-  function currentEngine() { return engine; }
-  function engineLabel(code) {
-    return { local: t('engine_local'), baidu: t('engine_baidu'), google: t('engine_google'), bing: t('engine_bing'), bili: t('engine_bili'), zhihu: t('engine_zhihu'), github: t('engine_github') }[code] || code;
-  }
-  function webSearch(q, code) {
-    var base = ENGINE_URLS[code];
-    if (!base || !q) return false;
-    window.open(base + encodeURIComponent(q), '_blank');
-    return true;
-  }
-  function renderEngineMenu() {
-    if (!engineMenu) return;
-    engineMenu.innerHTML = ENGINE_CODES.map(function (code) {
-      return '<button class="theme-option' + (engine === code ? ' active' : '') + '" data-engine="' + code + '">' +
-        (code === 'local' ? '🔍 ' : '') + escapeHtml(engineLabel(code)) + '</button>';
-    }).join('');
-  }
-  function setEngine(code) {
-    engine = ENGINE_CODES.indexOf(code) === -1 ? 'local' : code;
-    try { localStorage.setItem(ENGINE_KEY, engine); } catch (e) { /* 忽略 */ }
-    renderEngineMenu();
-    syncEngineUI();
-    if (window.YHStartPage && YHStartPage.setEngine) YHStartPage.setEngine(engine); // 同步青柠整屏起始页引擎
-  }
-  function syncEngineUI() {
-    var eng = currentEngine();
-    if (!searchInput || !btnSearch) return;
-    engineBtn.forEach(function (b) { b.innerHTML = engineLabel(eng) + ' ▾'; });
-    if (eng === 'local') {
-      searchInput.placeholder = t('search_ph');
-      btnSearch.innerHTML = t('search_btn');
-      btnSearch.title = t('search_btn');
-    } else {
-      searchInput.placeholder = (lang === 'en' ? 'Search on ' : '在 ') + engineLabel(eng) + (lang === 'en' ? '…' : ' 中搜索…');
-      btnSearch.innerHTML = engineLabel(eng);
-      btnSearch.title = t('search_btn') + ' → ' + engineLabel(eng);
-    }
-  }
-  engineBtn.forEach(function (b) { on(b, 'click', function (e) {
-    e.stopPropagation();
-    if (engineMenu) engineMenu.hidden = !engineMenu.hidden;
-  }); });
-  on(engineMenu, 'click', function (e) {
-    var b = e.target.closest ? e.target.closest('[data-engine]') : null;
-    if (!b) return;
-    setEngine(b.getAttribute('data-engine'));
-    if (engineMenu) engineMenu.hidden = true;
-    if (searchInput) searchInput.focus();
-  });
-  document.addEventListener('click', function (e) {
-    if (engineMenu && !engineMenu.hidden && !(e.target.closest && e.target.closest('.engine-wrap'))) {
-      engineMenu.hidden = true;
-    }
-  });
-  // 站外引擎：仅在回车或点按钮时跳转；输入只做站内实时过滤
-  function doSearch() {
-    clearTimeout(searchTimer);
-    var kw = keyword.trim();
-    var eng = currentEngine();
-    if (eng !== 'local') { webSearch(kw, eng); return; }
-    if (kw) { recordHotWord(kw); recordSearchHistory(kw); } // 站内搜索热词 + 最近搜索历史
-    hideSearchHot();
-    hideSearchAc();
-    if (rankActive || hotActive || toolsActive) exitAllViews();
-    renderGrid();
-  }
-  on(searchInput, 'input', function () {
-    keyword = searchInput.value;
-    if (btnClear) btnClear.hidden = !keyword;
-    clearTimeout(searchTimer);
-    if (currentEngine() === 'local') {
-      if (keyword) hideSearchHot(); else showSearchHot();
-      renderSearchAc();
-      searchTimer = setTimeout(doSearch, 120); // 站外引擎不随输入跳转
-    }
-  });
-  on(searchInput, 'focus', showSearchHot);
-  on(searchInput, 'blur', function () { setTimeout(function () { hideSearchHot(); hideSearchAc(); }, 150); });
-  // 搜索建议面板：🕘 最近搜索 + 🔥 站内热词（点击即搜索）
-  function showSearchHot() {
-    if (!searchHot) return;
-    if (currentEngine() !== 'local' || (searchInput && searchInput.value)) { searchHot.hidden = true; return; }
-    var html = '';
-    // ① 最近搜索（个人历史，带清空入口）
-    if (searchHistory.length) {
-      html += '<div class="search-hot-title">🕘 ' + t('recent_search_title') +
-        ' <button class="search-hot-clear" data-clear-hist="1" title="' + t('clear_search_hist_tip') + '">' + t('clear_search_hist') + '</button></div>';
-      html += searchHistory.map(function (h) {
-        return '<button class="search-hot-chip" data-q="' + escapeHtml(h.q) + '">' + escapeHtml(h.q) + '</button>';
-      }).join('');
-    }
-    // ② 站内热词
-    var keys = Object.keys(hotWords).sort(function (a, b) { return hotWords[b] - hotWords[a]; }).slice(0, 10);
-    if (keys.length) {
-      html += '<div class="search-hot-title">' + t('hot_search_title') + '</div>' +
-        keys.map(function (k) {
-          return '<button class="search-hot-chip" data-q="' + escapeHtml(k) + '">' + escapeHtml(k) + '</button>';
-        }).join('');
-    }
-    if (!html) { searchHot.hidden = true; return; }
-    searchHot.innerHTML = html;
-    searchHot.hidden = false;
-  }
-  function hideSearchHot() { if (searchHot) searchHot.hidden = true; }
-  on(searchHot, 'click', function (e) {
-    // 清空搜索历史
-    var clearBtn = e.target.closest ? e.target.closest('[data-clear-hist]') : null;
-    if (clearBtn) {
-      searchHistory = [];
-      saveSearchHistory();
-      showSearchHot();
-      return;
-    }
-    var b = e.target.closest ? e.target.closest('[data-q]') : null;
-    if (!b) return;
-    var q = b.getAttribute('data-q');
-    searchInput.value = q;
-    keyword = q;
-    if (btnClear) btnClear.hidden = false;
-    doSearch();
-  });
-  // 搜索联想 + 网址直达：输入时实时匹配站名，或识别网址提供直达
-  function hideSearchAc() { if (searchAc) searchAc.hidden = true; }
-  function renderSearchAc() {
-    if (!searchAc) return;
-    if (currentEngine() !== 'local' || !searchInput || !searchInput.value.trim()) { searchAc.hidden = true; return; }
-    var q = searchInput.value.trim();
-    var html = '';
-    // ① 网址直达：http/https 或"域名.后缀"（不含空格、非中文）
-    if (/^(https?:\/\/|www\.)/i.test(q) || (/\./.test(q) && !/\s/.test(q) && !/[\u4e00-\u9fff]/.test(q))) {
-      var u = /^https?:\/\//i.test(q) ? q : 'https://' + q;
-      html += '<div class="ac-item ac-url" data-url="' + escapeHtml(u) + '">🔗 <b>' + t('ac_direct') + '</b> <span>' + escapeHtml(q) + '</span></div>';
-    }
-    // ② 匹配站点：按模糊分从高到低取前 8
-    var kw = q.toLowerCase();
-    var fuzzy = (window.YH && YH.fuzzySearch) || function (k, t) { return t.indexOf(k) !== -1 ? 100 : null; };
-    var hits = [];
-    allSites().forEach(function (s) {
-      var sc = fuzzy(kw, s.name, 'fuzzy');
-      if (sc === null) sc = fuzzy(kw, s.fullName, 'fuzzy');
-      if (sc !== null) hits.push({ s: s, sc: sc });
-    });
-    hits.sort(function (a, b) { return b.sc - a.sc; });
-    hits.slice(0, 8).forEach(function (h) {
-      html += '<div class="ac-item" data-id="' + h.s.id + '">' + escapeHtml(nameLabel(h.s)) +
-        (h.s.tags && h.s.tags.length ? ' <span class="ac-tag">' + escapeHtml(tagLabel(h.s.tags[0])) + '</span>' : '') +
-      '</div>';
-    });
-    if (!html) { searchAc.hidden = true; return; }
-    // ③ 站外搜索该关键词
-    html += '<div class="ac-item ac-more" data-q="' + escapeHtml(q) + '">🔎 ' + t('ac_more') + ' ' + escapeHtml(q) + '</div>';
-    searchAc.innerHTML = html;
-    searchAc.hidden = false;
-  }
-  on(searchAc, 'click', function (e) {
-    var urlItem = e.target.closest ? e.target.closest('[data-url]') : null;
-    if (urlItem) {
-      window.open(urlItem.getAttribute('data-url'), '_blank');
-      hideSearchAc();
-      return;
-    }
-    var idItem = e.target.closest ? e.target.closest('[data-id]') : null;
-    if (idItem) {
-      var s = siteOf(idItem.getAttribute('data-id'));
-      if (s) { if (s.url) window.open(s.url, '_blank'); if (s.id) addRecent(s.id); }
-      hideSearchAc();
-      return;
-    }
-    var more = e.target.closest ? e.target.closest('[data-q]') : null;
-    if (more) {
-      searchInput.value = more.getAttribute('data-q');
-      keyword = searchInput.value;
-      if (btnClear) btnClear.hidden = false;
-      doSearch();
-    }
-  });
-  on(searchInput, 'keydown', function (e) {
-    var acItems = (searchAc && !searchAc.hidden) ? searchAc.querySelectorAll('.ac-item') : [];
-    var idx = -1;
-    for (var i = 0; i < acItems.length; i++) {
-      if (acItems[i] === document.activeElement) { idx = i; break; }
-    }
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      if (acItems.length) {
-        var next = (idx + 1) % acItems.length;
-        focusAcItem(acItems[next]);
-      }
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      if (acItems.length) {
-        var prev = (idx - 1 + acItems.length) % acItems.length;
-        if (idx === 0) { searchInput.focus(); } else { focusAcItem(acItems[prev]); }
-      }
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      hideSearchAc(); hideSearchHot();
-      searchInput.focus();
-    } else if (e.key === 'Enter' && idx >= 0) {
-      e.preventDefault();
-      acItems[idx].click();
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      doSearch();
-      if (appEl && !appEl.classList.contains('revealed')) {
-        appEl.classList.add('revealed');
-        document.body.classList.add('entered');
-      }
-    }
-  });
-  // 搜索联想：方向键聚焦某项（键盘流闭环：方向键/Tab 选中 + Enter 触发）
-  function focusAcItem(el) {
-    if (!el) return;
-    var old = searchAc.querySelectorAll('.ac-focused');
-    for (var k = 0; k < old.length; k++) { old[k].classList.remove('ac-focused'); }
-    el.classList.add('ac-focused');
-    try { if (el.scrollIntoView) el.scrollIntoView({ block: 'nearest' }); } catch (e) {}
-    try { el.focus(); } catch (e) {}
-  }
-  on(btnSearch, 'click', doSearch);
-  on(btnClear, 'click', function () {
-    searchInput.value = '';
-    keyword = '';
-    if (btnClear) btnClear.hidden = true;
-    doSearch();
-    searchInput.focus();
   });
 
   // ---------- 开场页 ----------
@@ -3392,7 +1965,7 @@
       // 开场页收缩到 0 高度时，保持滚动位置在顶部，避免页尾内容上移导致'跳到底部'
       window.scrollTo(0, 0);
     }
-    if (settings.showIntro === false) {
+    if (S.settings.showIntro === false) {
       document.body.classList.add('entered', 'instant');
       appEl.classList.add('revealed');
       window.scrollTo(0, 0);
@@ -3427,10 +2000,10 @@
     currentSite = null;
   }
   function wsOptionsHtml() {
-    var keys = Object.keys(workspaces);
+    var keys = Object.keys(S.workspaces);
     var html = '<option value="">' + t('ws_pick') + '</option>';
     keys.forEach(function (id) {
-      html += '<option value="' + id + '">' + escapeHtml(workspaces[id].name) + '</option>';
+      html += '<option value="' + id + '">' + escapeHtml(S.workspaces[id].name) + '</option>';
     });
     html += '<option value="__new">' + t('ws_new') + '</option>';
     return html;
@@ -3440,8 +2013,8 @@
     if (!s || !modalBody) return;
     // 动态 aria-label：随卡片内容变化更新，读屏用户可感知当前是哪个网站的详情
     if (modal) { modal.setAttribute('aria-label', escapeHtml(nameLabel(s)) + ' - ' + t('site_detail')); }
-    var isFav = favs.has(s.id);
-    var count = clicks[s.id] || 0;
+    var isFav = S.favs.has(s.id);
+    var count = S.clicks[s.id] || 0;
     var tags = (s.tags || []).map(function (tn) {
       return '<span class="m-tag">' + escapeHtml(tagLabel(tn)) + '</span>';
     }).join('');
@@ -3454,9 +2027,9 @@
     var urlLine = s.url
       ? '<div class="m-url">🔗 <a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">' + escapeHtml(s.url) + '</a></div>'
       : '';
-    var editBtn = (s.source === 'personal' && s.owner === currentUser)
+    var editBtn = (s.source === 'personal' && s.owner === S.currentUser)
       ? '<button id="m-edit" class="btn btn-ghost">' + t('edit_site') + '</button>' : '';
-    var delBtn = (s.source === 'personal' && s.owner === currentUser)
+    var delBtn = (s.source === 'personal' && s.owner === S.currentUser)
       ? '<button id="m-del" class="btn btn-ghost">' + t('del_site') + '</button>' : '';
     var fbBtn = (s.source !== 'personal')
       ? '<button id="m-fb" class="btn btn-ghost">' + t('fb_title') + '</button>' : '';
@@ -3500,11 +2073,11 @@
     var delBtnEl = modalBody.querySelector('#m-del');
     if (delBtnEl) delBtnEl.addEventListener('click', function () {
       if (!window.confirm(t('del_confirm'))) return;
-      var mine = personalSites[currentUser] || [];
-      personalSites[currentUser] = mine.filter(function (x) { return x.id !== s.id; });
+      var mine = S.personalSites[S.currentUser] || [];
+      S.personalSites[S.currentUser] = mine.filter(function (x) { return x.id !== s.id; });
       savePersonal();
       closeModal();
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
     });
     var copyBtn = modalBody.querySelector('#m-copy');
     if (copyBtn) copyBtn.addEventListener('click', function () {
@@ -3551,10 +2124,10 @@
         var name = (wsNew.value || '').trim();
         if (!name) return;
         var id = 'w' + Date.now();
-        workspaces[id] = { name: name, ids: [s.id] };
+        S.workspaces[id] = { name: name, ids: [s.id] };
         wsOk.textContent = t('created_added');
       } else if (val) {
-        if (workspaces[val].ids.indexOf(s.id) === -1) workspaces[val].ids.push(s.id);
+        if (S.workspaces[val].ids.indexOf(s.id) === -1) S.workspaces[val].ids.push(s.id);
         wsOk.textContent = t('added');
       } else {
         return;
@@ -3580,7 +2153,7 @@
       else if (favModal && !favModal.hidden) favModal.hidden = true;
       else if (fbModal && !fbModal.hidden) fbModal.hidden = true;
       else if (wsModal && !wsModal.hidden) closeWsManager();
-      else if (rankActive || hotActive || toolsActive) exitAllViews();
+      else if (S.rankActive || S.hotActive || S.toolsActive) exitAllViews();
       else if (modal && !modal.hidden) closeModal();
       return;
     }
@@ -3678,18 +2251,18 @@
     var data = {
       version: 1,
       exportedAt: new Date().toISOString(),
-      favsAll: favsAll,
-      clicksAll: clicksAll,
-      workspacesAll: workspacesAll,
-      personalSites: personalSites,
-      settings: settings,
+      favsAll: S.favsAll,
+      clicksAll: S.clicksAll,
+      workspacesAll: S.workspacesAll,
+      personalSites: S.personalSites,
+      settings: S.settings,
     };
     downloadText('yuhang-backup.json', JSON.stringify(data, null, 2), 'application/json');
     showMsg(t('data_exported'));
   });
   // ---------- 收藏导出为浏览器书签（HTML，可导入任意浏览器） ----------
   function exportBookmarksHtml() {
-    var items = allSites().filter(function (s) { return favs.has(s.id); });
+    var items = allSites().filter(function (s) { return S.favs.has(s.id); });
     var lines = items.map(function (s) {
       return '    <DT><A HREF="' + escapeHtml(s.url || '') + '">' + escapeHtml(nameLabel(s)) + '</A>';
     });
@@ -3705,11 +2278,11 @@
     showMsg(t('bm_exported'));
   }
   on($('btn-export-bookmarks'), 'click', function () {
-    if (!favs.size) { showMsg(t('bm_empty')); return; }
+    if (!S.favs.size) { showMsg(t('bm_empty')); return; }
     exportBookmarksHtml();
   });
   on($('fav-export-bm'), 'click', function () {
-    if (!favs.size) { showMsg(t('bm_empty')); return; }
+    if (!S.favs.size) { showMsg(t('bm_empty')); return; }
     exportBookmarksHtml();
   });
   on($('btn-import-data'), 'click', function () {
@@ -3724,19 +2297,19 @@
       try {
         var d = JSON.parse(reader.result);
         if (!d || d.version !== 1 || typeof d.favsAll !== 'object') throw new Error('bad');
-        favsAll = d.favsAll || {};
-        clicksAll = d.clicksAll || {};
-        workspacesAll = d.workspacesAll || {};
-        personalSites = d.personalSites || {};
-        if (d.settings && typeof d.settings === 'object') Object.assign(settings, d.settings);
+        S.favsAll = d.favsAll || {};
+        S.clicksAll = d.clicksAll || {};
+        S.workspacesAll = d.workspacesAll || {};
+        S.personalSites = d.personalSites || {};
+        if (d.settings && typeof d.settings === 'object') Object.assign(S.settings, d.settings);
         saveAccountData();
         savePersonal();
         saveSettings();
         loadAccountData();
-        updateLoginBtn();
+        YHAuth.updateLoginBtn();
         renderCats();
         renderFilterBar();
-        renderGrid();
+        YHCards.render();
         showMsg(t('data_imported'));
       } catch (err) {
         showMsg(t('data_import_fail'));
@@ -3753,22 +2326,22 @@
   on($('import-bm-file'), 'change', function (e) {
     var file = e.target && e.target.files && e.target.files[0];
     if (!file) return;
-    if (!currentUser) { showMsg(t('bm_need_login')); return; }
+    if (!S.currentUser) { showMsg(t('bm_need_login')); return; }
     if (typeof DOMParser === 'undefined') { showMsg(t('bm_fail')); return; }
     var reader = new FileReader();
     reader.onload = function () {
       try {
         var doc = new DOMParser().parseFromString(reader.result, 'text/html');
         var links = doc.querySelectorAll('a[href]');
-        if (!personalSites[currentUser]) personalSites[currentUser] = [];
+        if (!S.personalSites[S.currentUser]) S.personalSites[S.currentUser] = [];
         var added = 0;
         for (var i = 0; i < links.length; i++) {
           var href = (links[i].getAttribute('href') || '').trim();
           if (!href || /^(javascript:|#|about:)/i.test(href)) continue;
           var nm = (links[i].textContent || '').trim().slice(0, 40) || href;
-          personalSites[currentUser].push({
+          S.personalSites[S.currentUser].push({
             id: 'p' + Date.now() + Math.random().toString(36).slice(2, 7),
-            owner: currentUser, name: nm, fullName: nm, url: href,
+            owner: S.currentUser, name: nm, fullName: nm, url: href,
             brief: '', detail: '', category: '', tags: ['书签'], vpn: false, source: 'personal'
           });
           added++;
@@ -3777,8 +2350,8 @@
         savePersonal();
         renderCats();
         renderFilterBar();
-        renderGrid();
-        showMsg(t('bm_imported') + added + (lang === 'en' ? ' bookmarks' : ' 个书签'));
+        YHCards.render();
+        showMsg(t('bm_imported') + added + (S.lang === 'en' ? ' bookmarks' : ' 个书签'));
       } catch (err) {
         showMsg(t('bm_fail'));
       }
@@ -3840,7 +2413,7 @@
     if (act === 'home') {
       exitAllViews();
       activeCat = '全部'; selectedTags.clear(); activeWs = null;
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (act === 'search') {
       exitAllViews();
@@ -3848,21 +2421,21 @@
       setTimeout(function () { if (searchInput) searchInput.focus(); }, 350);
     } else if (act === 'favs') {
       exitAllViews();
-      if (!currentUser) { openLogin(t('need_login_fav')); return; }
+      if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
       activeCat = FAV_CAT; selectedTags.clear(); activeWs = null;
-      renderCats(); renderFilterBar(); renderGrid();
+      renderCats(); renderFilterBar(); YHCards.render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (act === 'tools') {
-      if (toolsActive) { exitAllViews(); return; }
-      openTools();
+      if (S.toolsActive) { exitAllViews(); return; }
+      YHTools.open();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (act === 'me') {
       exitAllViews();
-      if (currentUser) {
+      if (S.currentUser) {
         activeCat = MY_CAT; selectedTags.clear(); activeWs = null;
-        renderCats(); renderFilterBar(); renderGrid();
+        renderCats(); renderFilterBar(); YHCards.render();
         window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else { openLogin(t('need_login_fav')); }
+      } else { YHAuth.openLogin(t('need_login_fav')); }
     }
   }
   bottomNavs.forEach(function (nav) {
@@ -3877,9 +2450,9 @@
       for (var i = 0; i < items.length; i++) {
         var bn = items[i].getAttribute('data-bn');
         var on = false;
-        if (bn === 'home') on = !rankActive && !hotActive && !toolsActive && activeCat === '全部' && selectedTags.size === 0;
+        if (bn === 'home') on = !S.rankActive && !S.hotActive && !S.toolsActive && activeCat === '全部' && selectedTags.size === 0;
         else if (bn === 'favs') on = activeCat === FAV_CAT;
-        else if (bn === 'tools') on = toolsActive;
+        else if (bn === 'tools') on = S.toolsActive;
         else if (bn === 'me') on = activeCat === MY_CAT;
         items[i].classList.toggle('active', on);
       }
@@ -3890,7 +2463,7 @@
   on(grid, 'click', function (e) {
     var addBtn = e.target.closest ? e.target.closest('[data-empty-add]') : null;
     if (addBtn) {
-      if (!currentUser) { openLogin(t('need_login_fav')); return; }
+      if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
       openAdd();
       return;
     }
@@ -3902,20 +2475,22 @@
     }
     var star = e.target.closest ? e.target.closest('.star') : null;
     if (star) {
-      if (!currentUser) { openLogin(t('need_login_fav')); return; }
+      star.classList.remove('burst'); void star.offsetWidth; star.classList.add('burst');
+      if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
       toggleFav(star.getAttribute('data-id'));
       return;
     }
     var card = e.target.closest ? e.target.closest('.card') : null;
     if (!card) return;
+    makeRipple(card, e.clientX, e.clientY);
     var id = card.getAttribute('data-id');
     var url = card.getAttribute('data-url');
     if (id) {
       // 最近访问：本地记录，登录与否都记
       addRecent(id);
-      if (currentUser) {
+      if (S.currentUser) {
         // 点击统计为个人专属：仅登录后记录
-        clicks[id] = (clicks[id] || 0) + 1;
+        S.clicks[id] = (S.clicks[id] || 0) + 1;
         saveAccountData();
       }
     }
@@ -3958,7 +2533,7 @@
   var randomPick = null;
   function pickRandomSite() {
     if (!randomBody) return;
-    var list = filterSites();
+    var list = YHCards.getFilteredSites();
     if (!list.length) {
       randomPick = null;
       randomBody.innerHTML = '<div class="ws-empty">' + t('random_empty') + '</div>';
@@ -4000,7 +2575,7 @@
   btnWander.forEach(function (b) { on(b, 'click', function () {
     if (wanderTimer) { stopWander(); return; }
     wanderTimer = setInterval(function () {
-      var list = filterSites();
+      var list = YHCards.getFilteredSites();
       if (!list.length) { stopWander(); return; }
       var pick = list[Math.floor(Math.random() * list.length)];
       if (pick.url) window.open(pick.url, '_blank');
@@ -4044,42 +2619,48 @@
   btnStats.forEach(function (b) { on(b, 'click', openStats); });
   on(statClose, 'click', function () { statModal.hidden = true; });
   on(statModal, 'click', function (e) { if (e.target === statModal) statModal.hidden = true; });
-  function statBar(label, n, max) {
+  function statBar(label, n, max, colorStyle, rank) {
     var pct = max > 0 ? Math.round(n / max * 100) : 0;
-    return '<div class="stat-bar-row"><span class="stat-bar-label">' + escapeHtml(label) + '</span>' +
-      '<span class="stat-bar-track"><i style="width:' + pct + '%"></i></span>' +
+    var medal = '';
+    if (rank === 1) medal = '<span class="stat-medal stat-medal-1">🥇</span>';
+    else if (rank === 2) medal = '<span class="stat-medal stat-medal-2">🥈</span>';
+    else if (rank === 3) medal = '<span class="stat-medal stat-medal-3">🥉</span>';
+    else medal = '<span class="stat-rank">' + rank + '</span>';
+    return '<div class="stat-bar-row">' + medal +
+      '<span class="stat-bar-label">' + escapeHtml(label) + '</span>' +
+      '<span class="stat-bar-track">' + (colorStyle ? '<i style="width:' + pct + '%;' + colorStyle + '"></i>' : '<i style="width:' + pct + '%"></i>') + '</span>' +
       '<span class="stat-bar-num">' + n + '</span></div>';
   }
   function renderStats() {
     if (!statBody) return;
-    var favCount = favs.size;
-    var clickTotal = 0, clickKeys = Object.keys(clicks);
-    clickKeys.forEach(function (k) { clickTotal += clicks[k]; });
-    var myCount = currentUser ? (personalSites[currentUser] || []).length : 0;
-    var wsCountN = Object.keys(workspaces).length;
+    var favCount = S.favs.size;
+    var clickTotal = 0, clickKeys = Object.keys(S.clicks);
+    clickKeys.forEach(function (k) { clickTotal += S.clicks[k]; });
+    var myCount = S.currentUser ? (S.personalSites[S.currentUser] || []).length : 0;
+    var wsCountN = Object.keys(S.workspaces).length;
     var html = '<div class="stat-cards">' +
-      '<div class="stat-card"><b>' + favCount + '</b><span>' + t('stats_favs') + '</span></div>' +
-      '<div class="stat-card"><b>' + clickTotal + '</b><span>' + t('stats_clicks') + '</span></div>' +
-      '<div class="stat-card"><b>' + myCount + '</b><span>' + t('stats_mine') + '</span></div>' +
-      '<div class="stat-card"><b>' + wsCountN + '</b><span>' + t('stats_ws') + '</span></div>' +
+      '<div class="stat-card"><span class="sc-ico">⭐</span><b data-target="' + favCount + '" class="stat-num">' + favCount + '</b><span>' + t('stats_favs') + '</span></div>' +
+      '<div class="stat-card"><span class="sc-ico">👁</span><b data-target="' + clickTotal + '" class="stat-num">' + clickTotal + '</b><span>' + t('stats_clicks') + '</span></div>' +
+      '<div class="stat-card"><span class="sc-ico">📁</span><b data-target="' + myCount + '" class="stat-num">' + myCount + '</b><span>' + t('stats_mine') + '</span></div>' +
+      '<div class="stat-card"><span class="sc-ico">🗂</span><b data-target="' + wsCountN + '" class="stat-num">' + wsCountN + '</b><span>' + t('stats_ws') + '</span></div>' +
     '</div>';
     // 最常访问 Top 6
     var top = clickKeys
-      .map(function (k) { return { id: k, n: clicks[k] }; })
+      .map(function (k) { return { id: k, n: S.clicks[k] }; })
       .sort(function (a, b) { return b.n - a.n; })
       .slice(0, 6);
     if (top.length) {
       var maxTop = top[0].n || 1;
       html += '<div class="stat-sec">' + t('stats_top') + '</div>';
-      html += top.map(function (x) {
+      html += top.map(function (x, i) {
         var s = siteOf(x.id);
-        return statBar(s ? nameLabel(s) : x.id, x.n, maxTop);
+        return statBar(s ? nameLabel(s) : x.id, x.n, maxTop, '', i + 1);
       }).join('');
     }
     // 我的标签分布（收藏+点击过的站）
     var tagPool = {};
     allSites().forEach(function (s) {
-      if (favs.has(s.id) || (clicks[s.id] || 0) > 0) {
+      if (S.favs.has(s.id) || (S.clicks[s.id] || 0) > 0) {
         (s.tags || []).forEach(function (tn) { tagPool[tn] = (tagPool[tn] || 0) + 1; });
       }
     });
@@ -4087,26 +2668,35 @@
     if (tagKeys.length) {
       var maxTag = tagPool[tagKeys[0]] || 1;
       html += '<div class="stat-sec">' + t('stats_tags') + '</div>';
-      html += tagKeys.map(function (k) { return statBar(tagLabel(k), tagPool[k], maxTag); }).join('');
+      html += tagKeys.map(function (k) { return statBar(tagLabel(k), tagPool[k], maxTag, 'background:linear-gradient(90deg,' + tagHsl(k) + ',' + tagHsl(k, 52) + ');S.color:#fff;', ''); }).join('');
     }
     if (!top.length && !tagKeys.length) html += '<div class="ws-empty">' + t('stats_empty') + '</div>';
     statBody.innerHTML = html;
+    // 统计数字滚动
+    var nums = statBody.querySelectorAll('.stat-num');
+    for (var i = 0; i < nums.length; i++) countUp(nums[i]);
   }
 
   // ---------- 初始化 ----------
+  YHNav.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, siteOf: siteOf, YHAuth: YHAuth, YHTools: YHTools, YHCards: YHCards, YHSearch: YHSearch, renderCats: renderCats, renderFilterBar: renderFilterBar, searchInput: searchInput, rankView: rankView, hotView: hotView, toolsView: toolsView, rankPodium: rankPodium, rankTable: rankTable, rankTabs: rankTabs, rankBack: rankBack, hotTabs: hotTabs, hotBack: hotBack, hotRefresh: hotRefresh, hotMeta: hotMeta, hotFilter: hotFilter, hotList: hotList, grid: grid, filterBar: filterBar, on: on, getActiveCat: function(){ return activeCat; }, setActiveCat: function(v){ activeCat = v; }, getActiveWs: function(){ return activeWs; }, setActiveWs: function(v){ activeWs = v; }, getSelectedTags: function(){ return selectedTags; }, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, RANK_CAT: RANK_CAT, HOT_NEW_CAT: HOT_NEW_CAT, TOOLS_CAT: TOOLS_CAT });
+
+  YHAuth.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, siteOf: siteOf, allSites: allSites, downloadText: downloadText, showMsg: showMsg, openAdd: openAdd, renderCats: renderCats, renderFilterBar: renderFilterBar, YHCards: YHCards, loadAccountData: loadAccountData, saveAccountData: saveAccountData, on: on, getActiveCat: function(){ return activeCat; }, setActiveCat: function(v){ activeCat = v; }, getActiveWs: function(){ return activeWs; }, setActiveWs: function(v){ activeWs = v; }, getSelectedTags: function(){ return selectedTags; }, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, dom: { loginMsg: loginMsg, loginBody: loginBody, loginModal: loginModal, loginClose: loginClose, btnLogin: btnLogin, loginMenu: loginMenu, btnChangePass: btnChangePass, passNew: passNew, passNew2: passNew2, passMsg: passMsg, passBar: passBar, passStrength: passStrength, passHints: passHints, passModal: passModal, passClose: passClose, favList: favList, favClose: favClose, favModal: favModal, favClear: favClear, favOpenAll: favOpenAll, favSelCount: $('fav-sel-count'), favSelAll: $('fav-selall'), favBatchWs: $('fav-batch-ws'), favBatchRemove: $('fav-batch-remove'), favBatchExport: $('fav-batch-export') } });
+  YHCards.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, tagLabel: tagLabel, tagHue: tagHue, siteOf: siteOf, allSites: allSites, iconHTML: iconHTML, lazyLoadIcons: lazyLoadIcons, YH: window.YH, SITES: SITES, perfLevel: perfLevel, grid: grid, searchResult: searchResult, footerInfo: footerInfo, footerUpdated: footerUpdated, statTotal: statTotal, statTags: statTags, statFavs: statFavs, descTotal: descTotal, descTags: descTags, META: META, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, getKeyword: function(){ return keyword; }, getActiveCat: function(){ return activeCat; }, getActiveWs: function(){ return activeWs; }, getSelectedTags: function(){ return selectedTags; } });
   if (brandName && META.name) brandName.textContent = META.name;
   applyTheme();
   syncThemeUI();
   syncSizeBtns();
-  updateLoginBtn();
+  YHAuth.updateLoginBtn();
   renderCats();
   renderFilterBar();
-  renderGrid();
+  YHCards.render();
   applyLang();
   initSupabase();
   initDisclaimer();
   initClock();
   pickQuote();
+  YHSearch.init({ S: S, on: on, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, tagLabel: tagLabel, allSites: allSites, siteOf: siteOf, addRecent: addRecent, recordHotWord: recordHotWord, recordSearchHistory: recordSearchHistory, saveSearchHistory: saveSearchHistory, renderGrid: YHCards.render, exitAllViews: exitAllViews, hasActiveView: function(){ return S.rankActive||S.hotActive||S.toolsActive; }, engineMenu: engineMenu, searchInput: searchInput, btnSearch: btnSearch, btnClear: btnClear, engineBtn: engineBtn, searchHot: searchHot, searchAc: searchAc, appEl: appEl, getKeyword: function(){ return keyword; }, setKeyword: function(v){ keyword = v; } });
+  YHTools.init({ on: on, t: t, enterView: YHNav.enterView, exitAllViews: YHNav.exitAllViews, fadeInView: YHNav.fadeInView, fadeHide: YHNav.fadeHide, toolsGrid: toolsGrid, toolsView: toolsView, toolsBack: toolsBack });
 
   // ---------- 加载界面：资源就绪 + 至少展示片刻后淡出 ----------
   var loader = $('loader');
@@ -4133,9 +2723,9 @@
     setTimeout(tryHideLoader, 2500); // 兜底：个别资源卡住也不遮挡页面
   }
   initReveal();
-  if (settings.petals) initParticles();
-  if (settings.snow) initSnow();
-  if (settings.cursorFx) initCursorFx();
+  if (S.settings.petals) initParticles();
+  if (S.settings.snow) initSnow();
+  if (S.settings.cursorFx) initCursorFx();
 
   // PWA：注册 Service Worker（需 HTTPS 或 localhost；file:// 直接打开时跳过）
   if ('serviceWorker' in navigator && location && location.protocol !== 'file:') {
@@ -4162,7 +2752,7 @@
   }
   animateCount(statTotal, allSites().length);
   animateCount(statTags, (META.tags || []).length);
-  animateCount(statFavs, favs.size);
+  animateCount(statFavs, S.favs.size);
 
   // ---------- 起始页：拖拽回弹 + 滚动联动视差（尊重减少动态效果） ----------
   (function initIntroFx() {
