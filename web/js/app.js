@@ -1092,12 +1092,12 @@
     YHAuth.ensureSupabase().then(function (client) {
       if (!client) return;
       YHAuth.supabaseClient.auth.getSession().then(function (res) {
-        if (res && res.data && res.data.session && res.data.session.user) {
+        if (res && res.data && res.data.session && res.data.session.user && !res.data.session.user.is_anonymous) {
           YHAuth.setSupabaseUser(res.data.session.user);
           S.currentUser = YHAuth.supabaseUser.email || YHAuth.supabaseUser.id;
           loadAccountData();
           YHAuth.pullFromCloud().then(function () {
-            YHAuth.YHAuth.updateLoginBtn();
+            YHAuth.updateLoginBtn();
             renderCats();
             renderFilterBar();
             YHCards.render();
@@ -1105,13 +1105,13 @@
         }
       });
       YHAuth.supabaseClient.auth.onAuthStateChange(function (event, session) {
-        if (session && session.user) {
+        if (session && session.user && !session.user.is_anonymous) {
           YHAuth.setSupabaseUser(session.user);
           S.currentUser = YHAuth.supabaseUser.email || session.user.id;
           loadAccountData();
           if (event === 'SIGNED_IN') {
             YHAuth.pullFromCloud().then(function () {
-              YHAuth.YHAuth.updateLoginBtn();
+              YHAuth.updateLoginBtn();
               renderCats();
               renderFilterBar();
               YHCards.render();
@@ -1121,7 +1121,7 @@
           YHAuth.setSupabaseUser(null);
           S.currentUser = null;
           loadAccountData();
-          YHAuth.YHAuth.updateLoginBtn();
+          YHAuth.updateLoginBtn();
           renderCats();
           renderFilterBar();
           YHCards.render();
