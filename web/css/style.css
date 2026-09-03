@@ -2489,3 +2489,6 @@ body.is-loading .orbit {
 .card > .card-head,
 .card > .card-tags { position: relative; z-index: 2; }
 @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+/* inline SVG 图标统一 1em 尺寸（避免默认 300x150 巨大十字星） */
+.intro-quote .q-ico svg, .search-icon svg, .stat-icon svg, .bn-ico svg, .fab-btn svg, .sp-ico svg, .pw-eye svg, .disclaimer-icon svg, .sc-ico svg { width: 1em; height: 1em; display: inline-block; vertical-align: -0.15em; box-sizing: border-box; }
