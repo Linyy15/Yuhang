@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   var S = window.YHState;
+  console.log('[屿航] app v6 已加载（SW 缓存命中时仍为旧版请强刷）');
 
   // ---------- 性能分级：低端设备降级动效（与 prefers-reduced-motion 互补）
   // 逻辑：reduced-motion 是用户主动选择；low-fx 是设备被动降级（低核数/慢网络/低端 GPU）
@@ -728,8 +729,6 @@
     S.lang = l;
     try { S.persist.lang(); } catch (e) {}
     applyLang();
-  if (descTotal) descTotal.textContent = allSites().length;
-  if (descTags) descTags.textContent = (META.tags || []).length;
     syncThemeUI();
   }
   on(sLang, 'click', function (e) {
@@ -2694,6 +2693,8 @@
   renderFilterBar();
   YHCards.render();
   applyLang();
+  if (descTotal) descTotal.textContent = allSites().length;
+  if (descTags) descTags.textContent = (META.tags || []).length;
   initSupabase();
   initDisclaimer();
   initClock();
