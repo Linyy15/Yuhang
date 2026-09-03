@@ -616,7 +616,7 @@ body.instant .intro, body.instant .app { transition: none !important; }
 }
 .app.revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
 }
 
 /* 左侧导航 */
