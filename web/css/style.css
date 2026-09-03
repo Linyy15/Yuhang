@@ -158,7 +158,7 @@ body {
 .topbar {
   position: sticky;
   top: 0;
-  z-index: 50;
+  z-index: 90;
   padding: 10px 22px;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
   border-top: none; border-left: none; border-right: none;
@@ -1207,7 +1207,7 @@ body.instant .intro, body.instant .app { transition: none !important; }
     padding: 6px 10px 10px;
   }
   /* 移动端：顶栏随页面滚动；分类栏吸顶固定，始终可及、拇指横滑 */
-  .topbar { position: relative; z-index: 9000; padding: 10px 14px; }
+  .topbar { position: relative; z-index: 90; padding: 10px 14px; }
   /* 分类栏：横向滑动 Tabs（下划线激活态） */
   .cat-bar {
     flex-direction: row; flex-wrap: nowrap;
