@@ -335,7 +335,7 @@ body {
   animation: pop 0.2s ease;
 }
 .theme-panel[hidden] { display: none; }
-.theme-panel.engine-menu { position: fixed; right: 0; top: 0; z-index: 250; display: none; }
+.theme-panel.engine-menu { position: fixed; top: 0; left: 0; right: auto; z-index: 250; display: none; }
 .theme-panel.engine-menu.open { display: grid; }
 .theme-option {
   display: flex; align-items: center; gap: 10px;
@@ -1132,7 +1132,7 @@ body.instant .intro, body.instant .app { transition: none !important; }
 }
 .fab-btn:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 10px 26px rgba(91, 108, 255, 0.5); }
 .fab-panel {
-  position: fixed; right: 0; top: 0; bottom: auto;
+  position: fixed; top: 0; left: 0; bottom: auto;
   min-width: 172px; padding: 8px; border-radius: var(--radius-md);
   z-index: 250;
   display: none;
