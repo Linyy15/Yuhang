@@ -728,6 +728,8 @@
     S.lang = l;
     try { S.persist.lang(); } catch (e) {}
     applyLang();
+  if (descTotal) descTotal.textContent = allSites().length;
+  if (descTags) descTags.textContent = (META.tags || []).length;
     syncThemeUI();
   }
   on(sLang, 'click', function (e) {
@@ -2606,7 +2608,8 @@
   ];
   function pickQuote() {
     if (!introQuote) return;
-    introQuote.textContent = '✨ ' + QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    var qText = $('q-text');
+    if (qText) qText.textContent = QUOTES[Math.floor(Math.random() * QUOTES.length)];
   }
   on(introQuote, 'click', pickQuote);
 
