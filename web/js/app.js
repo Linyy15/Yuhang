@@ -2381,20 +2381,32 @@
   // 先 getElementById 一次以建立测试缓存；实际绑定用 querySelectorAll（桌面/移动各一套）
   $('fab-btn'); $('fab-panel');
   var fabButtons = document.querySelectorAll('.fab-btn');
-  function toggleFabPanel(btn) {
-    var panel = btn.parentElement ? btn.parentElement.querySelector('.fab-panel') : null;
-    if (panel) panel.hidden = !panel.hidden;
-  }
   function closeAllFab() {
-    document.querySelectorAll('.fab-panel').forEach(function (p) { p.hidden = true; });
+    document.querySelectorAll('.fab-panel').forEach(function (p) {
+      p.classList.remove('open'); p.style.top = ''; p.style.left = '';
+    });
+  }
+  function openFabPanel(btn) {
+    var panel = btn.parentElement ? btn.parentElement.querySelector('.fab-panel') : null;
+    if (!panel) return;
+    closeAllFab();
+    panel.hidden = false;
+    panel.classList.add('open');
+    var rect = btn.getBoundingClientRect();
+    panel.style.top = (rect.bottom + 8) + 'px';
+    requestAnimationFrame(function () {
+      var pw = panel.offsetWidth;
+      var left = rect.right - pw;
+      if (left < 8) left = 8;
+      var maxL = window.innerWidth - pw - 8;
+      if (left > maxL) left = maxL;
+      panel.style.left = left + 'px';
+    });
   }
   fabButtons.forEach(function (btn) {
     on(btn, 'click', function (e) {
       e.stopPropagation();
-      if (!btn.parentElement.querySelector('.fab-panel')) return;
-      var alreadyOpen = btn.parentElement.querySelector('.fab-panel[hidden]') === null;
-      closeAllFab();
-      if (!alreadyOpen) toggleFabPanel(btn);
+      openFabPanel(btn);
     });
   });
   document.querySelectorAll('.fab-panel').forEach(function (panel) {
@@ -2404,6 +2416,9 @@
   });
   document.addEventListener('click', function (e) {
     if (!(e.target.closest && e.target.closest('.fab'))) closeAllFab();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeAllFab();
   });
 
   // ---------- 移动端固定底部导航 ----------

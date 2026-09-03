@@ -142,18 +142,35 @@
 
     o.engineBtn.forEach(function (b) { o.on(b, 'click', function (e) {
       e.stopPropagation();
-      if (o.engineMenu) o.engineMenu.hidden = !o.engineMenu.hidden;
+      if (!o.engineMenu) return;
+      var menu = o.engineMenu;
+      if (menu.classList.contains('open')) {
+        menu.classList.remove('open'); menu.style.top = ''; menu.style.left = '';
+      } else {
+        menu.hidden = false;
+        menu.classList.add('open');
+        var rect = b.getBoundingClientRect();
+        menu.style.top = (rect.bottom + 8) + 'px';
+        requestAnimationFrame(function () {
+          var pw = menu.offsetWidth;
+          var left = rect.right - pw;
+          if (left < 8) left = 8;
+          var maxL = window.innerWidth - pw - 8;
+          if (left > maxL) left = maxL;
+          menu.style.left = left + 'px';
+        });
+      }
     }); });
     o.on(o.engineMenu, 'click', function (e) {
       var b = e.target.closest ? e.target.closest('[data-engine]') : null;
       if (!b) return;
       setEngine(b.getAttribute('data-engine'));
-      if (o.engineMenu) o.engineMenu.hidden = true;
+      if (o.engineMenu) { o.engineMenu.classList.remove('open'); o.engineMenu.style.top = ''; o.engineMenu.style.left = ''; }
       if (o.searchInput) o.searchInput.focus();
     });
     document.addEventListener('click', function (e) {
-      if (o.engineMenu && !o.engineMenu.hidden && !(e.target.closest && e.target.closest('.engine-wrap'))) {
-        o.engineMenu.hidden = true;
+      if (o.engineMenu && o.engineMenu.classList.contains('open') && !(e.target.closest && e.target.closest('.engine-wrap'))) {
+        o.engineMenu.classList.remove('open'); o.engineMenu.style.top = ''; o.engineMenu.style.left = '';
       }
     });
 
