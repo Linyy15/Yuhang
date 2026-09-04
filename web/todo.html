@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#5b6cff">
-<title>屿航 · 待办清单</title>
+<title>屿航 · 屿事</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6cff'/%3E%3Cstop offset='1' stop-color='%239a5bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='3' y='3' width='58' height='58' rx='16' fill='url(%23g)'/%3E%3Cpath fill='%23fff' d='M32 15l4.4 13-4.4-2.3-4.4 2.3z'/%3E%3Cpath fill='%23fff' d='M12 46a20 20 0 0 1 40 0z'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="ip/ip.css">
@@ -394,7 +394,7 @@ body::before {
 .clear-done-btn:hover { color: var(--red); border-color: var(--red); border-style: solid; }
 .clear-done-btn:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
 
-/* ---- 待办清单 ---- */
+/* ---- 屿事（待办清单） ---- */
 .todo-list { display: flex; flex-direction: column; gap: 10px; }
 .todo-item {
   display: flex; align-items: flex-start; gap: 12px;
@@ -689,6 +689,102 @@ body::before {
   0% { transform: scale(0); opacity: 1; }
   100% { transform: scale(4); opacity: 0; }
 }
+
+/* ---- 编辑待办 ---- */
+.todo-edit {
+  width: 30px; height: 30px; border-radius: var(--radius-sm);
+  border: none; background: transparent;
+  color: var(--faint); font-size: 13px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .18s ease;
+}
+.todo-edit:hover { background: var(--accent-soft); color: var(--accent); transform: scale(1.08); }
+.todo-edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.todo-item.editing { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+.edit-form {
+  display: flex; flex-direction: column; gap: 8px;
+  width: 100%;
+}
+.edit-form-row { display: flex; gap: 8px; flex-wrap: wrap; }
+.edit-form input[type="text"],
+.edit-form select {
+  flex: 1; min-width: 140px; padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--panel-2);
+  color: var(--text); font-size: 13px; font-family: inherit;
+  outline: none; transition: border-color .2s, box-shadow .2s;
+}
+.edit-form input[type="text"]:focus,
+.edit-form select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--panel);
+}
+.edit-actions { display: flex; gap: 8px; }
+.edit-save, .edit-cancel {
+  padding: 7px 16px; border-radius: 999px;
+  border: none; font-size: 12.5px; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: all .18s ease;
+}
+.edit-save {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff; box-shadow: 0 3px 10px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+.edit-save:hover { opacity: .92; }
+.edit-cancel {
+  background: var(--panel-2); border: 1px solid var(--border); color: var(--text-2);
+}
+.edit-cancel:hover { border-color: var(--accent); color: var(--accent); }
+.edit-save:focus-visible, .edit-cancel:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---- 截止日期徽标 ---- */
+.due-badge {
+  font-size: 11px; font-weight: 700; padding: 2px 9px;
+  border-radius: 999px; letter-spacing: .3px;
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
+}
+.due-today { background: color-mix(in oklab, #f59e0b 16%, transparent); color: #d97706; border-color: color-mix(in oklab, #f59e0b 45%, transparent); }
+.due-overdue { background: color-mix(in oklab, #ef4444 14%, transparent); color: var(--red); border-color: color-mix(in oklab, #ef4444 45%, transparent); }
+.todo-item.due-overdue-item { border-color: color-mix(in oklab, var(--red) 45%, var(--border)); }
+.todo-item.due-overdue-item::before { background: var(--red); box-shadow: 0 0 10px color-mix(in oklab, var(--red) 50%, transparent); }
+.add-form input[type="date"] {
+  flex: 0 0 auto; padding: 10px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--panel-2);
+  color: var(--text); font-size: 13px; font-family: inherit;
+  outline: none; transition: border-color .2s, box-shadow .2s, background .2s;
+}
+.add-form input[type="date"]:focus,
+.add-form input[type="date"]:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background: var(--panel);
+}
+
+/* ---- 搜索 ---- */
+.todo-search {
+  flex: 1 1 160px; min-width: 140px;
+  padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--panel-2);
+  color: var(--text); font-size: 12.5px; font-family: inherit;
+  outline: none; transition: border-color .2s, box-shadow .2s;
+}
+.todo-search:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.todo-search:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.todo-search::placeholder { color: var(--faint); }
+
+/* ---- 备份 ---- */
+.backup-btns { display: flex; gap: 6px; margin-left: auto; }
+.backup-btn {
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px dashed var(--border); background: transparent;
+  color: var(--faint); font-size: 11.5px; font-weight: 600; font-family: inherit;
+  cursor: pointer; transition: all .18s ease;
+}
+.backup-btn:hover { color: var(--accent); border-color: var(--accent); border-style: solid; }
+.backup-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.backup-btn.danger:hover { color: var(--red); border-color: var(--red); }
+#backupFile { display: none; }
 </style>
 </head>
 <body>
@@ -704,7 +800,7 @@ body::before {
   <div class="brand">
     <svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5b6cff"/><stop offset="1" stop-color="#9a5bff"/></linearGradient></defs><path fill="url(#g)" d="M12 3l2.6 7.6L12 9.2l-2.6 1.4z"/><path fill="url(#g)" d="M4.5 21a7.5 7.5 0 0 1 15 0z"/></svg>
     <span>屿航</span>
-    <span class="sub">· 待办清单</span>
+    <span class="sub">· 屿事</span>
   </div>
   <div class="ip-mascot ip-mascot--small ip-mascot--blink" id="headerMascot" title="屿咪 · 数字岛屿领航员">
     <span id="headerMascotSvg"></span>
@@ -749,6 +845,7 @@ body::before {
     </div>
     <div class="add-form-row">
       <input type="text" id="todoTag" placeholder="🏷️  分类标签（可选）" maxlength="30" autocomplete="off" aria-label="标签">
+      <input type="date" id="todoDue" aria-label="截止日期（可选）" title="截止日期（可选）">
       <select id="todoPriority" aria-label="优先级">
         <option value="mid">⚡ 优先级：中</option>
         <option value="high">🔴 优先级：高</option>
@@ -766,7 +863,13 @@ body::before {
     <button class="filter-btn" data-filter="mid">⚡ 中优<span class="pill-count" id="countMid"></span></button>
     <button class="filter-btn" data-filter="low">🟢 低优<span class="pill-count" id="countLow"></span></button>
     <span id="tagFilters"></span>
+    <input type="search" id="todoSearch" class="todo-search" placeholder="🔎 搜索待办…" autocomplete="off" aria-label="搜索待办">
     <button class="clear-done-btn" id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
+    <div class="backup-btns">
+      <button class="backup-btn" id="exportBtn" title="导出全部待办为 JSON 备份">⬇ 备份</button>
+      <button class="backup-btn" id="importBtn" title="从 JSON 备份恢复（合并导入）">⬆ 恢复</button>
+      <input type="file" id="backupFile" accept=".json,application/json" aria-hidden="true">
+    </div>
   </div>
 
   <div class="todo-list" id="todoList" role="list" aria-label="待办事项列表"></div>
@@ -785,6 +888,8 @@ body::before {
   let todos = [];
   let currentFilter = 'all';
   let currentTagFilter = null;
+  let searchKeyword = '';
+  let editingId = null;
   let trash = null;
   let trashTimer = null;
 
@@ -804,6 +909,13 @@ body::before {
   function getFiltered() {
     var list = todos;
     if (currentTagFilter) list = list.filter(function(t) { return t.tag === currentTagFilter; });
+    if (searchKeyword) {
+      var kw = searchKeyword.toLowerCase();
+      list = list.filter(function(t) {
+        return (t.title || '').toLowerCase().indexOf(kw) !== -1 ||
+               (t.tag || '').toLowerCase().indexOf(kw) !== -1;
+      });
+    }
     switch (currentFilter) {
       case 'active': return list.filter(function(t) { return !t.done; });
       case 'done': return list.filter(function(t) { return t.done; });
@@ -1164,6 +1276,46 @@ body::before {
     return d.getFullYear() + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + String(d.getDate()).padStart(2,'0');
   }
 
+  // 截止日期徽标：返回 { text, cls }；逾期/今天 有高亮
+  function dueInfo(dueStr) {
+    if (!dueStr) return null;
+    var today = new Date(); today.setHours(0,0,0,0);
+    var due = new Date(dueStr + 'T00:00:00');
+    if (isNaN(due.getTime())) return null;
+    var diff = Math.round((due - today) / 86400000);
+    if (diff < 0) return { text: '逾期 ' + Math.abs(diff) + ' 天', cls: 'due-overdue' };
+    if (diff === 0) return { text: '今天截止', cls: 'due-today' };
+    if (diff === 1) return { text: '明天截止', cls: 'due-today' };
+    return { text: dueStr.slice(5).replace('-', '/') + ' 截止', cls: '' };
+  }
+
+  function startEdit(id) {
+    editingId = id;
+    render();
+    var input = document.querySelector('.edit-form input[type="text"]');
+    if (input) { input.focus(); input.select(); }
+  }
+  function saveEdit(id) {
+    var t = todos.find(function(x) { return x.id === id; });
+    if (!t) return;
+    var titleEl = document.getElementById('editTitle');
+    var tagEl = document.getElementById('editTag');
+    var dueEl = document.getElementById('editDue');
+    var prioEl = document.getElementById('editPriority');
+    var title = (titleEl && titleEl.value || '').trim();
+    if (!title) { if (titleEl) titleEl.focus(); return; }
+    t.title = title;
+    t.tag = (tagEl && tagEl.value || '').trim() || null;
+    t.due = (dueEl && dueEl.value) || null;
+    t.priority = (prioEl && prioEl.value) || t.priority;
+    editingId = null;
+    save();
+    render();
+    updateStats();
+    renderTags();
+  }
+  function cancelEdit() { editingId = null; render(); }
+
   function render() {
     var list = getFiltered();
     var container = document.getElementById('todoList');
@@ -1213,6 +1365,10 @@ body::before {
     var priorityOrder = { high: 0, mid: 1, low: 2 };
     var sorted = list.slice().sort(function(a, b) {
       if (a.done !== b.done) return a.done ? 1 : -1;
+      // 未完成的：有截止日期的优先（按日期升序，越近越靠前）
+      var da = a.done ? 0 : (a.due ? new Date(a.due + 'T00:00:00').getTime() : Infinity);
+      var db = b.done ? 0 : (b.due ? new Date(b.due + 'T00:00:00').getTime() : Infinity);
+      if (!a.done && !b.done && da !== db) return da - db;
       var pa = priorityOrder[a.priority];
       var pb = priorityOrder[b.priority];
       if (pa !== pb) return pa - pb;
@@ -1225,19 +1381,44 @@ body::before {
       var prioText = todo.priority === 'high' ? '高' : todo.priority === 'low' ? '低' : '中';
       var date = formatDate(todo.createdAt);
       var doneCls = todo.done ? ' completed' : '';
-      html += '<div class="todo-item' + doneCls + ' prio-' + escapeHtml(todo.priority) + '" data-id="' + escapeHtml(todo.id) + '" tabindex="0" role="listitem">' +
+      var due = dueInfo(todo.due);
+      var dueOverdueCls = (due && due.cls === 'due-overdue' && !todo.done) ? ' due-overdue-item' : '';
+      html += '<div class="todo-item' + doneCls + dueOverdueCls + ' prio-' + escapeHtml(todo.priority) + '" data-id="' + escapeHtml(todo.id) + '" tabindex="0" role="listitem">' +
         '<div class="todo-check' + (todo.done ? ' checked' : '') + '" data-action="toggle" data-id="' + escapeHtml(todo.id) + '" tabindex="0" role="button" aria-label="' + (todo.done ? '取消完成' : '标记完成') + '">' +
           (todo.done ? '<span aria-hidden="true">✓</span>' : '') +
         '</div>' +
         '<div class="todo-body">' +
-          '<div class="todo-title">' + escapeHtml(todo.title) + '</div>' +
-          '<div class="todo-meta">' +
-            '<span class="priority-badge priority-' + escapeHtml(todo.priority) + '">' + prioText + '优先级</span>' +
-            (todo.tag ? '<span class="tag-badge">' + escapeHtml(todo.tag) + '</span>' : '') +
-            (date ? '<span class="meta-sep">·</span><span class="meta-date">' + date + '</span>' : '') +
-          '</div>' +
+          (editingId === todo.id
+            ? '<div class="edit-form">' +
+                '<div class="edit-form-row">' +
+                  '<input type="text" id="editTitle" value="' + escapeHtml(todo.title) + '" maxlength="200" aria-label="标题">' +
+                  '<select id="editPriority" aria-label="优先级">' +
+                    '<option value="high"' + (todo.priority === 'high' ? ' selected' : '') + '>🔴 高</option>' +
+                    '<option value="mid"' + (todo.priority === 'mid' ? ' selected' : '') + '>⚡ 中</option>' +
+                    '<option value="low"' + (todo.priority === 'low' ? ' selected' : '') + '>🟢 低</option>' +
+                  '</select>' +
+                '</div>' +
+                '<div class="edit-form-row">' +
+                  '<input type="text" id="editTag" value="' + escapeHtml(todo.tag || '') + '" maxlength="30" placeholder="标签（可选）" aria-label="标签">' +
+                  '<input type="date" id="editDue" value="' + escapeHtml(todo.due || '') + '" aria-label="截止日期">' +
+                '</div>' +
+                '<div class="edit-actions">' +
+                  '<button class="edit-save" data-action="save-edit" data-id="' + escapeHtml(todo.id) + '">保存</button>' +
+                  '<button class="edit-cancel" data-action="cancel-edit">取消</button>' +
+                '</div>' +
+              '</div>'
+            : '<div class="todo-title">' + escapeHtml(todo.title) + '</div>' +
+              '<div class="todo-meta">' +
+                '<span class="priority-badge priority-' + escapeHtml(todo.priority) + '">' + prioText + '优先级</span>' +
+                (due ? '<span class="due-badge ' + due.cls + '">' + due.text + '</span>' : '') +
+                (todo.tag ? '<span class="tag-badge">' + escapeHtml(todo.tag) + '</span>' : '') +
+                (date ? '<span class="meta-sep">·</span><span class="meta-date">' + date + '</span>' : '') +
+              '</div>') +
         '</div>' +
         '<div class="todo-actions">' +
+          (editingId === todo.id
+            ? ''
+            : '<button class="todo-edit" data-action="edit" data-id="' + escapeHtml(todo.id) + '" title="编辑" aria-label="编辑">✏️</button>') +
           '<button class="todo-del" data-action="delete-soft" data-id="' + escapeHtml(todo.id) + '" title="删除（可撤销）" aria-label="删除">' + '🗑' + '</button>' +
         '</div>' +
         '</div>';
@@ -1249,6 +1430,7 @@ body::before {
     var titleEl = document.getElementById('todoInput');
     var tagEl = document.getElementById('todoTag');
     var prioEl = document.getElementById('todoPriority');
+    var dueEl = document.getElementById('todoDue');
     var title = titleEl.value.trim();
     if (!title) {
       titleEl.focus();
@@ -1260,12 +1442,14 @@ body::before {
       title: title,
       tag: tagEl.value.trim() || null,
       priority: prioEl.value || 'mid',
+      due: dueEl.value || null,
       done: false,
       createdAt: Date.now()
     });
     save();
     titleEl.value = '';
     tagEl.value = '';
+    if (dueEl) dueEl.value = '';
     titleEl.focus();
     render();
     updateStats();
@@ -1351,6 +1535,61 @@ body::before {
     if (item) makeRipple(item, e.clientX, e.clientY);
     if (el.dataset.action === 'toggle') toggleTodo(id, e.clientX, e.clientY);
     if (el.dataset.action === 'delete-soft') softDeleteTodo(id);
+    if (el.dataset.action === 'edit') startEdit(id);
+    if (el.dataset.action === 'save-edit') saveEdit(id);
+    if (el.dataset.action === 'cancel-edit') cancelEdit();
+  });
+
+  // 搜索：输入即过滤
+  document.getElementById('todoSearch').addEventListener('input', function(e) {
+    searchKeyword = e.target.value.trim();
+    render();
+    renderFilterCounts();
+  });
+
+  // 备份：导出 / 导入
+  document.getElementById('exportBtn').addEventListener('click', function() {
+    var payload = { app: 'yuhang-todo', name: '屿事', version: 1, exportedAt: new Date().toISOString(), todos: todos };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = '屿事备份-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+    addSuccessFlash('⬇ 备份已导出');
+  });
+  document.getElementById('importBtn').addEventListener('click', function() {
+    document.getElementById('backupFile').click();
+  });
+  document.getElementById('backupFile').addEventListener('change', function(e) {
+    var file = e.target.files && e.target.files[0];
+    this.value = '';
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function() {
+      try {
+        var data = JSON.parse(reader.result);
+        var incoming = Array.isArray(data) ? data : (Array.isArray(data.todos) ? data.todos : null);
+        if (!incoming) throw new Error('bad format');
+        var merged = todos.slice();
+        var seen = {};
+        todos.forEach(function(t) { seen[t.id] = true; });
+        incoming.forEach(function(t) {
+          if (t && typeof t.id === 'string' && !seen[t.id]) { seen[t.id] = true; merged.push(t); }
+        });
+        if (!window.confirm('将合并导入 ' + incoming.length + ' 条待办（与现有 ' + todos.length + ' 条合并，按 ID 去重）。确定？')) return;
+        todos = merged;
+        save();
+        render();
+        updateStats();
+        renderTags();
+        addSuccessFlash('⬆ 已恢复 ' + incoming.length + ' 条待办');
+      } catch (err) {
+        window.alert('备份文件格式不正确，无法恢复。');
+      }
+    };
+    reader.readAsText(file);
   });
 
   // 键盘：Enter 确认操作，Delete 删除（选中项）
@@ -1371,6 +1610,7 @@ body::before {
   // 全局 / 快捷键：聚焦输入框
   document.addEventListener('keydown', function(e) {
     var active = document.activeElement;
+    if (e.key === 'Escape' && editingId) { cancelEdit(); return; }
     if (e.key === '/' && active && !['INPUT','TEXTAREA','SELECT'].includes(active.tagName)) {
       e.preventDefault();
       var inp = document.getElementById('todoInput');
@@ -1378,7 +1618,8 @@ body::before {
     }
     if (e.key === 'Escape' && trash) { hideUndo(); trash = null; clearTimeout(trashTimer); }
     if (e.key === 'Escape' && active === document.getElementById('todoInput')) {
-      inp.blur();
+      var inp2 = document.getElementById('todoInput');
+      if (inp2) inp2.blur();
     }
   });
 

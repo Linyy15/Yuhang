@@ -554,6 +554,37 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .ip-mascot { animation: none !important; }
   .ip-mascot--blink .ip-face { animation: none !important; }
 }
+
+/* quote 可点击换一句 */
+.quote-box { cursor: pointer; transition: transform .18s ease; }
+.quote-box:hover { transform: translateY(-1px); }
+.quote-box:active { transform: scale(.99); }
+.quote-hint { font-size: 11.5px; color: var(--faint); margin-top: 6px; text-align: center; }
+
+/* 屿事 · 今日待办 联动卡片 */
+.todo-link-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 12px;
+  animation: slideInTop .5s ease both;
+}
+.todo-link-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.todo-link-title { font-size: 15px; font-weight: 700; color: var(--text); }
+.todo-link-go { font-size: 12.5px; font-weight: 700; color: var(--accent); text-decoration: none; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); transition: all .18s ease; }
+.todo-link-go:hover { background: var(--accent); color: #fff; }
+.todo-link-progress { height: 10px; border-radius: 5px; background: color-mix(in srgb, var(--border) 70%, transparent); overflow: hidden; }
+.todo-link-progress i { display: block; height: 100%; width: 0%; border-radius: 5px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width .7s cubic-bezier(.34,1.56,.64,1); }
+.todo-link-text { font-size: 13.5px; color: var(--faint); display: flex; align-items: center; gap: 8px; }
+.todo-link-text b { color: var(--text); font-weight: 700; }
+.todo-link-text .mascot-mini { width: 22px; height: 22px; flex-shrink: 0; }
+@media (max-width: 560px) {
+  .todo-link-head { flex-direction: column; align-items: flex-start; }
+}
+@keyframes slideInTop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
@@ -626,10 +657,20 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     </div>
   </section>
 
-  <section class="quote-box" aria-label="屿咪的一句心里话">
+  <section class="quote-box" id="quoteBox" aria-label="屿咪的一句心里话" tabindex="0" role="button" title="点击换一句">
     <span class="deco-line" aria-hidden="true"></span>
-    <div class="quote-text">"每一座数字岛屿，都值得被温柔抵达。"</div>
+    <div class="quote-text" id="quoteText">"每一座数字岛屿，都值得被温柔抵达。"</div>
     <div class="quote-author">— 屿咪的日常碎碎念</div>
+    <div class="quote-hint">↻ 点击这里换一句</div>
+  </section>
+
+  <section class="todo-link-card" aria-label="屿事 今日待办">
+    <div class="todo-link-head">
+      <span class="todo-link-title">📋 屿事 · 今日待办</span>
+      <a class="todo-link-go" href="todo.html">去打理 →</a>
+    </div>
+    <div class="todo-link-progress"><i id="todoLinkBar"></i></div>
+    <div class="todo-link-text" id="todoLinkText">屿咪正在数你的待办…</div>
   </section>
 
   <section aria-label="角色技能">
@@ -684,7 +725,7 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   <footer class="footer">
     <p>屿咪 · 屿航专属数字岛屿领航员</p>
     <p>
-      <a href="todo.html">📋 待办清单</a>
+      <a href="todo.html">📋 屿事</a>
       · <a href="index.html">🏠 回到主页</a>
       · <a href="admin.html">🔧 管理后台</a>
     </p>
@@ -708,6 +749,85 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     { icon: '✨', name: '灵感',      val: '创意',  pct: 88 },
     { icon: '🌙', name: '陪伴',      val: '24h',   pct: 99 },
   ];
+
+  const QUOTES = [
+    { text: '每一座数字岛屿，都值得被温柔抵达。', mood: 'idle' },
+    { text: '慢慢来，比较快。今天也要元气满满！', mood: 'happy' },
+    { text: '累了就歇一下，岛屿会等你。', mood: 'idle' },
+    { text: '每一小步，都是向前一步。', mood: 'happy' },
+    { text: '今天过得怎么样？我来陪你收个尾。', mood: 'idle' },
+    { text: '星星也在工作，你又不是一个人。', mood: 'happy' },
+    { text: '完成不了的，明天再试一次就好。', mood: 'idle' },
+    { text: '你已经做得很好了，真的。', mood: 'happy' },
+    { text: '岛屿上所有的光，都在为你亮着。', mood: 'idle' },
+    { text: '呼吸一下，再继续。', mood: 'idle' }
+  ];
+
+  function timeGreeting() {
+    var h = new Date().getHours();
+    if (h < 6) return '夜深了';
+    if (h < 12) return '早上好';
+    if (h < 14) return '中午好';
+    if (h < 18) return '下午好';
+    if (h < 22) return '傍晚好';
+    return '晚安';
+  }
+
+  // 读取屿事(localStorage) 的待办概况
+  function todoOverview() {
+    try {
+      var raw = localStorage.getItem('yuhang_todos_v1');
+      if (!raw) return null;
+      var list = JSON.parse(raw);
+      if (!Array.isArray(list)) return null;
+      var total = list.length;
+      var done = list.filter(function(t) { return t.done; }).length;
+      var overdue = 0, todayOrSoon = 0;
+      var today = new Date(); today.setHours(0, 0, 0, 0);
+      list.forEach(function(t) {
+        if (t.done || !t.due) return;
+        var d = new Date(t.due + 'T00:00:00');
+        if (isNaN(d.getTime())) return;
+        var diff = Math.round((d - today) / 86400000);
+        if (diff < 0) overdue++;
+        else if (diff <= 1) todayOrSoon++;
+      });
+      return { total: total, done: done, overdue: overdue, todayOrSoon: todayOrSoon };
+    } catch (e) { return null; }
+  }
+
+  function renderTodoCard() {
+    var bar = document.getElementById('todoLinkBar');
+    var text = document.getElementById('todoLinkText');
+    if (!bar || !text) return;
+    var ov = todoOverview();
+    if (!ov || ov.total === 0) {
+      bar.style.width = '100%';
+      text.innerHTML = '<span class="mascot-mini ip-mascot ip-mascot--tiny ip-mascot--happy"><span>' + ipSvg('h') + '</span></span> <b>还没有待办</b>，去<span style="color:var(--accent);text-decoration:underline">屿事</span>添加第一条吧 ✨';
+      setMascotExpr('happy');
+      return;
+    }
+    var pct = Math.round(ov.done / ov.total * 100);
+    bar.style.width = pct + '%';
+    if (ov.total === ov.done) {
+      text.innerHTML = '<span class="mascot-mini ip-mascot ip-mascot--tiny ip-mascot--happy"><span>' + ipSvg('w') + '</span></span> <b>今天 ' + ov.total + ' 件事全部搞定 🎉</b> 辛苦啦！';
+      setMascotExpr('happy');
+    } else {
+      var rem = ov.total - ov.done;
+      var extra = '';
+      if (ov.overdue > 0) extra = '（<b style="color:#e5484d">' + ov.overdue + ' 件逾期</b>）';
+      else if (ov.todayOrSoon > 0) extra = '（<b>' + ov.todayOrSoon + ' 件今天/明天</b>）';
+      text.innerHTML = '<span class="mascot-mini ip-mascot ip-mascot--tiny ip-mascot--idle"><span>' + ipSvg('e') + '</span></span> 还有 <b>' + rem + '</b> 件事待完成' + extra + '，加油鸭 🚀';
+      setMascotExpr(ov.overdue > 0 ? 'surprised' : 'idle');
+    }
+  }
+
+  function pickRandomQuote() {
+    var q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    var el = document.getElementById('quoteText');
+    if (el) el.textContent = '"' + q.text + '"';
+    setMascotExpr(q.mood);
+  }
 
   function ipSvg(id) {
     return `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-label="屿咪 Yumi">
@@ -858,13 +978,23 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     setTimeout(() => this.classList.remove('ip-mascot--celebrate'), 700);
   });
 
-  // 初次显示欢迎气泡
-  setTimeout(() => showBubble(EXPRESSIONS[0].speech), 500);
+  // 语录点击换一句（含键盘）
+  var quoteBox = document.getElementById('quoteBox');
+  if (quoteBox) {
+    quoteBox.addEventListener('click', pickRandomQuote);
+    quoteBox.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pickRandomQuote(); }
+    });
+  }
+
+  // 初次显示欢迎气泡（带时间问候）
+  setTimeout(() => showBubble(timeGreeting() + '～今天也要元气满满哦！'), 500);
 
   initMascotSvg();
   renderSkills();
   renderExpressions();
   renderInteract();
+  renderTodoCard();
 })();
 </script>
 </body>
