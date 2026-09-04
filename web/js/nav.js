@@ -303,10 +303,7 @@
 
   // --------- 悬浮操作球 ---------
   function closeAllFab() {
-    document.querySelectorAll('.fab-panel').forEach(function (p) {
-      p.hidden = true;
-      p.classList.remove('open');
-    });
+    document.querySelectorAll('.fab-panel').forEach(function (p) { p.hidden = true; });
   }
 
   // --------- 移动端底部导航 ---------
@@ -402,12 +399,9 @@
         if (!btn.parentElement || !btn.parentElement.querySelector('.fab-panel')) return;
         var panel = btn.parentElement.querySelector('.fab-panel');
         if (!panel) return;
-        var alreadyOpen = !panel.hidden && panel.classList.contains('open');
+        var alreadyOpen = !panel.hidden;
         closeAllFab();
-        if (!alreadyOpen) {
-          panel.hidden = false;
-          panel.classList.add('open');
-        }
+        if (!alreadyOpen) panel.hidden = false;
       });
     });
     document.querySelectorAll('.fab-panel').forEach(function (panel) {
