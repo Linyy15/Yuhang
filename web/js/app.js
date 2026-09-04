@@ -88,6 +88,7 @@
   var wsAddBtn = $('ws-add');
   var disclaimerModal = $('disclaimer-modal');
   var disclaimerOk = $('disclaimer-ok');
+  var disclaimerConsent = $('disclaimer-consent');
   var passModal = $('pass-modal');
   var passClose = $('pass-close');
   var passNew = $('pass-new');
@@ -2230,9 +2231,15 @@
   function initDisclaimer() {
     if (!disclaimerModal) return;
     if (localStorage.getItem(DISCLAIMER_KEY) === '1') return;
+    if (disclaimerConsent) disclaimerConsent.checked = false;
+    if (disclaimerOk) disclaimerOk.disabled = true;
     disclaimerModal.hidden = false;
   }
+  on(disclaimerConsent, 'change', function () {
+    if (disclaimerOk) disclaimerOk.disabled = !disclaimerConsent.checked;
+  });
   on(disclaimerOk, 'click', function () {
+    if (!disclaimerConsent || !disclaimerConsent.checked) return;
     try { localStorage.setItem(DISCLAIMER_KEY, '1'); } catch (e) {}
     disclaimerModal.hidden = true;
   });

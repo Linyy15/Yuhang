@@ -2000,6 +2000,8 @@ html[data-color="red"] {
   max-height: 40vh;
   overflow-y: auto;
 }
+.disclaimer-consent { display: flex; align-items: flex-start; gap: 9px; margin: 14px 0; color: var(--text-2); font-size: 12px; line-height: 1.55; cursor: pointer; }
+.disclaimer-consent input { width: 17px; height: 17px; margin-top: 1px; accent-color: var(--accent); flex-shrink: 0; }
 .disclaimer-actions { margin-top: 18px; display: flex; justify-content: flex-end; }
 
 /* 注册（邮件申请）面板 */
