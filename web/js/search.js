@@ -139,6 +139,8 @@
   function init(o) {
     if (!o || !o.searchInput) return;
     opts = o;
+    renderEngineMenu();
+    syncEngineUI();
 
     o.engineBtn.forEach(function (b) { o.on(b, 'click', function (e) {
       e.stopPropagation();
