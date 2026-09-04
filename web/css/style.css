@@ -1967,6 +1967,9 @@ html[data-color="red"] {
 }
 .login-tab:hover { color: var(--text); }
 .login-tab.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border-color: transparent; }
+.hot-platform-tab { display: inline-flex; align-items: center; gap: 6px; }
+.hot-platform-icon { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 900; line-height: 1; }
+.hot-platform-tab.active .hot-platform-icon { background: rgba(255,255,255,.22); color: #fff; }
 .login-body { margin-top: 16px; }
 .login-body .form { margin-top: 0; }
 .form-actions { display: flex; gap: 10px; flex-wrap: wrap; }

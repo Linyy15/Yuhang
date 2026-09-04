@@ -27,12 +27,12 @@
   var hotRows = [];
 
   var HOT_PLATFORMS = [
-    { code: 'wbHot', key: 'hot_weibo', label: '微博' },
-    { code: 'zhihuHot', key: 'hot_zhihu', label: '知乎' },
-    { code: 'baiduRD', key: 'hot_baidu', label: '百度' },
-    { code: 'douyinHot', key: 'hot_douyin', label: '抖音' },
-    { code: 'bili', key: 'hot_bili', label: 'B站' },
-    { code: 'toutiao', key: 'hot_toutiao', label: '头条' },
+    { code: 'wbHot', key: 'hot_weibo', label: '微博', icon: '◉' },
+    { code: 'zhihuHot', key: 'hot_zhihu', label: '知乎', icon: '知' },
+    { code: 'baiduRD', key: 'hot_baidu', label: '百度', icon: '度' },
+    { code: 'douyinHot', key: 'hot_douyin', label: '抖音', icon: '♪' },
+    { code: 'bili', key: 'hot_bili', label: 'B站', icon: '▶' },
+    { code: 'toutiao', key: 'hot_toutiao', label: '头条', icon: '今' },
   ];
   var HOT_APIS = {
     wbHot: ['https://api.vvhan.com/api/hotlist/wbHot', 'https://60s.viki.moe/v2/hot?type=weibo', 'https://api.oioweb.cn/api/common/HotList?type=wbHot'],
@@ -189,7 +189,7 @@
   function renderHotTabs() {
     if (!opts.hotTabs) return;
     opts.hotTabs.innerHTML = HOT_PLATFORMS.map(function (p) {
-      return '<button class="login-tab' + (hotPlatform === p.code ? ' active' : '') + '" data-hot="' + p.code + '">' + opts.t(p.key) + '</button>';
+      return '<button class="login-tab hot-platform-tab' + (hotPlatform === p.code ? ' active' : '') + '" data-hot="' + p.code + '" aria-label="' + opts.escapeHtml(opts.t(p.key)) + '"><span class="hot-platform-icon" aria-hidden="true">' + p.icon + '</span><span>' + opts.escapeHtml(opts.t(p.key)) + '</span></button>';
     }).join('');
   }
   function setHotMeta(text) {
