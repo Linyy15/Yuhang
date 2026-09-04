@@ -95,7 +95,11 @@
     { code: 'bing', labelZh: '必应壁纸', labelEn: 'Bing' },
     { code: 'dark', labelZh: '暗夜', labelEn: 'Dark' },
   ];
-  var BING_URLS = ['https://bing.img.run/1920x1080.php', 'https://api.dujin.org/bing/1920.php'];
+  var BING_URLS = [
+    'https://bing.img.run/1920x1080.php',
+    'https://api.dujin.org/bing/1920.php',
+    'https://api.dujin.org/bing/1920/cn.php',
+  ];
 
   var QUOTES = [
     '行到水穷处，坐看云起时。', '凡是过往，皆为序章。',
@@ -111,12 +115,36 @@
   var dragIdx = -1;
 
   function cloneLinks(a) { return a.map(function (l) { return { name: l.name, url: l.url }; }); }
+  function normalizeUrl(url) {
+    url = String(url || '').trim();
+    if (!url) return '';
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    try {
+      var u = new URL(url);
+      if (u.protocol !== 'http:' && u.protocol !== 'https:') return '';
+      return u.href;
+    } catch (e) { return ''; }
+  }
+  function sanitizeLinks(links) {
+    var seen = {}, out = [];
+    for (var i = 0; links && i < links.length && out.length < 24; i++) {
+      var l = links[i];
+      var name = String((l && l.name) || '').trim().slice(0, 30);
+      var url = normalizeUrl(l && l.url);
+      var key = url || name.toLowerCase();
+      if (!name || !url || seen[key]) continue;
+      seen[key] = 1;
+      out.push({ name: name, url: url });
+    }
+    return out;
+  }
   function loadState() {
-    var d = { links: buildDefaultLinks(), engine: 'local', wall: 'aurora', bingOk: true };
+    var d = { links: sanitizeLinks(buildDefaultLinks()), engine: 'local', wall: 'aurora', bingOk: true };
     try {
       var raw = JSON.parse(localStorage.getItem(SP_KEY) || 'null');
       if (raw) {
-        if (Array.isArray(raw.links) && raw.links.length) d.links = raw.links;
+        var savedLinks = sanitizeLinks(raw.links);
+        if (savedLinks.length) d.links = savedLinks;
         if (raw.engine) d.engine = raw.engine;
         if (raw.wall) d.wall = raw.wall;
         if (raw.bingOk === false) d.bingOk = false;
@@ -127,6 +155,12 @@
     return d;
   }
   function saveState() { try { localStorage.setItem(SP_KEY, JSON.stringify(state)); } catch (e) {} }
+  function resetLinks() {
+    state.links = sanitizeLinks(buildDefaultLinks());
+    saveState();
+    renderLinks();
+    toast(isEn() ? 'Quick links restored' : '已恢复默认快捷链接');
+  }
 
   // ---------- 站点映射（window.SITES，sites.js 写入全局） ----------
   function siteMap() {
@@ -188,16 +222,21 @@
         return '<button type="button" data-wall="' + w.code + '" class="' + (state.wall === w.code ? 'active' : '') + '">' +
           '<span class="sw sw-' + w.code + '"></span>' +
           (isEn() ? w.labelEn : w.labelZh) + '</button>';
-      }).join('');
+      }).join('') +
+      '<button type="button" id="sp-wall-refresh" class="sp-wall-refresh" data-wall-refresh="1">' + (isEn() ? '⟳ Refresh Bing' : '⟳ 换一张必应') + '</button>';
   }
-  function applyWall() {
+  function applyWall(forceBing) {
     var sp = $('startpage'); if (sp) sp.setAttribute('data-sp-wall', state.wall);
     var w = $('sp-wall'); if (!w) return;
     w.onload = null; w.onerror = null;
     w.style.backgroundImage = 'none'; w.classList.remove('on');
-    if (state.wall === 'bing' && state.bingOk) {
-      var idx = 0;
-      w.onload = function () { w.classList.add('on'); };
+    if ((state.wall === 'bing' || forceBing) && state.bingOk) {
+      var idx = forceBing ? Math.floor(Math.random() * BING_URLS.length) : 0;
+      w.onload = function () {
+        w.classList.add('on');
+        // 背景加载成功时，移除可能由上一次错误写入的内联 fallback，避免覆盖 data-sp-wall 背景
+        w.style.backgroundImage = w.style.backgroundImage || '';
+      };
       w.onerror = function () {
         idx++;
         if (idx < BING_URLS.length) { w.style.backgroundImage = 'url(' + BING_URLS[idx] + ')'; }
@@ -207,7 +246,7 @@
           toast(isEn() ? 'Wallpaper failed, fallback to aurora' : '壁纸加载失败，已回落极光');
         }
       };
-      w.style.backgroundImage = 'url(' + BING_URLS[0] + ')';
+      w.style.backgroundImage = 'url(' + BING_URLS[idx] + ')';
     }
   }
 
@@ -283,10 +322,9 @@
     if (on) { var ni = $('sp-add-name'); if (ni) ni.focus(); }
   }
   function addLink(name, url) {
-    name = (name || '').trim(); url = (url || '').trim();
+    name = (name || '').trim().slice(0, 30); url = normalizeUrl(url);
     if (!name || !url) { toast(isEn() ? 'Name and URL required' : '名称和网址都要填哦'); return; }
-    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-    state.links.push({ name: name.slice(0, 30), url: url });
+    state.links.push({ name: name, url: url });
     saveState(); renderLinks();
     var ni = $('sp-add-name'), ui = $('sp-add-url');
     if (ni) ni.value = ''; if (ui) ui.value = ''; if (ni) ni.focus();
@@ -560,6 +598,7 @@
     bindDrag();
 
     on($('sp-manage-btn'), 'click', toggleEdit);
+    on($('sp-reset-links'), 'click', resetLinks);
     on($('sp-add-ok'), 'click', function () { addLink(($('sp-add-name') || {}).value, ($('sp-add-url') || {}).value); });
     on($('sp-add-name'), 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); ($('sp-add-ok') || {}).click && $('sp-add-ok').click(); } });
     on($('sp-add-url'), 'keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); ($('sp-add-ok') || {}).click && $('sp-add-ok').click(); } });
@@ -567,7 +606,13 @@
     on($('sp-wallset'), 'click', function (e) { e.stopPropagation(); var p = $('sp-wallpanel'); if (p) p.classList.toggle('hidden'); });
     on($('sp-wallpanel'), 'click', function (e) {
       var b = e.target.closest ? e.target.closest('[data-wall]') : null;
-      if (b) { state.wall = b.getAttribute('data-wall'); saveState(); applyWall(); renderWallPanel(); }
+      var refresh = e.target.closest ? e.target.closest('[data-wall-refresh]') : null;
+      if (refresh) { applyWall(true); toast(isEn() ? 'Wallpaper refreshed' : '已换一张壁纸'); return; }
+      if (b) {
+        state.wall = b.getAttribute('data-wall');
+        if (state.wall === 'bing') state.bingOk = true;
+        saveState(); applyWall(); renderWallPanel();
+      }
     });
     on($('sp-quote'), 'click', pickQuote);
     on($('sp-nav'), 'click', function () { closeStartPage(true); });

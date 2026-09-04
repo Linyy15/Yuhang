@@ -392,6 +392,11 @@ body.sp-open { overflow: hidden; } /* 锁住主站滚动 */
 .startpage .sp-wallpanel .sw-ocean { background: linear-gradient(135deg, #9fd8ff, #cfeaff); }
 .startpage .sp-wallpanel .sw-bing { background: linear-gradient(135deg, #6ab7ff, #9be6a8, #ffb8c6); }
 .startpage .sp-wallpanel .sw-dark { background: linear-gradient(135deg, #0b1020, #141a33); }
+.startpage .sp-wall-refresh {
+  margin-top: 2px; justify-content: center;
+  border: 1px dashed var(--accent-soft, rgba(91,108,255,.35));
+  color: var(--accent, #5b6cff);
+}
 
 /* 底部导航回主站 + 操作 */
 .startpage .sp-foot {

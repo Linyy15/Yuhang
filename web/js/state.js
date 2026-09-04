@@ -24,6 +24,7 @@
   var SIZE_KEY = 'nav_grid_size';
   var SETTINGS_KEY = 'nav_settings_v1';
   var WORKSPACES_KEY = 'nav_workspaces_v1';
+  var CLICK_LOG_KEY = 'nav_click_log_v1';
   var LANG_KEY = 'nav_lang_v1';
   var ENGINE_KEY = 'nav_engine_v1';
   var ACCOUNTS_KEY = 'nav_accounts_v1';
@@ -56,9 +57,11 @@
     clicksAll: readJSON(CLICKS_KEY, {}),           // 账号 -> { siteId: 次数 }
     favsAll: readJSON(FAVS_KEY, {}),               // 账号 -> [siteId]
     workspacesAll: readJSON(WORKSPACES_KEY, {}),   // 账号 -> { wsId: {name, ids} }
+    clickLogAll: readJSON(CLICK_LOG_KEY, {}),      // 账号 -> [{ id, ts }]（近 7 日频次）
 
     // --- 当前账号视图数据（由 loadAccountData 加载 / saveAccountData 持久化） ---
     clicks: {},                // 当前账号 { siteId: 次数 }
+    clickLog: [],              // 当前账号点击流水 [{ id, ts }]
     favs: new Set(),           // 当前账号收藏 siteId 集合
     workspaces: {},            // 当前账号 { wsId: {name, ids} }
     currentUser: null,         // 登录后为邮箱/用户ID
@@ -112,7 +115,7 @@
 
   // ============ 4. 纯持久化助手（无云副作用；app.js 自行追加 scheduleCloudPush） ============
   State.persist = {
-    accountData: function () { writeJSON(CLICKS_KEY, State.clicksAll); writeJSON(FAVS_KEY, State.favsAll); writeJSON(WORKSPACES_KEY, State.workspacesAll); },
+    accountData: function () { writeJSON(CLICKS_KEY, State.clicksAll); writeJSON(CLICK_LOG_KEY, State.clickLogAll); writeJSON(FAVS_KEY, State.favsAll); writeJSON(WORKSPACES_KEY, State.workspacesAll); },
     settings: function () { writeJSON(SETTINGS_KEY, State.settings); },
     accounts: function () { writeJSON(ACCOUNTS_KEY, State.accounts); },
     personal: function () { writeJSON(PERSONAL_KEY, State.personalSites); },

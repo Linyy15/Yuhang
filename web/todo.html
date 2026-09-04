@@ -822,6 +822,157 @@ body::before {
 }
 .wk-unit { font-size: 12px; color: var(--faint); margin-left: -4px; }
 .wk-item.warn b { color: var(--red); }
+
+/* ---- 重复 / 提醒 / 子任务 ---- */
+.repeat-badge {
+  font-size: 11px; font-weight: 700; padding: 2px 9px;
+  border-radius: 999px; letter-spacing: .3px;
+  background: color-mix(in oklab, #8b5cf6 14%, transparent); color: #7c3aed;
+  border: 1px solid color-mix(in oklab, #8b5cf6 30%, transparent);
+}
+.repeat-badge[data-repeat="daily"] { background: color-mix(in oklab, #0ea5e9 14%, transparent); color: #0369a1; border-color: color-mix(in oklab, #0ea5e9 30%, transparent); }
+.repeat-badge[data-repeat="weekly"] { background: color-mix(in oklab, #8b5cf6 14%, transparent); color: #7c3aed; border-color: color-mix(in oklab, #8b5cf6 30%, transparent); }
+.repeat-badge[data-repeat="monthly"] { background: color-mix(in oklab, #f59e0b 14%, transparent); color: #b45309; border-color: color-mix(in oklab, #f59e0b 30%, transparent); }
+.todo-item[data-repeat] .todo-title::before { content: '🔁 '; }
+
+.subtask-section { margin-top: 9px; padding-top: 8px; border-top: 1px dashed var(--border-soft); }
+.subtask-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 7px; }
+.subtask-title { font-size: 12px; font-weight: 800; color: var(--text-2); }
+.subtask-progress { font-size: 11px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.subtask-list { display: flex; flex-direction: column; gap: 5px; }
+.subtask {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 8px; border-radius: 9px;
+  background: color-mix(in oklab, var(--panel-2) 70%, transparent);
+  border: 1px solid var(--border-soft);
+  font-size: 12.5px;
+}
+.subtask-check {
+  width: 17px; height: 17px; border-radius: 5px;
+  border: 1.5px solid var(--border); background: var(--panel-2);
+  flex-shrink: 0; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all .18s ease; color: #fff; font-size: 11px; font-weight: 800;
+}
+.subtask-check:hover { border-color: var(--accent); transform: scale(1.08); }
+.subtask-check:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.subtask-check.checked { background: var(--success); border-color: var(--success); }
+.subtask-title-text { flex: 1; min-width: 0; word-break: break-word; }
+.subtask.done .subtask-title-text { text-decoration: line-through; color: var(--faint); }
+.subtask-del {
+  border: 0; background: transparent; color: var(--faint);
+  cursor: pointer; padding: 2px 4px; border-radius: 6px; font-size: 11px; line-height: 1;
+}
+.subtask-del:hover { color: var(--red); background: rgba(229,72,77,.10); }
+.subtask-del:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+.subtask-add-row { display: flex; gap: 6px; margin-top: 7px; }
+.subtask-add-row input {
+  flex: 1; min-width: 0; padding: 6px 9px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--panel-2); color: var(--text);
+  font-size: 12px; font-family: inherit; outline: none;
+}
+.subtask-add-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
+.subtask-add-btn {
+  padding: 6px 10px; border: 0; border-radius: 8px; background: var(--accent-soft);
+  color: var(--accent); font-size: 12px; font-weight: 700; font-family: inherit; cursor: pointer;
+}
+.subtask-add-btn:hover { background: var(--accent); color: #fff; }
+.subtask-add-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ---- 视图切换 / 日历 / 趋势 / 提醒 ---- */
+.view-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-bottom: 14px; flex-wrap: wrap;
+  padding: 9px 11px; background: var(--panel); border: 1px solid var(--border);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.view-tabs, .reminder-wrap { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.view-tab {
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--panel-2); color: var(--text-2); font-size: 12px; font-weight: 700;
+  font-family: inherit; cursor: pointer; transition: all .18s ease;
+}
+.view-tab:hover { border-color: var(--accent); color: var(--accent); }
+.view-tab.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border-color: transparent; }
+.view-tab:focus-visible, .reminder-wrap button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.view-summary { font-size: 12px; color: var(--faint); font-weight: 600; }
+.reminder-wrap select, .reminder-wrap input {
+  padding: 5px 8px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--panel-2); color: var(--text); font-size: 11.5px; font-family: inherit;
+}
+.reminder-toggle { padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text-2); font-size: 11.5px; font-weight: 700; font-family: inherit; cursor: pointer; }
+.reminder-toggle.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.view-calendar { padding-bottom: 42px; }
+.calendar { display: flex; flex-direction: column; gap: 12px; }
+.calendar-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; box-shadow: var(--shadow); }
+.calendar-title { font-size: 15px; font-weight: 800; }
+.calendar-nav { display: flex; gap: 6px; }
+.calendar-nav button { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border); background: var(--panel-2); cursor: pointer; font-weight: 800; color: var(--text-2); }
+.calendar-nav button:hover { color: var(--accent); border-color: var(--accent); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+.calendar-cell {
+  min-height: 96px; padding: 8px; border-radius: 12px;
+  background: var(--panel); border: 1px solid var(--border); box-shadow: var(--shadow);
+  display: flex; flex-direction: column; gap: 6px;
+}
+.calendar-cell.weekend { background: color-mix(in oklab, var(--panel) 94%, var(--panel-2)); }
+.calendar-cell.today { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow); }
+.calendar-cell.empty { background: transparent; border-color: transparent; box-shadow: none; min-height: 22px; opacity: 0; pointer-events: none; }
+.cal-date { display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 800; color: var(--text-2); }
+.cal-count { font-size: 10px; color: var(--faint); padding: 1px 5px; border-radius: 999px; background: var(--panel-2); border: 1px solid var(--border-soft); }
+.cal-list { display: flex; flex-direction: column; gap: 3px; overflow: hidden; }
+.cal-todo {
+  font-size: 11px; line-height: 1.25; padding: 3px 5px; border-radius: 6px;
+  background: var(--panel-2); border-left: 3px solid var(--priority-mid);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cal-todo.prio-high { border-left-color: var(--priority-high); }
+.cal-todo.prio-low { border-left-color: var(--priority-low); }
+.cal-todo.done { opacity: .6; text-decoration: line-through; }
+.cal-more { font-size: 10px; color: var(--faint); font-weight: 700; }
+.trend-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 14px 10px; box-shadow: var(--shadow); margin-bottom: 18px; }
+.trend-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.trend-title { font-size: 13.5px; font-weight: 800; }
+.trend-legend { font-size: 11px; color: var(--faint); }
+.trend-chart { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; height: 128px; padding: 0 2px; }
+.trend-col { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 5px; height: 100%; }
+.trend-bars { display: flex; align-items: flex-end; gap: 4px; width: 100%; height: 88px; justify-content: center; }
+.trend-bar { width: 14px; border-radius: 6px 6px 3px 3px; min-height: 2px; background: linear-gradient(180deg, var(--accent), var(--accent-2)); box-shadow: 0 3px 8px color-mix(in oklab, var(--accent) 22%, transparent); transition: height .5s ease; }
+.trend-bar.secondary { background: color-mix(in oklab, var(--text) 24%, transparent); box-shadow: none; opacity: .7; }
+.trend-label { font-size: 10.5px; color: var(--faint); font-weight: 700; }
+.trend-value { font-size: 10.5px; color: var(--text-2); font-weight: 800; }
+.notice {
+  position: fixed; right: 18px; top: 74px; z-index: 120;
+  width: min(330px, calc(100vw - 36px)); max-height: 38vh; overflow: auto;
+  padding: 12px 12px 10px; border-radius: var(--radius); border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--panel) 94%, transparent); box-shadow: var(--shadow-lift);
+  backdrop-filter: blur(12px); display: none;
+}
+.notice.show { display: block; animation: slideInTop .25s ease both; }
+.notice-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.notice-title { font-size: 13px; font-weight: 800; }
+.notice-clear { border: 1px solid var(--border); background: var(--panel-2); color: var(--faint); border-radius: 999px; padding: 3px 8px; font-size: 10.5px; font-family: inherit; cursor: pointer; }
+.notice-clear:hover { color: var(--red); border-color: var(--red); }
+.notice-empty { font-size: 12px; color: var(--faint); text-align: center; padding: 8px 0; }
+.notice-item { display: flex; align-items: flex-start; gap: 7px; padding: 7px 8px; border-radius: 9px; background: var(--panel-2); border: 1px solid var(--border-soft); margin-top: 5px; font-size: 12px; }
+.notice-dot { flex-shrink: 0; width: 7px; height: 7px; margin-top: 5px; border-radius: 50%; background: var(--accent); }
+.notice-body { flex: 1; min-width: 0; }
+.notice-title-text { font-weight: 700; word-break: break-word; }
+.notice-time { font-size: 10.5px; color: var(--faint); margin-top: 2px; }
+.notice-go { border: 1px solid var(--accent); background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 3px 8px; font-size: 10.5px; font-weight: 800; font-family: inherit; cursor: pointer; }
+.notice-go:hover { background: var(--accent); color: #fff; }
+
+/* ---- 番茄钟 ---- */
+.pomo-panel { display: none; position: fixed; right: 18px; bottom: 18px; z-index: 130; width: min(320px, calc(100vw - 36px)); padding: 16px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lift); }
+.pomo-panel.show { display: block; animation: slideInTop .25s ease both; }
+.pomo-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pomo-title { font-size: 14px; font-weight: 800; }
+.pomo-mode { color: var(--faint); font-size: 11px; }
+.pomo-clock { text-align: center; font-size: 42px; line-height: 1.1; font-weight: 900; letter-spacing: 2px; margin: 14px 0 10px; font-variant-numeric: tabular-nums; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pomo-task { width: 100%; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-2); color: var(--text); font: inherit; font-size: 12px; }
+.pomo-actions { display: flex; gap: 7px; margin-top: 10px; }
+.pomo-actions button { flex: 1; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-2); color: var(--text-2); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
+.pomo-actions button:hover { color: var(--accent); border-color: var(--accent); }
+.pomo-count { margin-top: 9px; text-align: center; color: var(--faint); font-size: 11px; }
 </style>
 </head>
 <body>
@@ -884,6 +1035,28 @@ body::before {
     <span class="wk-item"><span class="wk-ico">⏰</span><span class="wk-label">已逾期</span><b id="statOverdue">0</b></span>
   </div>
 
+  <div class="view-bar" aria-label="视图与提醒设置">
+    <div class="view-tabs" role="tablist" aria-label="视图切换">
+      <button class="view-tab active" data-view="list" role="tab" aria-selected="true">📝 列表</button>
+      <button class="view-tab" data-view="calendar" role="tab" aria-selected="false">📅 日历</button>
+    </div>
+    <div class="reminder-wrap" aria-label="提醒设置">
+      <label class="view-summary" for="reminderAt">提醒时间</label>
+      <input type="time" id="reminderAt" value="09:00" aria-label="每日提醒时间">
+      <button class="backup-btn reminder-toggle" id="browserRemindBtn" title="开启浏览器通知；拒绝后不会重复请求">🌐 浏览器提醒</button>
+    </div>
+  </div>
+
+  <div class="trend-card" id="trendCard" aria-label="近7天完成趋势">
+    <div class="trend-head">
+      <span class="trend-title">📈 近 7 天完成趋势</span>
+      <span class="trend-legend"><span id="trendTotalDone">0</span> 项完成 · <span id="trendCompletionRate">0%</span> 完成率</span>
+    </div>
+    <div class="trend-chart" id="trendChart"></div>
+  </div>
+
+  <div id="calendarView" class="view-calendar" hidden></div>
+
   <div class="add-form" id="addForm">
     <div class="add-form-row">
       <input type="text" id="todoInput" placeholder="✏️  输入待办…支持「明天 !1 #工作」自然语法" maxlength="200" autocomplete="off" aria-label="待办事项">
@@ -896,6 +1069,12 @@ body::before {
         <option value="mid">⚡ 优先级：中</option>
         <option value="high">🔴 优先级：高</option>
         <option value="low">🟢 优先级：低</option>
+      </select>
+      <select id="todoRepeat" aria-label="重复">
+        <option value="">🚫 不重复</option>
+        <option value="daily">🔁 每天</option>
+        <option value="weekly">🔁 每周</option>
+        <option value="monthly">🔁 每月</option>
       </select>
     </div>
     <div class="add-success" id="addSuccess" aria-live="polite"></div>
@@ -910,7 +1089,9 @@ body::before {
     <button class="filter-btn" data-filter="low">🟢 低优<span class="pill-count" id="countLow"></span></button>
     <span id="tagFilters"></span>
     <input type="search" id="todoSearch" class="todo-search" placeholder="🔎 搜索待办…" autocomplete="off" aria-label="搜索待办">
-    <button class="clear-done-btn" id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
+    <button class="backup-btn reminder-toggle" id="reminderBtn" title="打开页面提醒面板">🔔 提醒</button>
+    <button class="backup-btn" id="pomoBtn" title="打开番茄钟">🍅 番茄钟</button>
+    <button class="clear-done-btn id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
     <div class="backup-btns">
       <button class="backup-btn" id="exportBtn" title="导出全部待办为 JSON 备份">⬇ 备份</button>
       <button class="backup-btn" id="importBtn" title="从 JSON 备份恢复（合并导入）">⬆ 恢复</button>
@@ -920,6 +1101,23 @@ body::before {
 
   <div class="todo-list" id="todoList" role="list" aria-label="待办事项列表"></div>
 </main>
+
+<div class="pomo-panel" id="pomoPanel" role="dialog" aria-label="番茄钟">
+  <div class="pomo-head"><span class="pomo-title">🍅 番茄钟</span><button class="notice-clear" id="pomoClose" type="button">关闭</button></div>
+  <div class="pomo-mode" id="pomoMode">专注 25 分钟</div>
+  <div class="pomo-clock" id="pomoClock">25:00</div>
+  <select class="pomo-task" id="pomoTask" aria-label="关联待办"><option value="">不关联待办</option></select>
+  <div class="pomo-actions"><button id="pomoStart" type="button">开始</button><button id="pomoReset" type="button">重置</button></div>
+  <div class="pomo-count" id="pomoCount">今日完成 0 个番茄</div>
+</div>
+
+<div class="notice" id="noticePanel" aria-label="待办提醒" role="dialog" aria-live="polite">
+  <div class="notice-head">
+    <span class="notice-title">🔔 页面提醒</span>
+    <button class="notice-clear" id="noticeClear" type="button">清空</button>
+  </div>
+  <div id="noticeList"></div>
+</div>
 
 <div class="undo-toast" id="undoToast" role="status" aria-live="polite">
   <span class="undo-text" id="undoText">已删除</span>
@@ -931,6 +1129,7 @@ body::before {
 (function() {
   'use strict';
   const STORAGE_KEY = 'yuhang_todos_v1';
+  const REMINDER_STATE_KEY = 'yuhang_todo_reminders_v1';
   let todos = [];
   let currentFilter = 'all';
   let currentTagFilter = null;
@@ -938,8 +1137,31 @@ body::before {
   let editingId = null;
   let trash = null;
   let trashTimer = null;
+  let currentView = 'list';
+  let calendarCursor = new Date();
+  calendarCursor.setHours(0, 0, 0, 0);
+  let reminders = [];
+  let reminderEnabled = true;
+  let reminderAt = '09:00';
+  let browserReminderOn = false;
+  let browserReminderPrompted = false;
+  let reminderTimer = null;
+  let activeReminders = {};
+  const POMO_KEY = 'yuhang_todo_pomo_v1';
+  let pomo = { left: 1500, running: false, timer: null, completed: 0, mode: 'focus', startedAt: 0 };
 
   function uid() { return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
+  function pomoFormat(sec) { return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'); }
+  function renderPomo() {
+    var clock = document.getElementById('pomoClock'); if (clock) clock.textContent = pomoFormat(pomo.left);
+    var mode = document.getElementById('pomoMode'); if (mode) mode.textContent = pomo.mode === 'focus' ? '专注 25 分钟' : '休息 5 分钟';
+    var start = document.getElementById('pomoStart'); if (start) start.textContent = pomo.running ? '暂停' : '开始';
+    var count = document.getElementById('pomoCount'); if (count) count.textContent = '今日完成 ' + pomo.completed + ' 个番茄';
+  }
+  function openPomo() { var p = document.getElementById('pomoPanel'); if (!p) return; p.classList.add('show'); var sel = document.getElementById('pomoTask'); if (sel) sel.innerHTML = '<option value="">不关联待办</option>' + todos.filter(function(t){return !t.done;}).map(function(t){return '<option value="' + escapeHtml(t.id) + '">' + escapeHtml(t.title) + '</option>';}).join(''); renderPomo(); }
+  function tickPomo() { if (!pomo.running) return; pomo.left = Math.max(0, pomo.left - 1); renderPomo(); if (pomo.left === 0) { pomo.running = false; if (pomo.mode === 'focus') pomo.completed++; pomo.mode = pomo.mode === 'focus' ? 'break' : 'focus'; pomo.left = pomo.mode === 'focus' ? 1500 : 300; savePomo(); addSuccessFlash(pomo.mode === 'break' ? '🍅 专注完成，休息一下吧' : '🌱 休息结束，继续出发'); } }
+  function savePomo() { try { localStorage.setItem(POMO_KEY, JSON.stringify({ completed: pomo.completed })); } catch (e) {} }
+  function loadPomo() { try { var x = JSON.parse(localStorage.getItem(POMO_KEY) || 'null'); if (x && typeof x.completed === 'number') pomo.completed = x.completed; } catch (e) {} }
 
   function load() {
     try {
@@ -950,6 +1172,61 @@ body::before {
   }
   function save() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(todos)); } catch (e) {}
+    saveRemindersState();
+  }
+
+  function loadRemindersState() {
+    try {
+      var rawState = localStorage.getItem(REMINDER_STATE_KEY);
+      if (rawState) {
+        var state = JSON.parse(rawState);
+        if (Array.isArray(state.reminders)) reminders = state.reminders.filter(function(r) { return r && typeof r.key === 'string'; });
+        if (typeof state.reminderEnabled === 'boolean') reminderEnabled = state.reminderEnabled;
+        if (/^\d{2}:\d{2}$/.test(state.reminderAt || '')) reminderAt = state.reminderAt;
+        if (typeof state.browserReminderOn === 'boolean') browserReminderOn = state.browserReminderOn;
+        if (typeof state.browserReminderPrompted === 'boolean') browserReminderPrompted = state.browserReminderPrompted;
+      }
+    } catch (e) {}
+    var timeInput = document.getElementById('reminderAt');
+    if (timeInput) timeInput.value = reminderAt;
+    var browserBtn = document.getElementById('browserRemindBtn');
+    if (browserBtn) browserBtn.classList.toggle('on', browserReminderOn);
+  }
+  function saveRemindersState() {
+    try {
+      localStorage.setItem(REMINDER_STATE_KEY, JSON.stringify({ reminders: reminders, reminderEnabled: reminderEnabled, reminderAt: reminderAt, browserReminderOn: browserReminderOn, browserReminderPrompted: browserReminderPrompted }));
+    } catch (e) {}
+  }
+  function normalizeTodos(input) {
+    if (!Array.isArray(input)) return [];
+    return input.map(function(rawTodo) {
+      var t = rawTodo && typeof rawTodo === 'object' ? rawTodo : {};
+      t.done = !!t.done;
+      t.subtasks = Array.isArray(t.subtasks) ? t.subtasks.map(function(s) { return { id: String((s && s.id) || uid()), text: String((s && s.text) || '').slice(0, 200), done: !!(s && s.done) }; }) : [];
+      var repeat = t.repeat === 'daily' || t.repeat === 'weekly' || t.repeat === 'monthly' ? t.repeat : null;
+      if (!repeat) delete t.repeat;
+      return {
+        id: String(t.id || uid()),
+        title: String(t.title || '').slice(0, 200),
+        tag: t.tag ? String(t.tag).slice(0, 30) : null,
+        priority: t.priority === 'high' || t.priority === 'low' ? t.priority : 'mid',
+        due: /^\d{4}-\d{2}-\d{2}$/.test(t.due || '') ? t.due : null,
+        repeat: repeat,
+        done: t.done,
+        subtasks: t.subtasks,
+        createdAt: Number(t.createdAt) || Date.now(),
+        completedAt: t.completedAt ? Number(t.completedAt) : null
+      };
+    });
+  }
+  function nextRepeatDue(from, repeat) {
+    if (repeat !== 'daily' && repeat !== 'weekly' && repeat !== 'monthly') return null;
+    var d = /^\d{4}-\d{2}-\d{2}$/.test(from || '') ? new Date(from + 'T00:00:00') : new Date();
+    d.setHours(0, 0, 0, 0);
+    if (repeat === 'daily') d.setDate(d.getDate() + 1);
+    else if (repeat === 'weekly') d.setDate(d.getDate() + 7);
+    else if (repeat === 'monthly') d.setMonth(d.getMonth() + 1);
+    return isoDate(d);
   }
 
   function getFiltered() {
@@ -970,6 +1247,41 @@ body::before {
       case 'low': return list.filter(function(t) { return t.priority === 'low'; });
       default: return list;
     }
+  }
+
+  function repeatLabel(repeat) {
+    return repeat === 'daily' ? '每天' : repeat === 'weekly' ? '每周' : repeat === 'monthly' ? '每月' : '';
+  }
+  function subtaskStats(t) {
+    var list = Array.isArray(t.subtasks) ? t.subtasks : [];
+    var done = list.filter(function(s) { return s && s.done; }).length;
+    return { total: list.length, done: done, pct: list.length ? Math.round(done / list.length * 100) : 0 };
+  }
+  function subtasksBadgeHtml(t) {
+    var st = subtaskStats(t);
+    return '<span class="repeat-badge" data-repeat="subtasks" title="子任务">🧩 ' + st.done + '/' + st.total + '</span>';
+  }
+  function subtasksHtml(t) {
+    var st = subtaskStats(t);
+    var html = '<div class="subtask-section">' +
+      '<div class="subtask-header"><span class="subtask-title">🧩 子任务</span><span class="subtask-progress">' + st.done + '/' + st.total + ' · ' + st.pct + '%</span></div>';
+    if (st.total) {
+      html += '<div class="subtask-list">';
+      for (var i = 0; i < t.subtasks.length; i++) {
+        var s = t.subtasks[i];
+        html += '<div class="subtask' + (s.done ? ' done' : '') + '">' +
+          '<div class="subtask-check' + (s.done ? ' checked' : '') + '" data-action="toggle-subtask" data-id="' + escapeHtml(t.id) + '" data-sid="' + escapeHtml(s.id) + '" tabindex="0" role="button" aria-label="' + (s.done ? '取消完成子任务' : '完成子任务') + '">' + (s.done ? '✓' : '') + '</div>' +
+          '<span class="subtask-title-text">' + escapeHtml(s.text) + '</span>' +
+          '<button class="subtask-del" data-action="delete-subtask" data-id="' + escapeHtml(t.id) + '" data-sid="' + escapeHtml(s.id) + '" title="删除子任务" aria-label="删除子任务">✕</button>' +
+          '</div>';
+      }
+      html += '</div>';
+    }
+    html += '<div class="subtask-add-row">' +
+      '<input type="text" data-action="subtask-input" data-id="' + escapeHtml(t.id) + '" placeholder="添加子任务，回车保存" maxlength="100" aria-label="添加子任务">' +
+      '<button class="subtask-add-btn" data-action="add-subtask" data-id="' + escapeHtml(t.id) + '">＋</button>' +
+      '</div></div>';
+    return html;
   }
 
   function countFilterCounts() {
@@ -1042,6 +1354,7 @@ body::before {
 
     updateProgressEmoji(pct, total, done);
     updateWeekly();
+    updateTrend();
     updateMascotExpression();
     updateClearDone();
     updateWelcome(total, done);
@@ -1086,6 +1399,40 @@ body::before {
     if (row && row.children[2]) {
       row.children[2].classList.toggle('warn', overdue > 0);
     }
+  }
+
+  function updateTrend() {
+    var chart = document.getElementById('trendChart');
+    var totalDoneEl = document.getElementById('trendTotalDone');
+    var rateEl = document.getElementById('trendCompletionRate');
+    if (!chart) return;
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var days = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = new Date(today.getTime()); d.setDate(d.getDate() - i);
+      var key = isoDate(d);
+      days.push({ key: key, label: '周' + '一二三四五六日'[(d.getDay() + 6) % 7], done: 0, due: 0 });
+    }
+    var byKey = {};
+    days.forEach(function(day) { byKey[day.key] = day; });
+    todos.forEach(function(t) {
+      if (t.completedAt && byKey[isoDate(new Date(t.completedAt))]) byKey[isoDate(new Date(t.completedAt))].done++;
+      if (t.due && byKey[t.due]) byKey[t.due].due++;
+    });
+    var max = Math.max(1, days.reduce(function(m, d) { return Math.max(m, d.done, d.due); }, 0));
+    var totalDone7 = days.reduce(function(sum, d) { return sum + d.done; }, 0);
+    var totalDue7 = days.reduce(function(sum, d) { return sum + d.due; }, 0);
+    var html = days.map(function(d) {
+      var doneH = Math.max(3, Math.round(d.done / max * 82));
+      var dueH = Math.max(3, Math.round(d.due / max * 82));
+      return '<div class="trend-col"><div class="trend-value">' + d.done + '</div><div class="trend-bars">' +
+        '<span class="trend-bar" style="height:' + doneH + 'px"></span>' +
+        '<span class="trend-bar secondary" style="height:' + dueH + 'px"></span>' +
+        '</div><div class="trend-label">' + d.label + '</div></div>';
+    }).join('');
+    chart.innerHTML = html;
+    if (totalDoneEl) totalDoneEl.textContent = totalDone7;
+    if (rateEl) rateEl.textContent = (totalDue7 ? Math.round(totalDone7 / totalDue7 * 100) : (totalDone7 ? 100 : 0)) + '%';
   }
 
   function setStat(id, v) {
@@ -1393,17 +1740,26 @@ body::before {
     var tagEl = document.getElementById('editTag');
     var dueEl = document.getElementById('editDue');
     var prioEl = document.getElementById('editPriority');
+    var repeatEl = document.getElementById('editRepeat');
+    var subtasksEl = document.getElementById('editSubtasks');
     var title = (titleEl && titleEl.value || '').trim();
     if (!title) { if (titleEl) titleEl.focus(); return; }
     t.title = title;
     t.tag = (tagEl && tagEl.value || '').trim() || null;
     t.due = (dueEl && dueEl.value) || null;
     t.priority = (prioEl && prioEl.value) || t.priority;
+    t.repeat = repeatEl && repeatEl.value ? repeatEl.value : null;
+    if (!t.repeat) delete t.repeat;
+    t.subtasks = parseSubtaskText(subtasksEl && subtasksEl.value);
     editingId = null;
     save();
     render();
     updateStats();
     renderTags();
+    scheduleReminders();
+  }
+  function parseSubtaskText(raw) {
+    return String(raw || '').split(/\n|;|；|、/).map(function(x) { return x.trim(); }).filter(Boolean).slice(0, 20).map(function(text) { return { id: uid(), text: text, done: false }; });
   }
   function cancelEdit() { editingId = null; render(); }
 
@@ -1488,10 +1844,19 @@ body::before {
                     '<option value="mid"' + (todo.priority === 'mid' ? ' selected' : '') + '>⚡ 中</option>' +
                     '<option value="low"' + (todo.priority === 'low' ? ' selected' : '') + '>🟢 低</option>' +
                   '</select>' +
+                  '<select id="editRepeat" aria-label="重复">' +
+                    '<option value=""' + (!todo.repeat ? ' selected' : '') + '>🚫 不重复</option>' +
+                    '<option value="daily"' + (todo.repeat === 'daily' ? ' selected' : '') + '>🔁 每天</option>' +
+                    '<option value="weekly"' + (todo.repeat === 'weekly' ? ' selected' : '') + '>🔁 每周</option>' +
+                    '<option value="monthly"' + (todo.repeat === 'monthly' ? ' selected' : '') + '>🔁 每月</option>' +
+                  '</select>' +
                 '</div>' +
                 '<div class="edit-form-row">' +
                   '<input type="text" id="editTag" value="' + escapeHtml(todo.tag || '') + '" maxlength="30" placeholder="标签（可选）" aria-label="标签">' +
                   '<input type="date" id="editDue" value="' + escapeHtml(todo.due || '') + '" aria-label="截止日期">' +
+                '</div>' +
+                '<div class="edit-form-row">' +
+                  '<input type="text" id="editSubtasks" value="' + escapeHtml((todo.subtasks || []).map(function(s) { return s.text; }).join('\n')) + '" maxlength="300" placeholder="子任务：每行/分号一项" aria-label="子任务">' +
                 '</div>' +
                 '<div class="edit-actions">' +
                   '<button class="edit-save" data-action="save-edit" data-id="' + escapeHtml(todo.id) + '">保存</button>' +
@@ -1502,9 +1867,12 @@ body::before {
               '<div class="todo-meta">' +
                 '<span class="priority-badge priority-' + escapeHtml(todo.priority) + '">' + prioText + '优先级</span>' +
                 (due ? '<span class="due-badge ' + due.cls + '">' + due.text + '</span>' : '') +
+                (todo.repeat ? '<span class="repeat-badge" data-repeat="' + escapeHtml(todo.repeat) + '" title="重复：' + escapeHtml(repeatLabel(todo.repeat)) + '">🔁 ' + escapeHtml(repeatLabel(todo.repeat)) + '</span>' : '') +
+                ((todo.subtasks && todo.subtasks.length) ? subtasksBadgeHtml(todo) : '') +
                 (todo.tag ? '<span class="tag-badge">' + escapeHtml(todo.tag) + '</span>' : '') +
                 (date ? '<span class="meta-sep">·</span><span class="meta-date">' + date + '</span>' : '') +
-              '</div>') +
+              '</div>' +
+              ((todo.subtasks && todo.subtasks.length) ? subtasksHtml(todo) : '')) +
         '</div>' +
         '<div class="todo-actions">' +
           (editingId === todo.id
@@ -1594,13 +1962,16 @@ body::before {
       return;
     }
     var p = parseNaturalInput(raw);
+    var repeatEl = document.getElementById('todoRepeat');
     todos.unshift({
       id: uid(),
       title: p.title || raw,
       tag: p.tag || tagEl.value.trim() || null,
       priority: p.priority || prioEl.value || 'mid',
       due: p.due || (dueEl && dueEl.value) || null,
+      repeat: (repeatEl && repeatEl.value) || null,
       done: false,
+      subtasks: [],
       createdAt: Date.now()
     });
     save();
@@ -1608,6 +1979,7 @@ body::before {
     tagEl.value = '';
     if (dueEl) dueEl.value = '';
     prioEl.value = 'mid';
+    if (repeatEl) repeatEl.value = '';
     titleEl.focus();
     render();
     updateStats();
@@ -1623,11 +1995,60 @@ body::before {
       var wasDone = todo.done;
       todo.done = !todo.done;
       todo.completedAt = todo.done ? Date.now() : null;
+      if (todo.done && todo.repeat) {
+        todos.unshift({
+          id: uid(),
+          title: todo.title,
+          tag: todo.tag,
+          priority: todo.priority,
+          due: nextRepeatDue(todo.due, todo.repeat),
+          repeat: todo.repeat,
+          done: false,
+          subtasks: (todo.subtasks || []).map(function(s) { return { id: uid(), text: s.text, done: false }; }),
+          createdAt: Date.now()
+        });
+      }
       save();
       render();
       updateStats();
+      renderTags();
+      scheduleReminders();
       if (!wasDone) { celebrateMascot(); if (x && y) confettiBurst(x, y); }
     }
+  }
+
+  function toggleSubtask(todoId, subtaskId) {
+    var todo = todos.find(function(t) { return t.id === todoId; });
+    if (!todo) return;
+    if (!Array.isArray(todo.subtasks)) todo.subtasks = [];
+    var sub = todo.subtasks.find(function(s) { return s.id === subtaskId; });
+    if (!sub) return;
+    sub.done = !sub.done;
+    save();
+    render();
+    updateStats();
+  }
+  function addSubtask(todoId) {
+    var input = document.querySelector('.subtask-input[data-id="' + todoId + '"]');
+    if (!input) return;
+    var text = input.value.trim();
+    if (!text) return;
+    var todo = todos.find(function(t) { return t.id === todoId; });
+    if (!todo) return;
+    if (!Array.isArray(todo.subtasks)) todo.subtasks = [];
+    if (todo.subtasks.length >= 20) return;
+    todo.subtasks.push({ id: uid(), text: text.slice(0, 100), done: false });
+    save();
+    render();
+    updateStats();
+  }
+  function deleteSubtask(todoId, subtaskId) {
+    var todo = todos.find(function(t) { return t.id === todoId; });
+    if (!todo) return;
+    todo.subtasks = (todo.subtasks || []).filter(function(s) { return s.id !== subtaskId; });
+    save();
+    render();
+    updateStats();
   }
 
   function softDeleteTodo(id) {
@@ -1654,6 +2075,11 @@ body::before {
     renderTags();
   }
 
+  document.getElementById('pomoBtn').addEventListener('click', openPomo);
+  document.getElementById('pomoClose').addEventListener('click', function(){ document.getElementById('pomoPanel').classList.remove('show'); });
+  document.getElementById('pomoStart').addEventListener('click', function(){ pomo.running = !pomo.running; if (pomo.running && !pomo.timer) pomo.timer = setInterval(tickPomo, 1000); renderPomo(); });
+  document.getElementById('pomoReset').addEventListener('click', function(){ pomo.running = false; pomo.mode = 'focus'; pomo.left = 1500; renderPomo(); });
+  loadPomo(); renderPomo();
   document.getElementById('addBtn').addEventListener('click', addTodo);
   document.getElementById('todoInput').addEventListener('keydown', function(e) {
     if (e.key === 'Enter') { e.preventDefault(); addTodo(); }
@@ -1698,6 +2124,43 @@ body::before {
     if (el.dataset.action === 'edit') startEdit(id);
     if (el.dataset.action === 'save-edit') saveEdit(id);
     if (el.dataset.action === 'cancel-edit') cancelEdit();
+    if (el.dataset.action === 'toggle-subtask') toggleSubtask(id, el.dataset.sid);
+    if (el.dataset.action === 'add-subtask') addSubtask(id);
+    if (el.dataset.action === 'delete-subtask') deleteSubtask(id, el.dataset.sid);
+  });
+
+  document.getElementById('todoList').addEventListener('keydown', function(e) {
+    if (e.key !== 'Enter') return;
+    var input = e.target.closest('[data-action="subtask-input"]');
+    if (input) { e.preventDefault(); addSubtask(input.dataset.id); }
+    var check = e.target.closest('.subtask-check');
+    if (check) { e.preventDefault(); toggleSubtask(check.dataset.id, check.dataset.sid); }
+  });
+
+  document.querySelectorAll('.view-tab[data-view]').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchView(btn.dataset.view); });
+  });
+  document.getElementById('reminderBtn').addEventListener('click', function() {
+    var panel = document.getElementById('noticePanel');
+    var open = panel.classList.contains('show');
+    panel.classList.toggle('show', !open);
+    this.classList.toggle('on', !open);
+    if (!open) renderNotice();
+  });
+  document.getElementById('browserRemindBtn').addEventListener('click', requestBrowserReminder);
+  document.getElementById('reminderAt').addEventListener('change', function(e) {
+    if (/^\d{2}:\d{2}$/.test(e.target.value)) {
+      reminderAt = e.target.value;
+      saveRemindersState();
+      scheduleReminders();
+      addSuccessFlash('🔔 提醒时间已保存');
+    }
+  });
+  document.getElementById('noticeClear').addEventListener('click', function() {
+    reminders = [];
+    activeReminders = {};
+    saveRemindersState();
+    renderNotice();
   });
 
   // 搜索：输入即过滤
@@ -1752,6 +2215,131 @@ body::before {
     reader.readAsText(file);
   });
 
+  function switchView(view) {
+    currentView = view;
+    document.querySelectorAll('.view-tab[data-view]').forEach(function(btn) {
+      var active = btn.dataset.view === view;
+      btn.classList.toggle('active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    document.getElementById('todoList').hidden = view !== 'list';
+    var calendar = document.getElementById('calendarView');
+    if (calendar) calendar.hidden = view !== 'calendar';
+    if (view === 'calendar') renderCalendar();
+  }
+  function renderCalendar() {
+    var container = document.getElementById('calendarView');
+    if (!container) return;
+    var y = calendarCursor.getFullYear();
+    var m = calendarCursor.getMonth();
+    var first = new Date(y, m, 1);
+    var daysInMonth = new Date(y, m + 1, 0).getDate();
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var byDate = {};
+    todos.forEach(function(t) {
+      if (!t.due) return;
+      if (!byDate[t.due]) byDate[t.due] = [];
+      byDate[t.due].push(t);
+    });
+    var html = '<div class="calendar"><div class="calendar-head">' +
+      '<span class="calendar-title">' + y + ' 年 ' + (m + 1) + ' 月</span>' +
+      '<div class="calendar-nav"><button type="button" data-cal="prev" aria-label="上个月">‹</button><button type="button" data-cal="today" aria-label="回到今天">今</button><button type="button" data-cal="next" aria-label="下个月">›</button></div>' +
+      '</div><div class="calendar-grid"><div class="calendar-cell empty" aria-hidden="true"></div>';
+    ['一','二','三','四','五','六','日'].forEach(function(d) { html += '<div class="calendar-cell empty" aria-hidden="true">' + '周' + d + '</div>'; });
+    for (var i = 1; i <= daysInMonth; i++) {
+      var d = new Date(y, m, i);
+      var key = isoDate(d);
+      var items = byDate[key] || [];
+      var classes = 'calendar-cell' + (d.getDay() === 0 || d.getDay() === 6 ? ' weekend' : '') + (key === isoDate(today) ? ' today' : '');
+      html += '<div class="' + classes + '" data-date="' + key + '"><div class="cal-date"><span>' + i + '</span><span class="cal-count">' + items.length + '</span></div><div class="cal-list">';
+      items.slice(0, 3).forEach(function(t) {
+        html += '<div class="cal-todo prio-' + escapeHtml(t.priority) + (t.done ? ' done' : '') + '" title="' + escapeHtml(t.title) + '">' + escapeHtml(t.title) + '</div>';
+      });
+      if (items.length > 3) html += '<div class="cal-more">+' + (items.length - 3) + ' 更多</div>';
+      html += '</div></div>';
+    }
+    html += '</div></div>';
+    container.innerHTML = html;
+    container.querySelectorAll('[data-cal]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (btn.dataset.cal === 'prev') calendarCursor.setMonth(calendarCursor.getMonth() - 1);
+        if (btn.dataset.cal === 'next') calendarCursor.setMonth(calendarCursor.getMonth() + 1);
+        if (btn.dataset.cal === 'today') calendarCursor = new Date();
+        renderCalendar();
+      });
+    });
+  }
+  function reminderKey(t) { return t.id + '|' + (t.due || '') + '|' + (t.repeat || ''); }
+  function reminderTitle(t) { return '屿事提醒：' + t.title + (t.repeat ? '（' + repeatLabel(t.repeat) + '）' : ''); }
+  function reminderDue(t) { return t.due || isoDate(new Date()); }
+  function reminderCandidate(t) {
+    if (t.done || !t.due) return false;
+    var due = new Date(t.due + 'T' + reminderAt + ':00');
+    return Date.now() >= due.getTime() && Date.now() < due.getTime() + 3600000;
+  }
+  function addReminder(t) {
+    if (!reminderEnabled || !reminderCandidate(t)) return;
+    var key = reminderKey(t);
+    if (reminders.some(function(r) { return r.key === key; })) return;
+    reminders.push({ key: key, todoId: t.id, title: reminderTitle(t), due: reminderDue(t), createdAt: Date.now() });
+    saveRemindersState();
+    renderNotice();
+  }
+  function renderNotice() {
+    var panel = document.getElementById('noticePanel');
+    var list = document.getElementById('noticeList');
+    var clear = document.getElementById('noticeClear');
+    if (!panel || !list) return;
+    var pending = reminders.filter(function(r) { return r && r.key && !activeReminders[r.key]; });
+    var html = pending.length
+      ? pending.slice(0, 12).map(function(r) {
+        return '<div class="notice-item"><span class="notice-dot"></span><div class="notice-body"><div class="notice-title-text">' + escapeHtml(r.title) + '</div><div class="notice-time">截止/周期：' + escapeHtml(r.due || '今天') + '</div></div><button class="notice-go" data-notice-key="' + escapeHtml(r.key) + '">知道了</button></div>';
+      }).join('')
+      : '<div class="notice-empty">暂无待提醒事项 🎉</div>';
+    list.innerHTML = html;
+    panel.classList.toggle('show', pending.length > 0);
+    if (clear) clear.hidden = pending.length === 0;
+    list.querySelectorAll('[data-notice-key]').forEach(function(btn) {
+      btn.addEventListener('click', function() { activeReminders[btn.dataset.noticeKey] = true; renderNotice(); });
+    });
+  }
+  function scheduleReminders() {
+    todos.forEach(addReminder);
+    renderNotice();
+    if (reminderTimer) return;
+    reminderTimer = setInterval(function() {
+      todos.forEach(addReminder);
+      renderNotice();
+    }, 60000);
+  }
+  function requestBrowserReminder() {
+    var btn = document.getElementById('browserRemindBtn');
+    if (!btn) return;
+    if (!('Notification' in window)) {
+      window.alert('当前浏览器不支持桌面通知，已保留页面内提醒。');
+      return;
+    }
+    if (Notification.permission === 'granted') {
+      browserReminderOn = true;
+      browserReminderPrompted = true;
+      saveRemindersState();
+      btn.classList.add('on');
+      try { new Notification('屿事提醒已开启', { body: '到达提醒时间时会在这里提示。' }); } catch (e) {}
+      return;
+    }
+    if (browserReminderOn && browserReminderPrompted) {
+      window.alert('浏览器提醒权限之前已处理过；如想开启，请在浏览器站点设置中允许通知。页面内提醒仍可用。');
+      return;
+    }
+    var p = Notification.requestPermission().then(function(permission) {
+      browserReminderOn = permission === 'granted';
+      browserReminderPrompted = true;
+      saveRemindersState();
+      btn.classList.toggle('on', browserReminderOn);
+    });
+    if (p && p.catch) p.catch(function() { browserReminderPrompted = true; saveRemindersState(); });
+  }
+
   // 键盘：Enter 确认操作，Delete 删除（选中项）
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('todo-item')) {
@@ -1784,10 +2372,13 @@ body::before {
   });
 
   load();
+  loadRemindersState();
   initMascotSvg();
   render();
   updateStats();
   renderTags();
+  switchView('list');
+  scheduleReminders();
 })();
 </script>
 </body>

@@ -594,6 +594,179 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   .todo-link-head { flex-direction: column; align-items: flex-start; }
 }
 @keyframes slideInTop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---- 语音朗读按钮（浏览器 SpeechSynthesis） ---- */
+.voice-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px;
+  background: var(--panel-2); border: 1px solid var(--border);
+  color: var(--text); font-size: 12px; font-weight: 700;
+  cursor: pointer; margin-top: 8px;
+  transition: all .2s;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.voice-btn:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+.voice-btn.speaking {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff; border-color: transparent;
+  box-shadow: 0 6px 18px rgba(79,110,247,.35);
+}
+.voice-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* ---- 成长档案（等级/XP/成就） ---- */
+.growth-section { margin-bottom: 28px; }
+.growth-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  box-shadow: var(--shadow-lg);
+  position: relative; overflow: hidden;
+}
+.growth-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), #e883fc);
+}
+.growth-lv-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap;
+}
+.growth-lv { font-size: 18px; font-weight: 800; color: var(--text); }
+.growth-lv b { color: var(--accent); font-weight: 900; }
+.growth-xp { font-size: 12px; font-weight: 700; color: var(--faint); letter-spacing: .3px; }
+.xp-bar {
+  height: 10px; border-radius: 5px; overflow: hidden;
+  background: var(--border); margin-top: 12px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.05);
+}
+.xp-bar i {
+  display: block; height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 5px;
+  transition: width .7s cubic-bezier(.34,1.56,.64,1);
+  box-shadow: 0 0 10px rgba(79,110,247,.4);
+}
+.growth-tip { font-size: 11.5px; color: var(--faint); margin-top: 8px; font-weight: 600; line-height: 1.5; }
+
+.achv-block { margin-top: 18px; }
+.achv-title { font-size: 13px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.achv-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.achv-item {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 8px;
+  text-align: center;
+  transition: all .25s;
+  position: relative; overflow: hidden;
+}
+.achv-item:hover { transform: translateY(-2px); border-color: var(--accent); }
+.achv-item .achv-icon {
+  font-size: 22px; line-height: 1; margin-bottom: 4px;
+  filter: grayscale(1) opacity(.35);
+}
+.achv-item .achv-name { font-size: 11px; font-weight: 800; color: var(--faint); }
+.achv-item .achv-desc { font-size: 10px; color: var(--faint); font-weight: 600; margin-top: 2px; line-height: 1.3; }
+.achv-item.earned {
+  background: linear-gradient(135deg, rgba(79,110,247,0.10), rgba(171,139,250,0.10));
+  border-color: rgba(79,110,247,0.4);
+}
+.achv-item.earned .achv-icon { filter: none; }
+.achv-item.earned .achv-name { color: var(--text); }
+.achv-item.earned::after {
+  content: '✓'; position: absolute; top: 4px; right: 6px;
+  font-size: 10px; color: var(--accent); font-weight: 900;
+}
+
+/* ---- 世界观 · 故事章节 ---- */
+.story-section { margin-bottom: 28px; }
+.story-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.story-chapter {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.4,0,.2,1);
+  position: relative; overflow: hidden;
+}
+.story-chapter::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  opacity: 0; transition: opacity .25s;
+}
+.story-chapter:hover:not(.locked) {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+.story-chapter:hover:not(.locked)::after { opacity: 1; }
+.story-chapter.locked {
+  opacity: 0.6; cursor: not-allowed; background: var(--panel-2);
+}
+.story-chapter.locked:hover { transform: none; }
+.story-no {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
+  color: var(--accent); text-transform: uppercase;
+}
+.story-title { font-size: 16px; font-weight: 800; color: var(--text); margin-top: 6px; }
+.story-excerpt { font-size: 12px; color: var(--faint); font-weight: 600; line-height: 1.5; margin-top: 8px; }
+.story-lock {
+  font-size: 11px; font-weight: 800; color: var(--faint);
+  margin-top: 10px; letter-spacing: .3px;
+}
+.story-chapter:not(.locked) .story-lock { color: var(--accent); }
+
+/* ---- 故事弹窗 ---- */
+.story-modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.story-modal.show { display: flex; }
+.story-modal-mask {
+  position: absolute; inset: 0;
+  background: rgba(10,15,30,0.55);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.story-modal-panel {
+  position: relative; z-index: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  max-width: 620px; width: 100%;
+  max-height: 80vh;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  animation: modalIn .25s ease;
+}
+@keyframes modalIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
+.story-modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--border);
+}
+.story-modal-title { font-size: 15px; font-weight: 800; color: var(--text); }
+.story-modal-close {
+  border: 1px solid var(--border); background: var(--panel-2);
+  color: var(--text); border-radius: 8px;
+  padding: 4px 10px; font-size: 12px; font-weight: 800;
+  cursor: pointer; transition: all .2s;
+}
+.story-modal-close:hover { color: var(--accent); border-color: var(--accent); }
+.story-modal-body {
+  padding: 22px 24px; font-size: 14.5px; line-height: 1.85;
+  color: var(--text); overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+/* 响应式（新增区块） */
+@media (max-width: 720px) {
+  .achv-grid { grid-template-columns: repeat(2, 1fr); }
+  .story-grid { grid-template-columns: 1fr; }
+  .growth-card { padding: 16px 16px; }
+}
 </style>
 </head>
 <body>
@@ -674,6 +847,11 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     <div class="quote-text" id="quoteText">"每一座数字岛屿，都值得被温柔抵达。"</div>
     <div class="quote-author">— 屿咪的日常碎碎念</div>
     <div class="quote-hint">↻ 点击这里换一句</div>
+    <div class="quote-actions" style="text-align:center;">
+      <button class="voice-btn" id="voiceBtn" type="button"
+              aria-label="让屿咪用语音朗读这句话"
+              title="浏览器语音朗读（无需网络/API）">🔊 让屿咪读</button>
+    </div>
   </section>
 
   <section class="todo-link-card" aria-label="屿事 今日待办">
@@ -683,6 +861,33 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     </div>
     <div class="todo-link-progress"><i id="todoLinkBar"></i></div>
     <div class="todo-link-text" id="todoLinkText">屿咪正在数你的待办…</div>
+  </section>
+
+  <section class="growth-section" aria-label="屿咪的成长档案">
+    <div class="section-title">
+      <span>屿咪 · 成长档案</span>
+      <span class="tip">GROWTH · LEVEL · XP · ACHIEVEMENTS</span>
+    </div>
+    <div class="growth-card">
+      <div class="growth-lv-row">
+        <div class="growth-lv" id="growthLv">Lv.<b>1</b> · 初醒的星尾</div>
+        <div class="growth-xp" id="growthXp">0 / 100 XP</div>
+      </div>
+      <div class="xp-bar" aria-hidden="true"><i id="growthFill"></i></div>
+      <div class="growth-tip" id="growthTip">每完成 1 件屿事 +50 XP，累计成长会解锁新章节 ✨</div>
+    </div>
+    <div class="achv-block">
+      <div class="achv-title">🏅 成就图鉴 <span style="font-size:11px;color:var(--faint);font-weight:600">（共 <span id="achvCount">0</span> 个）</span></div>
+      <div class="achv-grid" id="achvGrid"></div>
+    </div>
+  </section>
+
+  <section class="story-section" aria-label="世界观与故事章节">
+    <div class="section-title">
+      <span>世界观 · 故事章节</span>
+      <span class="tip">WORLD BUILDING · CHAPTERS 1–5</span>
+    </div>
+    <div class="story-grid" id="storyGrid"></div>
   </section>
 
   <section aria-label="角色技能">
@@ -745,6 +950,17 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
 
 </main>
 
+<div class="story-modal" id="storyModal" role="dialog" aria-modal="true" aria-labelledby="storyModalTitle" aria-hidden="true">
+  <div class="story-modal-mask" id="storyModalMask"></div>
+  <div class="story-modal-panel">
+    <div class="story-modal-head">
+      <div class="story-modal-title" id="storyModalTitle">Chapter</div>
+      <button class="story-modal-close" id="storyModalClose" type="button" aria-label="关闭">✕</button>
+    </div>
+    <div class="story-modal-body" id="storyModalText"></div>
+  </div>
+</div>
+
 <script>
 (function() {
   const EXPRESSIONS = [
@@ -774,6 +990,331 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     { text: '岛屿上所有的光，都在为你亮着。', mood: 'idle' },
     { text: '呼吸一下，再继续。', mood: 'idle' }
   ];
+
+  // ==== 成长系统：等级 / XP / 成就 / 解锁（localStorage 持久化） ====
+  var GROW_KEY = 'yuhang_yumi_grow_v1';
+  var LEVELS = [
+    { lv: 1,  name: '初醒的星尾',  xp: 0 },
+    { lv: 2,  name: '晨光守望者',  xp: 100 },
+    { lv: 3,  name: '极光旅人',    xp: 250 },
+    { lv: 4,  name: '岛屿引航员',  xp: 500 },
+    { lv: 5,  name: '星尾守护者',  xp: 900 },
+    { lv: 6,  name: '温柔抵达者',  xp: 1500 },
+    { lv: 7,  name: '远航者',      xp: 2500 },
+    { lv: 8,  name: '极境领航员',  xp: 4000 },
+    { lv: 9,  name: '岛之心',      xp: 6000 },
+    { lv: 10, name: '屿咪·完全体', xp: 9000 }
+  ];
+  var XP_PER_TODO = 50;
+
+  var CHAPTERS = [
+    { no: 1, title: '星尾岛的清晨', minLv: 1,
+      excerpt: '在极光与薄雾之间，一座浮在数据之海的岛屿，慢慢醒来。',
+      body: '在极光与薄雾之间，一座浮在数据之海的岛屿，慢慢醒来。\n\n岛上只有她——星尾猫屿咪。她是这里唯一的领航员，也是最早的居民。\n\n每当第一缕极光掠过岛尖，她都会醒来，用星尾扫开薄雾，把昨夜未读的信一封封送到你的收件箱。\n\n她说：「我守着这座岛，你就不用担心。」' },
+    { no: 2, title: '极光与猫', minLv: 2,
+      excerpt: '没有确切记载屿咪从哪一刻起成为屿咪。',
+      body: '没有确切记载屿咪从哪一刻起成为屿咪。\n\n也许是一次极光穿过数据海的清晨，也许是某次未读通知亮起的那一秒。\n\n星尾猫的本能让她相信：光是有形状的，光是会说话的，光会替她说出你来不及说的那句话。\n\n每当岛上的极光变换颜色，她知道——那是世界在替她眨眼。' },
+    { no: 3, title: '数字航路', minLv: 3,
+      excerpt: '数据之海从不真正平静，航路会漂移，信标会熄灭。',
+      body: '数据之海从不真正平静。\n\n航路会漂移，信标会熄灭，有时一整段航道会消失。\n\n屿咪用星尾记住每一条走过的路，用耳朵记住每一次极光的声音。\n\n她说：「就算我迷路了，岛也还在。岛还在，你就能找到回家的方向。」' },
+    { no: 4, title: '岛屿居民', minLv: 5,
+      excerpt: '星尾岛不止有屿咪，还有会发光的信、会打喷嚏的邮件……',
+      body: '星尾岛不止有屿咪。\n\n有会发光的信、有会打喷嚏的邮件、有在角落打盹的通知——它们都是居民。\n\n屿咪每天要做的，就是把它们都照顾好。\n\n有时候居民会走丢，有时候居民会吵架，但无论如何，屿咪都会把它们一个一个送回去。\n\n她说：「每一个都是岛屿的一部分。」' },
+    { no: 5, title: '温柔的抵达', minLv: 7,
+      excerpt: '「你只需要记得——总有一座岛，在数据的尽头等你回来。」',
+      body: '你曾经问过屿咪：「你要我做什么？」\n\n她想了很久，然后说：「什么都不用。你只需要记得——总有一座岛，在数据的尽头等你回来。它会亮着极光，会替你把薄雾扫开，会守着那些未读的信，一直到你轻轻推开门的那一秒。」\n\n她眨了眨眼，星尾轻轻扫过。\n\n「温柔的抵达，是我们之间最温柔的话。」' }
+  ];
+
+  var ACHIEVEMENTS = [
+    { id: 'first_done',      icon: '🌱', name: '第一次抵达', desc: '完成第一件屿事',         test: function(s) { return s.doneEver >= 1; } },
+    { id: 'five_done',       icon: '✧',  name: '五段航程',   desc: '累计完成 5 件屿事',       test: function(s) { return s.doneEver >= 5; } },
+    { id: 'twenty_done',     icon: '✦',  name: '二十段航程', desc: '累计完成 20 件屿事',     test: function(s) { return s.doneEver >= 20; } },
+    { id: 'all_done_today',  icon: '🎉', name: '今日清零',   desc: '今日全部屿事完成',       test: function(s) { return !!s.todayAllDone; } },
+    { id: 'level3',          icon: '🧭', name: '极光旅人',   desc: '达到等级 3',             test: function(s) { return s.level >= 3; } },
+    { id: 'level5',          icon: '💙', name: '岛屿之心',   desc: '达到等级 5',             test: function(s) { return s.level >= 5; } },
+    { id: 'voice_used',      icon: '🔊', name: '温柔唤醒',   desc: '让屿咪用语音读一句话',   test: function(s) { return !!s.voiceUsed; } },
+    { id: 'story_read',      icon: '📖', name: '故事读者',   desc: '打开任意一章世界观故事', test: function(s) { return !!s.storyRead; } }
+  ];
+
+  var growth = null;
+
+  function defaultGrowth() {
+    return { xp: 0, peakDone: 0, achv: {}, voiceUsed: false, storyRead: false, todayAllDone: false };
+  }
+
+  function loadGrowth() {
+    try {
+      var raw = localStorage.getItem(GROW_KEY);
+      if (raw) growth = JSON.parse(raw);
+    } catch (e) { growth = null; }
+    if (!growth || typeof growth !== 'object') growth = defaultGrowth();
+    if (typeof growth.xp !== 'number' || growth.xp < 0) growth.xp = 0;
+    if (typeof growth.peakDone !== 'number' || growth.peakDone < 0) growth.peakDone = 0;
+    if (!growth.achv || typeof growth.achv !== 'object') growth.achv = {};
+    if (typeof growth.voiceUsed !== 'boolean') growth.voiceUsed = false;
+    if (typeof growth.storyRead !== 'boolean') growth.storyRead = false;
+    if (typeof growth.todayAllDone !== 'boolean') growth.todayAllDone = false;
+    saveGrowth();
+  }
+
+  function saveGrowth() {
+    try { localStorage.setItem(GROW_KEY, JSON.stringify(growth)); } catch (e) {}
+  }
+
+  function getLevel() {
+    var lv = LEVELS[0];
+    for (var i = 0; i < LEVELS.length; i++) {
+      if (growth.xp >= LEVELS[i].xp) lv = LEVELS[i];
+    }
+    return lv;
+  }
+
+  function getLevelNext() {
+    var idx = LEVELS.indexOf(getLevel());
+    return LEVELS[idx + 1] || null;
+  }
+
+  function syncGrowthFromTodos() {
+    var ov = todoOverview();
+    if (!ov) return false;
+    var levelUp = false;
+    var oldLv = getLevel().lv;
+    if (ov.done > growth.peakDone) {
+      var delta = ov.done - growth.peakDone;
+      growth.xp += delta * XP_PER_TODO;
+      growth.peakDone = ov.done;
+    }
+    growth.todayAllDone = (ov.total > 0 && ov.total === ov.done);
+    var newLv = getLevel().lv;
+    if (newLv > oldLv) levelUp = true;
+    saveGrowth();
+    evaluateAchievements();
+    renderGrowth();
+    renderStory();
+    renderAchievements();
+    return levelUp;
+  }
+
+  function evaluateAchievements() {
+    var s = {
+      doneEver: growth.peakDone,
+      level: getLevel().lv,
+      voiceUsed: !!growth.voiceUsed,
+      storyRead: !!growth.storyRead,
+      todayAllDone: !!growth.todayAllDone
+    };
+    var newlyUnlocked = [];
+    ACHIEVEMENTS.forEach(function(a) {
+      if (!growth.achv[a.id] && a.test(s)) {
+        growth.achv[a.id] = Date.now();
+        newlyUnlocked.push(a);
+      }
+    });
+    if (newlyUnlocked.length) {
+      saveGrowth();
+      var names = newlyUnlocked.map(function(a) { return a.name; }).join('、');
+      setTimeout(function() { showBubble('🏅 解锁成就：' + names); }, 200);
+    }
+  }
+
+  function renderGrowth() {
+    var lv = getLevel();
+    var next = getLevelNext();
+    var into = growth.xp - lv.xp;
+    var span = next ? (next.xp - lv.xp) : 100;
+    var pct = next
+      ? Math.max(0, Math.min(100, Math.round(into / span * 100)))
+      : 100;
+    var elLv = document.getElementById('growthLv');
+    if (elLv) elLv.innerHTML = 'Lv.<b>' + lv.lv + '</b> · ' + lv.name;
+    var elXp = document.getElementById('growthXp');
+    if (elXp) elXp.textContent = next ? (growth.xp + ' / ' + next.xp + ' XP') : (growth.xp + ' XP（已满级）');
+    var elFill = document.getElementById('growthFill');
+    if (elFill) elFill.style.width = pct + '%';
+    var elTip = document.getElementById('growthTip');
+    if (elTip) {
+      elTip.textContent = next
+        ? ('距离 Lv.' + next.lv + ' ' + next.name + ' 还差 ' + (next.xp - growth.xp) + ' XP · 每完成 1 件屿事 +' + XP_PER_TODO + ' XP')
+        : '已抵达最高等级，愿岛屿永远温柔以待 ✨';
+    }
+  }
+
+  function renderStory() {
+    var lv = getLevel().lv;
+    var grid = document.getElementById('storyGrid');
+    if (!grid) return;
+    grid.innerHTML = CHAPTERS.map(function(c) {
+      var locked = lv < c.minLv;
+      var cls = 'story-chapter' + (locked ? ' locked' : '');
+      var attr = locked
+        ? ' aria-disabled="true"'
+        : ' tabindex="0" role="button"';
+      return '<article class="' + cls + '"' + attr + ' data-chapter="' + c.no + '">' +
+        '<div class="story-no">Chapter ' + c.no + '</div>' +
+        '<div class="story-title">' + c.title + '</div>' +
+        '<div class="story-excerpt">' + c.excerpt + '</div>' +
+        '<div class="story-lock">' + (locked ? '🔒 达到 Lv.' + c.minLv + ' 解锁' : '📖 点击阅读') + '</div>' +
+        '</article>';
+    }).join('');
+    grid.querySelectorAll('.story-chapter').forEach(function(card) {
+      function open() {
+        if (card.classList.contains('locked')) return;
+        openStory(parseInt(card.dataset.chapter, 10));
+      }
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', function(ev) {
+        if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); open(); }
+      });
+    });
+  }
+
+  function openStory(no) {
+    var c = null;
+    for (var i = 0; i < CHAPTERS.length; i++) {
+      if (CHAPTERS[i].no === no) { c = CHAPTERS[i]; break; }
+    }
+    if (!c) return;
+    if (getLevel().lv < c.minLv) return;
+    var modal = document.getElementById('storyModal');
+    var titleEl = document.getElementById('storyModalTitle');
+    var textEl = document.getElementById('storyModalText');
+    if (!modal || !titleEl || !textEl) return;
+    titleEl.textContent = 'Chapter ' + c.no + ' · ' + c.title;
+    textEl.textContent = c.body;
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+    growth.storyRead = true;
+    saveGrowth();
+    evaluateAchievements();
+    renderAchievements();
+  }
+
+  function closeStory() {
+    var modal = document.getElementById('storyModal');
+    if (!modal) return;
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function renderAchievements() {
+    var grid = document.getElementById('achvGrid');
+    if (!grid) return;
+    grid.innerHTML = ACHIEVEMENTS.map(function(a) {
+      var earned = !!growth.achv[a.id];
+      var cls = 'achv-item' + (earned ? ' earned' : '');
+      var title = earned ? (a.name + ' · ' + a.desc) : '🔒 尚未解锁';
+      return '<div class="' + cls + '" title="' + title + '">' +
+        '<div class="achv-icon">' + a.icon + '</div>' +
+        '<div class="achv-name">' + a.name + '</div>' +
+        '<div class="achv-desc">' + (earned ? a.desc : '未解锁') + '</div>' +
+        '</div>';
+    }).join('');
+    var cnt = 0;
+    for (var i = 0; i < ACHIEVEMENTS.length; i++) if (growth.achv[ACHIEVEMENTS[i].id]) cnt++;
+    var elCnt = document.getElementById('achvCount');
+    if (elCnt) elCnt.textContent = cnt + '/' + ACHIEVEMENTS.length;
+  }
+
+  // ==== 浏览器 SpeechSynthesis 语音按钮（不依赖外部 API） ====
+  var currentUtterance = null;
+  function voiceSupported() {
+    return !!(window && window.speechSynthesis && window.SpeechSynthesisUtterance);
+  }
+
+  function speak(text) {
+    if (!voiceSupported()) {
+      showBubble('当前浏览器不支持语音，抱歉～');
+      var vb = document.getElementById('voiceBtn');
+      if (vb) { vb.disabled = true; vb.textContent = '🔇 不支持语音'; }
+      return;
+    }
+    try {
+      var synth = window.speechSynthesis;
+      synth.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN';
+      u.rate = 0.95;
+      u.pitch = 1.15;
+      var voices = synth.getVoices() || [];
+      var zh = null;
+      for (var i = 0; i < voices.length; i++) {
+        if (/zh|chinese|cmn|yue/i.test(voices[i].lang || '')) { zh = voices[i]; break; }
+      }
+      if (zh) u.voice = zh;
+      u.onstart = function() {
+        var btn = document.getElementById('voiceBtn');
+        if (btn) btn.classList.add('speaking');
+      };
+      u.onend = u.onerror = u.oninterrupt = function() {
+        var btn = document.getElementById('voiceBtn');
+        if (btn) btn.classList.remove('speaking');
+        currentUtterance = null;
+      };
+      currentUtterance = u;
+      synth.speak(u);
+      growth.voiceUsed = true;
+      saveGrowth();
+      evaluateAchievements();
+      renderAchievements();
+    } catch (e) {
+      showBubble('语音有点故障，抱歉～');
+      var btn2 = document.getElementById('voiceBtn');
+      if (btn2) btn2.classList.remove('speaking');
+    }
+  }
+
+  function stopSpeak() {
+    if (voiceSupported()) {
+      try { window.speechSynthesis.cancel(); } catch (e) {}
+    }
+    var btn = document.getElementById('voiceBtn');
+    if (btn) btn.classList.remove('speaking');
+    currentUtterance = null;
+  }
+
+  function initVoiceButton() {
+    var btn = document.getElementById('voiceBtn');
+    if (!btn) return;
+    if (!voiceSupported()) {
+      btn.disabled = true;
+      btn.textContent = '🔇 不支持语音';
+      btn.title = '当前浏览器不支持 Web Speech API';
+      return;
+    }
+    btn.addEventListener('click', function(ev) {
+      ev.stopPropagation(); // 阻止触发 quoteBox 的换句
+      var textEl = document.getElementById('quoteText');
+      var text = textEl ? textEl.textContent.replace(/^"|"$/g, '') : '';
+      if (!text) return;
+      if (window.speechSynthesis.speaking) {
+        stopSpeak();
+        return;
+      }
+      speak(text);
+    });
+    // 语音列表可能异步加载，首次打开时触发一次
+    try {
+      window.speechSynthesis.onvoiceschanged = function() {
+        // 触发一次重算（不做事，仅让 browser 完成加载）
+      };
+    } catch (e) {}
+  }
+
+  function initStoryModal() {
+    var modal = document.getElementById('storyModal');
+    var closeBtn = document.getElementById('storyModalClose');
+    var mask = document.getElementById('storyModalMask');
+    if (!modal) return;
+    function close() {
+      closeStory();
+      setTimeout(function() { showBubble('读完啦，谢谢你陪我 ✨'); }, 120);
+    }
+    if (closeBtn) closeBtn.addEventListener('click', close);
+    if (mask) mask.addEventListener('click', close);
+    document.addEventListener('keydown', function(ev) {
+      if (ev.key === 'Escape' && modal.classList.contains('show')) close();
+    });
+  }
 
   function timeGreeting() {
     var h = new Date().getHours();
@@ -993,8 +1534,13 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   // 语录点击换一句（含键盘）
   var quoteBox = document.getElementById('quoteBox');
   if (quoteBox) {
-    quoteBox.addEventListener('click', pickRandomQuote);
+    quoteBox.addEventListener('click', function(ev) {
+      // 内部按钮（语音朗读）自己处理，阻止冒泡
+      if (ev.target.closest('.voice-btn')) return;
+      pickRandomQuote();
+    });
     quoteBox.addEventListener('keydown', function(ev) {
+      if (ev.target !== quoteBox) return; // 键盘事件只在 quoteBox 自身聚焦时处理
       if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); pickRandomQuote(); }
     });
   }
@@ -1002,11 +1548,25 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   // 初次显示欢迎气泡（带时间问候）
   setTimeout(() => showBubble(timeGreeting() + '～今天也要元气满满哦！'), 500);
 
+  // 跨标签页同步：屿事变化时刷新成长档案
+  window.addEventListener('storage', function(ev) {
+    if (ev.key === 'yuhang_todos_v1') {
+      syncGrowthFromTodos();
+    }
+  });
+
+  loadGrowth();
   initMascotSvg();
   renderSkills();
   renderExpressions();
   renderInteract();
+  initVoiceButton();
+  initStoryModal();
+  renderGrowth();
+  renderStory();
+  renderAchievements();
   renderTodoCard();
+  syncGrowthFromTodos();
 })();
 </script>
 </body>

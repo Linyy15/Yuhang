@@ -179,17 +179,36 @@
   function loadAccountData() {
     if (S.currentUser) {
       S.clicks = S.clicksAll[S.currentUser] || {};
+      S.clickLog = S.clickLogAll[S.currentUser] || [];
       S.favs = new Set(S.favsAll[S.currentUser] || []);
       S.workspaces = S.workspacesAll[S.currentUser] || {};
     } else {
       S.clicks = {};
+      S.clickLog = [];
       S.favs = new Set();
       S.workspaces = {};
     }
   }
+  function pruneClickLog(log) {
+    if (!Array.isArray(log)) return [];
+    return log.filter(function (x) { return x && x.id && x.ts > 0; }).slice(-500);
+  }
+  function recordClick(id) {
+    if (!S.currentUser || !id) return;
+    S.clicks[id] = (S.clicks[id] || 0) + 1;
+    S.clickLog = S.clickLog || [];
+    S.clickLog.push({ id: id, ts: Date.now() });
+    var dayMs = 24 * 60 * 60 * 1000;
+    var cutoff = Date.now() - 7 * dayMs;
+    if (S.clickLog.length > 500 || S.clickLog.length && S.clickLog[0].ts < cutoff) {
+      S.clickLog = pruneClickLog(S.clickLog.filter(function (x) { return x.ts >= cutoff; }));
+    }
+    saveAccountData();
+  }
   function saveAccountData() {
     if (S.currentUser) {
       S.clicksAll[S.currentUser] = S.clicks;
+      S.clickLogAll[S.currentUser] = pruneClickLog(S.clickLog);
       S.favsAll[S.currentUser] = Array.from(S.favs);
       S.workspacesAll[S.currentUser] = S.workspaces;
     }
@@ -518,6 +537,8 @@
     stats_mine: { zh: '我的网站', en: 'My sites' },
     stats_ws: { zh: '工作区', en: 'Workspaces' },
     stats_top: { zh: '🏆 最常访问', en: '🏆 Most visited' },
+    stats_7d: { zh: '📅 近 7 日访问', en: '📅 Last 7 days' },
+    stats_7d_empty: { zh: '近 7 日还没有点击流水（累计次数不受影响）', en: 'No click log in the last 7 days (totals remain)' },
     stats_tags: { zh: '🏷 我的标签分布', en: '🏷 My tag mix' },
     stats_empty: { zh: '还没有数据，多逛逛、收藏几个网站后再来看看', en: 'No data yet — browse and favorite some sites first' },
     help_title: { zh: '⌨ 快捷键', en: '⌨ Shortcuts' },
@@ -2254,6 +2275,7 @@
       exportedAt: new Date().toISOString(),
       favsAll: S.favsAll,
       clicksAll: S.clicksAll,
+      clickLogAll: S.clickLogAll,
       workspacesAll: S.workspacesAll,
       personalSites: S.personalSites,
       settings: S.settings,
@@ -2300,6 +2322,7 @@
         if (!d || d.version !== 1 || typeof d.favsAll !== 'object') throw new Error('bad');
         S.favsAll = d.favsAll || {};
         S.clicksAll = d.clicksAll || {};
+        S.clickLogAll = d.clickLogAll || {};
         S.workspacesAll = d.workspacesAll || {};
         S.personalSites = d.personalSites || {};
         if (d.settings && typeof d.settings === 'object') Object.assign(S.settings, d.settings);
@@ -2504,11 +2527,8 @@
     if (id) {
       // 最近访问：本地记录，登录与否都记
       addRecent(id);
-      if (S.currentUser) {
-        // 点击统计为个人专属：仅登录后记录
-        S.clicks[id] = (S.clicks[id] || 0) + 1;
-        saveAccountData();
-      }
+      // 点击统计为个人专属：仅登录后记录，并保留近 7 日流水
+      recordClick(id);
     }
     if (url) {
       // 飞出反馈：被点开的卡片短暂上浮放大淡出
@@ -2578,7 +2598,7 @@
   on(randomOpen, 'click', function () {
     if (randomPick && randomPick.url) {
       window.open(randomPick.url, '_blank');
-      if (randomPick.id) addRecent(randomPick.id);
+      if (randomPick.id) { addRecent(randomPick.id); recordClick(randomPick.id); }
     }
     if (randomModal) randomModal.hidden = true;
   });
@@ -2648,11 +2668,21 @@
       '<span class="stat-bar-track">' + (colorStyle ? '<i style="width:' + pct + '%;' + colorStyle + '"></i>' : '<i style="width:' + pct + '%"></i>') + '</span>' +
       '<span class="stat-bar-num">' + n + '</span></div>';
   }
+  function clickStats() {
+    var clickTotal = 0, clickKeys = Object.keys(S.clicks);
+    clickKeys.forEach(function (k) { clickTotal += S.clicks[k]; });
+    var top = clickKeys
+      .map(function (k) { return { id: k, n: S.clicks[k] }; })
+      .sort(function (a, b) { return b.n - a.n; })
+      .slice(0, 6);
+    return { clickTotal: clickTotal, top: top };
+  }
   function renderStats() {
     if (!statBody) return;
     var favCount = S.favs.size;
-    var clickTotal = 0, clickKeys = Object.keys(S.clicks);
-    clickKeys.forEach(function (k) { clickTotal += S.clicks[k]; });
+    var stats = clickStats();
+    var clickTotal = stats.clickTotal;
+    var top = stats.top;
     var myCount = S.currentUser ? (S.personalSites[S.currentUser] || []).length : 0;
     var wsCountN = Object.keys(S.workspaces).length;
     var html = '<div class="stat-cards">' +
@@ -2662,10 +2692,6 @@
       '<div class="stat-card"><span class="sc-ico">🗂</span><b data-target="' + wsCountN + '" class="stat-num">' + wsCountN + '</b><span>' + t('stats_ws') + '</span></div>' +
     '</div>';
     // 最常访问 Top 6
-    var top = clickKeys
-      .map(function (k) { return { id: k, n: S.clicks[k] }; })
-      .sort(function (a, b) { return b.n - a.n; })
-      .slice(0, 6);
     if (top.length) {
       var maxTop = top[0].n || 1;
       html += '<div class="stat-sec">' + t('stats_top') + '</div>';
@@ -2673,6 +2699,26 @@
         var s = siteOf(x.id);
         return statBar(s ? nameLabel(s) : x.id, x.n, maxTop, '', i + 1);
       }).join('');
+    }
+    // 近 7 日访问频次（依赖点击流水；旧数据若无流水则只提示，不破坏累计统计）
+    var dayMs = 24 * 60 * 60 * 1000;
+    var cutoff = Date.now() - 7 * dayMs;
+    var recent = pruneClickLog(S.clickLog || [])
+      .filter(function (x) { return x.ts >= cutoff; })
+      .reduce(function (acc, x) { acc[x.id] = (acc[x.id] || 0) + 1; return acc; }, {});
+    var recentTop = Object.keys(recent)
+      .map(function (k) { return { id: k, n: recent[k] }; })
+      .sort(function (a, b) { return b.n - a.n; })
+      .slice(0, 5);
+    html += '<div class="stat-sec">' + t('stats_7d') + '</div>';
+    if (recentTop.length) {
+      var maxRecent = recentTop[0].n || 1;
+      html += recentTop.map(function (x, i) {
+        var s = siteOf(x.id);
+        return statBar(s ? nameLabel(s) : x.id, x.n, maxRecent, 'background:linear-gradient(90deg,' + tagHsl('效率工具') + ',' + tagHsl('效率工具', 52) + ');', i + 1);
+      }).join('');
+    } else {
+      html += '<div class="ws-empty">' + t('stats_7d_empty') + '</div>';
     }
     // 我的标签分布（收藏+点击过的站）
     var tagPool = {};
@@ -2687,7 +2733,6 @@
       html += '<div class="stat-sec">' + t('stats_tags') + '</div>';
       html += tagKeys.map(function (k) { return statBar(tagLabel(k), tagPool[k], maxTag, 'background:linear-gradient(90deg,' + tagHsl(k) + ',' + tagHsl(k, 52) + ');S.color:#fff;', ''); }).join('');
     }
-    if (!top.length && !tagKeys.length) html += '<div class="ws-empty">' + t('stats_empty') + '</div>';
     statBody.innerHTML = html;
     // 统计数字滚动
     var nums = statBody.querySelectorAll('.stat-num');
