@@ -91,6 +91,15 @@ body::before {
 .topbar-back:hover,
 .topbar-back:focus-visible { color: var(--accent); border-color: var(--accent); }
 .topbar-back:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.page-links { display: flex; align-items: center; gap: 8px; }
+.page-links a {
+  font-size: 13px; color: var(--text-2); text-decoration: none;
+  padding: 7px 11px; border-radius: 8px;
+  border: 1px solid var(--border); background: var(--panel-2);
+  transition: all .2s;
+}
+.page-links a:hover, .page-links a:focus-visible { color: var(--accent); border-color: var(--accent); }
+.page-links a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 /* ---- 主容器 ---- */
 .container {
@@ -833,7 +842,10 @@ body::before {
   <div class="ip-mascot ip-mascot--small ip-mascot--blink" id="headerMascot" title="屿咪 · 数字岛屿领航员">
     <span id="headerMascotSvg"></span>
   </div>
-  <a href="index.html" class="topbar-back">← 返回导航</a>
+  <nav class="page-links" aria-label="屿航页面导航">
+    <a href="index.html">🏝 屿航</a>
+    <a href="ip.html">🐱 屿咪</a>
+  </nav>
 </header>
 
 <main class="container">

@@ -1149,6 +1149,7 @@ body.instant .intro, body.instant .app { transition: none !important; }
   transition: background 0.15s ease;
 }
 .fab-item:hover { background: var(--accent-soft); }
+.fab-link { text-decoration: none; }
 .fab-panel .theme-wrap .theme-panel { top: 100%; }
 @keyframes pop { from { opacity: 0; transform: scale(0.94) translateY(6px); } to { opacity: 1; transform: none; } }
 
