@@ -209,7 +209,9 @@ check('滚动后主界面显现（revealed）', elCache['app'].classList.contain
 
 // ---------- 12. 免责声明 ----------
 check('首次访问弹出免责声明', elCache['disclaimer-modal'].hidden === false, `(hidden=${elCache['disclaimer-modal'].hidden})`);
-// 点击"我知道了" → 关闭并记录
+// 必须先勾选了解 → 才能点击“我知道了”关闭并记录
+elCache['disclaimer-consent'].checked = true;
+(elCache['disclaimer-consent']._listeners.change || []).forEach((fn) => fn());
 (elCache['disclaimer-ok']._listeners.click || []).forEach((fn) => fn());
 check('点击后关闭并记录', elCache['disclaimer-modal'].hidden === true && global.localStorage.getItem('nav_disclaimer_v1') === '1', '');
 // 设置里的"再次显示" → 清标记并重弹
