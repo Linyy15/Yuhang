@@ -1091,7 +1091,7 @@ body::before {
     <input type="search" id="todoSearch" class="todo-search" placeholder="🔎 搜索待办…" autocomplete="off" aria-label="搜索待办">
     <button class="backup-btn reminder-toggle" id="reminderBtn" title="打开页面提醒面板">🔔 提醒</button>
     <button class="backup-btn" id="pomoBtn" title="打开番茄钟">🍅 番茄钟</button>
-    <button class="clear-done-btn id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
+    <button class="clear-done-btn" id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
     <div class="backup-btns">
       <button class="backup-btn" id="exportBtn" title="导出全部待办为 JSON 备份">⬇ 备份</button>
       <button class="backup-btn" id="importBtn" title="从 JSON 备份恢复（合并导入）">⬆ 恢复</button>
@@ -1147,6 +1147,7 @@ body::before {
   let browserReminderPrompted = false;
   let reminderTimer = null;
   let activeReminders = {};
+  let noticeOpen = false;
   const POMO_KEY = 'yuhang_todo_pomo_v1';
   let pomo = { left: 1500, running: false, timer: null, completed: 0, mode: 'focus', startedAt: 0 };
 
@@ -1166,7 +1167,7 @@ body::before {
   function load() {
     try {
       var raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) todos = JSON.parse(raw);
+      if (raw) todos = normalizeTodos(JSON.parse(raw));
       if (!Array.isArray(todos)) todos = [];
     } catch (e) { todos = []; }
   }
@@ -2141,11 +2142,9 @@ body::before {
     btn.addEventListener('click', function() { switchView(btn.dataset.view); });
   });
   document.getElementById('reminderBtn').addEventListener('click', function() {
-    var panel = document.getElementById('noticePanel');
-    var open = panel.classList.contains('show');
-    panel.classList.toggle('show', !open);
-    this.classList.toggle('on', !open);
-    if (!open) renderNotice();
+    noticeOpen = !noticeOpen;
+    this.classList.toggle('on', noticeOpen);
+    renderNotice();
   });
   document.getElementById('browserRemindBtn').addEventListener('click', requestBrowserReminder);
   document.getElementById('reminderAt').addEventListener('change', function(e) {
@@ -2202,7 +2201,7 @@ body::before {
           if (t && typeof t.id === 'string' && !seen[t.id]) { seen[t.id] = true; merged.push(t); }
         });
         if (!window.confirm('将合并导入 ' + incoming.length + ' 条待办（与现有 ' + todos.length + ' 条合并，按 ID 去重）。确定？')) return;
-        todos = merged;
+        todos = normalizeTodos(merged);
         save();
         render();
         updateStats();
@@ -2234,6 +2233,7 @@ body::before {
     var m = calendarCursor.getMonth();
     var first = new Date(y, m, 1);
     var daysInMonth = new Date(y, m + 1, 0).getDate();
+    var leading = (first.getDay() + 6) % 7;
     var today = new Date(); today.setHours(0, 0, 0, 0);
     var byDate = {};
     todos.forEach(function(t) {
@@ -2244,8 +2244,9 @@ body::before {
     var html = '<div class="calendar"><div class="calendar-head">' +
       '<span class="calendar-title">' + y + ' 年 ' + (m + 1) + ' 月</span>' +
       '<div class="calendar-nav"><button type="button" data-cal="prev" aria-label="上个月">‹</button><button type="button" data-cal="today" aria-label="回到今天">今</button><button type="button" data-cal="next" aria-label="下个月">›</button></div>' +
-      '</div><div class="calendar-grid"><div class="calendar-cell empty" aria-hidden="true"></div>';
+      '</div><div class="calendar-grid">';
     ['一','二','三','四','五','六','日'].forEach(function(d) { html += '<div class="calendar-cell empty" aria-hidden="true">' + '周' + d + '</div>'; });
+    for (var l = 0; l < leading; l++) html += '<div class="calendar-cell empty" aria-hidden="true"></div>';
     for (var i = 1; i <= daysInMonth; i++) {
       var d = new Date(y, m, i);
       var key = isoDate(d);
@@ -2264,7 +2265,7 @@ body::before {
       btn.addEventListener('click', function() {
         if (btn.dataset.cal === 'prev') calendarCursor.setMonth(calendarCursor.getMonth() - 1);
         if (btn.dataset.cal === 'next') calendarCursor.setMonth(calendarCursor.getMonth() + 1);
-        if (btn.dataset.cal === 'today') calendarCursor = new Date();
+        if (btn.dataset.cal === 'today') { calendarCursor = new Date(); calendarCursor.setHours(0, 0, 0, 0); }
         renderCalendar();
       });
     });
@@ -2283,6 +2284,9 @@ body::before {
     if (reminders.some(function(r) { return r.key === key; })) return;
     reminders.push({ key: key, todoId: t.id, title: reminderTitle(t), due: reminderDue(t), createdAt: Date.now() });
     saveRemindersState();
+    if (browserReminderOn && 'Notification' in window && Notification.permission === 'granted') {
+      try { new Notification('屿事提醒', { body: reminderTitle(t) }); } catch (e) {}
+    }
     renderNotice();
   }
   function renderNotice() {
@@ -2297,10 +2301,17 @@ body::before {
       }).join('')
       : '<div class="notice-empty">暂无待提醒事项 🎉</div>';
     list.innerHTML = html;
-    panel.classList.toggle('show', pending.length > 0);
+    panel.classList.toggle('show', noticeOpen);
     if (clear) clear.hidden = pending.length === 0;
     list.querySelectorAll('[data-notice-key]').forEach(function(btn) {
-      btn.addEventListener('click', function() { activeReminders[btn.dataset.noticeKey] = true; renderNotice(); });
+      btn.addEventListener('click', function() {
+        activeReminders[btn.dataset.noticeKey] = true;
+        var remaining = reminders.filter(function(r) { return r && r.key && !activeReminders[r.key]; });
+        if (!remaining.length) noticeOpen = false;
+        var remindBtn = document.getElementById('reminderBtn');
+        if (remindBtn) remindBtn.classList.toggle('on', noticeOpen);
+        renderNotice();
+      });
     });
   }
   function scheduleReminders() {
