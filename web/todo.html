@@ -940,10 +940,6 @@ body::before {
 .trend-bar.secondary { background: color-mix(in oklab, var(--text) 24%, transparent); box-shadow: none; opacity: .7; }
 .trend-label { font-size: 10.5px; color: var(--faint); font-weight: 700; }
 .trend-value { font-size: 10.5px; color: var(--text-2); font-weight: 800; }
-.notice-confirm { position: fixed; inset: 0; z-index: 140; display: grid; place-items: center; padding: 18px; background: rgba(15, 23, 42, .28); }
-.notice-confirm[hidden] { display: none; }
-.notice-confirm-box { width: min(420px, 100%); padding: 18px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--panel); box-shadow: var(--shadow-lift); }
-.notice-confirm-box p { margin: 4px 0 0; color: var(--text-2); font-size: 13px; line-height: 1.65; }
 .notice {
   position: fixed; right: 18px; top: 74px; z-index: 120;
   width: min(330px, calc(100vw - 36px)); max-height: 38vh; overflow: auto;
@@ -977,10 +973,6 @@ body::before {
 .pomo-actions button { flex: 1; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-2); color: var(--text-2); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
 .pomo-actions button:hover { color: var(--accent); border-color: var(--accent); }
 .pomo-count { margin-top: 9px; text-align: center; color: var(--faint); font-size: 11px; }
-.reminder-understand { display: flex; align-items: flex-start; gap: 9px; margin: 12px 0 14px; color: var(--text-2); font-size: 12px; line-height: 1.55; }
-.reminder-understand input { width: 17px; height: 17px; margin-top: 1px; accent-color: var(--accent); flex-shrink: 0; }
-.reminder-confirm-actions { display: flex; justify-content: flex-end; gap: 8px; }
-.reminder-confirm-actions button:disabled { opacity: .45; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -1052,8 +1044,6 @@ body::before {
       <label class="view-summary" for="reminderAt">提醒时间</label>
       <input type="time" id="reminderAt" value="09:00" aria-label="每日提醒时间">
       <button class="backup-btn reminder-toggle" id="browserRemindBtn" title="开启浏览器通知；拒绝后不会重复请求">🌐 浏览器提醒</button>
-      <button class="backup-btn" id="pomoBtnTop" title="打开番茄钟">🍅 番茄钟</button>
-      <span class="view-summary" id="pomoSummary" title="番茄钟概览">未启动</span>
     </div>
   </div>
 
@@ -1121,15 +1111,6 @@ body::before {
   <div class="pomo-count" id="pomoCount">今日完成 0 个番茄</div>
 </div>
 
-<div class="notice-confirm" id="reminderConfirm" role="dialog" aria-modal="true" aria-labelledby="reminderConfirmTitle" hidden>
-  <div class="notice-confirm-box">
-    <div class="notice-head"><span class="notice-title" id="reminderConfirmTitle">🔔 开启屿事提醒</span></div>
-    <p>提醒只会在你打开屿事页面时检查。浏览器通知需要额外授权，也可以只使用页面内提醒。</p>
-    <label class="reminder-understand"><input type="checkbox" id="reminderUnderstand"> <span>我已了解提醒方式，并同意继续开启提醒。</span></label>
-    <div class="reminder-confirm-actions"><button class="notice-clear" id="reminderCancel" type="button">取消</button><button class="subtask-add-btn" id="reminderConfirmBtn" type="button" disabled>继续</button></div>
-  </div>
-</div>
-
 <div class="notice" id="noticePanel" aria-label="待办提醒" role="dialog" aria-live="polite">
   <div class="notice-head">
     <span class="notice-title">🔔 页面提醒</span>
@@ -1177,8 +1158,6 @@ body::before {
     var mode = document.getElementById('pomoMode'); if (mode) mode.textContent = pomo.mode === 'focus' ? '专注 25 分钟' : '休息 5 分钟';
     var start = document.getElementById('pomoStart'); if (start) start.textContent = pomo.running ? '暂停' : '开始';
     var count = document.getElementById('pomoCount'); if (count) count.textContent = '今日完成 ' + pomo.completed + ' 个番茄';
-    var summary = document.getElementById('pomoSummary');
-    if (summary) summary.textContent = pomo.running ? pomoFormat(pomo.left) + ' · 专注中' : ('今日 ' + pomo.completed + ' 个');
   }
   function openPomo() { var p = document.getElementById('pomoPanel'); if (!p) return; p.classList.add('show'); var sel = document.getElementById('pomoTask'); if (sel) sel.innerHTML = '<option value="">不关联待办</option>' + todos.filter(function(t){return !t.done;}).map(function(t){return '<option value="' + escapeHtml(t.id) + '">' + escapeHtml(t.title) + '</option>';}).join(''); renderPomo(); }
   function tickPomo() { if (!pomo.running) return; pomo.left = Math.max(0, pomo.left - 1); renderPomo(); if (pomo.left === 0) { pomo.running = false; if (pomo.mode === 'focus') pomo.completed++; pomo.mode = pomo.mode === 'focus' ? 'break' : 'focus'; pomo.left = pomo.mode === 'focus' ? 1500 : 300; savePomo(); addSuccessFlash(pomo.mode === 'break' ? '🍅 专注完成，休息一下吧' : '🌱 休息结束，继续出发'); } }
@@ -2098,7 +2077,6 @@ body::before {
   }
 
   document.getElementById('pomoBtn').addEventListener('click', openPomo);
-  document.getElementById('pomoBtnTop').addEventListener('click', openPomo);
   document.getElementById('pomoClose').addEventListener('click', function(){ document.getElementById('pomoPanel').classList.remove('show'); });
   document.getElementById('pomoStart').addEventListener('click', function(){ pomo.running = !pomo.running; if (pomo.running && !pomo.timer) pomo.timer = setInterval(tickPomo, 1000); renderPomo(); });
   document.getElementById('pomoReset').addEventListener('click', function(){ pomo.running = false; pomo.mode = 'focus'; pomo.left = 1500; renderPomo(); });
@@ -2168,7 +2146,7 @@ body::before {
     this.classList.toggle('on', noticeOpen);
     renderNotice();
   });
-  document.getElementById('browserRemindBtn').addEventListener('click', function() { confirmReminderKnowledge(requestBrowserReminder); });
+  document.getElementById('browserRemindBtn').addEventListener('click', requestBrowserReminder);
   document.getElementById('reminderAt').addEventListener('change', function(e) {
     if (/^\d{2}:\d{2}$/.test(e.target.value)) {
       reminderAt = e.target.value;
@@ -2344,18 +2322,6 @@ body::before {
       todos.forEach(addReminder);
       renderNotice();
     }, 60000);
-  }
-  function confirmReminderKnowledge(done) {
-    if (localStorage.getItem('yuhang_reminder_understood_v1') === '1') { done(); return; }
-    var modal = document.getElementById('reminderConfirm');
-    var check = document.getElementById('reminderUnderstand');
-    var next = document.getElementById('reminderConfirmBtn');
-    var cancel = document.getElementById('reminderCancel');
-    if (!modal || !check || !next) return;
-    check.checked = false; next.disabled = true; modal.hidden = false; check.focus();
-    check.onchange = function() { next.disabled = !check.checked; };
-    cancel.onclick = function() { modal.hidden = true; };
-    next.onclick = function() { if (!check.checked) return; localStorage.setItem('yuhang_reminder_understood_v1', '1'); modal.hidden = true; done(); };
   }
   function requestBrowserReminder() {
     var btn = document.getElementById('browserRemindBtn');
