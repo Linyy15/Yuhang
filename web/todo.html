@@ -785,6 +785,34 @@ body::before {
 .backup-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .backup-btn.danger:hover { color: var(--red); border-color: var(--red); }
 #backupFile { display: none; }
+
+/* 本周战绩 */
+.weekly-row {
+  display: flex; align-items: stretch; gap: 10px;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.wk-item {
+  flex: 1 1 150px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  animation: cardPop .5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.wk-item:nth-child(2) { animation-delay: 80ms; }
+.wk-item:nth-child(3) { animation-delay: 160ms; }
+.wk-ico { font-size: 17px; line-height: 1; }
+.wk-label { font-size: 12.5px; color: var(--faint); font-weight: 600; }
+.wk-item b {
+  margin-left: auto;
+  font-size: 22px; font-weight: 800; line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+.wk-unit { font-size: 12px; color: var(--faint); margin-left: -4px; }
+.wk-item.warn b { color: var(--red); }
 </style>
 </head>
 <body>
@@ -838,9 +866,15 @@ body::before {
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   </div>
 
+  <div class="weekly-row" id="weeklyRow" aria-label="本周战绩">
+    <span class="wk-item"><span class="wk-ico">📆</span><span class="wk-label">本周完成</span><b id="statWeek">0</b></span>
+    <span class="wk-item"><span class="wk-ico">🔥</span><span class="wk-label">连续打卡</span><b id="statStreak">0</b><span class="wk-unit">天</span></span>
+    <span class="wk-item"><span class="wk-ico">⏰</span><span class="wk-label">已逾期</span><b id="statOverdue">0</b></span>
+  </div>
+
   <div class="add-form" id="addForm">
     <div class="add-form-row">
-      <input type="text" id="todoInput" placeholder="✏️  输入新的待办事项..." maxlength="200" autocomplete="off" aria-label="待办事项">
+      <input type="text" id="todoInput" placeholder="✏️  输入待办…支持「明天 !1 #工作」自然语法" maxlength="200" autocomplete="off" aria-label="待办事项">
       <button class="add-btn" id="addBtn" aria-label="添加待办"><span class="btn-shine"></span>添加</button>
     </div>
     <div class="add-form-row">
@@ -995,11 +1029,56 @@ body::before {
     if (text) text.textContent = pct + '%';
 
     updateProgressEmoji(pct, total, done);
+    updateWeekly();
     updateMascotExpression();
     updateClearDone();
     updateWelcome(total, done);
     updateFullDone(total, done);
     renderFilterCounts();
+  }
+
+  // 本周完成 / 连续打卡 / 已逾期
+  function updateWeekly() {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    // 本周一（周日按上周日处理，保持一周=周一~周日）
+    var dow = today.getDay() === 0 ? 7 : today.getDay();
+    var monday = new Date(today.getTime()); monday.setDate(today.getDate() - (dow - 1));
+
+    var weekDone = 0, overdue = 0;
+    var doneDays = {};
+    todos.forEach(function(t) {
+      if (t.completedAt) {
+        var d = new Date(t.completedAt);
+        if (d >= monday) weekDone++;
+        doneDays[isoDate(d)] = true;
+      }
+      if (t.due && !t.done) {
+        var due = new Date(t.due + 'T00:00:00');
+        if (!isNaN(due.getTime()) && due < today) overdue++;
+      }
+    });
+
+    // 连续打卡：从今天往前数，今天没完成则从昨天起算
+    var streak = 0;
+    var cursor = new Date(today.getTime());
+    if (!doneDays[isoDate(cursor)]) cursor.setDate(cursor.getDate() - 1);
+    while (doneDays[isoDate(cursor)]) {
+      streak++;
+      cursor.setDate(cursor.getDate() - 1);
+    }
+
+    setStat('statWeek', weekDone);
+    setStat('statStreak', streak);
+    setStat('statOverdue', overdue);
+    var row = document.getElementById('weeklyRow');
+    if (row && row.children[2]) {
+      row.children[2].classList.toggle('warn', overdue > 0);
+    }
+  }
+
+  function setStat(id, v) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = v;
   }
 
   function updateProgressEmoji(pct, total, done) {
@@ -1426,23 +1505,89 @@ body::before {
     container.innerHTML = html;
   }
 
+  function isoDate(d) {
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+
+  // 自然语言解析：!1/!2/!3 优先级、#标签/@标签、今天/明天/后天/下周一/M月D日
+  function parseNaturalInput(raw) {
+    var out = { title: raw, priority: null, tag: null, due: null };
+    var title = raw;
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    function rel(days) {
+      var d = new Date(today.getTime()); d.setDate(d.getDate() + days);
+      return isoDate(d);
+    }
+
+    var m = title.match(/!([123])/);
+    if (m) {
+      out.priority = { '1': 'high', '2': 'mid', '3': 'low' }[m[1]];
+      title = title.replace(/!([123])/, '');
+    } else {
+      m = title.match(/!(高|中|低)/);
+      if (m) {
+        out.priority = m[1] === '高' ? 'high' : (m[1] === '中' ? 'mid' : 'low');
+        title = title.replace(/!(高|中|低)/, '');
+      }
+    }
+
+    var dm = title.match(/大后天|后天|明天|今天/);
+    if (dm) {
+      out.due = rel({ '今天': 0, '明天': 1, '后天': 2, '大后天': 3 }[dm[0]]);
+      title = title.replace(dm[0], '');
+    } else {
+      dm = title.match(/(下)?(周|星期|礼拜)(一|二|三|四|五|六|日|天)/);
+      if (dm) {
+        var wdMap = { '一': 1, '二': 2, '三': 3, '四': 4, '五': 5, '六': 6, '日': 0, '天': 0 };
+        var diff = (wdMap[dm[3]] - today.getDay() + 7) % 7;
+        if (dm[1] === '下') diff += 7;
+        out.due = rel(diff);
+        title = title.replace(dm[0], '');
+      } else {
+        dm = title.match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+        if (dm) {
+          out.due = dm[1] + '-' + String(dm[2]).padStart(2, '0') + '-' + String(dm[3]).padStart(2, '0');
+          title = title.replace(dm[0], '');
+        } else {
+          dm = title.match(/(\d{1,2})月(\d{1,2})日/);
+          if (dm) {
+            var d = new Date(today.getFullYear(), +dm[1] - 1, +dm[2]);
+            if (d < today) d = new Date(today.getFullYear() + 1, +dm[1] - 1, +dm[2]);
+            out.due = isoDate(d);
+            title = title.replace(dm[0], '');
+          }
+        }
+      }
+    }
+
+    var tm = title.match(/([#@])([\u4e00-\u9fa5A-Za-z0-9_-]{1,20})/);
+    if (tm) {
+      out.tag = tm[2];
+      title = title.replace(tm[0], '');
+    }
+
+    out.title = title.replace(/^[,，、；;:：\s]+/, '').replace(/[\s,，、]+$/, '').trim();
+    return out;
+  }
+
   function addTodo() {
     var titleEl = document.getElementById('todoInput');
     var tagEl = document.getElementById('todoTag');
     var prioEl = document.getElementById('todoPriority');
     var dueEl = document.getElementById('todoDue');
-    var title = titleEl.value.trim();
-    if (!title) {
+    var raw = titleEl.value.trim();
+    if (!raw) {
       titleEl.focus();
       shakeForm();
       return;
     }
+    var p = parseNaturalInput(raw);
     todos.unshift({
       id: uid(),
-      title: title,
-      tag: tagEl.value.trim() || null,
-      priority: prioEl.value || 'mid',
-      due: dueEl.value || null,
+      title: p.title || raw,
+      tag: p.tag || tagEl.value.trim() || null,
+      priority: p.priority || prioEl.value || 'mid',
+      due: p.due || (dueEl && dueEl.value) || null,
       done: false,
       createdAt: Date.now()
     });
@@ -1450,12 +1595,14 @@ body::before {
     titleEl.value = '';
     tagEl.value = '';
     if (dueEl) dueEl.value = '';
+    prioEl.value = 'mid';
     titleEl.focus();
     render();
     updateStats();
     renderTags();
     if (trash) purgeTrash();
-    addSuccessFlash('✨ 待办已添加');
+    if (p.due || p.priority || p.tag) addSuccessFlash('✨ 已识别「' + (p.due || '') + (p.priority ? ' · ' + ({ high: '高', mid: '中', low: '低' })[p.priority] : '') + (p.tag ? ' · #' + p.tag : '') + '」');
+    else addSuccessFlash('✨ 待办已添加');
   }
 
   function toggleTodo(id, x, y) {
@@ -1463,6 +1610,7 @@ body::before {
     if (todo) {
       var wasDone = todo.done;
       todo.done = !todo.done;
+      todo.completedAt = todo.done ? Date.now() : null;
       save();
       render();
       updateStats();
