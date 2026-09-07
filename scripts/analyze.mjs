@@ -4,8 +4,10 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const raw = readFileSync('data/sites.tsv', 'utf8');
 const lines = raw.split(/\r?\n/).filter((l) => l.trim() !== '');
 const header = lines[0].split('\t');
+const malformedRows = [];
 const rows = lines.slice(1).map((l, i) => {
   const c = l.split('\t');
+  if (c.length !== 8) malformedRows.push({ row: i + 2, columns: c.length, raw: l.slice(0, 240) });
   return {
     row: i + 2,
     short: (c[0] || '').trim(),
@@ -22,6 +24,10 @@ const rows = lines.slice(1).map((l, i) => {
 const report = {};
 report.totalRows = rows.length;
 report.columns = header;
+report.expectedColumnCount = 8;
+report.malformedRows = malformedRows;
+report.emptyNames = rows.filter((r) => !r.short && !r.name).map((r) => ({ row: r.row, cat: r.cat }));
+report.emptyCategories = rows.filter((r) => !r.cat).map((r) => ({ row: r.row, short: r.short, name: r.name }));
 
 // 大类分布
 report.categories = {};
@@ -90,6 +96,9 @@ report.summary = {
   dupByNameGroups: report.dupByName.length,
   nonHttpUrlCount: report.nonHttpUrls.length,
   suspiciousUrlCount: report.suspiciousUrls.length,
+  malformedRowCount: report.malformedRows.length,
+  emptyNameCount: report.emptyNames.length,
+  emptyCategoryCount: report.emptyCategories.length,
 };
 
 writeFileSync('data/analysis-report.json', JSON.stringify(report, null, 2), 'utf8');
@@ -106,5 +115,8 @@ console.log('同网址重复:', report.summary.dupByUrlGroups, '组，多出', r
 console.log('简称重复:', report.summary.dupByNameGroups, '组');
 console.log('非http网址:', report.summary.nonHttpUrlCount, '条');
 console.log('可疑网址:', report.summary.suspiciousUrlCount, '条');
+console.log('列数异常:', report.summary.malformedRowCount, '行');
+console.log('名称为空:', report.summary.emptyNameCount, '行');
+console.log('大类为空:', report.summary.emptyCategoryCount, '行');
 console.log('加速器字段分布:', JSON.stringify(report.vpnValues));
 console.log('完整报告已写入 data/analysis-report.json');

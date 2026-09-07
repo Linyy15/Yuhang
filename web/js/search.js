@@ -72,6 +72,10 @@
     hideSearchAc();
     if (opts.hasActiveView()) opts.exitAllViews();
     opts.renderGrid();
+    if (opts.renderSearchContext) opts.renderSearchContext();
+  }
+  function siteSourceLabel(site) {
+    return site && site.source === 'personal' ? '我的链接' : '公共目录';
   }
   function showSearchHot() {
     var searchHot = opts.searchHot;
@@ -109,18 +113,19 @@
       html += '<div class="ac-item ac-direct" data-url="' + opts.escapeHtml(u) + '"><span class="ac-ico">🔗</span><b>' + opts.t('ac_direct') + '</b> <span>' + opts.escapeHtml(q) + '</span></div>';
     }
     var kw = q.toLowerCase();
+    var scorer = (window.YH && YH.searchSiteScore);
     var fuzzy = (window.YH && YH.fuzzySearch) || function (k, t) { return t.indexOf(k) !== -1 ? 100 : null; };
     var hits = [];
-    opts.allSites().forEach(function (s) {
-      var sc = fuzzy(kw, s.name, 'fuzzy');
-      if (sc === null) sc = fuzzy(kw, s.fullName, 'fuzzy');
+    (opts.searchableSites ? opts.searchableSites() : opts.allSites()).forEach(function (s) {
+      var sc = scorer ? scorer(kw, s) : fuzzy(kw, s.name, 'fuzzy');
       if (sc !== null) hits.push({ s: s, sc: sc });
     });
     hits.sort(function (a, b) { return b.sc - a.sc; });
     hits.slice(0, 8).forEach(function (h) {
-      html += '<div class="ac-item" data-id="' + h.s.id + '"><span class="ac-ico">🏝</span>' + opts.escapeHtml(opts.nameLabel(h.s)) +
+      html += '<button type="button" class="ac-item" data-id="' + h.s.id + '"><span class="ac-ico">🏝</span><span class="ac-name">' + opts.escapeHtml(opts.nameLabel(h.s)) + '</span>' +
+        '<span class="ac-source ' + (h.s.source === 'personal' ? 'is-personal' : 'is-public') + '">' + siteSourceLabel(h.s) + '</span>' +
         (h.s.tags && h.s.tags.length ? ' <span class="ac-tag">' + opts.escapeHtml(opts.tagLabel(h.s.tags[0])) + '</span>' : '') +
-      '</div>';
+      '</button>';
     });
     if (!html) { searchAc.hidden = true; return; }
     html += '<div class="ac-item ac-more" data-q="' + opts.escapeHtml(q) + '"><span class="ac-ico">🔎</span>' + opts.t('ac_more') + ' <span>' + opts.escapeHtml(q) + '</span></div>';

@@ -20,7 +20,7 @@ function makeEl(id) {
     addEventListener(t, fn) { (this._listeners[t] = this._listeners[t] || []).push(fn); },
     appendChild(c) { this.children.push(c); return c; },
     removeChild() {}, querySelector() { return null; }, querySelectorAll() { return []; },
-    closest() { return null; }, getAttribute() { return null; }, setAttribute() {},
+    closest() { return null; }, getAttribute() { return null; }, setAttribute() {}, removeAttribute() {},
     getContext() { return null; }, setPointerCapture() {},
     focus() {}, click() {}, scrollTo() {}, remove() {},
     classList: {
@@ -90,6 +90,7 @@ eval(readFileSync('web/js/search.js', 'utf8'));
 eval(readFileSync('web/js/cards.js', 'utf8'));
 eval(readFileSync('web/js/auth.js', 'utf8'));
 eval(readFileSync('web/js/nav.js', 'utf8'));
+eval(readFileSync('web/js/startpage.js', 'utf8'));
 try {
   eval(readFileSync('web/js/app.js', 'utf8'));
   check('app.js 启动无异常', true, '');
@@ -175,7 +176,16 @@ check('点击回顶平滑滚动到 0', scrollTop && scrollTop.top === 0 && scrol
 check('页脚免责说明存在', /footer_disclaimer/.test(require('fs').readFileSync('web/js/app.js', 'utf8')), '');
 check('免责弹窗文案含数据同步说明', /随账号云端同步/.test(require('fs').readFileSync('web/js/app.js', 'utf8')), '');
 
-// ---------- 8. 起始页新动效 ----------
+// ---------- 8. 起始页收藏投影（当前账号隔离 + 状态卡） ----------
+check('起始页脚本已加载', !!global.YHStartPage && typeof global.YHStartPage.open === 'function', '');
+// 游客不应显示其他账号的收藏
+global.localStorage.setItem('nav_favs_v1', JSON.stringify({ 'other@example.com': ['ai-chatgpt'] }));
+if (global.YHStartPage && global.YHStartPage.open) global.YHStartPage.open();
+check('起始页游客收藏数为0', String(elCache['sp-fav-count'].textContent) === '0', `(count=${elCache['sp-fav-count'].textContent})`);
+check('起始页快捷链接数', String(elCache['sp-link-count'].textContent) === '12', `(links=${elCache['sp-link-count'].textContent})`);
+if (global.YHStartPage && global.YHStartPage.close) global.YHStartPage.close();
+
+// ---------- 9. 起始页动效 ----------
 const fs8 = require('fs');
 check('拖拽手柄存在', !!elCache['avatar-drag'] && (elCache['avatar-drag']._listeners.pointerdown || []).length >= 1, '');
 check('滚动联动不崩溃', !!elCache['intro-inner'], '');
@@ -184,7 +194,7 @@ check('极光/blob/脉冲元素在 HTML',
   fs8.readFileSync('web/index.html', 'utf8').includes('aurora-1') &&
   fs8.readFileSync('web/index.html', 'utf8').includes('pulse-ring'), '');
 
-// ---------- 9. 展示区已删除（MacBook / 3D 地球 / gooey） ----------
+// ---------- 10. 展示区已删除（MacBook / 3D 地球 / gooey） ----------
 check('MacBook 展示区已删除', !fs8.readFileSync('web/index.html', 'utf8').includes('mac-sec') && !fs8.readFileSync('web/index.html', 'utf8').includes('mac-content'), '');
 check('3D 地球已删除', !fs8.readFileSync('web/index.html', 'utf8').includes('globe-sec') && !fs8.readFileSync('web/js/app.js', 'utf8').includes('initGlobe'), '');
 check('搜索框无 gooey 残留', !fs8.readFileSync('web/index.html', 'utf8').includes('goo-blob') && !fs8.readFileSync('web/index.html', 'utf8').includes('goo-search'), '');

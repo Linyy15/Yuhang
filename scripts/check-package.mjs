@@ -77,12 +77,22 @@ if (appBlock) {
   globals.addEventListener = () => {}; globals.removeEventListener = () => {};
   globals.open = () => {};
   const w = globals;
-  // 顺序执行四个内联脚本
-  const order = ['window.SITES', 'root.YH = factory()', 'window.APP_CONFIG', 'function filterSites'];
+  // 按 index.html 的真实依赖顺序执行所有核心内联脚本。
+  // 旧检查只执行四块，无法覆盖新增 schema/links/search-index/integrations，且不会真正初始化 app。
+  const order = [
+    'window.SITES =', 'root.YH = factory()', 'root.YHSchema = factory()',
+    'root.YHLinks = factory()', 'root.YHSearchIndex = factory', 'root.YHIntegrations = factory()',
+    'window.APP_CONFIG', 'root.YHState = factory()', 'root.YHTools =',
+    'root.YHSearch =', 'root.YHCards =', 'root.YHAuth =', 'root.YHNav =',
+    'function applyLang()'
+  ];
   let ok = true, msg = '';
+  const used = new Set();
   for (const marker of order) {
-    const blk = blocks.find((b) => b.includes(marker));
-    if (!blk) { ok = false; msg = '缺脚本块: ' + marker; break; }
+    const idx = blocks.findIndex((b, i) => !used.has(i) && b.includes(marker));
+    if (idx < 0) { ok = false; msg = '缺脚本块: ' + marker; break; }
+    used.add(idx);
+    const blk = blocks[idx];
     try { (0, eval)(blk.replace(/^<script>/, '').replace(/<\/script>$/, '')); }
     catch (e) { ok = false; msg = marker + ' 执行异常: ' + e.message; break; }
   }

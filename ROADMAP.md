@@ -37,13 +37,13 @@ sites.js → sites-lib.js → config.js → state.js → tools.js
 
 | 节点 | 说明 |
 |------|------|
-| `data/sites.tsv` | 权威数据源，1462 条站点，8 列制表符分隔，UTF-8 |
+| `data/sites.tsv` | 权威数据源，当前构建为 4214 条站点（以 `web/data/sites.js` 的 `SITES_META.total` 和构建测试为准），8 列制表符分隔，UTF-8 |
 | `web/js/sites-lib.js` | 公共数据模块（浏览器 + Node 双端，置于 `web/js` 保证站点自包含）：TSV 解析、网址修正、去重合并、多标签智能分类、序列化 |
 | `scripts/build.mjs` | CLI 构建入口（复用 `sites-lib.js`），清洗 + 分类 + 生成 `web/data/sites.js` 与 `data/sites.json` |
 | `web/data/sites.js` | 构建产物，主页面读取它渲染卡片 |
 | `data/sites.json` | 同源派生，参考用 |
 
-数据链路自洽：tsv 1462 条 = sites.js 1462 条，导出 tsv 再 build 与基线逐字节一致（`test-roundtrip.mjs` 验证）。
+数据链路自洽：当前 TSV、`sites.js`、`sites.json` 均为 4214 条；构建元数据含 `catalogVersion`，`test-roundtrip.mjs` 会验证它们与当前 TSV 的构建结果一致。历史 1462 条基线仅在目录版本相同时参与逐字节比较，避免目录升级被误报为构建回归。
 
 ---
 
@@ -91,5 +91,6 @@ sites.js → sites-lib.js → config.js → state.js → tools.js
 ## 后续候选
 
 - `dist/index.html` 体积优化（gzip 实测、脚本 defer、懒加载梳理）。
+- 链接实体 Schema V2：已定义公共站点、个人链接、工作区项、快捷方式、投稿的类型/可见性/状态/版本字段；下一步接入主站保存与云同步冲突策略。
 - 移动端 / 无障碍真机 / 真浏览器验证（冒烟测试覆盖逻辑，不覆盖像素视觉与动效流畅度）。
 - 单文件零外链（supabase UMD 内联）。

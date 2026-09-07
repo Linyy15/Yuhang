@@ -1,0 +1,158 @@
+/* 屿航共享主题层：由 html[data-theme] 与 html[data-color] 驱动。
+ * 主站(index)、屿事(todo)、屿咪(ip)、世界观(story) 四页共用。
+ * 主题/配色与主站共享同一 localStorage 键：nav_theme_v1 / nav_color_v1。
+ * 注：本文件只承载"令牌 + 9 风格 + 7 强调色 + 跨页可访问性/动效降级 + 通用毛玻璃与移动导航组件"，
+ *      页面特有样式仍由各页 style 承载，避免回归。
+ */
+:root {
+  --font: "PingFang SC", "Microsoft YaHei", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --text: #1c2333; --text-sub: #5b6478; --text-faint: #9aa2b8;
+  --glass-bg: rgba(255,255,255,.86); --glass-bg-strong: rgba(255,255,255,.94);
+  --glass-border: rgba(255,255,255,.9); --glass-shadow: 0 10px 36px rgba(38,46,80,.10);
+  --accent: #5b6cff; --accent-2: #9a5bff; --accent-soft: rgba(91,108,255,.12); --bg-base: #f5f7fc;
+  --blob-1: rgba(205,215,238,.30); --blob-2: rgba(205,215,238,.16); --blob-3: rgba(205,215,238,.10);
+  --radius-lg: 22px; --radius-md: 16px; --radius-sm: 11px;
+  --dur-fast: .15s; --dur-normal: .25s; --ease-out: cubic-bezier(.2,.7,.3,1);
+  /* 历史页面兼容别名（todo/ip 旧变量名映射到统一 token） */
+  --bg: var(--bg-base); --panel: var(--glass-bg-strong); --panel-2: var(--glass-bg);
+  --border: var(--glass-border); --border-soft: color-mix(in oklab, var(--glass-border) 70%, transparent);
+  --text-2: var(--text-sub); --faint: var(--text-faint); --radius: var(--radius-md);
+  --shadow: var(--glass-shadow); --shadow-lg: 0 18px 40px color-mix(in oklab, var(--accent) 14%, transparent);
+  --ip-glow: color-mix(in oklab, var(--accent) 18%, transparent);
+}
+
+/* ===== 9 套风格（与主站 style.css 一致） ===== */
+html[data-theme="terminal"] {
+  --font: ui-monospace, "Cascadia Code", Consolas, monospace;
+  --text:#b8f5b8; --text-sub:#7fd98f; --text-faint:#4f8f5f;
+  --glass-bg:rgba(8,18,12,.92); --glass-bg-strong:rgba(10,22,14,.96); --glass-border:rgba(60,200,100,.35); --glass-shadow:0 0 0 transparent;
+  --accent:#33ff66; --accent-2:#00cc88; --accent-soft:rgba(51,255,102,.14);
+  --bg-base:linear-gradient(165deg,#0a100c,#0d1610);
+  --blob-1:rgba(51,255,102,.14); --blob-2:rgba(0,200,140,.10); --blob-3:rgba(51,255,102,.08);
+  --radius-lg:4px; --radius-md:4px; --radius-sm:2px;
+}
+html[data-theme="magazine"] {
+  --font:Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+  --text:#1a1a1a; --text-sub:#555; --text-faint:#999;
+  --glass-bg:rgba(255,255,255,.92); --glass-bg-strong:#fff; --glass-border:rgba(0,0,0,.15); --glass-shadow:0 2px 14px rgba(0,0,0,.07);
+  --accent:#c8102e; --accent-2:#1a1a1a; --accent-soft:rgba(200,16,46,.08);
+  --bg-base:linear-gradient(165deg,#faf7f2,#f4eee3);
+  --blob-1:rgba(200,16,46,.06); --blob-2:rgba(0,0,0,.03); --blob-3:rgba(200,16,46,.05);
+  --radius-lg:3px; --radius-md:2px; --radius-sm:2px;
+}
+html[data-theme="brutalism"] {
+  --text:#111; --text-sub:#444; --text-faint:#888;
+  --glass-bg:rgba(255,255,255,.96); --glass-bg-strong:#fff; --glass-border:#111; --glass-shadow:6px 6px 0 #111;
+  --accent:#ff5c33; --accent-2:#111; --accent-soft:rgba(255,92,51,.12);
+  --bg-base:linear-gradient(165deg,#fdf6ef,#f6ecdf);
+  --blob-1:rgba(255,92,51,.10); --blob-2:rgba(17,17,17,.05); --blob-3:rgba(255,92,51,.08);
+  --radius-lg:0; --radius-md:0; --radius-sm:0;
+}
+html[data-theme="cyber"] {
+  --text:#e8ecff; --text-sub:#a8b2e8; --text-faint:#5f6b9e;
+  --glass-bg:rgba(10,6,32,.82); --glass-bg-strong:rgba(16,10,44,.92); --glass-border:rgba(0,240,255,.45); --glass-shadow:0 0 24px rgba(0,240,255,.12);
+  --accent:#00f0ff; --accent-2:#ff00e5; --accent-soft:rgba(0,240,255,.14);
+  --bg-base:linear-gradient(150deg,#070114,#12023a 50%,#050018);
+  --blob-1:rgba(0,240,255,.25); --blob-2:rgba(255,0,229,.22); --blob-3:rgba(90,60,255,.25);
+  --radius-lg:14px; --radius-md:12px; --radius-sm:8px;
+}
+html[data-theme="pixel"] {
+  --font:ui-monospace, "Cascadia Code", Consolas, monospace;
+  --text:#fff; --text-sub:#cfd3ff; --text-faint:#9aa0d8;
+  --glass-bg:rgba(48,48,96,.94); --glass-bg-strong:rgba(56,56,110,.97); --glass-border:rgba(255,255,255,.8); --glass-shadow:5px 5px 0 rgba(0,0,0,.45);
+  --accent:#ffd23f; --accent-2:#ff8c1a; --accent-soft:rgba(255,210,63,.20);
+  --bg-base:linear-gradient(165deg,#2b2b5e,#232352);
+  --blob-1:rgba(255,210,63,.14); --blob-2:rgba(120,90,255,.16); --blob-3:rgba(255,140,26,.12);
+  --radius-lg:0; --radius-md:0; --radius-sm:0;
+}
+html[data-theme="swiss"] {
+  --text:#111; --text-sub:#555; --text-faint:#999;
+  --glass-bg:rgba(255,255,255,.94); --glass-bg-strong:#fff; --glass-border:rgba(0,0,0,.15); --glass-shadow:0 2px 12px rgba(0,0,0,.06);
+  --accent:#f00; --accent-2:#111; --accent-soft:rgba(255,0,0,.08);
+  --bg-base:linear-gradient(180deg,#fff,#f6f6f6);
+  --blob-1:rgba(0,0,0,.03); --blob-2:rgba(255,0,0,.05); --blob-3:rgba(0,0,0,.03);
+  --radius-lg:0; --radius-md:0; --radius-sm:0;
+}
+html[data-theme="glass"] { /* 玻璃拟态：默认 token */
+  --text:#1c2333; --text-sub:#5b6478; --text-faint:#9aa2b8;
+  --glass-bg:rgba(255,255,255,.86); --glass-bg-strong:rgba(255,255,255,.94); --glass-border:rgba(255,255,255,.9); --glass-shadow:0 10px 36px rgba(38,46,80,.10);
+  --bg-base:#f5f7fc;
+  --blob-1:rgba(205,215,238,.30); --blob-2:rgba(205,215,238,.16); --blob-3:rgba(205,215,238,.10);
+  --radius-lg:22px; --radius-md:16px; --radius-sm:11px;
+}
+html[data-theme="journal"] {
+  --font:"Kaiti SC", "STKaiti", "KaiTi", "Microsoft YaHei", serif;
+  --text:#4a3f35; --text-sub:#7d6f60; --text-faint:#b3a493;
+  --glass-bg:rgba(255,252,245,.90); --glass-bg-strong:rgba(255,254,250,.96); --glass-border:rgba(224,196,160,.70); --glass-shadow:0 4px 14px rgba(120,90,60,.08);
+  --accent:#e76f51; --accent-2:#f4a261; --accent-soft:rgba(231,111,81,.12);
+  --bg-base:repeating-linear-gradient(0deg,transparent,transparent 23px,rgba(0,0,0,.035) 23px,rgba(0,0,0,.035) 24px),linear-gradient(165deg,#fdf6ec,#f9eeda);
+  --blob-1:rgba(247,168,196,.35); --blob-2:rgba(127,209,200,.28); --blob-3:rgba(244,162,97,.25);
+  --radius-lg:10px; --radius-md:8px; --radius-sm:6px;
+}
+html[data-theme="space"] {
+  --text:#e6e9ff; --text-sub:#a5b0e8; --text-faint:#5f6b9e;
+  --glass-bg:rgba(8,12,40,.78); --glass-bg-strong:rgba(14,20,56,.90); --glass-border:rgba(140,160,255,.30); --glass-shadow:0 10px 40px rgba(0,0,0,.55);
+  --accent:#4f8cff; --accent-2:#b06bff; --accent-soft:rgba(79,140,255,.16);
+  --bg-base:radial-gradient(1px 1px at 18% 22%,rgba(255,255,255,.9),transparent 100%),radial-gradient(1px 1px at 72% 12%,rgba(255,255,255,.8),transparent 100%),linear-gradient(165deg,#04060f,#0a1030 55%,#12092e);
+  --blob-1:rgba(79,140,255,.25); --blob-2:rgba(176,107,255,.20); --blob-3:rgba(60,180,255,.18);
+  --radius-lg:18px; --radius-md:14px; --radius-sm:10px;
+}
+
+/* ===== 7 个强调色（blue 为默认，无需属性） ===== */
+html[data-color="violet"] { --accent:#8b5cf6; --accent-2:#d946ef; --accent-soft:rgba(139,92,246,.14); }
+html[data-color="pink"]   { --accent:#ec4899; --accent-2:#f472b6; --accent-soft:rgba(236,72,153,.13); }
+html[data-color="mint"]   { --accent:#0ea5a0; --accent-2:#22c55e; --accent-soft:rgba(14,165,160,.14); }
+html[data-color="orange"] { --accent:#f97316; --accent-2:#f59e0b; --accent-soft:rgba(249,115,22,.13); }
+html[data-color="green"]  { --accent:#22c55e; --accent-2:#10b981; --accent-soft:rgba(34,197,94,.14); }
+html[data-color="red"]     { --accent:#ef4444; --accent-2:#c8102e; --accent-soft:rgba(239,68,68,.12); }
+
+/* ===== 跨页可访问性与动效降级 ===== */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:focus:not(:focus-visible) { outline: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
+
+/* ===== 跨页通用组件：毛玻璃容器 + 移动端底部导航 + "更多"抽屉 ===== */
+.yh-glass { background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+
+.yh-mobile-nav {
+  position: fixed; inset: auto 0 0; z-index: 85; display: none; height: 56px;
+  background: var(--glass-bg-strong); border-top: 1px solid var(--glass-border);
+}
+.yh-mobile-nav a, .yh-mobile-nav button {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  border: 0; background: transparent; color: var(--text-faint);
+  font: 11px var(--font); text-decoration: none; cursor: pointer;
+  transition: color var(--dur-fast) ease;
+}
+.yh-mobile-nav .yh-nav-icon { font-size: 17px; line-height: 1; }
+.yh-mobile-nav .active { color: var(--accent); font-weight: 700; }
+.yh-mobile-nav .active .yh-nav-icon { transform: translateY(-1px); }
+
+.yh-mobile-more {
+  position: fixed; left: 12px; right: 12px; bottom: 72px; z-index: 180;
+  max-width: 560px; margin: auto; padding: 10px;
+  border-radius: var(--radius-lg); background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
+}
+.yh-mobile-more[hidden] { display: none; }
+.yh-mobile-more .yh-more-head { display: flex; align-items: center; justify-content: space-between; padding: 4px 5px 8px 8px; color: var(--text-sub); font-size: 12px; font-weight: 700; }
+.yh-mobile-more .yh-more-head button { width: 30px; height: 30px; border: none; border-radius: 9px; background: transparent; color: var(--text-sub); cursor: pointer; font: inherit; }
+.yh-mobile-more .yh-more-head button:hover { background: var(--accent-soft); color: var(--accent); }
+.yh-mobile-more .yh-more-item { width: 100%; display: grid; grid-template-columns: 28px 1fr; column-gap: 8px; align-items: center; text-align: left; padding: 10px 9px; border: none; border-radius: 12px; background: transparent; color: var(--text); font: inherit; cursor: pointer; }
+.yh-mobile-more .yh-more-item span { font-size: 13px; font-weight: 700; }
+.yh-mobile-more .yh-more-item small { grid-column: 2; margin-top: 1px; color: var(--text-faint); font-size: 10.5px; }
+.yh-mobile-more .yh-more-item:hover, .yh-mobile-more .yh-more-item:focus-visible { background: var(--accent-soft); }
+
+@media (max-width: 980px) {
+  .yh-mobile-nav { display: flex; }
+  body.yh-has-mobile-nav { padding-bottom: 76px; }
+}
+
+/* 直角系风格统一去圆角 */
+html[data-theme="terminal"] .yh-glass, html[data-theme="terminal"] .yh-mobile-more { border-radius: 0; }
+html[data-theme="magazine"] .yh-glass, html[data-theme="magazine"] .yh-mobile-more,
+html[data-theme="brutalism"] .yh-glass, html[data-theme="brutalism"] .yh-mobile-more,
+html[data-theme="pixel"] .yh-glass, html[data-theme="pixel"] .yh-mobile-more,
+html[data-theme="swiss"] .yh-glass, html[data-theme="swiss"] .yh-mobile-more { border-radius: 0; }

@@ -50,6 +50,14 @@
     if (!hasStorage) return;
     try { localStorage.setItem(key, value); } catch (e) {}
   }
+  function readThemeValue(key, fallback) {
+    if (!hasStorage) return fallback;
+    try {
+      var raw = localStorage.getItem(key);
+      if (raw == null || raw === '') return fallback;
+      try { return JSON.parse(raw); } catch (e) { return raw; }
+    } catch (e) { return fallback; }
+  }
 
   // ============ 3. State 对象（唯一事实来源） ============
   var State = {
@@ -69,11 +77,11 @@
     personalSites: readJSON(PERSONAL_KEY, {}),     // 账号 -> [personalSite]
 
     // --- UI 设置 ---
-    theme: readJSON(THEME_KEY, 'brutalism') || 'brutalism',
-    color: readJSON(COLOR_KEY, 'blue') || 'blue',
+    theme: readThemeValue(THEME_KEY, 'brutalism') || 'brutalism',
+    color: readThemeValue(COLOR_KEY, 'blue') || 'blue',
     gridSize: readJSON(SIZE_KEY, 'md') || 'md',
     settings: Object.assign(
-      { petals: true, snow: true, cursorFx: false, showIntro: true, shareStats: true, cardIcon: 'favicon' },
+      { petals: true, snow: true, cursorFx: false, showIntro: true, shareStats: true, cardIcon: 'favicon', misclickLock: false },
       readJSON(SETTINGS_KEY, {})
     ),
     lang: readJSON(LANG_KEY, 'zh') || 'zh',

@@ -21,6 +21,7 @@
     var activeCat = opts.getActiveCat(), activeWs = opts.getActiveWs(), selectedTags = opts.getSelectedTags();
     var kw = opts.getKeyword().trim().toLowerCase();
     var base;
+    // 搜索时按当前空间取源：公共目录不被私人链接干扰，私人/收藏/工作区保留自身上下文。
     if (activeWs) {
       var ws = opts.S.workspaces[activeWs];
       base = (ws ? ws.ids : []).map(function (id) { return opts.siteOf(id); }).filter(Boolean);
@@ -36,30 +37,36 @@
     } else if (activeCat === opts.RECENT_CAT) {
       base = opts.S.recentIds.map(function (id) { return opts.siteOf(id); }).filter(Boolean);
     } else if (selectedTags.size) {
-      base = opts.allSites().filter(function (s) {
+      base = (opts.publicSites ? opts.publicSites() : opts.allSites()).filter(function (s) {
         return (s.tags || []).some(function (tn) { return selectedTags.has(tn); });
       }).sort(byName);
     } else {
-      base = opts.allSites().sort(byName);
+      base = (opts.publicSites ? opts.publicSites() : opts.allSites()).slice().sort(byName);
     }
     if (kw) {
-      var fuzzy = (opts.YH && opts.YH.fuzzySearch) ||
-        function (q, t) { return t.indexOf(q) !== -1 ? 100 : null; };
-      var scored = [];
-      base.forEach(function (s) {
-        var best = null;
-        function bump(sc) { if (sc !== null && (best === null || sc > best)) best = sc; }
-        bump(fuzzy(kw, s.name, 'fuzzy'));
-        bump(fuzzy(kw, s.fullName, 'fuzzy'));
-        bump(fuzzy(kw, (s.tags || []).join(' '), 'fuzzy'));
-        bump(fuzzy(kw, s.category, 'fuzzy'));
-        bump(fuzzy(kw, s.brief, 'fuzzy'));
-        bump(fuzzy(kw, s.detail, 'fuzzy'));
-        bump(fuzzy(kw, s.url, 'exact'));
-        if (best !== null) scored.push({ s: s, score: best });
-      });
-      scored.sort(function (a, b) { return b.score - a.score || byName(a.s, b.s); });
-      base = scored.map(function (x) { return x.s; });
+      // P2：优先使用可复用索引；没有索引时保留原有线性模糊搜索兜底。
+      var index = opts.searchIndex;
+      if (index && typeof index.query === 'function') {
+        var indexed = index.query(kw, { sites: base, favorites: opts.S.favs });
+        base = indexed.map(function (hit) { return hit.site; });
+      } else {
+        var scorer = (opts.YH && opts.YH.searchSiteScore);
+        var fuzzy = (opts.YH && opts.YH.fuzzySearch) || function (q, t) { return t.indexOf(q) !== -1 ? 100 : null; };
+        var scored = [];
+        base.forEach(function (s) {
+          var best = scorer ? scorer(kw, s) : null;
+          if (best === null) {
+            best = null;
+            function bump(sc) { if (sc !== null && (best === null || sc > best)) best = sc; }
+            bump(fuzzy(kw, s.name, 'fuzzy')); bump(fuzzy(kw, s.fullName, 'fuzzy'));
+            bump(fuzzy(kw, (s.tags || []).join(' '), 'fuzzy')); bump(fuzzy(kw, s.category, 'fuzzy'));
+            bump(fuzzy(kw, s.brief, 'exact')); bump(fuzzy(kw, s.detail, 'exact')); bump(fuzzy(kw, s.url, 'exact'));
+          }
+          if (best !== null) scored.push({ s: s, score: best });
+        });
+        scored.sort(function (a, b) { return b.score - a.score || byName(a.s, b.s); });
+        base = scored.map(function (x) { return x.s; });
+      }
     }
     return base;
   }
@@ -98,7 +105,13 @@
     var more = '<button class="more" data-id="' + opts.escapeHtml(s.id) + '" title="⋯">⋯</button>';
     var primaryTag = (s.tags && s.tags[0]) || s.category || '';
     var cardHue = primaryTag ? opts.tagHue(primaryTag) : '';
-    var tag = primaryTag ? '<span class="tag" style="--tag-c ' + cardHue + '">' + opts.escapeHtml(opts.tagLabel(primaryTag)) + '</span>' : '';
+    // 卡片展示多个标签；详情弹窗仍展示完整标签集
+    var visibleTags = (s.tags || []).slice(0, 3);
+    var tag = visibleTags.map(function (tn) {
+      return '<span class="tag" style="--tag-c ' + opts.tagHue(tn) + '">' + opts.escapeHtml(opts.tagLabel(tn)) + '</span>';
+    }).join('');
+    if (!tag && primaryTag) tag = '<span class="tag" style="--tag-c ' + cardHue + '">' + opts.escapeHtml(opts.tagLabel(primaryTag)) + '</span>';
+    if ((s.tags || []).length > 3) tag += '<span class="tag tag-more">+' + ((s.tags || []).length - 3) + '</span>';
     var srcTag = s.source === 'personal' ? '<span class="tag tag-me">' + opts.t('personal') + '</span>' : '';
     var count = showCount && opts.S.clicks[s.id] ? '<span class="card-count">👁' + opts.S.clicks[s.id] + '</span>' : '';
     var cs = cardHue ? 'style="--card-c ' + cardHue + '"' : '';
@@ -202,7 +215,7 @@
     }
     if (opts.footerInfo) opts.footerInfo.textContent = (opts.S.lang === 'en'
       ? opts.allSites().length + ' sites · showing ' + list.length + ' · ' + opts.S.favs.size + ' favorites'
-      : '共收录 ' + opts.allSites().length + ' 个网站 · 当前显示 ' + list.length + ' 个 · 已收藏 ' + opts.S.favs.size + ' 个');
+      : '公共目录 ' + (opts.publicSites ? opts.publicSites().length : opts.allSites().length) + ' 个 · 当前空间显示 ' + list.length + ' 个 · 已收藏 ' + opts.S.favs.size + ' 个');
     if (opts.footerUpdated) opts.footerUpdated.textContent = opts.META.updatedAt || '';
     if (opts.statTotal) opts.statTotal.textContent = opts.allSites().length;
     if (opts.statTags) opts.statTags.textContent = (opts.META.tags || []).length;

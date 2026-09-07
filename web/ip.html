@@ -5,43 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#5b6cff">
 <title>屿咪 · 数字岛屿领航员</title>
+<link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="ip/ip.css">
+<script src="js/theme-sync.js"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6cff'/%3E%3Cstop offset='1' stop-color='%239a5bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='3' y='3' width='58' height='58' rx='16' fill='url(%23g)'/%3E%3Cpath fill='%23fff' d='M32 15l4.4 13-4.4-2.3-4.4 2.3z'/%3E%3Cpath fill='%23fff' d='M12 46a20 20 0 0 1 40 0z'/%3E%3C/svg%3E">
 <style>
+.page-theme-picker { position: relative; min-width: 0; max-width: 290px; }
+.page-theme-picker .yh-tp { padding: 6px; }
+@media (max-width: 980px) { .page-theme-picker { display: none; } }
 :root {
-  --bg: #f6f7fb;
-  --panel: #ffffff;
-  --panel-2: rgba(255,255,255,0.72);
-  --border: #e4e7ef;
-  --text: #1d2333;
-  --faint: #8a90a3;
-  --accent: #4f6ef7;
-  --accent-2: #8b5cf6;
+  /* 颜色/主题 token 由 css/theme.css 驱动（9 主题 × 7 强调色）；此处仅保留 theme.css 未覆盖的状态色与别名 */
+  --glass-tint: var(--glass-bg);
   --red: #e5484d;
   --yellow: #d97706;
   --green: #16a34a;
-  --radius: 14px;
-  --radius-lg: 22px;
-  --shadow: 0 1px 3px rgba(20,30,60,.08), 0 8px 24px rgba(20,30,60,.06);
-  --shadow-lg: 0 2px 8px rgba(20,30,60,.10), 0 18px 40px rgba(79,110,247,.14);
-  --glass-border: rgba(255,255,255,0.55);
-  --glass-tint: rgba(255,255,255,0.45);
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0b0f18;
-    --panel: #141826;
-    --panel-2: rgba(20,24,36,0.72);
-    --border: #232a3c;
-    --text: #e7eaf3;
-    --faint: #7d8499;
-    --accent: #6d86ff;
-    --accent-2: #a78bfa;
-    --shadow: 0 1px 3px rgba(0,0,0,.55), 0 8px 24px rgba(0,0,0,.45);
-    --shadow-lg: 0 2px 8px rgba(0,0,0,.4), 0 18px 40px rgba(79,110,247,.10);
-    --glass-border: rgba(255,255,255,0.10);
-    --glass-tint: rgba(255,255,255,0.06);
-  }
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -706,6 +683,8 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   opacity: 0.6; cursor: not-allowed; background: var(--panel-2);
 }
 .story-chapter.locked:hover { transform: none; }
+.story-chapter:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.story-chapter.locked:focus-visible { outline-color: var(--faint); }
 .story-no {
   font-size: 10px; font-weight: 800; letter-spacing: 1.2px;
   color: var(--accent); text-transform: uppercase;
@@ -786,6 +765,7 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     <a href="index.html">🏝 屿航</a>
     <a href="todo.html">📋 屿事</a>
   </nav>
+  <div class="page-theme-picker" id="pageThemePicker" aria-label="主题换肤"></div>
 </header>
 
 <main id="main-content" class="container">
@@ -873,7 +853,7 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
         <div class="growth-lv" id="growthLv">Lv.<b>1</b> · 初醒的星尾</div>
         <div class="growth-xp" id="growthXp">0 / 100 XP</div>
       </div>
-      <div class="xp-bar" aria-hidden="true"><i id="growthFill"></i></div>
+      <div class="xp-bar" id="growthProgress" role="progressbar" aria-label="屿咪当前等级经验值" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="growthFill"></i></div>
       <div class="growth-tip" id="growthTip">每完成 1 件屿事 +50 XP，累计成长会解锁新章节 ✨</div>
     </div>
     <div class="achv-block">
@@ -943,6 +923,7 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     <p>屿咪 · 屿航专属数字岛屿领航员</p>
     <p>
       <a href="todo.html">📋 屿事</a>
+      · <a href="story.html">📖 阅读屿咪长篇故事</a>
       · <a href="index.html">🏠 回到主页</a>
       · <a href="admin.html">🔧 管理后台</a>
     </p>
@@ -961,6 +942,7 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   </div>
 </div>
 
+<script defer src="js/yh-shared.js"></script>
 <script>
 (function() {
   const EXPRESSIONS = [
@@ -1033,7 +1015,9 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     { id: 'level3',          icon: '🧭', name: '极光旅人',   desc: '达到等级 3',             test: function(s) { return s.level >= 3; } },
     { id: 'level5',          icon: '💙', name: '岛屿之心',   desc: '达到等级 5',             test: function(s) { return s.level >= 5; } },
     { id: 'voice_used',      icon: '🔊', name: '温柔唤醒',   desc: '让屿咪用语音读一句话',   test: function(s) { return !!s.voiceUsed; } },
-    { id: 'story_read',      icon: '📖', name: '故事读者',   desc: '打开任意一章世界观故事', test: function(s) { return !!s.storyRead; } }
+    { id: 'story_read',      icon: '📖', name: '故事读者',   desc: '打开任意一章世界观故事', test: function(s) { return !!s.storyRead; } },
+    { id: 'explorer',         icon: '🧭', name: '群岛探索者', desc: '在屿航浏览 10 个不同站点', test: function(s) { return s.browseCount >= 10; } },
+    { id: 'collector',        icon: '⭐', name: '收藏家',     desc: '在屿航收藏 5 个不同站点', test: function(s) { return s.favCount >= 5; } }
   ];
 
   var growth = null;
@@ -1103,6 +1087,10 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
       storyRead: !!growth.storyRead,
       todayAllDone: !!growth.todayAllDone
     };
+    var b = {};
+    try { b = JSON.parse(localStorage.getItem('yuhang_behavior_v1') || '{}'); } catch (e) {}
+    s.browseCount = Object.keys(b.browsed || {}).length;
+    s.favCount = Object.keys(b.favs || {}).length;
     var newlyUnlocked = [];
     ACHIEVEMENTS.forEach(function(a) {
       if (!growth.achv[a.id] && a.test(s)) {
@@ -1131,6 +1119,13 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
     if (elXp) elXp.textContent = next ? (growth.xp + ' / ' + next.xp + ' XP') : (growth.xp + ' XP（已满级）');
     var elFill = document.getElementById('growthFill');
     if (elFill) elFill.style.width = pct + '%';
+    var elProgress = document.getElementById('growthProgress');
+    if (elProgress) {
+      elProgress.setAttribute('aria-valuenow', String(pct));
+      elProgress.setAttribute('aria-valuetext', next
+        ? (growth.xp + ' / ' + next.xp + ' XP，当前等级 ' + lv.lv)
+        : (growth.xp + ' XP，已满级'));
+    }
     var elTip = document.getElementById('growthTip');
     if (elTip) {
       elTip.textContent = next
@@ -1490,20 +1485,21 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
       span.innerHTML = ipSvg('e' + i);
     });
 
-    grid.querySelectorAll('.expr-card').forEach(card => {
-      const handler = () => {
+    if (!grid._exprBound) {
+      grid._exprBound = true;
+      const activate = (card) => {
+        if (!card) return;
         const key = card.dataset.expr;
         setMascotExpr(key);
         document.querySelectorAll('.interact-btn').forEach(b =>
           b.classList.toggle('active', b.dataset.expr === key));
       };
-      card.addEventListener('click', handler);
-      card.addEventListener('keydown', (ev) => {
-        if (ev.key === 'Enter' || ev.key === ' ') {
-          ev.preventDefault(); handler();
-        }
+      grid.addEventListener('click', (ev) => activate(ev.target.closest('.expr-card')));
+      grid.addEventListener('keydown', (ev) => {
+        const card = ev.target.closest('.expr-card');
+        if (card && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); activate(card); }
       });
-    });
+    }
   }
 
   function renderInteract() {
@@ -1548,10 +1544,18 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   // 初次显示欢迎气泡（带时间问候）
   setTimeout(() => showBubble(timeGreeting() + '～今天也要元气满满哦！'), 500);
 
-  // 跨标签页同步：屿事变化时刷新成长档案
+  // 跨标签页同步：屿事变化时刷新成长档案并显示屿咪反馈
   window.addEventListener('storage', function(ev) {
     if (ev.key === 'yuhang_todos_v1') {
       syncGrowthFromTodos();
+      renderTodoCard();
+    }
+    if (ev.key === 'yuhang_yumi_signal_v1') {
+      try {
+        var signal = JSON.parse(ev.newValue || '{}');
+        setMascotExpr(signal.action === 'done' ? 'happy' : signal.action === 'add' ? 'wave' : 'idle');
+        showBubble(signal.message || '我一直陪着你哦～');
+      } catch (e) {}
     }
   });
 
@@ -1569,5 +1573,6 @@ button:focus:not(:focus-visible), a:focus:not(:focus-visible) { outline: none; }
   syncGrowthFromTodos();
 })();
 </script>
+<script>window.addEventListener('DOMContentLoaded',function(){if(window.YHShared){YHShared.YHMobileNav.mount({active:'ip'});YHShared.YHThemePicker.mount(document.getElementById('pageThemePicker'),{compact:true});}});</script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "屿航 · 保存当前网页",
+  "description": "将当前标签页的标题和网址保存到屿航 Web。",
+  "version": "0.1.0",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_title": "保存到屿航",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon.svg",
+      "32": "icons/icon.svg",
+      "48": "icons/icon.svg",
+      "128": "icons/icon.svg"
+    }
+  },
+  "icons": {
+    "16": "icons/icon.svg",
+    "32": "icons/icon.svg",
+    "48": "icons/icon.svg",
+    "128": "icons/icon.svg"
+  }
+}

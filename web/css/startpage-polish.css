@@ -1,0 +1,73 @@
+/* Fullscreen start page visual polish: quiet editorial layout */
+#startpage.startpage {
+  --sp-surface: rgba(255,255,255,.72);
+  --sp-surface-strong: rgba(255,255,255,.86);
+  --sp-line: rgba(40,52,90,.11);
+  padding: 22px clamp(18px, 4vw, 64px) 20px;
+  background:
+    radial-gradient(70% 60% at 50% -10%, color-mix(in srgb, var(--accent,#5b6cff) 14%, transparent), transparent 70%),
+    linear-gradient(145deg, #f7f9ff 0%, #f5f1ff 52%, #edf7ff 100%);
+}
+#startpage.startpage::after { opacity: .18; background-size: 64px 64px; mask-image: linear-gradient(to bottom, rgba(0,0,0,.25), transparent 65%); }
+.startpage .sp-bg i.sp-blob { opacity: .3; filter: blur(100px) saturate(.9); }
+.startpage .sp-bg .sp-blob-1 { width: 42vw; height: 42vw; left: -15vw; top: -18vh; }
+.startpage .sp-bg .sp-blob-2 { width: 34vw; height: 34vw; right: -12vw; bottom: -16vh; }
+.startpage .sp-bg .sp-blob-3, .startpage .sp-bg .sp-blob-4, .startpage .sp-bg .sp-blob-5 { opacity: .12; }
+.startpage .sp-veil { background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.18)); }
+.startpage .sp-topbar { flex: 0 0 auto; }
+.startpage .sp-topbar button { padding: 8px 13px; border-radius: 10px; font-size: 12px; color: var(--sp-muted); background: rgba(255,255,255,.54); border: 1px solid var(--sp-line); box-shadow: none; }
+.startpage .sp-main {
+  justify-content: flex-start;
+  gap: 0;
+  padding: clamp(18px, 5vh, 62px) 0 20px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.startpage .sp-time { font-size: clamp(58px, 9vw, 112px); line-height: .95; letter-spacing: -.045em; font-weight: 300; color: #1c2742; text-shadow: none; }
+.startpage .sp-date { margin-top: 14px; font-size: 14px; color: var(--sp-muted); letter-spacing: .12em; font-weight: 600; }
+.startpage .sp-greet { margin-top: 8px; font-size: 16px; color: #2f3b58; font-weight: 600; }
+.startpage .sp-quote { margin-top: 14px; padding: 5px 12px; font-size: 12px; border: 0; background: transparent; color: #7c879e; }
+.startpage .sp-quick-status { margin-top: 28px; gap: 10px; max-width: 400px; }
+.startpage .sp-status-card { min-width: 150px; padding: 10px 14px; border-radius: 12px; background: rgba(255,255,255,.48); border: 1px solid var(--sp-line); box-shadow: none; }
+.startpage .sp-status-card:hover, .startpage .sp-status-card:focus-visible { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(40,52,90,.08); }
+.startpage .sp-sc-ico { font-size: 15px; opacity: .8; }
+.startpage .sp-sc-num { font-size: 19px; }
+.startpage .sp-sc-label { font-size: 11px; color: #65718a; }
+.startpage .sp-search { margin-top: 24px; max-width: 680px; padding: 7px 8px 7px 17px; border-radius: 15px; background: var(--sp-surface-strong); border: 1px solid rgba(255,255,255,.82); box-shadow: 0 16px 42px rgba(56,65,112,.10), 0 0 0 5px rgba(255,255,255,.16); }
+.startpage .sp-search:focus-within { box-shadow: 0 18px 48px rgba(56,65,112,.14), 0 0 0 4px color-mix(in srgb, var(--accent,#5b6cff) 12%, transparent); }
+.startpage .sp-ico { opacity: .48; }
+.startpage .sp-input { font-size: 14px; }
+.startpage .sp-engine-btn { padding: 7px 10px; border-radius: 9px; background: transparent; color: #68738b; font-size: 12px; }
+.startpage .sp-go { padding: 9px 17px; border-radius: 10px; font-size: 12px; box-shadow: none; }
+.startpage .sp-sugg { margin-top: 8px; max-width: 680px; border-radius: 14px; border: 1px solid var(--sp-line); box-shadow: 0 16px 40px rgba(40,52,90,.12); }
+.startpage .sp-focus-panel { margin-top: 30px; max-width: 680px; padding: 16px 18px; border-radius: 16px; background: rgba(255,255,255,.3); border: 1px solid rgba(255,255,255,.52); }
+.startpage .sp-section-title { width: 100%; margin: 0 0 12px; align-items: center; }
+.startpage .sp-section-title .t { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: #7b879f; }
+.startpage .sp-proj-row { justify-content: flex-start; gap: 7px; min-height: 0; }
+.startpage .sp-proj-row + .sp-proj-row { margin-top: 7px; }
+.startpage .sp-proj-chip { padding: 6px 10px; border-radius: 9px; background: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.7); box-shadow: none; font-size: 12px; }
+.startpage .sp-proj-empty { display: none; }
+.startpage .sp-cats { margin-top: 22px; max-width: 680px; justify-content: flex-start; gap: 6px; }
+.startpage .sp-cat-label { width: 100%; margin-bottom: 2px; font-size: 11px; letter-spacing: .12em; }
+.startpage .sp-cat-chip { padding: 5px 10px; border-radius: 8px; border: 1px solid var(--sp-line); box-shadow: none; font-size: 11px; }
+.startpage .sp-links-title { max-width: 680px; margin-top: 26px; margin-bottom: 10px; }
+.startpage .sp-links-title button { font-size: 11px; color: #7b879f; padding: 4px 7px; }
+.startpage .sp-links { max-width: 680px; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.startpage .sp-link { min-height: 82px; padding: 12px 5px 9px; border-radius: 13px; background: rgba(255,255,255,.58); border: 1px solid rgba(255,255,255,.72); box-shadow: 0 5px 18px rgba(40,52,90,.045); }
+.startpage .sp-link:hover, .startpage .sp-link:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(40,52,90,.1); }
+.startpage .sp-link .sp-link-ico { width: 38px; height: 38px; border-radius: 10px; box-shadow: none; }
+.startpage .sp-link .sp-link-name { font-size: 11px; font-weight: 650; color: #35415c; }
+.startpage .sp-foot { flex: 0 0 auto; padding-top: 10px; }
+.startpage .sp-foot .sp-nav { min-width: 150px; padding: 9px 20px; border-radius: 10px; font-size: 12px; box-shadow: none; }
+@media (max-width: 640px) {
+  #startpage.startpage { padding: 12px 12px 14px; }
+  .startpage .sp-main { padding-top: 24px; }
+  .startpage .sp-time { font-size: clamp(54px, 18vw, 82px); }
+  .startpage .sp-quick-status { margin-top: 22px; }
+  .startpage .sp-status-card { min-width: 0; padding: 9px 10px; }
+  .startpage .sp-search { margin-top: 18px; border-radius: 13px; }
+  .startpage .sp-focus-panel { margin-top: 22px; padding: 13px 12px; }
+  .startpage .sp-links-title { margin-top: 20px; }
+  .startpage .sp-links { grid-template-columns: repeat(4, 1fr); gap: 7px; }
+  .startpage .sp-link { min-height: 76px; }
+}

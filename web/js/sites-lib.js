@@ -99,7 +99,12 @@
     // 办公协作
     { tag: '办公协作', re: /notion|wps|石墨|shimo|语雀|yuque|腾讯文档|飞书|feishu|钉钉|dingtalk|microsoft 365|微软365|zoom|\boffice\b/ },
     // 效率工具（含系统工具/邮箱/搜索/浏览器）
-    { tag: '效率工具', re: /万能命令|wannengrun|mikutools|miku\.tools|work tools|worktools|nosignups|tinywow|草料|cli\.im|倒数日|daysmatter|番茄|forestapp|xmind|思维导图|微信网页传输|file\.weixin|海明威|hemingway|convertio|ilovepdf|pdf24|7-zip|7zip|压缩|英国地址|地址生成|meiguodizhi|fakeuk|lanerc|老弟|ld1y|360安全|火绒|huorong|卡巴斯基|kaspersky|图吧|tubixiangtong|迅雷|xunlei|uu加速|uu远程|remote\.163|前行者|ehubs|魔极客|monsgeek|麦高|mchose|mg-driver|驱动|163邮箱|mail\.163|qq邮箱|mail\.qq|网易邮箱|邮箱|yandex|夸克|quark|chrome|google chrome|microsoft edge|edge浏览器|浏览器|路由器|192\.168|edge:\/\/|新标签页/ },
+         { tag: '效率工具', re: /万能命令|wannengrun|mikutools|miku\.tools|work tools|worktools|nosignups|倒数日|daysmatter|番茄|forestapp|xmind|思维导图|微信网页传输|file\.weixin|海明威|hemingway|日历|日程|待办|时间管理|密码管理|password manager|邮箱|mail\.163|mail\.qq|网易邮箱|qq邮箱|yandex|夸克|chrome|google chrome|microsoft edge|edge浏览器|浏览器|新标签页/ },
+     { tag: '文件与格式', re: /tinywow|草料|cli\.im|convertio|ilovepdf|pdf24|pdf|base64|json|二维码|qr code|压缩|解压|zip|7-zip|7zip|格式转换|文件转换|图片压缩|图片转换|去背景|抠图|remove\.bg|bigjpg|url编解码|url encode|正则/ },
+     { tag: '系统与网络', re: /英国地址|地址生成|meiguodizhi|fakeuk|lanerc|老弟|ld1y|360安全|火绒|huorong|卡巴斯基|kaspersky|图吧|tubixiangtong|迅雷|xunlei|uu加速|uu远程|remote\.163|前行者|ehubs|魔极客|monsgeek|麦高|mchose|mg-driver|驱动|路由器|192\.168|网络诊断|ping|dns|远程控制/ },
+     { tag: '查询服务', re: /快递|kuaidi|航班|flight|汇率|exchange rate|天气|tianqi|地图|amap|ditu|ip查询|黑猫|tousu/ },
+     // 其他在线工具：无法归入效率、文件、系统或查询时的中性工具分类。
+     { tag: '在线工具', re: /在线工具|web tool|toolbox|工具箱|测试工具/ },
     // 编程开发
     { tag: '编程开发', re: /csdn|博客园|cnblogs|廖雪峰|liaoxuefeng|菜鸟教程|runoob|掘金|juejin|v2ex|stack overflow|stackoverflow|github|gitee|vs code|visual studio|node\.js|python|\bnpm\b|docker hub|devdocs|carbon|explainshell|\bshell\b|米粒|miligong|codepen|jsfiddle/ },
     // 云盘与云服务
@@ -123,7 +128,7 @@
   // 原大类兜底（仅当上面规则一个都没命中时使用，保证每个网站至少一个标签）
   var CAT_FALLBACK = {
     AI: 'AI', 游戏: '游戏', 设计: '设计与创意', 教育: '在线学习',
-    工具: '效率工具', 电商: '电商购物', 电子: '数码硬件', 硬件: '数码硬件',
+    工具: '在线工具', 电商: '电商购物', 电子: '数码硬件', 硬件: '数码硬件',
     媒体: '新闻资讯', 社交: '社交媒体', 出行: '生活服务',
     科技: '其他', 时尚: '电商购物', 开发: '编程开发', 政务: '政务',
   };
@@ -301,6 +306,8 @@
       tags: tagList,
       categories: categories,
       updatedAt: new Date().toISOString().slice(0, 10),
+      // A stable, human-readable identity for matching generated catalog artifacts.
+      catalogVersion: 'catalog-' + sites.length + '-' + new Date().toISOString().slice(0, 10).replace(/-/g, ''),
     };
     return {
       meta: meta,
@@ -434,12 +441,24 @@
   }
   // mode: 'exact'（仅精确子串，用于简介/详情长文本）
   //       'partial'（+紧凑子序列）
-  //       'fuzzy'（+锚定开头的编辑距离，错别字容错，用于名称/全名/标签）
+  //       'fuzzy'（+编辑距离，错别字容错，用于名称/全名/标签）
   // 返回 0-100 分数（越高越匹配），不匹配返回 null。
-  // 注意：query 与 text 需已统一小写。
+  // 搜索输入和数据字段统一做轻量规范化，并兼容少量高频错拼。
+  var SEARCH_ALIASES = {
+    chagpt: 'chatgpt', chatgpt: 'chatgpt', gpt: 'gpt',
+    bilibili: '哔哩哔哩', bili: '哔哩哔哩', youtube: '油管',
+    google: '谷歌', github: 'github', douyin: '抖音',
+  };
+  function searchText(v) {
+    return String(v == null ? '' : v).toLowerCase()
+      .replace(/[\u3000\s_-]+/g, '')
+      .replace(/[：:，,。.!！?？/\\]+/g, '');
+  }
   function fuzzySearch(query, text, mode) {
-    var q = String(query == null ? '' : query).toLowerCase();
-    var t = String(text == null ? '' : text).toLowerCase();
+    var q = searchText(query);
+    var t = searchText(text);
+    var alias = SEARCH_ALIASES[q];
+    if (alias && searchText(t).indexOf(searchText(alias)) !== -1) return 98;
     if (!q || !t) return null;
     if (t.indexOf(q) !== -1) return 100; // 1. 精确子串
     if (mode === 'exact') return null;
@@ -474,6 +493,29 @@
     }
     if (best <= cap) return Math.max(40, 70 - best * 12);
     return null;
+  }
+
+  // 综合站点排序：标题/域名优先，简介只作弱匹配，避免“视频”等宽泛词淹没精确结果。
+  function searchSiteScore(query, site) {
+    var q = searchText(query);
+    if (!q || !site) return null;
+    var best = null;
+    function score(value, weight, mode) {
+      var hit = fuzzySearch(q, value, mode);
+      if (hit === null) return;
+      var valueText = searchText(value);
+      var exact = valueText === q ? 115 : (valueText.indexOf(q) === 0 ? 108 : hit);
+      var result = Math.min(120, exact * weight);
+      if (best === null || result > best) best = result;
+    }
+    score(site.name, 1.00, 'fuzzy');
+    score(site.fullName, 0.94, 'fuzzy');
+    score((site.tags || []).join(' '), 0.78, 'fuzzy');
+    score(site.category, 0.72, 'fuzzy');
+    score(site.url, 0.88, 'exact');
+    score(site.brief, 0.52, 'exact');
+    score(site.detail, 0.35, 'exact');
+    return best;
   }
 
   // ---------- 热搜榜解析（兼容 vvhan / 60s / oioweb 等聚合接口） ----------
@@ -563,6 +605,7 @@
     validate: validate,
     classifyRow: classifyRow,
     fuzzySearch: fuzzySearch,
+    searchSiteScore: searchSiteScore,
     parseHotlist: parseHotlist,
     metaFromSites: metaFromSites,
     renumberSites: renumberSites,

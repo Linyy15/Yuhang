@@ -114,6 +114,29 @@
         '<div class="tool-row"><span id="tl-ip-out" class="tool-result"></span></div>'
     },
   ];
+  // 媒体工具（独立分类，不计入原有 15 个纯前端工具；仅处理用户提供的 URL/本地文件）
+  var MEDIA_TOOLS = [
+    {
+      id: 'media-link', icon: '🔎', key: 'tool_media_link',
+      body: '<div class="tool-row"><input id="tl-media-url" class="tool-out" type="url" aria-label="媒体链接" placeholder="https://example.com/media.mp4"><button type="button" class="btn small" data-act="media-link-analyze">分析</button></div>' +
+        '<div class="tool-hint">仅检查你输入的 HTTP(S) 地址，不会抓取受限平台内容。</div><div id="tl-media-url-out" class="tool-result" aria-live="polite"></div>'
+    },
+    {
+      id: 'media-file', icon: '🎞️', key: 'tool_media_file',
+      body: '<div class="tool-row"><input id="tl-media-file" type="file" aria-label="选择本地媒体" accept="audio/*,video/*,image/*"><button type="button" class="btn small" data-act="media-file-analyze">分析</button></div>' +
+        '<div class="tool-hint">文件只在浏览器本地读取基本元数据，不会上传。</div><div id="tl-media-file-out" class="tool-result" aria-live="polite"></div>'
+    },
+    {
+      id: 'media-download', icon: '⬇️', key: 'tool_media_download',
+      body: '<div class="tool-row"><input id="tl-media-download" type="file" aria-label="选择要下载的本地文件"><button type="button" class="btn small" data-act="media-download-file">下载所选文件</button></div>' +
+        '<div class="tool-hint">仅重新下载你明确选择的本地文件，不访问第三方平台。</div><div id="tl-media-download-out" class="tool-result" aria-live="polite"></div>'
+    },
+    {
+      id: 'media-format', icon: '🧩', key: 'tool_media_format',
+      body: '<div class="tool-row"><button type="button" class="btn small" data-act="media-format-detect">检测当前浏览器</button></div>' +
+        '<div class="tool-hint">检测浏览器原生播放能力，不执行格式转换或解密。</div><div id="tl-media-format-out" class="tool-result" aria-live="polite"></div>'
+    }
+  ];
   var TOOL_QUICK = [
     { name: '📦 快递查询', url: 'https://www.kuaidi100.com' },
     { name: '✈️ 航班查询', url: 'https://zh.flightaware.com' },
@@ -122,6 +145,63 @@
     { name: '🗺 地图', url: 'https://www.amap.com' },
     { name: '📰 今日头条', url: 'https://www.toutiao.com' },
   ];
+
+  function renderMediaTools() {
+    return '<div class="tools-sec tools-sec-media">' + opts.t('tool_sec_media') + '</div>' +
+      MEDIA_TOOLS.map(function (tl) {
+        return '<div class="tool-card" data-tool="' + tl.id + '">' +
+          '<div class="tool-head"><span class="tool-ico">' + tl.icon + '</span><span class="tool-name">' + opts.t(tl.key) + '</span><span class="tool-arrow">▾</span></div>' +
+          '<div class="tool-body">' + tl.body + '</div></div>';
+      }).join('');
+  }
+
+  function formatBytes(n) {
+    if (!n) return '0 B';
+    var units = ['B', 'KB', 'MB', 'GB'], i = Math.min(Math.floor(Math.log(n) / Math.log(1024)), 3);
+    return (n / Math.pow(1024, i)).toFixed(i ? 2 : 0) + ' ' + units[i];
+  }
+  function mediaLinkAnalyze() {
+    var input = $('tl-media-url'), out = $('tl-media-url-out');
+    if (!input || !out) return;
+    var value = input.value.trim();
+    try {
+      var u = new URL(value);
+      if (!/^https?:$/.test(u.protocol)) throw new Error('仅支持 HTTP(S) 链接');
+      var path = u.pathname, ext = (path.match(/\.([a-z0-9]{2,5})$/i) || [])[1] || '未知';
+      out.textContent = '✅ 有效链接 · 类型后缀：' + ext.toUpperCase() + ' · 不会自动抓取或绕过平台限制';
+    } catch (e) { out.textContent = '请输入有效的 HTTP(S) 媒体链接'; }
+  }
+  function mediaFileAnalyze() {
+    var input = $('tl-media-file'), out = $('tl-media-file-out'), file = input && input.files && input.files[0];
+    if (!out) return;
+    if (!file) { out.textContent = '请先选择音频、视频或图片文件'; return; }
+    out.textContent = '✅ ' + file.name + ' · ' + (file.type || '未知类型') + ' · ' + formatBytes(file.size) + ' · ' + (file.lastModified ? new Date(file.lastModified).toLocaleDateString() : '');
+  }
+  function mediaDownloadFile() {
+    var input = $('tl-media-download'), out = $('tl-media-download-out'), file = input && input.files && input.files[0];
+    if (!out) return;
+    if (!file) { out.textContent = '请先选择要下载的本地文件'; return; }
+    try {
+      var a = document.createElement('a'), url = URL.createObjectURL(file);
+      a.href = url; a.download = file.name; a.rel = 'noopener';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      out.textContent = '✅ 已触发下载：' + file.name;
+    } catch (e) { out.textContent = '当前浏览器不支持本地下载'; }
+  }
+  function mediaFormatDetect() {
+    var out = $('tl-media-format-out');
+    if (!out) return;
+    var audio = document.createElement('audio'), video = document.createElement('video');
+    var types = ['audio/mpeg', 'audio/ogg; codecs="vorbis"', 'audio/wav', 'video/mp4', 'video/webm', 'video/ogg'];
+    var recorder = window.MediaRecorder;
+    out.textContent = types.map(function (type) {
+      var el = type.indexOf('audio/') === 0 ? audio : video;
+      var play = el.canPlayType(type) || 'no';
+      var record = recorder && typeof recorder.isTypeSupported === 'function' && recorder.isTypeSupported(type) ? '可录制' : '不支持录制';
+      return type + ': 播放=' + play + '，' + record;
+    }).join(' · ') + '（仅能力检测，不执行格式转换）';
+  }
 
   function renderTools() {
     var toolsGrid = opts && opts.toolsGrid;
@@ -138,6 +218,7 @@
           '<div class="tool-body">' + tl.body + '</div>' +
         '</div>';
       }).join('') +
+      renderMediaTools() +
       '<div class="tools-sec">' + opts.t('tool_sec_quick') + '</div>' +
       TOOL_QUICK.map(function (q) {
         return '<a class="tool-card tool-link" href="' + q.url + '" target="_blank" rel="noopener">' +
@@ -493,6 +574,14 @@
       qrGen();
     } else if (act === 'ip-lookup') {
       ipLookup();
+    } else if (act === 'media-link-analyze') {
+      mediaLinkAnalyze();
+    } else if (act === 'media-file-analyze') {
+      mediaFileAnalyze();
+    } else if (act === 'media-download-file') {
+      mediaDownloadFile();
+    } else if (act === 'media-format-detect') {
+      mediaFormatDetect();
     }
     if (btn && btn.blur) btn.blur();
   }

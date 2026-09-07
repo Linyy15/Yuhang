@@ -4,17 +4,23 @@
  * 网站图标（favicon.im / DuckDuckGo / Google）：cache-first，缓存已见过的图标 → 离线也能显示图标（首字兜底）。
  * 发布更新后请提升版本号（CACHE），下次访问自动更新缓存。
  */
-const CACHE = 'yuhang-v6';
+const CACHE = 'yuhang-v8';
 const ICON_CACHE = 'yuhang-icons-v1';
 const SHELL = [
   './',
   './index.html',
   './js/sites-lib.js',
+  './js/schema.js',
+  './js/links.js',
+  './js/search-index.js',
+  './js/integrations.js',
+  './js/media-tools.js',
   './js/config.js',
   './js/app.js',
   './js/startpage.js',
   './css/style.css',
   './css/startpage.css',
+  './css/startpage-polish.css',
   './icon.svg',
   './manifest.webmanifest',
 ];

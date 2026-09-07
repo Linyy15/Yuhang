@@ -7,8 +7,15 @@
 <title>屿航 · 屿事</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%235b6cff'/%3E%3Cstop offset='1' stop-color='%239a5bff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='3' y='3' width='58' height='58' rx='16' fill='url(%23g)'/%3E%3Cpath fill='%23fff' d='M32 15l4.4 13-4.4-2.3-4.4 2.3z'/%3E%3Cpath fill='%23fff' d='M12 46a20 20 0 0 1 40 0z'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/theme.css">
+<script src="js/theme-sync.js"></script>
 <link rel="stylesheet" href="ip/ip.css">
 <style>
+.page-theme-picker { position: relative; min-width: 0; max-width: 290px; }.page-start-settings{border:1px solid var(--border);border-radius:999px;background:var(--panel-2);color:var(--text-2);padding:6px 9px;font:700 11px var(--font);cursor:pointer}.page-start-settings:hover,.page-start-settings:focus-visible{color:var(--accent);border-color:var(--accent)}
+.page-theme-picker .yh-tp { padding: 6px; }
+@media (max-width: 980px) { .page-theme-picker { display: none; } }
+
+body.todo-start-open{overflow:hidden}.todo-start-overlay{position:fixed;inset:0;z-index:120;background:var(--bg-base);display:grid;place-items:center;padding:24px}.todo-start-overlay[hidden]{display:none}.todo-start-card{width:min(620px,100%);padding:clamp(28px,6vw,64px);text-align:center;background:var(--glass-bg-strong);border:1px solid var(--glass-border);border-radius:var(--radius-lg);box-shadow:var(--glass-shadow)}.todo-start-kicker{color:var(--accent);font:800 11px var(--font);letter-spacing:.2em}.todo-start-card h1{margin:12px 0 8px;color:var(--text);font-size:clamp(26px,5vw,44px)}.todo-start-card p{color:var(--text-sub);margin-bottom:24px}.todo-start-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}.todo-start-choice{border:1px solid var(--glass-border);border-radius:var(--radius-sm);background:var(--glass-bg);color:var(--text);padding:12px 18px;font:700 13px var(--font);cursor:pointer}.todo-start-choice.primary{border-color:transparent;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff}.todo-start-choice:focus-visible{outline:2px solid var(--accent);outline-offset:3px}.todo-start-remember{display:inline-flex;align-items:center;gap:7px;margin-top:18px;color:var(--text-faint);font-size:12px}.todo-start-remember input{accent-color:var(--accent)}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
@@ -402,6 +409,34 @@ body::before {
 }
 .clear-done-btn:hover { color: var(--red); border-color: var(--red); border-style: solid; }
 .clear-done-btn:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+
+/* ---- 专注航线（下一项 + 番茄钟） ---- */
+.focus-strip {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; padding: 11px 14px;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 10%, var(--panel)), color-mix(in oklab, var(--accent-2) 8%, var(--panel)));
+  border: 1px solid var(--border-soft); border-radius: var(--radius);
+  box-shadow: var(--shadow); min-height: 52px;
+}
+.focus-strip-icon { font-size: 20px; flex-shrink: 0; }
+.focus-strip > span:nth-child(2) { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.focus-strip b { font-size: 12px; color: var(--text); }
+.focus-strip small { font-size: 11px; color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.focus-strip-btn { flex-shrink: 0; }
+.focus-strip.is-done { opacity: .75; }
+
+/* ---- 一键聚焦下一项 ---- */
+.focus-next-btn {
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, var(--border));
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 11.5px; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: all .18s ease;
+}
+.focus-next-btn:hover { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--accent), var(--accent-2)); transform: translateY(-1px); }
+.focus-next-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.todo-item.focus-next { animation: focusNext .8s ease 2; border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft), var(--shadow-lift); }
+@keyframes focusNext { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
 /* ---- 屿事（待办清单） ---- */
 .todo-list { display: flex; flex-direction: column; gap: 10px; }
@@ -902,6 +937,19 @@ body::before {
 .reminder-toggle { padding: 5px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--panel-2); color: var(--text-2); font-size: 11.5px; font-weight: 700; font-family: inherit; cursor: pointer; }
 .reminder-toggle.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .view-calendar { padding-bottom: 42px; }
+/* 今日工作台与看板视图 */
+.board-view { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding-bottom:42px; }
+.board-column { min-height:220px; padding:12px; border:1px solid var(--border); border-radius:var(--radius); background:color-mix(in oklab,var(--panel) 78%,transparent); }
+.board-column.drag-over { outline:2px dashed var(--accent); background:var(--accent-soft); }
+.board-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; font-weight:800; }
+.board-count { color:var(--faint); font-size:12px; }
+.board-task { padding:11px; margin:8px 0; border:1px solid var(--border); border-radius:10px; background:var(--panel); box-shadow:var(--shadow); cursor:grab; }
+.board-task:active { cursor:grabbing; }
+.board-task-title { font-weight:700; word-break:break-word; }
+.board-task-meta { color:var(--faint); font-size:11px; margin-top:6px; }
+.today-strip { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin:0 0 12px; padding:10px 12px; border:1px solid var(--border-soft); border-radius:var(--radius); background:color-mix(in oklab,var(--accent) 7%,var(--panel)); }
+.today-strip strong { color:var(--accent); }
+@media (max-width:720px){ .board-view{grid-template-columns:1fr; overflow-x:visible;} .board-column{min-height:120px;} }
 .calendar { display: flex; flex-direction: column; gap: 12px; }
 .calendar-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; box-shadow: var(--shadow); }
 .calendar-title { font-size: 15px; font-weight: 800; }
@@ -962,6 +1010,39 @@ body::before {
 .notice-go:hover { background: var(--accent); color: #fff; }
 
 /* ---- 番茄钟 ---- */
+.pomo-panel:fullscreen {
+  width: 100vw; height: 100vh; max-width: none; max-height: none;
+  border: 0; border-radius: 0; padding: max(28px, 6vh) 24px;
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; gap: 22px; overflow: auto;
+  background:
+    radial-gradient(ellipse 65% 55% at 50% 38%, color-mix(in oklab, var(--accent) 20%, transparent), transparent 70%),
+    radial-gradient(ellipse 80% 80% at 50% 100%, color-mix(in oklab, var(--accent-2) 12%, transparent), transparent 70%),
+    var(--bg);
+}
+.pomo-panel:fullscreen::before { content: 'FOCUS MODE'; position: absolute; top: 28px; left: 32px; color: var(--faint); font-size: 11px; font-weight: 800; letter-spacing: .22em; opacity: .7; }
+.pomo-panel:fullscreen .pomo-head { width: min(720px, 92vw); padding-bottom: 16px; border-bottom: 1px solid color-mix(in oklab, var(--accent) 18%, var(--border)); }
+.pomo-panel:fullscreen .pomo-title { font-size: 20px; }
+.pomo-panel:fullscreen .pomo-head-actions { display: flex; gap: 10px; }
+.pomo-panel:fullscreen .pomo-mode { font-size: 18px; font-weight: 700; color: var(--accent); }
+.pomo-panel:fullscreen .pomo-clock { margin: 0; font-size: clamp(104px, 19vw, 260px); line-height: .95; letter-spacing: .035em; text-shadow: 0 18px 70px color-mix(in oklab, var(--accent) 28%, transparent); }
+.pomo-panel:fullscreen .pomo-task { width: min(500px, 88vw); padding: 12px 14px; font-size: 14px; border-radius: 12px; }
+.pomo-panel:fullscreen .pomo-actions { width: min(500px, 88vw); gap: 12px; margin-top: 2px; }
+.pomo-panel:fullscreen .pomo-actions button { min-width: 140px; padding: 13px 28px; font-size: 16px; border-radius: 12px; }
+.pomo-panel:fullscreen .pomo-actions button:first-child { color: #fff; border-color: transparent; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 10px 28px color-mix(in oklab, var(--accent) 28%, transparent); }
+.pomo-panel:fullscreen .pomo-count { font-size: 13px; }
+@media (max-width: 560px) {
+  .pomo-panel:fullscreen { padding: 58px 16px 24px; gap: 16px; }
+  .pomo-panel:fullscreen::before { top: 20px; left: 20px; }
+  .pomo-panel:fullscreen .pomo-head { width: 100%; }
+  .pomo-panel:fullscreen .pomo-title { font-size: 17px; }
+  .pomo-panel:fullscreen .pomo-clock { font-size: clamp(76px, 25vw, 150px); }
+  .pomo-panel:fullscreen .pomo-actions button { min-width: 0; padding: 12px 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pomo-panel:fullscreen .pomo-clock { text-shadow: none; }
+}
+
 .pomo-panel { display: none; position: fixed; right: 18px; bottom: 18px; z-index: 130; width: min(320px, calc(100vw - 36px)); padding: 16px; background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-lift); }
 .pomo-panel.show { display: block; animation: slideInTop .25s ease both; }
 .pomo-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -973,7 +1054,18 @@ body::before {
 .pomo-actions button { flex: 1; padding: 7px 9px; border: 1px solid var(--border); border-radius: 8px; background: var(--panel-2); color: var(--text-2); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer; }
 .pomo-actions button:hover { color: var(--accent); border-color: var(--accent); }
 .pomo-count { margin-top: 9px; text-align: center; color: var(--faint); font-size: 11px; }
+
+/* 新视图：标签分组 / 时间轴 */
+.tags-group-view, .timeline-view { display: flex; flex-direction: column; gap: 18px; }
+.tg-group, .tl-group { background: var(--panel-2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.tg-head, .tl-head { display: flex; align-items: center; justify-content: space-between; padding: 9px 14px; background: linear-gradient(135deg, color-mix(in oklab, var(--accent) 12%, transparent), color-mix(in oklab, var(--accent-2) 10%, transparent)); border-bottom: 1px solid var(--border); }
+.tg-name, .tl-name { font-size: 13px; font-weight: 800; color: var(--text); }
+.tg-count, .tl-count { font-size: 11px; font-weight: 700; color: var(--faint); }
+.tg-group .todo-item, .tl-group .todo-item { border-radius: 0; border-left: 0; border-right: 0; border-top: 0; }
+.tg-group .todo-item:first-child, .tl-group .todo-item:first-child { border-top: 0; }
+.tl-group:first-child .tl-head { background: linear-gradient(135deg, color-mix(in oklab, var(--red) 16%, transparent), color-mix(in oklab, var(--accent) 10%, transparent)); }
 </style>
+<script src="js/theme-sync.js"></script>
 </head>
 <body>
 
@@ -996,8 +1088,23 @@ body::before {
   <nav class="page-links" aria-label="屿航页面导航">
     <a href="index.html">🏝 屿航</a>
     <a href="ip.html">🐱 屿咪</a>
+    <button type="button" class="page-start-settings" id="todoStartSettings" title="设置默认起始页">⚙ 起始页</button>
   </nav>
+  <div class="page-theme-picker" id="pageThemePicker" aria-label="主题换肤"></div>
 </header>
+
+<div class="todo-start-overlay" id="todoStartOverlay" hidden>
+  <div class="todo-start-card" role="dialog" aria-labelledby="todoStartTitle">
+    <div class="todo-start-kicker">YUSHI · DAILY ROUTE</div>
+    <h1 id="todoStartTitle">今天，先从哪条航线开始？</h1>
+    <p>屿咪会陪你把想做的事，一件件带回岸上。</p>
+    <div class="todo-start-actions">
+      <button type="button" class="todo-start-choice primary" data-todo-start="normal">📋 进入普通屿事</button>
+      <button type="button" class="todo-start-choice" data-todo-start="fullscreen">🌌 进入整屏起始页</button>
+    </div>
+    <label class="todo-start-remember"><input type="checkbox" id="todoStartRemember" checked> 记住我的选择</label>
+  </div>
+</div>
 
 <main class="container">
 
@@ -1039,6 +1146,9 @@ body::before {
     <div class="view-tabs" role="tablist" aria-label="视图切换">
       <button class="view-tab active" data-view="list" role="tab" aria-selected="true">📝 列表</button>
       <button class="view-tab" data-view="calendar" role="tab" aria-selected="false">📅 日历</button>
+       <button class="view-tab" data-view="board" role="tab" aria-selected="false">🗂 看板</button>
+       <button class="view-tab" data-view="tagsgroup" role="tab" aria-selected="false">🏷 分组</button>
+       <button class="view-tab" data-view="timeline" role="tab" aria-selected="false">⏳ 时间轴</button>
     </div>
     <div class="reminder-wrap" aria-label="提醒设置">
       <label class="view-summary" for="reminderAt">提醒时间</label>
@@ -1056,6 +1166,9 @@ body::before {
   </div>
 
   <div id="calendarView" class="view-calendar" hidden></div>
+  <div id="boardView" class="board-view" hidden></div>
+  <div id="tagsGroupView" class="tags-group-view" hidden></div>
+  <div id="timelineView" class="timeline-view" hidden></div>
 
   <div class="add-form" id="addForm">
     <div class="add-form-row">
@@ -1080,8 +1193,16 @@ body::before {
     <div class="add-success" id="addSuccess" aria-live="polite"></div>
   </div>
 
+  <div class="focus-strip" id="focusStrip" aria-live="polite">
+    <span class="focus-strip-icon">🧭</span>
+    <span><b id="focusTitle">今日航线</b><small id="focusText">先完成一件最重要的事，屿咪会为你记住这段航程。</small></span>
+    <button type="button" id="focusBtn" class="backup-btn">开始专注</button>
+  </div>
+
   <div class="filter-bar" role="toolbar" aria-label="筛选">
     <button class="filter-btn active" data-filter="all">全部<span class="pill-count" id="countAll"></span></button>
+    <button class="filter-btn" data-filter="today">📌 今日</button>
+    <button class="filter-btn" data-filter="overdue">⚠️ 逾期</button>
     <button class="filter-btn" data-filter="active">待办<span class="pill-count" id="countActive"></span></button>
     <button class="filter-btn" data-filter="done">已完成<span class="pill-count" id="countDone"></span></button>
     <button class="filter-btn" data-filter="high">🔴 高优<span class="pill-count" id="countHigh"></span></button>
@@ -1091,7 +1212,8 @@ body::before {
     <input type="search" id="todoSearch" class="todo-search" placeholder="🔎 搜索待办…" autocomplete="off" aria-label="搜索待办">
     <button class="backup-btn reminder-toggle" id="reminderBtn" title="打开页面提醒面板">🔔 提醒</button>
     <button class="backup-btn" id="pomoBtn" title="打开番茄钟">🍅 番茄钟</button>
-    <button class="clear-done-btn" id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
+    <button class="focus-next-btn" id="focusNextBtn" title="跳到最紧急的未完成待办">🎯 下一项</button>
+     <button class="clear-done-btn" id="clearDoneBtn" title="永久删除全部已完成项" hidden>清空已完成</button>
     <div class="backup-btns">
       <button class="backup-btn" id="exportBtn" title="导出全部待办为 JSON 备份">⬇ 备份</button>
       <button class="backup-btn" id="importBtn" title="从 JSON 备份恢复（合并导入）">⬆ 恢复</button>
@@ -1103,7 +1225,7 @@ body::before {
 </main>
 
 <div class="pomo-panel" id="pomoPanel" role="dialog" aria-label="番茄钟">
-  <div class="pomo-head"><span class="pomo-title">🍅 番茄钟</span><button class="notice-clear" id="pomoClose" type="button">关闭</button></div>
+  <div class="pomo-head"><span class="pomo-title">🍅 番茄钟</span><span class="pomo-head-actions"><button class="notice-clear" id="pomoFullscreen" type="button" title="进入全屏专注">⛶ 全屏</button><button class="notice-clear" id="pomoClose" type="button">关闭</button></span></div>
   <div class="pomo-mode" id="pomoMode">专注 25 分钟</div>
   <div class="pomo-clock" id="pomoClock">25:00</div>
   <select class="pomo-task" id="pomoTask" aria-label="关联待办"><option value="">不关联待办</option></select>
@@ -1125,6 +1247,7 @@ body::before {
   <span class="undo-bar" aria-hidden="true"></span>
 </div>
 
+<script defer src="js/yh-shared.js"></script>
 <script>
 (function() {
   'use strict';
@@ -1148,8 +1271,56 @@ body::before {
   let reminderTimer = null;
   let activeReminders = {};
   let noticeOpen = false;
+  var TODO_START_KEY = 'yuhang_todo_start_mode_v1';
+  function showTodoStartChooser() {
+    var overlay = document.getElementById('todoStartOverlay');
+    if (overlay) { overlay.hidden = false; document.body.classList.add('todo-start-open'); }
+  }
+  function resetTodoStartChooser() {
+    var overlay = document.getElementById('todoStartOverlay');
+    if (!overlay) return;
+    var title = overlay.querySelector('#todoStartTitle');
+    var desc = overlay.querySelector('.todo-start-card p');
+    var primary = overlay.querySelector('[data-todo-start="normal"]');
+    var secondary = overlay.querySelector('[data-todo-start="fullscreen"]');
+    if (title) title.textContent = '今天，先从哪条航线开始？';
+    if (desc) desc.textContent = '屿咪会陪你把想做的事，一件件带回岸上。';
+    if (primary) { primary.dataset.todoStart = 'normal'; primary.textContent = '📋 进入普通屿事'; primary.classList.add('primary'); }
+    if (secondary) { secondary.dataset.todoStart = 'fullscreen'; secondary.textContent = '🌌 进入整屏起始页'; secondary.classList.remove('primary'); }
+    var remember = document.getElementById('todoStartRemember');
+    if (remember) { remember.checked = true; remember.closest('label').style.display = 'inline-flex'; }
+  }
+  function closeTodoStartChooser(mode) {
+    var remember = document.getElementById('todoStartRemember');
+    if (remember && remember.checked) { try { localStorage.setItem(TODO_START_KEY, mode); } catch (e) {} }
+    var overlay = document.getElementById('todoStartOverlay');
+    if (overlay) overlay.hidden = true;
+    document.body.classList.remove('todo-start-open');
+  }
+  function initTodoStart() {
+    var overlay = document.getElementById('todoStartOverlay');
+    if (!overlay) return;
+    overlay.querySelectorAll('[data-todo-start]').forEach(function (b) { b.addEventListener('click', function () { closeTodoStartChooser(b.getAttribute('data-todo-start')); }); });
+    var settings = document.getElementById('todoStartSettings');
+    if (settings) settings.addEventListener('click', function () { resetTodoStartChooser(); showTodoStartChooser(); });
+    var mode = null; try { mode = localStorage.getItem(TODO_START_KEY); } catch (e) {}
+    if (mode === 'fullscreen') {
+      var title = overlay.querySelector('#todoStartTitle');
+      var desc = overlay.querySelector('.todo-start-card p');
+      var primary = overlay.querySelector('[data-todo-start="normal"]');
+      var secondary = overlay.querySelector('[data-todo-start="fullscreen"]');
+      if (title) title.textContent = '今天的航线已经准备好了';
+      if (desc) desc.textContent = '这是你的整屏屿事起始页，准备好后再进入待办清单。';
+      if (primary) { primary.dataset.todoStart = 'normal'; primary.textContent = '📋 开始今日屿事'; }
+      if (secondary) { secondary.dataset.todoStart = 'normal'; secondary.textContent = '↩ 改为普通进入'; secondary.classList.remove('primary'); }
+      var remember = document.getElementById('todoStartRemember');
+      if (remember) { remember.checked = false; remember.closest('label').style.display = 'none'; }
+      showTodoStartChooser();
+    }
+  }
   const POMO_KEY = 'yuhang_todo_pomo_v1';
   let pomo = { left: 1500, running: false, timer: null, completed: 0, mode: 'focus', startedAt: 0 };
+  let focusTodoId = null;
 
   function uid() { return Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 8); }
   function pomoFormat(sec) { return String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0'); }
@@ -1160,6 +1331,18 @@ body::before {
     var count = document.getElementById('pomoCount'); if (count) count.textContent = '今日完成 ' + pomo.completed + ' 个番茄';
   }
   function openPomo() { var p = document.getElementById('pomoPanel'); if (!p) return; p.classList.add('show'); var sel = document.getElementById('pomoTask'); if (sel) sel.innerHTML = '<option value="">不关联待办</option>' + todos.filter(function(t){return !t.done;}).map(function(t){return '<option value="' + escapeHtml(t.id) + '">' + escapeHtml(t.title) + '</option>';}).join(''); renderPomo(); }
+  function togglePomoFullscreen() {
+    var p = document.getElementById('pomoPanel'); if (!p) return;
+    if (document.fullscreenElement === p) { if (document.exitFullscreen) document.exitFullscreen(); return; }
+    if (p.requestFullscreen) p.requestFullscreen().catch(function() { addSuccessFlash('当前浏览器不支持全屏'); });
+    else addSuccessFlash('当前浏览器不支持全屏');
+  }
+  function syncPomoFullscreenButton() {
+    var btn = document.getElementById('pomoFullscreen'); if (!btn) return;
+    var active = document.fullscreenElement === document.getElementById('pomoPanel');
+    btn.textContent = active ? '⛶ 退出全屏' : '⛶ 全屏';
+    btn.title = active ? '退出全屏专注' : '进入全屏专注';
+  }
   function tickPomo() { if (!pomo.running) return; pomo.left = Math.max(0, pomo.left - 1); renderPomo(); if (pomo.left === 0) { pomo.running = false; if (pomo.mode === 'focus') pomo.completed++; pomo.mode = pomo.mode === 'focus' ? 'break' : 'focus'; pomo.left = pomo.mode === 'focus' ? 1500 : 300; savePomo(); addSuccessFlash(pomo.mode === 'break' ? '🍅 专注完成，休息一下吧' : '🌱 休息结束，继续出发'); } }
   function savePomo() { try { localStorage.setItem(POMO_KEY, JSON.stringify({ completed: pomo.completed })); } catch (e) {} }
   function loadPomo() { try { var x = JSON.parse(localStorage.getItem(POMO_KEY) || 'null'); if (x && typeof x.completed === 'number') pomo.completed = x.completed; } catch (e) {} }
@@ -1174,6 +1357,11 @@ body::before {
   function save() {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(todos)); } catch (e) {}
     saveRemindersState();
+  }
+  function notifyYumi(action, message) {
+    try { localStorage.setItem('yuhang_yumi_signal_v1', JSON.stringify({ action: action, message: message || '', at: Date.now() })); } catch (e) {}
+    var text = message || (action === 'add' ? '收到！我帮你记在小本本上。' : action === 'done' ? '这座岛屿已经点亮啦！' : '我们一起出发吧！');
+    addSuccessFlash('🐱 屿咪：' + text);
   }
 
   function loadRemindersState() {
@@ -1214,6 +1402,8 @@ body::before {
         due: /^\d{4}-\d{2}-\d{2}$/.test(t.due || '') ? t.due : null,
         repeat: repeat,
         done: t.done,
+        status: t.done ? 'done' : (t.status === 'doing' ? 'doing' : 'todo'),
+        note: String(t.note || '').slice(0, 1000),
         subtasks: t.subtasks,
         createdAt: Number(t.createdAt) || Date.now(),
         completedAt: t.completedAt ? Number(t.completedAt) : null
@@ -1246,6 +1436,8 @@ body::before {
       case 'high': return list.filter(function(t) { return t.priority === 'high'; });
       case 'mid': return list.filter(function(t) { return t.priority === 'mid'; });
       case 'low': return list.filter(function(t) { return t.priority === 'low'; });
+      case 'today': return list.filter(function(t) { return !t.done && t.due === isoDate(new Date()); });
+      case 'overdue': return list.filter(function(t) { return !t.done && t.due && t.due < isoDate(new Date()); });
       default: return list;
     }
   }
@@ -1358,6 +1550,7 @@ body::before {
     updateTrend();
     updateMascotExpression();
     updateClearDone();
+    updateFocusStrip();
     updateWelcome(total, done);
     updateFullDone(total, done);
     renderFilterCounts();
@@ -1972,6 +2165,8 @@ body::before {
       due: p.due || (dueEl && dueEl.value) || null,
       repeat: (repeatEl && repeatEl.value) || null,
       done: false,
+      status: 'todo',
+      note: '',
       subtasks: [],
       createdAt: Date.now()
     });
@@ -1988,6 +2183,7 @@ body::before {
     if (trash) purgeTrash();
     if (p.due || p.priority || p.tag) addSuccessFlash('✨ 已识别「' + (p.due || '') + (p.priority ? ' · ' + ({ high: '高', mid: '中', low: '低' })[p.priority] : '') + (p.tag ? ' · #' + p.tag : '') + '」');
     else addSuccessFlash('✨ 待办已添加');
+    notifyYumi('add', '收到！我帮你记在小本本上。');
   }
 
   function toggleTodo(id, x, y) {
@@ -1995,6 +2191,7 @@ body::before {
     if (todo) {
       var wasDone = todo.done;
       todo.done = !todo.done;
+      todo.status = todo.done ? 'done' : 'todo';
       todo.completedAt = todo.done ? Date.now() : null;
       if (todo.done && todo.repeat) {
         todos.unshift({
@@ -2005,6 +2202,8 @@ body::before {
           due: nextRepeatDue(todo.due, todo.repeat),
           repeat: todo.repeat,
           done: false,
+          status: 'todo',
+          note: todo.note || '',
           subtasks: (todo.subtasks || []).map(function(s) { return { id: uid(), text: s.text, done: false }; }),
           createdAt: Date.now()
         });
@@ -2014,7 +2213,7 @@ body::before {
       updateStats();
       renderTags();
       scheduleReminders();
-      if (!wasDone) { celebrateMascot(); if (x && y) confettiBurst(x, y); }
+      if (!wasDone) { celebrateMascot(); if (x && y) confettiBurst(x, y); notifyYumi('done', '这座岛屿已经点亮啦！'); }
     }
   }
 
@@ -2063,6 +2262,53 @@ body::before {
     showUndo(todo);
   }
 
+  function getFocusTodo() {
+    var candidates = todos.filter(function(t) { return !t.done; });
+    candidates.sort(function(a, b) {
+      var da = a.due ? new Date(a.due + 'T00:00:00').getTime() : Infinity;
+      var db = b.due ? new Date(b.due + 'T00:00:00').getTime() : Infinity;
+      if (da !== db) return da - db;
+      var order = { high: 0, mid: 1, low: 2 };
+      return order[a.priority] - order[b.priority] || (b.createdAt || 0) - (a.createdAt || 0);
+    });
+    return candidates[0] || null;
+  }
+  function updateFocusStrip() {
+    var strip = document.getElementById('focusStrip');
+    var title = document.getElementById('focusTitle');
+    var text = document.getElementById('focusText');
+    var btn = document.getElementById('focusBtn');
+    var todo = getFocusTodo();
+    if (!strip || !title || !text || !btn) return;
+    strip.classList.toggle('is-done', !todo);
+    if (!todo) {
+      title.textContent = '今日航线已完成'; text.textContent = '太棒了！可以休息一下，或添加新的目标。'; btn.textContent = '打开番茄钟';
+      return;
+    }
+    title.textContent = '下一站 · ' + todo.title;
+    text.textContent = todo.due ? '按截止日期与优先级排序 · 准备专注 25 分钟' : '优先完成这一项 · 准备专注 25 分钟';
+    btn.textContent = '开始专注';
+  }
+
+  function focusNextTodo() {
+    var candidates = todos.filter(function(t) { return !t.done; });
+    if (!candidates.length) { addSuccessFlash('🎉 没有未完成待办啦'); return; }
+    candidates.sort(function(a, b) {
+      var da = a.due ? new Date(a.due + 'T00:00:00').getTime() : Infinity;
+      var db = b.due ? new Date(b.due + 'T00:00:00').getTime() : Infinity;
+      if (da !== db) return da - db;
+      var order = { high: 0, mid: 1, low: 2 };
+      return order[a.priority] - order[b.priority] || (b.createdAt || 0) - (a.createdAt || 0);
+    });
+    var todo = candidates[0];
+    currentFilter = 'all'; currentTagFilter = null; searchKeyword = '';
+    var search = document.getElementById('todoSearch'); if (search) search.value = '';
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(function(b) { b.classList.toggle('active', b.dataset.filter === 'all'); });
+    render();
+    var item = document.querySelector('.todo-item[data-id="' + CSS.escape(todo.id) + '"]');
+    if (item) { item.scrollIntoView({ behavior: 'smooth', block: 'center' }); item.classList.add('focus-next'); setTimeout(function() { item.classList.remove('focus-next'); }, 1700); }
+  }
+
   function clearDone() {
     var doneCount = todos.filter(function(t) { return t.done; }).length;
     if (!doneCount) return;
@@ -2076,8 +2322,18 @@ body::before {
     renderTags();
   }
 
+  document.getElementById('focusBtn').addEventListener('click', function() {
+    var todo = getFocusTodo();
+    if (!todo) { openPomo(); return; }
+    focusNextTodo();
+    openPomo();
+    var task = document.getElementById('pomoTask');
+    if (task) task.value = todo.id;
+  });
   document.getElementById('pomoBtn').addEventListener('click', openPomo);
-  document.getElementById('pomoClose').addEventListener('click', function(){ document.getElementById('pomoPanel').classList.remove('show'); });
+  document.getElementById('pomoFullscreen').addEventListener('click', togglePomoFullscreen);
+  document.addEventListener('fullscreenchange', syncPomoFullscreenButton);
+  document.getElementById('pomoClose').addEventListener('click', function(){ if (document.fullscreenElement === document.getElementById('pomoPanel') && document.exitFullscreen) document.exitFullscreen(); document.getElementById('pomoPanel').classList.remove('show'); });
   document.getElementById('pomoStart').addEventListener('click', function(){ pomo.running = !pomo.running; if (pomo.running && !pomo.timer) pomo.timer = setInterval(tickPomo, 1000); renderPomo(); });
   document.getElementById('pomoReset').addEventListener('click', function(){ pomo.running = false; pomo.mode = 'focus'; pomo.left = 1500; renderPomo(); });
   loadPomo(); renderPomo();
@@ -2100,6 +2356,7 @@ body::before {
   });
 
   document.getElementById('clearDoneBtn').addEventListener('click', clearDone);
+  document.getElementById('focusNextBtn').addEventListener('click', focusNextTodo);
 
   document.getElementById('undoCta').addEventListener('click', function() {
     if (!trash) return;
@@ -2136,6 +2393,22 @@ body::before {
     if (input) { e.preventDefault(); addSubtask(input.dataset.id); }
     var check = e.target.closest('.subtask-check');
     if (check) { e.preventDefault(); toggleSubtask(check.dataset.id, check.dataset.sid); }
+  });
+
+  // 新视图容器复用列表的动作委派（toggle / edit / delete）
+  ['tagsGroupView', 'timelineView'].forEach(function(cid) {
+    var c = document.getElementById(cid);
+    if (!c) return;
+    c.addEventListener('click', function(e) {
+      var el = e.target.closest('[data-action]');
+      if (!el) return;
+      var id = el.dataset.id;
+      var item = el.closest('.todo-item');
+      if (item) makeRipple(item, e.clientX, e.clientY);
+      if (el.dataset.action === 'toggle') toggleTodo(id, e.clientX, e.clientY);
+      if (el.dataset.action === 'delete-soft') softDeleteTodo(id);
+      if (el.dataset.action === 'edit') startEdit(id);
+    });
   });
 
   document.querySelectorAll('.view-tab[data-view]').forEach(function(btn) {
@@ -2214,6 +2487,113 @@ body::before {
     reader.readAsText(file);
   });
 
+  function renderBoard() {
+    var board = document.getElementById('boardView');
+    if (!board) return;
+    var cols = [{ key: 'todo', title: '待处理', icon: '🧭' }, { key: 'doing', title: '进行中', icon: '⚡' }, { key: 'done', title: '已完成', icon: '✨' }];
+    board.innerHTML = cols.map(function(col) {
+      var items = todos.filter(function(t) { return (t.done ? 'done' : (t.status || 'todo')) === col.key; });
+      return '<section class="board-column" data-status="' + col.key + '"><div class="board-head"><span>' + col.icon + ' ' + col.title + '</span><span class="board-count">' + items.length + '</span></div>' + items.map(function(t) {
+        return '<article class="board-task" draggable="true" data-id="' + escapeHtml(t.id) + '"><div class="board-task-title">' + escapeHtml(t.title) + '</div><div class="board-task-meta">' + (t.priority === 'high' ? '🔴 高优' : t.priority === 'low' ? '🟢 低优' : '⚡ 中优') + (t.due ? ' · ' + escapeHtml(t.due) : '') + '</div></article>';
+      }).join('') + '</section>';
+    }).join('');
+    board.querySelectorAll('.board-task').forEach(function(card) {
+      card.addEventListener('dragstart', function(e) { e.dataTransfer.setData('text/plain', card.dataset.id); });
+    });
+    board.querySelectorAll('.board-column').forEach(function(col) {
+      col.addEventListener('dragover', function(e) { e.preventDefault(); col.classList.add('drag-over'); });
+      col.addEventListener('dragleave', function() { col.classList.remove('drag-over'); });
+      col.addEventListener('drop', function(e) {
+        e.preventDefault(); col.classList.remove('drag-over');
+        var t = todos.find(function(x) { return x.id === e.dataTransfer.getData('text/plain'); });
+        if (!t) return;
+        t.status = col.dataset.status; t.done = col.dataset.status === 'done';
+        t.completedAt = t.done ? (t.completedAt || Date.now()) : null;
+        save(); renderBoard(); render(); updateStats();
+        if (t.done) { celebrateMascot(); addSuccessFlash('✨ 屿咪：这座岛屿点亮啦！'); }
+      });
+    });
+  }
+
+  // ===== 新视图：标签分组 / 时间轴（复用既有 todo-item 标记与动作委派） =====
+  function groupItemHTML(todo) {
+    var prioText = todo.priority === 'high' ? '高' : todo.priority === 'low' ? '低' : '中';
+    var due = dueInfo(todo.due);
+    var doneCls = todo.done ? ' completed' : '';
+    var dueOverdueCls = (due && due.cls === 'due-overdue' && !todo.done) ? ' due-overdue-item' : '';
+    return '<div class="todo-item' + doneCls + dueOverdueCls + ' prio-' + escapeHtml(todo.priority) + '" data-id="' + escapeHtml(todo.id) + '" tabindex="0" role="listitem">' +
+      '<div class="todo-check' + (todo.done ? ' checked' : '') + '" data-action="toggle" data-id="' + escapeHtml(todo.id) + '" tabindex="0" role="button" aria-label="' + (todo.done ? '取消完成' : '标记完成') + '">' + (todo.done ? '<span aria-hidden="true">✓</span>' : '') + '</div>' +
+      '<div class="todo-body">' +
+        '<div class="todo-title">' + escapeHtml(todo.title) + '</div>' +
+        '<div class="todo-meta">' +
+          '<span class="priority-badge priority-' + escapeHtml(todo.priority) + '">' + prioText + '优先级</span>' +
+          (due ? '<span class="due-badge ' + due.cls + '">' + due.text + '</span>' : '') +
+          (todo.repeat ? '<span class="repeat-badge">🔁 ' + escapeHtml(repeatLabel(todo.repeat)) + '</span>' : '') +
+          (todo.tag ? '<span class="tag-badge">' + escapeHtml(todo.tag) + '</span>' : '') +
+        '</div>' +
+      '</div>' +
+      '<div class="todo-actions">' +
+        '<button class="todo-edit" data-action="edit" data-id="' + escapeHtml(todo.id) + '" title="编辑" aria-label="编辑">✏️</button>' +
+        '<button class="todo-del" data-action="delete-soft" data-id="' + escapeHtml(todo.id) + '" title="删除（可撤销）" aria-label="删除">🗑</button>' +
+      '</div>' +
+    '</div>';
+  }
+  function renderTagsGroup() {
+    var container = document.getElementById('tagsGroupView');
+    if (!container) return;
+    var list = getFiltered();
+    if (!list.length) { container.innerHTML = '<div class="empty-state"><p>该筛选下没有待办 🎉</p></div>'; return; }
+    var groups = {};
+    var order = [];
+    list.forEach(function (t) {
+      var key = t.tag || '未分组';
+      if (!groups[key]) { groups[key] = []; order.push(key); }
+      groups[key].push(t);
+    });
+    var html = '';
+    order.forEach(function (key) {
+      var arr = groups[key];
+      var done = arr.filter(function (t) { return t.done; }).length;
+      html += '<div class="tg-group">' +
+        '<div class="tg-head"><span class="tg-name">' + escapeHtml(key) + '</span><span class="tg-count">' + done + '/' + arr.length + '</span></div>' +
+        arr.map(groupItemHTML).join('') +
+      '</div>';
+    });
+    container.innerHTML = html;
+  }
+  function renderTimeline() {
+    var container = document.getElementById('timelineView');
+    if (!container) return;
+    var list = getFiltered();
+    if (!list.length) { container.innerHTML = '<div class="empty-state"><p>该筛选下没有待办 🎉</p></div>'; return; }
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var tom = new Date(today.getTime() + 86400000);
+    var endWeek = new Date(today.getTime() + 7 * 86400000);
+    var buckets = { overdue: [], today: [], tomorrow: [], week: [], later: [], none: [] };
+    list.forEach(function (t) {
+      if (!t.due) { buckets.none.push(t); return; }
+      var d = new Date(t.due + 'T00:00:00');
+      if (isNaN(d.getTime())) { buckets.none.push(t); return; }
+      if (d < today) buckets.overdue.push(t);
+      else if (d.getTime() === today.getTime()) buckets.today.push(t);
+      else if (d.getTime() === tom.getTime()) buckets.tomorrow.push(t);
+      else if (d < endWeek) buckets.week.push(t);
+      else buckets.later.push(t);
+    });
+    var labels = { overdue: '⏰ 已逾期', today: '📅 今天', tomorrow: '➡ 明天', week: '📆 本周内', later: '🗓 更远', none: '✨ 无截止日期' };
+    var order = ['overdue', 'today', 'tomorrow', 'week', 'later', 'none'];
+    var html = '';
+    order.forEach(function (k) {
+      var arr = buckets[k];
+      if (!arr.length) return;
+      html += '<div class="tl-group">' +
+        '<div class="tl-head"><span class="tl-name">' + labels[k] + '</span><span class="tl-count">' + arr.length + '</span></div>' +
+        arr.map(groupItemHTML).join('') +
+      '</div>';
+    });
+    container.innerHTML = html || '<div class="empty-state"><p>该筛选下没有待办 🎉</p></div>';
+  }
+
   function switchView(view) {
     currentView = view;
     document.querySelectorAll('.view-tab[data-view]').forEach(function(btn) {
@@ -2224,7 +2604,16 @@ body::before {
     document.getElementById('todoList').hidden = view !== 'list';
     var calendar = document.getElementById('calendarView');
     if (calendar) calendar.hidden = view !== 'calendar';
+    var board = document.getElementById('boardView');
+    if (board) board.hidden = view !== 'board';
+    var tg = document.getElementById('tagsGroupView');
+    if (tg) tg.hidden = view !== 'tagsgroup';
+    var tl = document.getElementById('timelineView');
+    if (tl) tl.hidden = view !== 'timeline';
     if (view === 'calendar') renderCalendar();
+    if (view === 'board') renderBoard();
+    if (view === 'tagsgroup') renderTagsGroup();
+    if (view === 'timeline') renderTimeline();
   }
   function renderCalendar() {
     var container = document.getElementById('calendarView');
@@ -2380,8 +2769,37 @@ body::before {
       var inp2 = document.getElementById('todoInput');
       if (inp2) inp2.blur();
     }
+    // ? 快捷键说明（与主站统一）
+    if (e.key === '?' && active && !['INPUT','TEXTAREA','SELECT'].includes(active.tagName)) {
+      if (window.YHShared) window.YHShared.YHToast.show('/ 聚焦输入 · Esc 取消/关闭 · ⏎ 确认 · 🖱 点卡片可编辑/删除', 3200);
+    }
   });
 
+  // 屿航待办收件箱：从主站卡片「加入屿事」导入（等待共享 UMD 完成 defer 加载）
+  function mountTodoInbox() {
+    try {
+      var bridge = window.YHShared && window.YHShared.YHTodoBridge;
+      var pending = bridge ? bridge.pending() : [];
+      if (pending && pending.length) {
+        var inboxBar = document.createElement('div');
+        inboxBar.className = 'welcome-bar';
+        inboxBar.style.cssText = 'cursor:pointer;display:flex;align-items:center;gap:10px';
+        inboxBar.innerHTML = '<span style="font-size:18px">📥</span><span style="flex:1;font-size:13px;font-weight:700;color:var(--text)">屿航给你发了 <b>' + pending.length + '</b> 条待办，点此一键导入</span><span style="font-size:12px;color:var(--accent);font-weight:700">导入 →</span>';
+        inboxBar.addEventListener('click', function () {
+          pending.forEach(function (it) { todos.push({ id: uid(), title: it.title || '未命名待办', priority: 'mid', tag: '屿航', due: '', done: false, createdAt: Date.now(), note: it.url ? '来自屿航：' + it.url : '' }); });
+          bridge.clear(); save(); render(); updateStats(); renderTags();
+          if (window.YHShared) window.YHShared.YHToast.show('已导入 ' + pending.length + ' 条待办 📋');
+          inboxBar.remove();
+        });
+        var container = document.querySelector('.container');
+        if (container) container.insertBefore(inboxBar, container.firstChild.nextSibling);
+      }
+    } catch (e) {}
+  }
+  if (window.YHShared) mountTodoInbox();
+  else window.addEventListener('DOMContentLoaded', mountTodoInbox);
+
+  initTodoStart();
   load();
   loadRemindersState();
   initMascotSvg();
@@ -2392,5 +2810,6 @@ body::before {
   scheduleReminders();
 })();
 </script>
+<script>window.addEventListener('DOMContentLoaded',function(){if(window.YHShared){YHShared.YHMobileNav.mount({active:'todo'});YHShared.YHThemePicker.mount(document.getElementById('pageThemePicker'),{compact:true});}});</script>
 </body>
 </html>

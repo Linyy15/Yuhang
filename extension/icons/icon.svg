@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title">
+  <title id="title">屿航</title>
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#315fe8"/>
+      <stop offset="1" stop-color="#764be8"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#sea)"/>
+  <path d="M20 78c14-4 23 8 37 3s22-22 37-16c7 3 10 8 14 13v23H20Z" fill="#dff7ff" opacity=".94"/>
+  <path d="M20 92c14-4 23 8 37 3s22-22 37-16c7 3 10 8 14 13" fill="none" stroke="#3ab4d8" stroke-linecap="round" stroke-width="6"/>
+  <path d="M64 27 84 60H44Z" fill="#fff"/>
+  <path d="M64 27v34" stroke="#bed5ff" stroke-width="4"/>
+</svg>

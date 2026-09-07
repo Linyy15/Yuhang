@@ -12,18 +12,26 @@ function check(name, ok, extra) {
   console.log((ok ? '✅' : '❌'), name, extra || '');
   if (!ok) fail++;
 }
-// 归一化：忽略 updatedAt 日期（UTC 跨日会使该字段变化，其余必须逐字节一致）
-function normDate(s) {
-  return String(s).replace(/"updatedAt":"\d{4}-\d{2}-\d{2}"/g, '"updatedAt":"DATE"');
+// 归一化：忽略构建时元数据（UTC 跨日和目录版本会变化），其余必须逐字节一致。
+function normBuildMeta(s) {
+  return String(s)
+    .replace(/"updatedAt"\s*:\s*"\d{4}-\d{2}-\d{2}"/g, '"updatedAt":"DATE"')
+    .replace(/"catalogVersion"\s*:\s*"catalog-\d+-\d{8}"/g, '"catalogVersion":"CATALOG_VERSION"');
 }
 
-// ---- 1. sites.js / sites.json 与基线逐字节一致（仅 updatedAt 日期可不同） ----
+// ---- 1. 当前 TSV 构建产物必须一致；旧基线仅在同一目录版本时才参与逐字节比较 ----
 const cur = readFileSync('web/data/sites.js', 'utf8');
-const base = readFileSync('scripts/baseline/sites.js.baseline', 'utf8');
-check('sites.js 与基线逐字节一致（除日期）', normDate(cur) === normDate(base), `(${cur.length} chars)`);
 const curJ = readFileSync('data/sites.json', 'utf8');
-const baseJ = readFileSync('scripts/baseline/sites.json.baseline', 'utf8');
-check('sites.json 与基线逐字节一致（除日期）', normDate(curJ) === normDate(baseJ), `(${curJ.length} chars)`);
+const currentBuild = YH.buildSitesFromTsv(readFileSync('data/sites.tsv', 'utf8'));
+check('sites.js 与当前 TSV 构建结果一致', normBuildMeta(cur) === normBuildMeta(YH.serializeSitesJs(currentBuild.meta, currentBuild.sites)), `(${currentBuild.sites.length} 条)`);
+check('sites.json 与当前 TSV 构建结果一致', normBuildMeta(curJ) === normBuildMeta(YH.serializeJson(currentBuild.meta, currentBuild.sites)), `(${currentBuild.sites.length} 条)`);
+const base = readFileSync('scripts/baseline/sites.js.baseline', 'utf8');
+const baseTotal = Number((base.match(/"total":(\d+)/) || [])[1]);
+if (baseTotal === currentBuild.sites.length) {
+  check('sites.js 与同版本基线一致（除构建元数据）', normBuildMeta(cur) === normBuildMeta(base), `(${cur.length} chars)`);
+} else {
+  console.log('ℹ️  跳过旧基线逐字节比较：基线目录为 ' + baseTotal + ' 条，当前目录为 ' + currentBuild.sites.length + ' 条。');
+}
 
 // ---- 2. TSV 导出 → 重新生成 自洽 ----
 // 说明：8 列 tsv 无法携带原始标签词汇，个别站点的标签会被规则收敛精简（如

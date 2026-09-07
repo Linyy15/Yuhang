@@ -413,13 +413,8 @@
       if (!(e.target.closest && e.target.closest('.fab'))) closeAllFab();
     });
 
-    // 底部导航 桌面 + 移动：querySelectorAll 拿两套
-    document.querySelectorAll('.bottom-nav').forEach(function (nav) {
-      o.on(nav, 'click', function (e) {
-        var b = e.target.closest ? e.target.closest('[data-bn]') : null;
-        if (b) handleBottomNav(b.getAttribute('data-bn'));
-      });
-    });
+    // 底部导航由 app.js 统一绑定：它同时协调“更多”抽屉、工作区和个人链接状态。
+    // nav.js 仍提供 syncBottomNav/视图 API，避免同一次触控被重复处理。
   }
 
   root.YHNav = {

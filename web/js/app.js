@@ -27,6 +27,9 @@
 
   var SITES = window.SITES || [];
   var META = window.SITES_META || {};
+  // P1/P2/P3 capability modules remain optional for legacy/static deployments.
+  var searchIndex = window.YHSearchIndex || null;
+  if (window.YHIntegrations && typeof window.YHIntegrations.init === 'function') window.YHIntegrations.init({ enabled: false });
 
   function $(id) { return document.getElementById(id); }
   function on(el, evt, fn) { if (el) el.addEventListener(evt, fn); }
@@ -35,9 +38,20 @@
   var appEl = $('app');
   var catBar = $('cat-bar');
   var filterBar = $('filter-bar');
+  var explorerBar = $('explorer-bar');
+  var explorerKicker = $('explorer-kicker');
+  var explorerTitle = $('explorer-title');
+  var explorerDesc = $('explorer-desc');
+  var explorerActions = $('explorer-actions');
+  var scopePublicCount = $('scope-public-count');
+  var scopePersonalCount = $('scope-personal-count');
+  var scopeFavsCount = $('scope-favs-count');
+  var scopeWsCount = $('scope-ws-count');
   var searchInput = $('search-input');
   var btnSearch = $('btn-search');
   var btnClear = $('btn-clear');
+  var misclickLockBtn = $('misclick-lock');
+  var misclickLockMenuBtn = $('btn-misclick-lock');
   var engineBtn = document.querySelectorAll('#engine-btn');
   var engineMenu = $('engine-menu');
   var searchResult = $('search-result');
@@ -162,6 +176,7 @@
   var editingPersonalId = null; // 正在编辑的个人网站 id（null=新增）
   var keyword = '';
   var currentSite = null;
+  var lockedCardClicks = { id: null, count: 0, timer: null };
   var FAV_CAT = '⭐ 收藏';
   var HOT_CAT = '🔥 最常';
   var WS_CAT = '🗂 工作区';
@@ -267,9 +282,67 @@
     }
     return null;
   }
+  function personalSites() {
+    return S.currentUser ? (S.personalSites[S.currentUser] || []) : [];
+  }
   function allSites() {
-    var mine = S.currentUser ? (S.personalSites[S.currentUser] || []) : [];
-    return SITES.concat(mine);
+    return SITES.concat(personalSites());
+  }
+  function publicSites() { return SITES; }
+  function currentScope() {
+    if (activeWs) return 'workspace';
+    if (activeCat === MY_CAT) return 'personal';
+    if (activeCat === FAV_CAT) return 'favs';
+    return 'public';
+  }
+  function scopeCopy(scope) {
+    var loggedIn = !!S.currentUser;
+    if (scope === 'personal') return {
+      kicker: '我的入口', title: '我的链接',
+      desc: loggedIn ? '只展示你创建或导入的私人链接，不与公共目录混在一起。' : '登录后可添加、导入并跨设备同步你的私人链接。'
+    };
+    if (scope === 'favs') return {
+      kicker: '我的入口', title: '收藏',
+      desc: loggedIn ? '把公共网站或私人链接集中到你的高频访问清单。' : '登录后可将常用网站固定到收藏，并跨设备同步。'
+    };
+    if (scope === 'workspace') return {
+      kicker: '我的入口', title: '工作区',
+      desc: loggedIn ? '按场景组合公共网站与私人链接，形成专属工作台。' : '登录后可按学习、工作或项目建立工作区。'
+    };
+    return { kicker: '探索目录', title: '公共目录', desc: '浏览经过整理的公共网站目录；用标签和搜索快速定位。' };
+  }
+  function searchableSites() {
+    if (activeWs) {
+      var ws = S.workspaces[activeWs];
+      return (ws ? ws.ids : []).map(siteOf).filter(Boolean);
+    }
+    if (activeCat === MY_CAT) return personalSites();
+    if (activeCat === FAV_CAT) return allSites().filter(function (s) { return S.favs.has(s.id); });
+    if (activeCat === RECENT_CAT) return S.recentIds.map(siteOf).filter(Boolean);
+    if (selectedTags.size) return publicSites().filter(function (s) {
+      return (s.tags || []).some(function (tag) { return selectedTags.has(tag); });
+    });
+    return publicSites();
+  }
+  function renderExplorerBar() {
+    if (!explorerBar) return;
+    var scope = currentScope();
+    var copy = scopeCopy(scope);
+    if (explorerKicker) explorerKicker.textContent = copy.kicker;
+    if (explorerTitle) explorerTitle.textContent = copy.title;
+    if (explorerDesc) explorerDesc.textContent = copy.desc;
+    if (scopePublicCount) scopePublicCount.textContent = publicSites().length;
+    if (scopePersonalCount) scopePersonalCount.textContent = personalSites().length;
+    if (scopeFavsCount) scopeFavsCount.textContent = S.favs.size;
+    if (scopeWsCount) scopeWsCount.textContent = wsCount();
+    if (explorerActions) {
+      var buttons = explorerActions.querySelectorAll('[data-scope]');
+      for (var i = 0; i < buttons.length; i++) {
+        var isActive = buttons[i].getAttribute('data-scope') === scope;
+        buttons[i].classList.toggle('active', isActive);
+        buttons[i].setAttribute('aria-current', isActive ? 'page' : 'false');
+      }
+    }
   }
 
   // ================= 中英文 =================
@@ -331,6 +404,7 @@
     hot_toutiao: { zh: '头条', en: 'Toutiao' },
     tools_title: { zh: '🧰 工具箱', en: '🧰 Toolbox' },
     tool_sec_local: { zh: '⚡ 实用小工具（纯本地，无需联网）', en: '⚡ Mini tools (local, offline)' },
+    tool_sec_media: { zh: '🎬 媒体工具（仅处理你提供的内容）', en: '🎬 Media tools (your content only)' },
     tool_sec_quick: { zh: '🔗 快捷查询（跳转网站）', en: '🔗 Quick links' },
     tool_open: { zh: '打开', en: 'Open' },
     tool_pw: { zh: '随机密码', en: 'Random password' },
@@ -563,6 +637,10 @@
     tool_pomo: { zh: '🍅 番茄钟', en: '🍅 Pomodoro' },
     tool_qr: { zh: '▦ 二维码', en: '▦ QR code' },
     tool_ip: { zh: '🌐 IP 查询', en: '🌐 My IP' },
+    tool_media_link: { zh: '链接分析', en: 'Link analysis' },
+    tool_media_file: { zh: '选择本地媒体分析', en: 'Analyze local media' },
+    tool_media_download: { zh: '下载用户选择的本地文件', en: 'Download selected local file' },
+    tool_media_format: { zh: '格式转换能力检测', en: 'Format capability detection' },
     pomo_running: { zh: '🍅 专注中…', en: '🍅 Focusing…' },
     pomo_paused: { zh: '⏸ 已暂停', en: '⏸ Paused' },
     pomo_done: { zh: '✅ 时间到！休息一下吧', en: '✅ Time\'s up! Take a break' },
@@ -595,7 +673,8 @@
     submit_mail_name: { zh: '名称：', en: 'Name: ' },
     submit_mail_url: { zh: '网址：', en: 'URL: ' },
     submit_mail_brief: { zh: '简介：', en: 'Description: ' },
-    submit_sent: { zh: '📧 已打开邮件发送给站长', en: '📧 Opened email to owner' }
+    submit_sent: { zh: '📧 已打开邮件发送给站长', en: '📧 Opened email to owner' },
+    totodo: { zh: '📋 加入屿事', en: '📋 Add to Yushi' }
   };
   var TAG_EN = {
     'AI': 'AI', '游戏': 'Games', '设计与创意': 'Design & Creative',
@@ -1121,6 +1200,7 @@
           YHAuth.pullFromCloud().then(function () {
             YHAuth.updateLoginBtn();
             renderCats();
+            renderExplorerBar();
             renderFilterBar();
             YHCards.render();
           });
@@ -1137,6 +1217,7 @@
               renderCats();
               renderFilterBar();
               YHCards.render();
+              if (window.YHStartPage && window.YHStartPage.refreshProjection) window.YHStartPage.refreshProjection();
             });
           }
         } else {
@@ -1147,6 +1228,7 @@
           renderCats();
           renderFilterBar();
           YHCards.render();
+          if (window.YHStartPage && window.YHStartPage.refreshProjection) window.YHStartPage.refreshProjection();
         }
       });
     });
@@ -1519,9 +1601,20 @@
 
   // ---------- 收藏（个人专属） ----------
   function toggleFav(id) {
-    if (S.favs.has(id)) S.favs.delete(id); else S.favs.add(id);
+    if (S.favs.has(id)) {
+      S.favs.delete(id);
+    } else {
+      S.favs.add(id);
+      if (window.YHShared && id) {
+        try {
+          var leveled = window.YHShared.YHGrowth.awardFav(id);
+          if (leveled) window.YHShared.YHToast.show('屿咪升级了！🐱✨');
+        } catch (e) {}
+      }
+    }
     saveAccountData();
-    renderCats(); YHCards.render();
+    renderCats(); renderExplorerBar(); YHCards.render();
+    if (window.YHStartPage && window.YHStartPage.refreshProjection) window.YHStartPage.refreshProjection();
     if (modal && !modal.hidden && currentSite && currentSite.id === id) renderModal();
   }
 
@@ -1753,35 +1846,39 @@
       : '<span class="tag tag-off">' + t('official') + '</span>';
   }
 
+  // 导航工作台：四类链接实体的显式入口。登录前仍可浏览目录，其他入口说明登录价值。
+  on(explorerActions, 'click', function (e) {
+    var btn = e.target.closest ? e.target.closest('[data-scope]') : null;
+    if (!btn) return;
+    var scope = btn.getAttribute('data-scope');
+    if (scope !== 'public' && !S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
+    if (scope === 'workspace') { openWsManager(); return; }
+    exitAllViews();
+    selectedTags.clear();
+    activeWs = null;
+    if (scope === 'personal') activeCat = MY_CAT;
+    else if (scope === 'favs') activeCat = FAV_CAT;
+    else activeCat = '全部';
+    renderCats(); renderExplorerBar(); renderFilterBar(); YHCards.render();
+  });
+
   // ---------- 左侧导航 ----------
   function renderCats() {
     if (!catBar && !catDropdown[0]) return;
+    // 侧栏只承担“发现公共目录”：避免私人链接、收藏和工作区与公共分类混排。
+    // 热搜/工具/排行是低频二级视图，保留在分类末端，不抢占个人入口。
     var specials = [
-      { name: '全部', label: t('all'), count: allSites().length },
+      { name: '全部', label: t('all'), count: publicSites().length },
       { name: HOT_NEW_CAT, label: t('hot_new'), count: '' },
-      { name: TOOLS_CAT, label: t('tools_title'), count: '' },
+      { name: TOOLS_CAT, label: t('tools_title'), count: '' }
     ];
-    if (S.currentUser) {
-      // 登录后专属：个人网站 / 收藏 / 最常 / 工作区
-      specials.push({ name: MY_CAT, label: t('my_sites'), count: (S.personalSites[S.currentUser] || []).length });
-      specials.push({ name: FAV_CAT, label: t('favs'), count: S.favs.size });
-      specials.push({ name: HOT_CAT, label: t('hot'), count: clickedCount() });
-      specials.push({ name: WS_CAT, label: t('ws'), count: wsCount() });
-      specials.push({ name: RANK_CAT, label: t('rank_title'), count: '' });
-    } else {
-      // 未登录：登录解锁提示
-      specials.push({ name: '__login', label: t('login_hint_short'), count: '' });
-    }
-    if (S.recentIds.length) {
-      // 最近访问（本地记录，登录与否都可用）
-      specials.push({ name: RECENT_CAT, label: t('recent'), count: S.recentIds.length });
-    }
+    if (S.currentUser) specials.push({ name: RANK_CAT, label: t('rank_title'), count: '' });
     var tags = (META.tags || []).map(function (tt) { return { name: tt.name, label: tagLabel(tt.name), count: tt.count }; });
     var items = specials.concat(tags);
     // 生成单个分类项（桌面分类栏与移动端筛选下拉共用）
     function makeItem(item) {
       var viewOn = S.rankActive || S.hotActive || S.toolsActive; // 视图打开时，普通分类不高亮
-      var isSpecial = (item.name === '全部' || item.name === MY_CAT || item.name === FAV_CAT || item.name === HOT_CAT || item.name === WS_CAT || item.name === RANK_CAT || item.name === HOT_NEW_CAT || item.name === TOOLS_CAT || item.name === RECENT_CAT || item.name === '__login');
+      var isSpecial = (item.name === '全部' || item.name === RANK_CAT || item.name === HOT_NEW_CAT || item.name === TOOLS_CAT);
       var viewActive = (item.name === RANK_CAT && S.rankActive) || (item.name === HOT_NEW_CAT && S.hotActive) || (item.name === TOOLS_CAT && S.toolsActive);
       var isActive = isSpecial
         ? (viewOn ? viewActive : activeCat === item.name)
@@ -1811,18 +1908,17 @@
       items.forEach(function (item) { dd.appendChild(makeItem(item)); });
     });
     updateCatFilterLabel();
+    renderExplorerBar();
     syncBottomNav();
   }
   // 分类项点击（桌面/移动下拉共用）
   function onCatItemClick(name) {
     return function () {
       if (name !== RANK_CAT && name !== HOT_NEW_CAT && name !== TOOLS_CAT) exitAllViews();
-      if (name === '__login') { YHAuth.openLogin(t('need_login_fav')); closeCatDropdown(); return; }
-      if (name === WS_CAT) { openWsManager(); closeCatDropdown(); return; }
       if (name === RANK_CAT) { openRank(); closeCatDropdown(); return; }
       if (name === HOT_NEW_CAT) { openHot(); closeCatDropdown(); return; }
       if (name === TOOLS_CAT) { YHTools.open(); closeCatDropdown(); return; }
-      if (name === '全部' || name === MY_CAT || name === FAV_CAT || name === HOT_CAT || name === RECENT_CAT) {
+      if (name === '全部') {
         activeCat = name;
         selectedTags.clear();
         activeWs = null;
@@ -1833,7 +1929,7 @@
         if (selectedTags.size === 0) activeCat = '全部';
       }
       closeCatDropdown();
-      renderCats(); renderFilterBar(); YHCards.render();
+      renderCats(); renderExplorerBar(); renderFilterBar(); YHCards.render();
     };
   }
   // 移动端筛选按钮：显示当前所处分类
@@ -1877,33 +1973,34 @@
     if (activeWs) {
       var ws = S.workspaces[activeWs];
       filterBar.hidden = false;
-      filterBar.innerHTML = '<span class="filter-label">' + t('current_ws') + '</span>' +
-        '<button class="filter-chip" data-ws-exit="1">' + escapeHtml(ws ? ws.name : '') + ' ✕</button>';
+      filterBar.className = 'filter-bar space-context glass';
+      filterBar.innerHTML = '<div class="space-heading"><span class="space-kicker">我的入口</span><strong>' + escapeHtml(ws ? ws.name : t('ws')) + '</strong><small>工作区可同时收纳公共网站和私人链接</small></div>' +
+        '<div class="space-actions"><button class="filter-chip" data-ws-manage="1">管理工作区</button><button class="filter-chip" data-ws-exit="1">返回目录</button></div>';
       return;
     }
     if (activeCat === MY_CAT) {
       filterBar.hidden = false;
-      filterBar.innerHTML = '<span class="filter-label">' + t('my_sites') + '</span>' +
-        '<button class="filter-chip filter-add" data-my-add="1">＋ ' + t('add_site') + '</button>' +
-        '<button class="filter-chip" data-my-exit="1">✕</button>';
+      filterBar.className = 'filter-bar space-context glass';
+      filterBar.innerHTML = '<div class="space-heading"><span class="space-kicker">我的入口 · 仅自己可见</span><strong>' + t('my_sites') + '</strong><small>' + personalSites().length + ' 条私人链接，独立于公共目录保存</small></div>' +
+        '<div class="space-actions"><button class="filter-chip filter-add" data-my-add="1">＋ ' + t('add_site') + '</button><button class="filter-chip" data-my-exit="1">返回目录</button></div>';
       return;
     }
     if (activeCat === FAV_CAT) {
       filterBar.hidden = false;
-      filterBar.innerHTML = '<span class="filter-label">' + t('favs') + '</span>' +
-        '<button class="filter-chip" data-fav-openall="1">' + t('open_all') + '</button>' +
-        '<button class="filter-chip" data-fav-manage="1">' + t('manage_favs') + '</button>' +
-        '<button class="filter-chip" data-fav-clear="1">' + t('clear_favs') + '</button>';
+      filterBar.className = 'filter-bar space-context glass';
+      filterBar.innerHTML = '<div class="space-heading"><span class="space-kicker">我的入口</span><strong>' + t('favs') + '</strong><small>' + S.favs.size + ' 个收藏，可来自公共目录或我的链接</small></div>' +
+        '<div class="space-actions"><button class="filter-chip" data-fav-openall="1">' + t('open_all') + '</button><button class="filter-chip" data-fav-manage="1">' + t('manage_favs') + '</button><button class="filter-chip" data-fav-clear="1">' + t('clear_favs') + '</button></div>';
       return;
     }
     if (activeCat === RECENT_CAT) {
       filterBar.hidden = false;
-      filterBar.innerHTML = '<span class="filter-label">' + t('recent') + '</span>' +
-        '<button class="filter-chip" data-recent-clear="1">' + t('clear_recent') + '</button>' +
-        '<button class="filter-chip" data-recent-exit="1">✕</button>';
+      filterBar.className = 'filter-bar space-context glass';
+      filterBar.innerHTML = '<div class="space-heading"><span class="space-kicker">我的入口 · 本机记录</span><strong>' + t('recent') + '</strong><small>最近打开的链接，不会影响公共目录</small></div>' +
+        '<div class="space-actions"><button class="filter-chip" data-recent-clear="1">' + t('clear_recent') + '</button><button class="filter-chip" data-recent-exit="1">返回目录</button></div>';
       return;
     }
-    if (!selectedTags.size) { filterBar.hidden = true; return; }
+    if (!selectedTags.size) { filterBar.hidden = true; filterBar.className = 'filter-bar glass'; return; }
+    filterBar.className = 'filter-bar glass';
     filterBar.hidden = false;
     var html = '<span class="filter-label">' + t('sel_tags') + '</span>';
     selectedTags.forEach(function (tname) {
@@ -1955,6 +2052,8 @@
       renderCats(); renderFilterBar(); YHCards.render();
       return;
     }
+    var wsManage = e.target.closest ? e.target.closest('[data-ws-manage]') : null;
+    if (wsManage) { openWsManager(); return; }
     var wsExit = e.target.closest ? e.target.closest('[data-ws-exit]') : null;
     if (wsExit) {
       activeWs = null;
@@ -2075,6 +2174,7 @@
         '<button id="m-ws" class="btn btn-ghost">' + t('add_ws') + '</button>' +
         '<button id="m-copy" class="btn btn-ghost">' + t('copy') + '</button>' +
         '<button id="m-copy2" class="btn btn-ghost">' + t('copy_title_url') + '</button>' +
+        '<button id="m-totodo" class="btn btn-ghost">' + t('totodo') + '</button>' +
         editBtn +
         delBtn +
         fbBtn +
@@ -2130,6 +2230,16 @@
         ta2.select();
         try { document.execCommand('copy'); done(); } catch (e) {}
         document.body.removeChild(ta2);
+      }
+    });
+    // 加入屿事：写入跨页待办收件箱，供 todo.html 一键导入
+    var todoBtn = modalBody.querySelector('#m-totodo');
+    if (todoBtn) todoBtn.addEventListener('click', function () {
+      if (window.YHShared && window.YHShared.YHTodoBridge) {
+        try {
+          window.YHShared.YHTodoBridge.push({ title: nameLabel(s), url: s.url || '' });
+          window.YHShared.YHToast.show('已加入屿事待办 📋');
+        } catch (e) {}
       }
     });
     var wsBtn = modalBody.querySelector('#m-ws');
@@ -2454,12 +2564,25 @@
   // ---------- 移动端固定底部导航 ----------
   // 底部导航：两套 DOM（桌面/移动副本），均绑定 + 同步高亮
   var bottomNavs = document.querySelectorAll('.bottom-nav');
+  var mobileMorePanel = $('mobile-more-panel');
+  var mobileMoreClose = $('mobile-more-close');
+  function closeMobileMore() {
+    if (mobileMorePanel) mobileMorePanel.hidden = true;
+    var moreButtons = document.querySelectorAll('[data-bn="more"]');
+    for (var i = 0; i < moreButtons.length; i++) moreButtons[i].setAttribute('aria-expanded', 'false');
+  }
+  function openMobileMore() {
+    if (!mobileMorePanel) return;
+    mobileMorePanel.hidden = false;
+    var moreButtons = document.querySelectorAll('[data-bn="more"]');
+    for (var i = 0; i < moreButtons.length; i++) moreButtons[i].setAttribute('aria-expanded', 'true');
+  }
   function handleBottomNav(b) {
     var act = b.getAttribute('data-bn');
     if (act === 'home') {
       exitAllViews();
       activeCat = '全部'; selectedTags.clear(); activeWs = null;
-      renderCats(); renderFilterBar(); YHCards.render();
+      renderCats(); renderExplorerBar(); renderFilterBar(); YHCards.render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (act === 'search') {
       exitAllViews();
@@ -2469,7 +2592,7 @@
       exitAllViews();
       if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
       activeCat = FAV_CAT; selectedTags.clear(); activeWs = null;
-      renderCats(); renderFilterBar(); YHCards.render();
+      renderCats(); renderExplorerBar(); renderFilterBar(); YHCards.render();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (act === 'tools') {
       if (S.toolsActive) { exitAllViews(); return; }
@@ -2479,9 +2602,12 @@
       exitAllViews();
       if (S.currentUser) {
         activeCat = MY_CAT; selectedTags.clear(); activeWs = null;
-        renderCats(); renderFilterBar(); YHCards.render();
+        renderCats(); renderExplorerBar(); renderFilterBar(); YHCards.render();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else { YHAuth.openLogin(t('need_login_fav')); }
+    } else if (act === 'more') {
+      if (mobileMorePanel && !mobileMorePanel.hidden) closeMobileMore();
+      else openMobileMore();
     }
   }
   bottomNavs.forEach(function (nav) {
@@ -2489,6 +2615,30 @@
       var b = e.target.closest ? e.target.closest('[data-bn]') : null;
       if (b) handleBottomNav(b);
     });
+  });
+  on(mobileMoreClose, 'click', closeMobileMore);
+  on(mobileMorePanel, 'click', function (e) {
+    var item = e.target.closest ? e.target.closest('[data-mobile-more]') : null;
+    if (!item) return;
+    var action = item.getAttribute('data-mobile-more');
+    closeMobileMore();
+    if (action === 'workspace') {
+      if (!S.currentUser) { YHAuth.openLogin(t('need_login_fav')); return; }
+      openWsManager();
+    } else if (action === 'recent') {
+      exitAllViews(); activeCat = RECENT_CAT; selectedTags.clear(); activeWs = null;
+      renderCats(); renderExplorerBar(); renderFilterBar(); YHCards.render();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (action === 'tools') {
+      if (!S.toolsActive) YHTools.open();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (action === 'filters') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setTimeout(function () { if (catFilterBtn[0]) catFilterBtn[0].click(); }, 250);
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (mobileMorePanel && !mobileMorePanel.hidden && !(e.target.closest && e.target.closest('#mobile-more-panel, [data-bn="more"]'))) closeMobileMore();
   });
   function syncBottomNav() {
     bottomNavs.forEach(function (nav) {
@@ -2504,6 +2654,33 @@
       }
     });
   }
+
+  // ---------- 电脑端防误点锁 ----------
+  function isDesktopLockContext() {
+    return !(window.matchMedia && window.matchMedia('(max-width: 980px)').matches);
+  }
+  function syncMisclickLockUI() {
+    var locked = !!S.settings.misclickLock;
+    if (misclickLockBtn) {
+      misclickLockBtn.classList.toggle('locked', locked);
+      misclickLockBtn.setAttribute('aria-pressed', locked ? 'true' : 'false');
+      misclickLockBtn.title = locked ? '防误点锁：已锁定（点击解锁）' : '防误点锁：未锁定（点击上锁）';
+      misclickLockBtn.innerHTML = (locked ? '🔒' : '🔓') + ' <span>' + (locked ? '已锁定' : '防误点') + '</span>';
+    }
+    if (misclickLockMenuBtn) {
+      misclickLockMenuBtn.textContent = (locked ? '🔒 防误点锁：已锁定' : '🔓 防误点锁：未锁定');
+      misclickLockMenuBtn.setAttribute('aria-pressed', locked ? 'true' : 'false');
+    }
+    document.documentElement.classList.toggle('misclick-locked', locked);
+  }
+  function toggleMisclickLock() {
+    S.settings.misclickLock = !S.settings.misclickLock;
+    saveSettings();
+    syncMisclickLockUI();
+    showMsg(S.settings.misclickLock ? '🔒 已开启防误点锁：电脑端卡片不会直接打开网站' : '🔓 已解除防误点锁：卡片可直接打开网站');
+  }
+  on(misclickLockBtn, 'click', toggleMisclickLock);
+  on(misclickLockMenuBtn, 'click', toggleMisclickLock);
 
   // ---------- 卡片交互 ----------
   on(grid, 'click', function (e) {
@@ -2528,14 +2705,34 @@
     }
     var card = e.target.closest ? e.target.closest('.card') : null;
     if (!card) return;
-    makeRipple(card, e.clientX, e.clientY);
     var id = card.getAttribute('data-id');
     var url = card.getAttribute('data-url');
+    // 仅电脑端拦截网站卡片的直接打开；收藏、更多、详情等操作不受影响。
+    if (S.settings.misclickLock && isDesktopLockContext()) {
+      if (lockedCardClicks.id === id) lockedCardClicks.count++;
+      else { lockedCardClicks.id = id; lockedCardClicks.count = 1; }
+      clearTimeout(lockedCardClicks.timer);
+      lockedCardClicks.timer = setTimeout(function () { lockedCardClicks.id = null; lockedCardClicks.count = 0; }, 1200);
+      if (lockedCardClicks.count >= 3) {
+        lockedCardClicks.id = null; lockedCardClicks.count = 0;
+        clearTimeout(lockedCardClicks.timer);
+        showMsg('🔒 防误点锁已开启，请点击顶栏的锁按钮解锁后再打开网站');
+      }
+      return;
+    }
+    makeRipple(card, e.clientX, e.clientY);
     if (id) {
       // 最近访问：本地记录，登录与否都记
       addRecent(id);
       // 点击统计为个人专属：仅登录后记录，并保留近 7 日流水
       recordClick(id);
+      // 屿咪成长：浏览行为授 XP（与 ip.html 成就共用 yuhang_yumi_grow_v1）
+      if (window.YHShared && window.YHShared.YHGrowth) {
+        try {
+          var leveled = window.YHShared.YHGrowth.awardBrowse(id);
+          if (leveled) window.YHShared.YHToast.show('屿咪升级了！🐱✨');
+        } catch (e) {}
+      }
     }
     if (url) {
       // 飞出反馈：被点开的卡片短暂上浮放大淡出
@@ -2750,11 +2947,13 @@
   YHNav.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, siteOf: siteOf, YHAuth: YHAuth, YHTools: YHTools, YHCards: YHCards, YHSearch: YHSearch, renderCats: renderCats, renderFilterBar: renderFilterBar, searchInput: searchInput, rankView: rankView, hotView: hotView, toolsView: toolsView, rankPodium: rankPodium, rankTable: rankTable, rankTabs: rankTabs, rankBack: rankBack, hotTabs: hotTabs, hotBack: hotBack, hotRefresh: hotRefresh, hotMeta: hotMeta, hotFilter: hotFilter, hotList: hotList, grid: grid, filterBar: filterBar, on: on, getActiveCat: function(){ return activeCat; }, setActiveCat: function(v){ activeCat = v; }, getActiveWs: function(){ return activeWs; }, setActiveWs: function(v){ activeWs = v; }, getSelectedTags: function(){ return selectedTags; }, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, RANK_CAT: RANK_CAT, HOT_NEW_CAT: HOT_NEW_CAT, TOOLS_CAT: TOOLS_CAT });
 
   YHAuth.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, siteOf: siteOf, allSites: allSites, downloadText: downloadText, showMsg: showMsg, openAdd: openAdd, renderCats: renderCats, renderFilterBar: renderFilterBar, YHCards: YHCards, loadAccountData: loadAccountData, saveAccountData: saveAccountData, on: on, getActiveCat: function(){ return activeCat; }, setActiveCat: function(v){ activeCat = v; }, getActiveWs: function(){ return activeWs; }, setActiveWs: function(v){ activeWs = v; }, getSelectedTags: function(){ return selectedTags; }, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, dom: { loginMsg: loginMsg, loginBody: loginBody, loginModal: loginModal, loginClose: loginClose, btnLogin: btnLogin, loginMenu: loginMenu, btnChangePass: btnChangePass, passNew: passNew, passNew2: passNew2, passMsg: passMsg, passBar: passBar, passStrength: passStrength, passHints: passHints, passModal: passModal, passClose: passClose, favList: favList, favClose: favClose, favModal: favModal, favClear: favClear, favOpenAll: favOpenAll, favSelCount: $('fav-sel-count'), favSelAll: $('fav-selall'), favBatchWs: $('fav-batch-ws'), favBatchRemove: $('fav-batch-remove'), favBatchExport: $('fav-batch-export') } });
-  YHCards.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, tagLabel: tagLabel, tagHue: tagHue, siteOf: siteOf, allSites: allSites, iconHTML: iconHTML, lazyLoadIcons: lazyLoadIcons, YH: window.YH, SITES: SITES, perfLevel: perfLevel, grid: grid, searchResult: searchResult, footerInfo: footerInfo, footerUpdated: footerUpdated, statTotal: statTotal, statTags: statTags, statFavs: statFavs, descTotal: descTotal, descTags: descTags, META: META, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, getKeyword: function(){ return keyword; }, getActiveCat: function(){ return activeCat; }, getActiveWs: function(){ return activeWs; }, getSelectedTags: function(){ return selectedTags; } });
+  if (searchIndex && typeof searchIndex.build === 'function') searchIndex.build(allSites());
+  YHCards.init({ S: S, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, tagLabel: tagLabel, tagHue: tagHue, siteOf: siteOf, allSites: allSites, publicSites: publicSites, searchIndex: searchIndex, iconHTML: iconHTML, lazyLoadIcons: lazyLoadIcons, YH: window.YH, SITES: SITES, perfLevel: perfLevel, grid: grid, searchResult: searchResult, footerInfo: footerInfo, footerUpdated: footerUpdated, statTotal: statTotal, statTags: statTags, descTotal: descTotal, descTags: descTags, META: META, MY_CAT: MY_CAT, FAV_CAT: FAV_CAT, HOT_CAT: HOT_CAT, WS_CAT: WS_CAT, RECENT_CAT: RECENT_CAT, getKeyword: function(){ return keyword; }, getActiveCat: function(){ return activeCat; }, getActiveWs: function(){ return activeWs; }, getSelectedTags: function(){ return selectedTags; } });
   if (brandName && META.name) brandName.textContent = META.name;
   applyTheme();
   syncThemeUI();
   syncSizeBtns();
+  syncMisclickLockUI();
   YHAuth.updateLoginBtn();
   renderCats();
   renderFilterBar();
@@ -2766,7 +2965,7 @@
   initDisclaimer();
   initClock();
   pickQuote();
-  YHSearch.init({ S: S, on: on, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, tagLabel: tagLabel, allSites: allSites, siteOf: siteOf, addRecent: addRecent, recordHotWord: recordHotWord, recordSearchHistory: recordSearchHistory, saveSearchHistory: saveSearchHistory, renderGrid: YHCards.render, exitAllViews: exitAllViews, hasActiveView: function(){ return S.rankActive||S.hotActive||S.toolsActive; }, engineMenu: engineMenu, searchInput: searchInput, btnSearch: btnSearch, btnClear: btnClear, engineBtn: engineBtn, searchHot: searchHot, searchAc: searchAc, appEl: appEl, getKeyword: function(){ return keyword; }, setKeyword: function(v){ keyword = v; } });
+  YHSearch.init({ S: S, on: on, t: t, escapeHtml: escapeHtml, nameLabel: nameLabel, tagLabel: tagLabel, allSites: allSites, searchableSites: searchableSites, siteOf: siteOf, addRecent: addRecent, recordHotWord: recordHotWord, recordSearchHistory: recordSearchHistory, saveSearchHistory: saveSearchHistory, renderGrid: YHCards.render, renderSearchContext: renderExplorerBar, exitAllViews: exitAllViews, hasActiveView: function(){ return S.rankActive||S.hotActive||S.toolsActive; }, engineMenu: engineMenu, searchInput: searchInput, btnSearch: btnSearch, btnClear: btnClear, engineBtn: engineBtn, searchHot: searchHot, searchAc: searchAc, appEl: appEl, getKeyword: function(){ return keyword; }, setKeyword: function(v){ keyword = v; } });
   YHTools.init({ on: on, t: t, enterView: YHNav.enterView, exitAllViews: YHNav.exitAllViews, fadeInView: YHNav.fadeInView, fadeHide: YHNav.fadeHide, toolsGrid: toolsGrid, toolsView: toolsView, toolsBack: toolsBack });
 
   // ---------- 加载界面：资源就绪 + 至少展示片刻后淡出 ----------

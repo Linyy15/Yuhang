@@ -113,6 +113,7 @@
   // ---------- 状态 ----------
   var state = { links: [], engine: 'local', wall: 'aurora', bingOk: true };
   var dragIdx = -1;
+  var wallRequest = 0;
 
   function cloneLinks(a) { return a.map(function (l) { return { name: l.name, url: l.url }; }); }
   function normalizeUrl(url) {
@@ -209,6 +210,7 @@
   // 主站 setEngine 回调（app.js 在 setEngine 内加一行调用），仅同步本页 UI，不再回写（避免循环）
   window.YHStartPage = {
     setEngine: function (code) { if (code) { state.engine = code; renderEngines(); renderSugg(); } },
+    refreshProjection: refreshProjectionIfOpen,
     open: openStartPage,
     close: function () { closeStartPage(false); },
   };
@@ -228,26 +230,30 @@
   function applyWall(forceBing) {
     var sp = $('startpage'); if (sp) sp.setAttribute('data-sp-wall', state.wall);
     var w = $('sp-wall'); if (!w) return;
+    var request = ++wallRequest;
     w.onload = null; w.onerror = null;
     w.style.backgroundImage = 'none'; w.classList.remove('on');
-    if ((state.wall === 'bing' || forceBing) && state.bingOk) {
-      var idx = forceBing ? Math.floor(Math.random() * BING_URLS.length) : 0;
-      w.onload = function () {
+    if (state.wall !== 'bing' && !forceBing) return;
+    var idx = forceBing ? Math.floor(Math.random() * BING_URLS.length) : 0;
+    function tryNext() {
+      if (request !== wallRequest) return;
+      if (idx >= BING_URLS.length) {
+        state.bingOk = false; state.wall = 'aurora'; saveState(); applyWall();
+        renderWallPanel();
+        toast(isEn() ? 'Wallpaper unavailable, fallback to aurora' : '壁纸暂时不可用，已回落极光');
+        return;
+      }
+      var url = BING_URLS[idx++];
+      var probe = new Image();
+      probe.onload = function () {
+        if (request !== wallRequest) return;
+        w.style.backgroundImage = 'url("' + url.replace(/"/g, '\\"') + '")';
         w.classList.add('on');
-        // 背景加载成功时，移除可能由上一次错误写入的内联 fallback，避免覆盖 data-sp-wall 背景
-        w.style.backgroundImage = w.style.backgroundImage || '';
       };
-      w.onerror = function () {
-        idx++;
-        if (idx < BING_URLS.length) { w.style.backgroundImage = 'url(' + BING_URLS[idx] + ')'; }
-        else {
-          state.bingOk = false; state.wall = 'aurora'; saveState(); applyWall();
-          renderWallPanel();
-          toast(isEn() ? 'Wallpaper failed, fallback to aurora' : '壁纸加载失败，已回落极光');
-        }
-      };
-      w.style.backgroundImage = 'url(' + BING_URLS[idx] + ')';
+      probe.onerror = tryNext;
+      probe.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 't=' + Date.now();
     }
+    tryNext();
   }
 
   // ---------- 时钟 / 问候 / 一言 ----------
@@ -295,6 +301,7 @@
   // ---------- 快捷链接（增删 / 拖拽排序） ----------
   function renderLinks() {
     var box = $('sp-links'); if (!box) return;
+    var lc = $('sp-link-count'); if (lc) lc.textContent = String(state.links.length);
     var editing = box.classList.contains('editing');
     var html = '';
     for (var i = 0; i < state.links.length; i++) {
@@ -361,53 +368,64 @@
     });
   }
 
-  // ---------- 只读投影：收藏 / 最常访问 ----------
-  function gatherFavIds() {
-    var fa = readJSON(FAVS_KEY, {}); if (!fa) return [];
-    var out = [];
-    if (Array.isArray(fa)) out = out.concat(fa);
-    else {
-      for (var k in fa) { if (Array.isArray(fa[k])) out = out.concat(fa[k]); }
-    }
-    // 去重保序
-    var seen = {}, r = [];
-    for (var i = 0; i < out.length; i++) { if (!seen[out[i]]) { seen[out[i]] = 1; r.push(out[i]); } }
-    return r;
+  // ---------- 当前用户投影：收藏 / 最常访问 ----------
+
+  function renderStartpageProjectionFallback() {
+    var favsRow = document.querySelector('.sp-proj-row.favs');
+    var hotRow = document.querySelector('.sp-proj-row.hot');
+    if (favsRow && favsRow.querySelector('.sp-proj-chip')) return;
+    if (hotRow && hotRow.querySelector('.sp-proj-chip')) return;
+    var top = buildDefaultLinks().slice(0, 8);
+    if (!top.length) return;
+    if (favsRow) favsRow.innerHTML = top.map(function (l) {
+      return '<a class="sp-proj-chip" href="' + esc(l.url) + '" target="_blank" rel="noopener">' +
+        '<span class="ico">' + favIcon(hostOf(l.url)) + '</span>' + esc(l.name) + '</a>';
+    }).join('');
   }
-   function gatherClickTop() {
-    var c = readJSON(CLICKS_KEY, {}); if (!c) return [];
-    // nav_click_count_v1 结构为 { 账号: { 网址: 次数 } }，需两层遍历并按网址累加（跨账号合并投影）
-    var summed = {};
-    for (var acc in c) {
-      var map = c[acc];
-      if (!map) continue;
-      for (var sid in map) { summed[sid] = (summed[sid] || 0) + (map[sid] || 0); }
+
+  function currentAccountKey() {
+    var s = window.YHState;
+    return s && s.currentUser ? String(s.currentUser) : null;
+  }
+  function gatherFavIds() {
+    var s = window.YHState;
+    if (s && s.favs && typeof s.favs.forEach === 'function') {
+      var r = []; s.favs.forEach(function (id) { r.push(id); }); return r;
     }
+    var key = currentAccountKey();
+    if (!key) return [];
+    var fa = readJSON(FAVS_KEY, {});
+    return fa && Array.isArray(fa[key]) ? fa[key].slice() : [];
+  }
+  function gatherClickTop() {
+    var s = window.YHState;
+    var map = s && s.clicks ? s.clicks : null;
+    if (!map) { var key = currentAccountKey(); var all = readJSON(CLICKS_KEY, {}); map = key && all ? all[key] : {}; }
     var arr = [];
-    for (var k in summed) { arr.push({ id: k, n: summed[k] }); }
+    for (var sid in map) arr.push({ id: sid, n: map[sid] || 0 });
     arr.sort(function (a, b) { return b.n - a.n; });
     return arr.slice(0, 8);
   }
   function renderProjection() {
     var sm = siteMap();
-    var favs = gatherFavIds().slice(0, 8).map(function (id) { return sm[id]; }).filter(Boolean);
+    var favIds = gatherFavIds();
+    var favs = favIds.slice(0, 8).map(function (id) { return sm[id]; }).filter(Boolean);
     var hot = gatherClickTop().map(function (x) { return sm[x.id]; }).filter(Boolean).slice(0, 8);
-
-    function row(list, tag, hint) {
+    var favCount = $('sp-fav-count'); if (favCount) favCount.textContent = String(favIds.length);
+    function row(list, tag, hint, emptyHint) {
       var wrap = document.querySelector('.sp-proj-row.' + tag);
       if (!wrap) return;
-      if (!list.length) { wrap.innerHTML = ''; return; }
-      var html = '<span class="sp-proj-head" style="font-size:12px;color:var(--text-faint);">' + esc(hint) + '</span>';
+      if (!list.length) { wrap.innerHTML = '<span class="sp-proj-empty">' + esc(emptyHint) + '</span>'; return; }
+      var html = '';
       for (var i = 0; i < list.length; i++) {
         var s = list[i];
         html += '<a class="sp-proj-chip" href="' + esc(s.url || '') + '" target="_blank" rel="noopener">' +
-          '<span class="ico">' + favIcon(hostOf(s.url || '')) + '</span>' +
-          esc(s.name) + '</a>';
+          '<span class="ico">' + favIcon(hostOf(s.url || '')) + '</span>' + esc(s.name) + '</a>';
       }
       wrap.innerHTML = html;
     }
-    row(favs, 'favs', isEn() ? 'Favorites' : '⭐ 收藏');
-    row(hot, 'hot', isEn() ? 'Most visited' : '🔥 最常访问');
+    row(favs, 'favs', isEn() ? 'Favorites' : '收藏', isEn() ? 'No favorites yet' : '去导航页收藏常用网站');
+    row(hot, 'hot', isEn() ? 'Recent' : '最近常用', isEn() ? 'Open a site to see it here' : '打开过的网站会出现在这里');
   }
 
   // ---------- 分类直达（快捷链接与网站分类强关联） ----------
@@ -484,6 +502,10 @@
   }
 
   // ---------- 打开 / 关闭 ----------
+  function refreshProjectionIfOpen() {
+    var sp = $('startpage');
+    if (sp && !sp.hidden) renderProjection();
+  }
   function openStartPage() {
     var sp = $('startpage'); if (!sp) return;
     state = loadState();
@@ -492,6 +514,7 @@
     renderWallPanel();
     renderLinks();
     renderProjection();
+    renderStartpageProjectionFallback();
     renderCatChips();
     pickQuote();
     tickClock();
@@ -594,6 +617,18 @@
     on($('sp-cats'), 'click', function (e) {
       var b = e.target.closest ? e.target.closest('.sp-cat-chip') : null;
       if (b) gotoCategory(b.getAttribute('data-cat'));
+    });
+    // 快捷状态卡：收藏卡回到主站收藏空间，快捷链接卡进入编辑
+    on($('sp-status-favs'), 'click', function () {
+      closeStartPage(true);
+      setTimeout(function () {
+        var favBtn = document.querySelector('[data-scope="favs"]');
+        if (favBtn) favBtn.click();
+      }, 340);
+    });
+    on($('sp-status-links'), 'click', function () {
+      var box = $('sp-links');
+      if (box && !box.classList.contains('editing')) toggleEdit();
     });
     bindDrag();
 
