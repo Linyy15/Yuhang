@@ -11,3 +11,13 @@ node_modules
 # OS / 编辑残留
 .DS_Store
 Thumbs.db
+# Local secrets / environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json

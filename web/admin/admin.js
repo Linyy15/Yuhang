@@ -49,12 +49,8 @@
     t.classList.add('out');
     setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); }, 300);
   }
-
-  // ---------- 反馈记录（Supabase，站长可见） ----------
-  var ADMIN_EMAIL = 'xvwang99@126.com'; // ← 站长邮箱（与 scripts/supabase-schema.sql 中的一致，按需修改）
-  var supabaseClient = (window.supabase && window.APP_CONFIG)
-    ? window.supabase.createClient(window.APP_CONFIG.supabaseUrl, window.APP_CONFIG.supabaseAnonKey)
-    : null;
+  // 公开版不含云端反馈后台或管理员身份配置。\n  var ADMIN_EMAIL = "";
+  var supabaseClient = null;
 
   var $ = function (id) { return document.getElementById(id); };
   var tbody = $('tbody'), search = $('search'), fCat = $('filter-cat'), fTag = $('filter-tag'), fIssue = $('filter-issue');
@@ -752,7 +748,7 @@
   function loadFeedback() {
     var list = $('fb-list');
     list.innerHTML = '<li class="fb-empty">加载中…</li>';
-    if (!supabaseClient) { list.innerHTML = '<li class="fb-empty">⚠ 未加载 Supabase（检查 js/config.js 与网络）</li>'; return; }
+    if (!supabaseClient) { list.innerHTML = '<li class="fb-empty">⚠ 公开版不提供云端反馈后台</li>'; return; }
     supabaseClient.rpc('get_all_feedback').then(function (res) {
       if (res.error) { list.innerHTML = '<li class="fb-empty">加载失败：' + esc(fbAuthErr(res.error)) + '</li>'; return; }
       var rows = res.data || [];
@@ -777,7 +773,7 @@
     $('fb-list').innerHTML = '';
     $('fb-logout').hidden = true;
     setFbMsg('');
-    if (!supabaseClient) { $('fb-login').hidden = false; setFbMsg('⚠ Supabase 未加载（需网络 + js/config.js）', 'err'); return; }
+    if (!supabaseClient) { $('fb-login').hidden = false; setFbMsg('⚠ 公开版不提供云端反馈后台', 'err'); return; }
     supabaseClient.auth.getSession().then(function (res) {
       var u = res && res.data && res.data.session ? res.data.session.user : null;
       if (u && u.email === ADMIN_EMAIL) {
@@ -798,7 +794,7 @@
   });
   $('fb-close').addEventListener('click', function () { $('fb-panel').hidden = true; });
   $('fb-refresh').addEventListener('click', function () {
-    if (!supabaseClient) { setFbMsg('⚠ Supabase 未加载', 'err'); return; }
+    if (!supabaseClient) { setFbMsg('⚠ 公开版不提供云端反馈后台', 'err'); return; }
     supabaseClient.auth.getSession().then(function (res) {
       var u = res && res.data && res.data.session ? res.data.session.user : null;
       if (u && u.email === ADMIN_EMAIL) loadFeedback();
@@ -808,7 +804,7 @@
   $('fb-login-btn').addEventListener('click', function () {
     var em = $('fb-email').value.trim(), pw = $('fb-pass').value;
     if (!em || !pw) { setFbMsg('请输入邮箱和密码', 'err'); return; }
-    if (!supabaseClient) { setFbMsg('⚠ Supabase 未加载', 'err'); return; }
+    if (!supabaseClient) { setFbMsg('⚠ 公开版不提供云端反馈后台', 'err'); return; }
     setFbMsg('登录中…');
     supabaseClient.auth.signInWithPassword({ email: em, password: pw }).then(function (res) {
       if (res.error) { setFbMsg('登录失败：' + fbAuthErr(res.error), 'err'); return; }

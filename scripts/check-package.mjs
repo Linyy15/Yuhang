@@ -24,7 +24,6 @@ check('含 <script> 内联块', (html.match(/<script>/g) || []).length >= 4, `($
 function srcOf(path) { return readFileSync(path, 'utf8').replace(/<\/script/gi, '<\\/script'); }
 check('sites.js 内联一致', html.includes(srcOf('web/data/sites.js').slice(0, 200)) && html.includes('window.SITES = '), '');
 check('sites-lib 内联一致', html.includes('root.YH = factory()'), '');
-check('config 内联一致', html.includes('window.APP_CONFIG'), '');
 check('app.js 内联一致', html.includes('function filterSites'), '');
 check('style.css 内联一致', html.includes('.back-top'), '');
 
@@ -82,7 +81,7 @@ if (appBlock) {
   const order = [
     'window.SITES =', 'root.YH = factory()', 'root.YHSchema = factory()',
     'root.YHLinks = factory()', 'root.YHSearchIndex = factory', 'root.YHIntegrations = factory()',
-    'window.APP_CONFIG', 'root.YHState = factory()', 'root.YHTools =',
+    'root.YHState = factory()', 'root.YHTools =',
     'root.YHSearch =', 'root.YHCards =', 'root.YHAuth =', 'root.YHNav =',
     'function applyLang()'
   ];

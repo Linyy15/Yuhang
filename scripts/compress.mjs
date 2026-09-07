@@ -14,7 +14,6 @@ const targets = [
   'web/css/style.css',
   'web/js/app.js',
   'web/js/sites-lib.js',
-  'web/js/config.js',
   'web/data/sites.js',
   'web/sw.js',
   'dist/index.html',

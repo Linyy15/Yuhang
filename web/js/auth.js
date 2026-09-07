@@ -12,42 +12,8 @@
   'use strict';
   var $ = document.getElementById.bind(document);
   var opts = null;
-
-  // ============ 1. Supabase 按需懒加载 ============
-  var SUPABASE_CDNS = [
-    'https://registry.npmmirror.com/@supabase/supabase-js/2/files/dist/umd/supabase.min.js',
-    'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2',
-    'https://unpkg.com/@supabase/supabase-js@2',
-  ];
-  var supabaseClient = null;
-  var _supabasePromise = null;
-  function loadSupabaseLib() {
-    if (_supabasePromise) return _supabasePromise;
-    _supabasePromise = new Promise(function (resolve) {
-      if (window.supabase) return resolve();
-      var urls = SUPABASE_CDNS.slice();
-      function tryNext() {
-        if (!urls.length || !document || !document.createElement) return resolve();
-        var s = document.createElement('script');
-        s.src = urls.shift();
-        s.onload = function () { if (window.supabase) resolve(); else tryNext(); };
-        s.onerror = function () { tryNext(); };
-        if (document.head) document.head.appendChild(s); else tryNext();
-      }
-      tryNext();
-    });
-    return _supabasePromise;
-  }
-  function ensureSupabase() {
-    return loadSupabaseLib().then(function () {
-      if (supabaseClient) return supabaseClient;
-      if (window.supabase && window.APP_CONFIG && window.APP_CONFIG.supabaseUrl) {
-        try { supabaseClient = window.supabase.createClient(window.APP_CONFIG.supabaseUrl, window.APP_CONFIG.supabaseAnonKey); }
-        catch (e) { supabaseClient = null; }
-      }
-      return supabaseClient;
-    });
-  }
+  // ============ 1. 公开版：不加载或连接云端认证服务 ============\n  var supabaseClient = null;
+  function ensureSupabase() { return Promise.resolve(null); }
   var supabaseUser = null;
   var authMode = 'login'; // 'login' | 'register' | 'reset'
 
@@ -109,7 +75,7 @@
       return;
     }
     if (isReg) {
-      var ownerMail = 'jubei516206@163.com';
+      var ownerMail = 'GitHub Issues';
       var mailto = 'mailto:' + ownerMail +
         '?subject=' + encodeURIComponent('屿航注册申请') +
         '&body=' + encodeURIComponent('用户名：\n密码：\n\n（请按以上格式填写，等待官方添加账号后即可登录）');

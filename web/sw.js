@@ -15,7 +15,6 @@ const SHELL = [
   './js/search-index.js',
   './js/integrations.js',
   './js/media-tools.js',
-  './js/config.js',
   './js/app.js',
   './js/startpage.js',
   './css/style.css',

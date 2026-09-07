@@ -490,7 +490,7 @@
     auth_err: { zh: '登录失败', en: 'Sign-in failed' },
     google_login: { zh: '继续使用谷歌', en: 'Continue with Google' },
     microsoft_login: { zh: '继续使用微软', en: 'Continue with Microsoft' },
-    no_supabase: { zh: '⚠️ 尚未配置 Supabase（请在 js/config.js 填入密钥）', en: '⚠️ Supabase not configured (add keys in js/config.js)' },
+    no_supabase: { zh: '⚠️ 公开版未启用云同步功能', en: '⚠️ Cloud sync is not enabled in the public edition' },
     to_login: { zh: '已有账号？去登录', en: 'Have an account? Sign in' },
     to_register: { zh: '没有账号？去注册', en: 'No account? Register' },
     email_invalid: { zh: '邮箱格式不正确', en: 'Invalid email' },
@@ -516,12 +516,12 @@
     disclaimer_ok: { zh: '我知道了! 不再提醒', en: 'Got it! Don\'t remind again' },
     disclaimer_text: {
       zh: '· 本网站（屿航）由 屿雀iris 制作，内容均为个人兴趣收集，仅供学习交流，不含任何商业推广。<br>' +
-         '· 收藏、点击、个人网站等数据随账号云端同步，仅本人可见。<br>' +
-         '· 如有网站违反法律法规或链接失效，请联系 jubei516206@163.com，我们会尽快处理。<br>' +
+         '· 收藏、点击、个人网站等数据默认仅保存在当前浏览器。<br>' +
+         '· 如发现链接失效或内容问题，请通过 GitHub Issues 提交反馈。<br>' +
          '· 使用各网站前请查阅其授权许可，部分内容禁止商用；因误用产生的一切后果与本站无关。',
       en: '· Yuhang (屿航) is made by Yunque Iris. All listings are collected out of personal interest for learning and sharing only, with no commercial promotion.<br>' +
-         '· Your favorites, clicks and personal sites are synced to the cloud and only visible to you.<br>' +
-         '· If any site violates the law or a link breaks, contact jubei516206@163.com.<br>' +
+         '· Your favorites, clicks and personal sites are stored in your current browser by default.<br>' +
+         '· Report broken links or content issues through GitHub Issues.<br>' +
          '· Please check each site\'s license before use; some content is not for commercial use. Misuse is at your own risk.'
     },
     footer_disclaimer: {
@@ -1112,56 +1112,31 @@
   }
 
 
-  // ---------- 官方网站反馈 ----------
+  // ---------- GitHub Issues 反馈 ----------
   function openFeedback() {
-    if (!S.currentUser) { YHAuth.openLogin(t('fb_need_login')); return; }
     if (!currentSite) return;
     fbText.value = '';
     fbMsg.innerHTML = '';
     fbModal.hidden = false;
   }
-  // 站长接收邮箱（公开联系邮箱；如需修改，改这一处即可）
-  var CONTACT_EMAIL = 'jubei516206@163.com';
-  // 打开一封发给站长的邮件（本地邮箱客户端）
   function mailToOwner(subject, body) {
-    var u = 'mailto:' + CONTACT_EMAIL +
-      '?subject=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(body || '');
-    var a = document.createElement('a');
-    a.href = u;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function () { a.remove(); }, 300);
+    var u = 'https://github.com/Linyy15/linyueyuan1/issues/new?title=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body || '');
+    window.open(u, '_blank', 'noopener');
   }
   on(fbClose, 'click', function () { fbModal.hidden = true; });
   on(fbModal, 'click', function (e) { if (e.target === fbModal) fbModal.hidden = true; });
-  on(fbSubmit, 'click', function () {
-    if (!currentSite) { fbMsg.innerHTML = t('no_supabase'); return; }
-    var msg = fbText.value.trim();
-    if (!msg) { fbMsg.innerHTML = t('login_need'); return; }
-    YHAuth.ensureSupabase().then(function (client) {
-      if (!client) { fbMsg.innerHTML = t('no_supabase'); return; }
-      client.from('feedback').insert({ user_id: cloudUid(), site_id: currentSite.id, message: msg }).then(function (res) {
-        if (res.error) { fbMsg.innerHTML = t('auth_err') + ': ' + authErrorMsg(res.error); return; }
-        fbMsg.innerHTML = t('fb_ok');
-        setTimeout(function () { fbModal.hidden = true; }, 1000);
-      });
-    });
-  });
-  // 反馈也直接发给站长（邮件）
-  on($('fb-mail'), 'click', function () {
+  function sendFeedbackIssue() {
     var msg = fbText.value.trim();
     if (!msg) { fbMsg.innerHTML = t('login_need'); return; }
     var name = currentSite ? nameLabel(currentSite) : '';
     var url = currentSite ? currentSite.url : '';
-    mailToOwner(
-      t('fb_mail_subject'),
-      t('fb_mail_body') + '\n\n' + name + '\n' + url + '\n\n' + msg
-    );
-    fbMsg.innerHTML = t('fb_mail_sent');
-  });
+    mailToOwner(t('fb_mail_subject'), t('fb_mail_body') + '\n\n' + name + '\n' + url + '\n\n' + msg);
+    fbMsg.innerHTML = '已打开 GitHub Issues，请在新页面提交反馈。';
+  }
+  on(fbSubmit, 'click', sendFeedbackIssue);
+  on($('fb-mail'), 'click', sendFeedbackIssue);
 
-  // ---------- 提交收录（推荐网站给站长，通过邮件发送） ----------
+  // ---------- 提交收录（通过 GitHub Issues） ----------
   function openSubmit() {
     if (submitName) submitName.value = '';
     if (submitUrl) submitUrl.value = '';

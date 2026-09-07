@@ -83,7 +83,6 @@ try {
 const YH = require('../web/js/sites-lib.js');
 global.YH = YH;
 eval(readFileSync('web/data/sites.js', 'utf8'));
-eval(readFileSync('web/js/config.js', 'utf8'));
 eval(readFileSync('web/js/state.js', 'utf8'));
 eval(readFileSync('web/js/tools.js', 'utf8'));
 eval(readFileSync('web/js/search.js', 'utf8'));
@@ -174,7 +173,7 @@ global.scrollTo = (o) => { scrollTop = o; };
 (backTop._listeners.click || []).forEach((fn) => fn());
 check('点击回顶平滑滚动到 0', scrollTop && scrollTop.top === 0 && scrollTop.behavior === 'smooth', JSON.stringify(scrollTop));
 check('页脚免责说明存在', /footer_disclaimer/.test(require('fs').readFileSync('web/js/app.js', 'utf8')), '');
-check('免责弹窗文案含数据同步说明', /随账号云端同步/.test(require('fs').readFileSync('web/js/app.js', 'utf8')), '');
+check('免责弹窗文案说明本地存储', /默认仅保存在当前浏览器/.test(require('fs').readFileSync('web/js/app.js', 'utf8')), '');
 
 // ---------- 8. 起始页收藏投影（当前账号隔离 + 状态卡） ----------
 check('起始页脚本已加载', !!global.YHStartPage && typeof global.YHStartPage.open === 'function', '');
@@ -250,7 +249,7 @@ check('卡片仅一个标签', (elCache['grid'].innerHTML.match(/class="tag"/g) 
 
 // ---------- 15. 注册邮件申请 / 新工具 / 焦点修复 ----------
 const appSrc = fs8.readFileSync('web/js/app.js', 'utf8') + '\n' + fs8.readFileSync('web/js/search.js', 'utf8') + '\n' + fs8.readFileSync('web/js/cards.js', 'utf8') + '\n' + fs8.readFileSync('web/js/auth.js', 'utf8') + '\n' + fs8.readFileSync('web/js/nav.js', 'utf8');
-check('注册改为邮件申请', appSrc.includes('jubei516206@163.com') && appSrc.includes('reg_mail_title') && appSrc.includes('mailto:'), '');
+check('公开版未内置私人邮箱', !appSrc.includes('@163.com') && !appSrc.includes('@126.com'), '');
 check('工具箱含计算器', tgrid2.includes('计算器'), '');
 check('工具箱含函数图像', tgrid2.includes('函数图像'), '');
 check('鼠标点击不显示焦点轮廓（防同时亮）', fs8.readFileSync('web/css/style.css', 'utf8').includes(':focus:not(:focus-visible)'), '');
@@ -295,7 +294,7 @@ check('卡片飞出优化', appSrc.includes('flyOutCards') && appSrc.includes('c
 check('搜索联想+网址直达', appSrc.includes('renderSearchAc') && appSrc.includes('ac_direct'), '');
 check('导出收藏为书签', appSrc.includes('exportBookmarksHtml') && appSrc.includes('NETSCAPE-Bookmark-file-1'), '');
 check('复制标题+网址', appSrc.includes('m-copy2') && appSrc.includes('copy_title_url'), '');
-check('提交收录发给站长', !!elCache['btn-submit'] && htmlSrc.includes('submit-modal') && appSrc.includes('mailToOwner') && appSrc.includes('CONTACT_EMAIL'), '');
+check('提交收录通过 GitHub Issues', !!elCache['btn-submit'] && htmlSrc.includes('submit-modal') && appSrc.includes('mailToOwner') && appSrc.includes('github.com/Linyy15/linyueyuan1/issues/new'), '');
 check('反馈发给站长', htmlSrc.includes('fb-mail') && appSrc.includes('fb_mail_subject'), '');
 check('加载性能优化', htmlSrc.includes('rel="preload"') && htmlSrc.includes('defer') && fs8.existsSync('scripts/compress.mjs'), '');
 
